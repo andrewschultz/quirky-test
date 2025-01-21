@@ -26,6 +26,10 @@ barriers {
    
 } 
 
+booleans {
+   footnotes_available : boolean "false" scope="survivor";
+}
+
 ## Print the objective when the game starts
 
 on_startup {
@@ -34,6 +38,10 @@ on_startup {
    : clear_screen;
    : print "Submitted for the 2025 TALP competition." ;
    : press_any_key ;
+   : if (footnotes_available) {
+     : print "Because you went through once, footnotes are now available.";
+     : clear_screen;
+   }
 }
 
 ## Execute this every time a player moves or redescribes a location
@@ -41,7 +49,6 @@ on_startup {
 on_describe {
    : if (is_at "nameless_lameness" ) {
       : print "Try X ME." ;
-      : win_game ;
    }
 }
 
@@ -53,4 +60,8 @@ on_command {
          : print   "Good guess, if this were an anagram game." ;
          }
       }
+   : match "wingame _"  {
+      : set_true "footnotes_available";
+      : win_game ;
+   }
 }
