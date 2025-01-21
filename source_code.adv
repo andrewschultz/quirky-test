@@ -1,0 +1,56 @@
+
+start_at = nameless_lameness
+
+## Defines locations in the world
+
+locations {
+   nameless_lameness      : location "You are surounded by nameless lameness." ;
+   bold_hub  : location "You are in a bold hub." ;
+}
+
+# Defines things in the world (scenery cannot be carried)
+
+objects {
+}
+   
+connections {
+
+   ## Connects locations together (bidirectional)
+   
+   from, direction, to = [
+      ## bold_hub,     north, bold_hub
+   ]
+}
+
+barriers {
+   
+} 
+
+## Print the objective when the game starts
+
+on_startup {
+   : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
+   : press_any_key ;
+   : clear_screen;
+   : print "Submitted for the 2025 TALP competition." ;
+   : press_any_key ;
+}
+
+## Execute this every time a player moves or redescribes a location
+
+on_describe {
+   : if (is_at "nameless_lameness" ) {
+      : print "Try X ME." ;
+      : win_game ;
+   }
+}
+
+## Test VERB NOUN that the player types and executes conditional actions
+
+on_command {
+   : match "salesmen _"  {
+      : if (is_at "nameless_lameness") {
+         : print   "Good guess, if this were an anagram game." ;
+         }
+      }
+}
