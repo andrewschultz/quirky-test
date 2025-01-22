@@ -4,7 +4,7 @@ start_at = nameless_lameness
 ## Defines locations in the world
 
 locations {
-   nameless_lameness      : location "You are surounded by nameless lameness." ;
+   nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" ;
    bold_hub  : location "You are in a bold hub." ;
 }
 
@@ -79,5 +79,12 @@ on_command {
          : pocket "ooh_task" ;
          : print "You find something called Ooh, Task to Ask." ;
       }
+   }
+}
+
+
+assets {
+   graphics {
+      lameness_16 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVSUlKtra2fn5+YmJimpqZgYGBnZ2dubm5ZWVl1dXWRkZGDg4NLS0u0tLR8fHyKioo9s6mBAAAB6ElEQVRYw+XYIZaDMBAGYHIELrACvQ6JRdUjse0RKmvpARBcAIHEcgFEZS0KzxXovja0ZCYzJARq9r8A3yOTySSeJyN8meGVPnym+SR45SaTPXMtZBKZtJsSP1O9c5xylrmMf/HemQA/CiCCgN8J0G4NEAuAWgsoICCZvn9/AQ5rAQMBuOkBuTvA0wJCqgQAIEGAOAZrYAoYDAFKCeQIcLcHCBUAtkHNAhIEiJ0BoAgCUIO3+QrMfkAKAYfVgH4OqCEg+zIgAICWWoEUlMAHUMrvnwyLUC0CY0C3OSDSArIvAAYdQPkBmi7gABAEINQBsozog+l6gG8BaNcAKh4AjwIAqHcH+DYAOAyQZyELOP87QMkBBAmIdIB2c4C/AGi4Rjirwq4jzwJ+CXy8CwflPNadRRsCxFaAlAaU3wXcScBRB/BJQMQAPjNxYQBg54FlQL09YHQAtBCQE/eS2VD4Bpw4wGwX9jsDLmaAhgNcdwWENoACAdDFoASAcdRtQ1dAQgOqVYCo4XaBpggYQMkAyMOwsQXgIqiITrQE6HWX42VA4ggAUzn5PIEAhSNAIAD/PkIDUC+kbqcXK0C9NwBN5b0tIKeGIrQCchsAgNC9TyBAYAHoqE6o7EP+jSqC7yMmALgG6AcovfgBhBvnaozG45IAAAAASUVORK5CYII=";
    }
 }
