@@ -48,9 +48,15 @@ subroutines {
       : print "Your score just went up by a point.";
       : increment "score";
       }
+   add_bonus : subroutine {
+      : print {( "<" + "You just found a bonus point!" + bonus_alert + "<6>>" )};
+      : increment "bonus_score";
+      }
+}
 
 strings {
    my_score : dynamic_string {( score + "/" + max_score )}
+   bonus_alert: dynamic_string {( bonus_score == 0 ? " There are a few in the game, and SCORE will let you know your progress." : "" )}
 }
 
 themes {
