@@ -43,6 +43,16 @@ booleans {
    footnotes_available : boolean "false" scope="survivor";
 }
 
+subroutines {
+   add_point : subroutine {
+      : print "Your score just went up by a point.";
+      : increment "score";
+      }
+
+strings {
+   my_score : dynamic_string {( score + "/" + max_score )}
+}
+
 themes {
    game_theme : theme {   system_messages {
 
@@ -52,6 +62,8 @@ themes {
       }
    }
 }
+
+
 ## Print the objective when the game starts
 
 on_startup {
@@ -104,7 +116,7 @@ on_command {
       : else {
          : pocket "ooh_task" ;
          : print "You find something called Ooh, Task to Ask." ;
-         : increment "score" ;
+         : gosub "add_point";
       }
    }
    : match "score _"  {
