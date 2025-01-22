@@ -14,6 +14,10 @@ objects {
   ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
 }
 
+integers {
+   score : integer "0" ;
+   max_score : integer "1" ;
+}
 
 vocabulary {
    : noun      / aliases = [task, ask]
@@ -78,8 +82,12 @@ on_command {
       : else {
          : pocket "ooh_task" ;
          : print "You find something called Ooh, Task to Ask." ;
+         : increment "score" ;
       }
    }
+   : match "score _"  {
+      : print {( "Your score is " + score + " out of " + max_score + "." )} ;
+      }
 }
 
 
