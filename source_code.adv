@@ -77,12 +77,20 @@ on_describe {
 on_command {
    : match "salesmen _"  {
       : if (is_at "nameless_lameness") {
-         : print   "Good guess, if this were an anagram game." ;
+         : print "Good guess, if this were an anagram game." ;
          }
       }
    : match "wingame _"  {
       : set_true "footnotes_available";
       : win_game ;
+   }
+   : match "exits _" {
+      : if (is_at "nameless_lameness") {
+         : print "There's a puzzle here to start. The tutorial can walk you through it." ;
+         }
+      : else {
+         : print "I should list exits here.";
+      }
    }
    : match "x me" {
       : if (is_carried "ooh_task") {
