@@ -1,5 +1,6 @@
 
 start_at = nameless_lameness
+start_theme = my_theme
 
 ## Defines locations in the world
 
@@ -70,15 +71,16 @@ themes {
          status_bar_pen   = 15
          status_bar_paper = 9
       }
+      system_messages {
+
+	ask_new_game                                   = Would you like to restart Quirky Test?
+	ask_quit                                       = Do you wish to quit Quirky Test?
+	post_quit = I hope you enjoyed the experience. Pressing any key will restart the game.
+	you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
+	unknown_verb                                   = Nothing comes up from that. VERBS gives a list of what you need, though there are ones to guess, too.
    }
-   game_theme : theme {   system_messages {
-
-      unknown_verb                                   = Nothing comes up from that. VERBS gives a list of what you need, though there are ones to guess, too.
-      you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
-
       }
    }
-}
 
 
 ## Print the objective when the game starts
