@@ -61,6 +61,16 @@ strings {
 }
 
 themes {
+   my_theme : theme {
+      status_bar {
+         : header_text;
+         : dynamic_text "my_score" ;
+      }
+      colors {
+         status_bar_pen   = 15
+         status_bar_paper = 9
+      }
+   }
    game_theme : theme {   system_messages {
 
       unknown_verb                                   = Nothing comes up from that. VERBS gives a list of what you need, though there are ones to guess, too.
