@@ -16,7 +16,9 @@ objects {
 
 integers {
    score : integer "0" ;
+   bonus_score : integer "0" ;
    max_score : integer "1" ;
+   max_bonus_score : integer "1" ;
 }
 
 vocabulary {
@@ -106,7 +108,8 @@ on_command {
       }
    }
    : match "score _"  {
-      : print {( "Your score is " + score + " out of " + max_score + "." )} ;
+      : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<" + "#f00" + ">>." )} ;
+      : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of " + max_bonus_score + "." )} ;
       }
 }
 
