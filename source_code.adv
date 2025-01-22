@@ -41,6 +41,7 @@ barriers {
 
 booleans {
    footnotes_available : boolean "false" scope="survivor";
+   turkey_quest_point : boolean "false" ;
 }
 
 subroutines {
@@ -100,6 +101,16 @@ on_command {
          : print "Good guess, if this were an anagram game." ;
          }
       }
+   : match "turkey quest" {
+      : if (turkey_quest_point) {
+         : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke." ;
+         }
+      : else {
+         : print "Ah! Yes, you are in the spirit of things, here. Have a bonus point." ;
+         : set_true "turkey_quest_point" ;
+         : gosub "add_bonus";
+      }
+   }
    : match "wingame _"  {
       : set_true "footnotes_available";
       : win_game ;
