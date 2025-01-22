@@ -11,8 +11,15 @@ locations {
 # Defines things in the world (scenery cannot be carried)
 
 objects {
+  ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
 }
-   
+
+
+vocabulary {
+   : noun      / aliases = [task, ask]
+}
+
+
 connections {
 
    ## Connects locations together (bidirectional)
@@ -63,5 +70,14 @@ on_command {
    : match "wingame _"  {
       : set_true "footnotes_available";
       : win_game ;
+   }
+   : match "x me" {
+      : if (is_carried "ooh_task") {
+         : print "Got what you need." ;
+      }
+      : else {
+         : pocket "ooh_task" ;
+         : print "You find something called Ooh, Task to Ask." ;
+      }
    }
 }
