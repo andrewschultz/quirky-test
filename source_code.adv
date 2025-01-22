@@ -41,6 +41,15 @@ booleans {
    footnotes_available : boolean "false" scope="survivor";
 }
 
+themes {
+   game_theme : theme {   system_messages {
+
+      unknown_verb                                   = Nothing comes up from that. VERBS gives a list of what you need, though there are ones to guess, too.
+      you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
+
+      }
+   }
+}
 ## Print the objective when the game starts
 
 on_startup {
