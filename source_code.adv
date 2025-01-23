@@ -132,9 +132,12 @@ on_command {
          : gosub "add_bonus";
       }
    }
-   : match "wingame _"  {
-      : set_true "footnotes_available";
-      : win_game ;
+   : if (in_debug) {
+      : match "wingame _"  {
+         : print {( footnotes_available ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
+         : set_true "footnotes_available";
+         : win_game ;
+      }
    }
    : match "exits _" {
       : if (is_at "nameless_lameness") {
