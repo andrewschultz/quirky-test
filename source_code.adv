@@ -43,6 +43,7 @@ barriers {
 booleans {
    footnotes_available : boolean "false" scope="survivor";
    turkey_quest_point : boolean "false" ;
+   in_debug: boolean "false" ;
 }
 
 subroutines {
@@ -54,6 +55,17 @@ subroutines {
       : print {( "<" + "You just found a bonus point!" + bonus_alert + "<6>>" )};
       : increment "bonus_score";
       }
+   init : subroutine {
+   : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
+   : press_any_key ;
+   : clear_screen;
+   : print "Submitted for the 2025 TALP competition." ;
+   : press_any_key ;
+   : if (footnotes_available) {
+     : print "Because you went through once, footnotes are now available.";
+     : clear_screen;
+     }
+   }
 }
 
 strings {
@@ -85,16 +97,13 @@ themes {
 
 ## Print the objective when the game starts
 
+on_debug {
+   : set_true "in_debug" ;
+   : gosub "init" ;
+}
+
 on_startup {
-   : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
-   : press_any_key ;
-   : clear_screen;
-   : print "Submitted for the 2025 TALP competition." ;
-   : press_any_key ;
-   : if (footnotes_available) {
-     : print "Because you went through once, footnotes are now available.";
-     : clear_screen;
-   }
+   : gosub "init" ;
 }
 
 ## Execute this every time a player moves or redescribes a location
