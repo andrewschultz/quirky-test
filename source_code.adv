@@ -73,6 +73,12 @@ subroutines {
          : win_game ;
       }
    }
+   verb_list : subroutine {
+      : print "The standard list of verbs works here." ;
+      : if (in_debug) {
+         : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
+      }
+   }
 }
 
 strings {
@@ -150,6 +156,9 @@ on_command {
       : else {
          : print "I should list exits here.";
       }
+   }
+   : match "verb _;verbs _" {
+      : gosub "verb_list" ;
    }
    : match "drop _" {
       : print "While classic text adventures often required the player to use DROP due to inventory limits, this is often regarded as needless fiddling today. Text adventures often take steps to keep the player's inventory manageable so they can focus on puzzles, getting rid of items that are no longer necessary.";
