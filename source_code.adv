@@ -2,30 +2,12 @@
 start_at = nameless_lameness
 start_theme = my_theme
 
-## Defines locations in the world
+## Defines locations in the world, along with how they connect
 
 locations {
    nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" ;
    bold_hub  : location "You are in a bold hub." ;
 }
-
-# Defines things in the world (scenery cannot be carried)
-
-objects {
-  ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
-}
-
-integers {
-   score : integer "0" ;
-   bonus_score : integer "0" ;
-   max_score : integer "1" ;
-   max_bonus_score : integer "1" ;
-}
-
-vocabulary {
-   : noun      / aliases = [task, ask]
-}
-
 
 connections {
 
@@ -40,10 +22,30 @@ barriers {
    
 } 
 
+## Defines objects
+
+objects {
+  ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
+}
+
+## Booleans and integers
+
 booleans {
    footnotes_available : boolean "false" scope="survivor";
    turkey_quest_point : boolean "false" ;
    in_debug: boolean "false" ;
+   in_tutorial: boolean "false" ;
+}
+
+integers {
+   score : integer "0" ;
+   bonus_score : integer "0" ;
+   max_score : integer "1" ;
+   max_bonus_score : integer "1" ;
+}
+
+vocabulary {
+   : noun      / aliases = [task, ask]
 }
 
 subroutines {
@@ -107,8 +109,7 @@ themes {
       }
    }
 
-
-## Print the objective when the game starts
+## On_debug and on_startup call the INIT subroutine, but on_debug sets a flag or flags to allow for cheat commands
 
 on_debug {
    : set_true "in_debug" ;
