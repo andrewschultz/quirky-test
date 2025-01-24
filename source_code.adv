@@ -34,7 +34,10 @@ booleans {
    footnotes_available : boolean "false" scope="survivor";
    turkey_quest_point : boolean "false" ;
    in_debug: boolean "false" ;
+   ## tutorial booleans
    in_tutorial: boolean "false" ;
+   tutorial_x_me_done : boolean "false" ;
+   tutorial_x_me_cued : boolean "false" ;
 }
 
 integers {
@@ -73,6 +76,12 @@ subroutines {
          : print {( footnotes_available ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
          : set_true "footnotes_available";
          : win_game ;
+      }
+   }
+   tutorial : subroutine {
+      : if (!tutorial_x_me_done) {
+         : print {( tutorial_x_me_cued ? "One convention of text adventures is that you want to examine yourself first, to give clues about who you are and what you're doing here. <X ME<#0f0>> will do this." : "<X ME<#0f0>> should be your first command." )} ;
+         : set_true "tutorial_x_me_cued" ;
       }
    }
    verb_list : subroutine {
@@ -120,12 +129,17 @@ on_startup {
    : gosub "init" ;
 }
 
-## Execute this every time a player moves or redescribes a location
+## on_tick is primarily used for the tutorial
+
+on_tick {
+   : if (in_tutorial) {
+      : gosub "tutorial" ;
+   }
+}
+
+## on_describe is for moving around
 
 on_describe {
-   : if (is_at "nameless_lameness" ) {
-      : print "Try X ME." ;
-   }
 }
 
 ## Test VERB NOUN that the player types and executes conditional actions
