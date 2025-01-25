@@ -41,6 +41,8 @@ booleans {
 }
 
 integers {
+   tutorial_score : integer "0" ;
+   max_tutorial_score : integer "1";
    score : integer "0" ;
    bonus_score : integer "0" ;
    max_score : integer "1" ;
@@ -189,7 +191,10 @@ on_command {
       }
    }
    : match "score _"  {
-      : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<" + "#f00" + ">>." )} ;
+      : if (in_tutorial) {
+         : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_score + "<#ff0>>." )} ;
+      }
+      : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
       : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of " + max_bonus_score + "." )} ;
       }
 }
