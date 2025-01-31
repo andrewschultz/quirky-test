@@ -84,6 +84,17 @@ subroutines {
      }
   : clear_screen ;
    }
+   tutorial_choice : subroutine {
+   : ask_bool {
+      question   = "<Quirky Test<#0f0>> has a tutorial mode for the first few puzzles. Would you like to use it?"
+      yes_answer = Yes, I'd like to use the tutorial.
+      no_answer  = No, I don't need the tutorial.
+      var        = in_tutorial
+      }
+      : print "Note you can change in and out of tutorial mode with <TUTORIAL YES<#0f0>> and <TUTORIAL NO<#0f0>> before you have completed the first few tasks, though this may break narrative continuity.";
+      : press_any_key ;
+      : clear_screen ;
+   }
    debug_commands : subroutine {
       : match "wingame _"  {
          : print {( footnotes_available ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
@@ -164,10 +175,12 @@ themes {
 on_debug {
    : set_true "in_debug" ;
    : gosub "init" ;
+   : gosub "tutorial_choice" ;
 }
 
 on_startup {
    : gosub "init" ;
+   : gosub "tutorial_choice" ;
 }
 
 ## on_tick is primarily used for the tutorial
