@@ -7,11 +7,18 @@ start_theme = my_theme
 ## Booleans and integers
 
 booleans {
-   footnotes_available : boolean "false" scope="survivor";
-   score_notify: boolean "true" ;
-   turkey_quest_point : boolean "false" ;
-   theory_bore_point : boolean "false" ;
+   ## game state booleans
    in_debug: boolean "false" ;
+   score_notify: boolean "true" ;
+   tutorial_done: boolean "false" ;
+   footnotes_available : boolean "false" scope="survivor";
+
+   ## regular point tally booleans
+   point_first_base : boolean "false" ;
+
+   ## bonus point tally booleans
+   bonus_point_turkey_quest : boolean "false" ;
+   bonus_point_theory_bore : boolean "false" ;
 
    ## tutorial booleans
    in_tutorial: boolean "false" ;
@@ -22,8 +29,6 @@ booleans {
    tutorial_item_taken: boolean "false" ;
    tutorial_additional_metaverb_done : boolean "false" ;
    tutorial_x_ask_done : boolean "false" ;
-
-   tutorial_done: boolean "false" ;
 
    ## parser shortcut booleans
    look_warn: boolean "false" ;
@@ -124,7 +129,7 @@ subroutines {
       no_answer  = No, I don't need the tutorial.
       var        = in_tutorial
       }
-      : print "Note you can change in and out of tutorial mode with <TUTORIAL YES<#00f0>> and <TUTORIAL NO<#00f>> before you have completed the first few tasks, though this may break narrative continuity.";
+      : print "Note you can change in and out of tutorial mode with <TUTORIAL YES<#00f>> and <TUTORIAL NO<#00f>> before you have completed the first few tasks, though this may break narrative continuity.";
       : press_any_key ;
       : clear_screen ;
    }
@@ -185,7 +190,7 @@ subroutines {
    }
    meta_about : subroutine {
       : print {( qt + " was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." )} ;
-      : print "You can find specific thanks in the " + thx + " command." ;
+      : print {( "You can find specific thanks in the " + thx + " command." )} ;
       : set_true "tutorial_about_done" ;
    }
    meta_thanks : subroutine {
@@ -242,7 +247,7 @@ themes {
 	ask_quit                                       = Do you wish to quit Quirky Test?
 	post_quit = I hope you enjoyed the experience. Pressing any key will restart the game.
 	you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
-	unknown_verb                                   = Nothing comes up from that. <VERBS<#f80>> gives a list of what you need, though there are ones to guess, too." )}
+	unknown_verb                                   = Nothing comes up from that. <VERBS<#f80>> gives a list of what you need, though there are ones to guess, too.
    }
       }
    }
@@ -296,22 +301,22 @@ on_command {
          }
       }
    : match "theory bore" {
-      : if (theory_bore_point) {
+      : if (bonus_point_theory_bore) {
          : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
       }
       : else {
 	     : print {( point_first_base ? "You snicker at what you've found, but then figure you better not do so to Thor's face." : "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" )} ;
-		 : set_true "theory_bore_point" ;
+		 : set_true "bonus_point_theory_bore" ;
 		 : gosub "add_bonus" ;
 	 }
    }
    : match "turkey quest" {
-      : if (turkey_quest_point) {
+      : if (bonus_point_turkey_quest) {
          : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke." ;
          }
       : else {
          : print "Ah! Yes, you are in the spirit of things, here. Have a bonus point." ;
-         : set_true "turkey_quest_point" ;
+         : set_true "bonus_point_turkey_quest" ;
          : gosub "add_bonus";
       }
    }
