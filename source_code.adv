@@ -10,6 +10,7 @@ booleans {
    footnotes_available : boolean "false" scope="survivor";
    score_notify: boolean "true" ;
    turkey_quest_point : boolean "false" ;
+   theory_bore_point : boolean "false" ;
    in_debug: boolean "false" ;
 
    ## tutorial booleans
@@ -33,9 +34,9 @@ integers {
    tutorial_score : integer "0" ;
    max_tutorial_score : integer "1";
    score : integer "0" ;
-   bonus_score : integer "0" ;
    max_score : integer "1" ;
-   max_bonus_score : integer "1" ;
+   bonus_score : integer "0" ;
+   max_bonus_score : integer "2" ;
 }
 
 ## strings
@@ -263,7 +264,7 @@ on_startup {
 
 on_tick {
    : if (in_tutorial) {
-      : gosub "tutorial" ;
+      : gosub "tutorial_progress" ;
    }
 }
 
@@ -294,6 +295,16 @@ on_command {
          : print "Good guess, if this were an anagram game." ;
          }
       }
+   : match "theory bore" {
+      : if (theory_bore_point) {
+         : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
+      }
+      : else {
+	     : print {( point_first_base ? "You snicker at what you've found, but then figure you better not do so to Thor's face." : "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" )} ;
+		 : set_true "theory_bore_point" ;
+		 : gosub "add_bonus" ;
+	 }
+   }
    : match "turkey quest" {
       : if (turkey_quest_point) {
          : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke." ;
