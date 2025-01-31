@@ -42,6 +42,9 @@ booleans {
    tutorial_verbs_done : boolean "false" ;
    tutorial_x_me_done : boolean "false" ;
    tutorial_x_me_cued : boolean "false" ;
+   tutorial_item_taken: boolean "false" ;
+   tutorial_additional_metaverb_done : boolean "false" ;
+   tutorial_x_ask_done : boolean "false" ;
 
    tutorial_done: boolean "false" ;
 
@@ -152,8 +155,10 @@ subroutines {
 }
 
 strings {
+   qt : string "<Quirky Test<#ff0>>" ;
    my_score : dynamic_string {( score + "/" + max_score )}
-   bonus_alert: dynamic_string {( bonus_score == 0 ? " There are a few in the game, and SCORE will let you know your progress." : "" )}
+   bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and SCORE will let you know your progress." : "" )}
+   notify_string : string "You need to specify <NOTIFY YES<#0f0>> or <NOTIFY NO<#0f0>> for score notification changes.";
 }
 
 themes {
