@@ -35,9 +35,11 @@ booleans {
    score_notify: boolean "true" ;
    turkey_quest_point : boolean "false" ;
    in_debug: boolean "false" ;
+
    ## tutorial booleans
    in_tutorial: boolean "false" ;
    tutorial_about_done : boolean "false" ;
+   tutorial_verbs_done : boolean "false" ;
    tutorial_x_me_done : boolean "false" ;
    tutorial_x_me_cued : boolean "false" ;
 
@@ -121,7 +123,11 @@ subroutines {
       : set_true "tutorial_about_done" ;
    }
    verb_list : subroutine {
-      : print "The standard list of verbs works here." ;
+      : set_true "tutorial_verbs_done";
+      : print {( "While " + qt + " requires you to guess some verbs as part of a puzzle, it doesn't require any nonstandard verbs to move around or manipulate objects or NPCs." )} ;
+      : print "There are no diagonal directions, only N S E W U D and IN and OUT. You can use the long form of each direction, but it is not necessary." ;
+      : print "You can <TAKE<#0f0>> an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
+      : print {( "No other standard commands are needed to win " + qt + ". However, <META<#f80>> will describe meta-commands, and <OPTIONS<#f80>> toggles options." )} ;
       : if (in_debug) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
