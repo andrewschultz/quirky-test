@@ -167,6 +167,13 @@ subroutines {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
    }
+   verb_meta_list : subroutine {
+      : print {( "ABOUT gives info about the game." )} ;
+      : print {( "THANKS gives info about people who helped with the game. I usually use CREDITS, but Adventuron reserves that for its own." )} ;
+      : print {( "There are also standard commands like SAVE, RESTORE and QUIT." )} ;
+      : print {( "Adventuron-specific META commands include TSTART and TSTOP, which start and stop a transcript." )} ;
+      : set_true "tutorial_additional_metaverb_done";
+   }
 }
 
 strings {
@@ -303,6 +310,9 @@ on_command {
       : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
       : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of " + max_bonus_score + "." )} ;
       }
+   : match "meta _" {
+      : gosub "verb_meta_list";
+   }
 }
 
 
