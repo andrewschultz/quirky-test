@@ -2,31 +2,7 @@
 start_at = nameless_lameness
 start_theme = my_theme
 
-## Defines locations in the world, along with how they connect
-
-locations {
-   nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" ;
-   bold_hub  : location "You are in a bold hub." ;
-}
-
-connections {
-
-   ## Connects locations together (bidirectional)
-   
-   from, direction, to = [
-      ## bold_hub,     north, bold_hub
-   ]
-}
-
-barriers {
-   
-} 
-
-## Defines objects
-
-objects {
-  ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
-}
+## we start with simplest defined then move to more complex
 
 ## Booleans and integers
 
@@ -62,8 +38,59 @@ integers {
    max_bonus_score : integer "1" ;
 }
 
+## strings
+
+strings {
+   ## short stubs
+   # meta verbs in orange
+   abt : string "<ABOUT<#f80>>" ;
+   verbs : string "<VERBS<#f80>>" ;
+   thx : string "<THANKS<#f80>>" ;
+
+   # options in blue 00f
+
+   # regular commands in green
+   xme : string "<X ME<#ff0>>" ;
+   qt : string "<Quirky Test<#ff0>>" ;
+
+   # tutorial stuff in purple
+   tut : string "<TUTORIAL NOTE:<#f0f>> " ;
+
+   ## dynamic strings
+
+   my_score : dynamic_string {( score + "/" + max_score )}
+   bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and SCORE will let you know your progress." : "" )}
+   notify_string : string "You need to specify <NOTIFY YES<#00f>> or <NOTIFY NO<#00f>> for score notification changes.";
+}
+
+## Objects with vocabulary
+
+objects {
+  ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
+}
+
 vocabulary {
    : noun      / aliases = [task, ask]
+}
+
+## Locations with connections
+
+locations {
+   nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" ;
+   bold_hub  : location "You are in a bold hub." ;
+}
+
+connections {
+
+   ## Connects locations together (bidirectional)
+
+   from, direction, to = [
+      ## bold_hub,     north, bold_hub
+   ]
+}
+
+barriers {
+
 }
 
 subroutines {
@@ -193,16 +220,9 @@ subroutines {
       : set_true "tutorial_additional_metaverb_done";
    }
    verb_options_list : subroutine {
-      : print {( "Many games have options for sound, etc. " + qt + " uses <OPTION YES/Y<#00f>> and <OPTION NO/N<#00f>> to change them. <OPTION<#00f>> shows its status." )} ;
+      : print {( "Many games have options for sound, etc. " + qt + " uses <OPTIONS YES/Y<#00f>> and <OPTIONS NO/N<#00f>> to change them. <OPTION<#00f>> shows its status." )} ;
       : print {( "The main option is <TUTORIAL<#0f0>>" + (tutorial_done ? "but you've finished the tutorial" : ", though it's disabled once the tutorial is done" ) + "." )} ;
    }
-}
-
-strings {
-   qt : string "<Quirky Test<#ff0>>" ;
-   my_score : dynamic_string {( score + "/" + max_score )}
-   bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and SCORE will let you know your progress." : "" )}
-   notify_string : string "You need to specify <NOTIFY YES<#0f0>> or <NOTIFY NO<#0f0>> for score notification changes.";
 }
 
 themes {
