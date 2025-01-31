@@ -203,7 +203,7 @@ themes {
 	ask_quit                                       = Do you wish to quit Quirky Test?
 	post_quit = I hope you enjoyed the experience. Pressing any key will restart the game.
 	you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
-	unknown_verb                                   = Nothing comes up from that. VERBS gives a list of what you need, though there are ones to guess, too.
+	unknown_verb                                   = "Nothing comes up from that. <VERBS<#0f0>> gives a list of what you need, though there are ones to guess, too."
    }
       }
    }
@@ -288,7 +288,7 @@ on_command {
       : gosub "meta_thanks" ;
    }
    : match "drop _" {
-      : print "While classic text adventures often required the player to use DROP due to inventory limits, this is often regarded as needless fiddling today. Text adventures often take steps to keep the player's inventory manageable so they can focus on puzzles, getting rid of items that are no longer necessary.";
+      : print "While classic text adventures often required the player to use <DROP<#0f0>> due to inventory limits, this is often regarded as needless fiddling today. Text adventures often take steps to keep the player's inventory manageable so they can focus on puzzles, getting rid of items that are no longer necessary.";
    }
    : match "x me" {
       : if (is_carried "ooh_task") {
@@ -298,6 +298,7 @@ on_command {
          : pocket "ooh_task" ;
          : print "You find something called Ooh, Task to Ask." ;
          : gosub "add_point";
+         : set_true "tutorial_x_me_done";
       }
    }
    : match "x ooh;x task;x task;x ask" {
