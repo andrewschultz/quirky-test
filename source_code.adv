@@ -32,6 +32,7 @@ objects {
 
 booleans {
    footnotes_available : boolean "false" scope="survivor";
+   score_notify: boolean "true" ;
    turkey_quest_point : boolean "false" ;
    in_debug: boolean "false" ;
    ## tutorial booleans
@@ -55,11 +56,15 @@ vocabulary {
 
 subroutines {
    add_point : subroutine {
-      : print "Your score just went up by a point.";
+      : if (score_notify) {
+         : print "<Your score just went up by a point!<#ff0>>";
+      }
       : increment "score";
       }
    add_bonus : subroutine {
-      : print {( "<" + "You just found a bonus point!" + bonus_alert + "<6>>" )};
+      : if (score_notify) {
+         : print {( "<" + "You just found a bonus point!" + bonus_alert + "<6>>" )};
+      }
       : increment "bonus_score";
       }
    init : subroutine {
@@ -78,6 +83,25 @@ subroutines {
          : print {( footnotes_available ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
          : set_true "footnotes_available";
          : win_game ;
+      }
+   }
+   options_notify: subroutine {
+      : match "notify yes;notify y" {
+         : print "Score notify is now on.";
+         : set_true "score_notify";
+         : done ;
+      }
+      : match "notify no;notify n" {
+         : print "Score notify is now off.";
+         : set_false "score_notify";
+         : done ;
+      }
+      : match "notify -" {
+         : print {( "Toggling <NOTIFY<#0f0>> without an argument is not supported. " + notify_string )};
+         : done ;
+      }
+      : match "notify *" {
+         : print {( "The argument after <NOTIFY<#0f0>> wasn't recognized. " + notify_string )};
       }
    }
    tutorial : subroutine {
