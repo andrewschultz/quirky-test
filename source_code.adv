@@ -127,10 +127,28 @@ subroutines {
       }
    }
    tutorial : subroutine {
-      : if (!tutorial_x_me_done) {
-         : print {( tutorial_x_me_cued ? "One convention of text adventures is that you want to examine yourself first, to give clues about who you are and what you're doing here. <X ME<#0f0>> will do this." : "<X ME<#0f0>> should be your first command." )} ;
-         : set_true "tutorial_x_me_cued" ;
+      : if (!tutorial_about_done) {
+         : print "An author frequently implemntes an <ABOUT<#0f0>> commands page for the player to access. This contains details that might disrupt the cover-screen narrative. You can try it now." ;
+         : return ;
       }
+      : if (!tutorial_verbs_done) {
+         : print "The <VERBS<#0f0>> meta-command is useful to see what the most common commands are. You can try it now.";
+         : return ;
+      }
+      : if (!tutorial_additional_metaverb_done) {
+         : print "The <ABOUT<#0f0>> and <VERBS<#0f0>> meta-commands tipped off additional other meta-commands. You should try one now." ;
+         : return ;
+      }
+      : if (!tutorial_x_me_done) {
+         : print {( tutorial_x_me_cued ? "You'll want to <X ME<#0f0>> to continue the tutorial." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that <X ME<#0f0>> provides clues of who you are and what you're doing with relatively few keystrokes. So <X ME<#0f0>> should be your first in-world command."  )} ;
+         : set_true "tutorial_x_me_cued" ;
+         : return ;
+      }
+      : if (!tutorial_x_ask_done) {
+         : print {( "The last thing to do is to <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as that's a reserved word." )} ;
+         : return;
+      }
+      : print "I should have had something to do for the tutorial. This is a bug, but you're done.";
    }
    tutorial_complete : subroutine {
       : print "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use HINT or HELP or HINTS.";
