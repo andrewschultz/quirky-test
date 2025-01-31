@@ -117,13 +117,13 @@ subroutines {
   : clear_screen ;
    }
    tutorial_choice : subroutine {
-   : ask_bool {
-      question   = "<Quirky Test<#0f0>> has a tutorial mode for the first few puzzles. Would you like to use it?"
+   : ask_bool { ##? how do we put QT in here?
+      question   = <Quirky Test<#ff0>> has a tutorial mode for the first few puzzles. Would you like to use it?
       yes_answer = Yes, I'd like to use the tutorial.
       no_answer  = No, I don't need the tutorial.
       var        = in_tutorial
       }
-      : print "Note you can change in and out of tutorial mode with <TUTORIAL YES<#0f0>> and <TUTORIAL NO<#0f0>> before you have completed the first few tasks, though this may break narrative continuity.";
+      : print "Note you can change in and out of tutorial mode with <TUTORIAL YES<#00f0>> and <TUTORIAL NO<#00f>> before you have completed the first few tasks, though this may break narrative continuity.";
       : press_any_key ;
       : clear_screen ;
    }
@@ -241,7 +241,7 @@ themes {
 	ask_quit                                       = Do you wish to quit Quirky Test?
 	post_quit = I hope you enjoyed the experience. Pressing any key will restart the game.
 	you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
-	unknown_verb                                   = "Nothing comes up from that. <VERBS<#0f0>> gives a list of what you need, though there are ones to guess, too."
+	unknown_verb                                   = Nothing comes up from that. <VERBS<#f80>> gives a list of what you need, though there are ones to guess, too." )}
    }
       }
    }
@@ -348,7 +348,7 @@ on_command {
    }
    : match "score _"  {
       : if (in_tutorial) {
-         : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_score + "<#ff0>>." )} ;
+         : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#ff0>>." )} ;
       }
       : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
       : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of " + max_bonus_score + "." )} ;
