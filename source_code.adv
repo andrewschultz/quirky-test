@@ -76,14 +76,13 @@ subroutines {
       }
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
-   : press_any_key ;
-   : clear_screen;
    : print "Submitted for the 2025 TALP competition." ;
    : press_any_key ;
    : if (footnotes_available) {
      : print "Because you went through once, footnotes are now available.";
-     : clear_screen;
+     : press_any_key ;
      }
+  : clear_screen ;
    }
    debug_commands : subroutine {
       : match "wingame _"  {
