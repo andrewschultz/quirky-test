@@ -37,6 +37,7 @@ booleans {
    in_debug: boolean "false" ;
    ## tutorial booleans
    in_tutorial: boolean "false" ;
+   tutorial_about_done : boolean "false" ;
    tutorial_x_me_done : boolean "false" ;
    tutorial_x_me_cued : boolean "false" ;
 
@@ -113,6 +114,11 @@ subroutines {
          : print {( tutorial_x_me_cued ? "One convention of text adventures is that you want to examine yourself first, to give clues about who you are and what you're doing here. <X ME<#0f0>> will do this." : "<X ME<#0f0>> should be your first command." )} ;
          : set_true "tutorial_x_me_cued" ;
       }
+   }
+   meta_about : subroutine {
+      : print {( qt + " was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." )} ;
+      : print "You can find specific thanks in the <THANKS<#f80>> command." ;
+      : set_true "tutorial_about_done" ;
    }
    verb_list : subroutine {
       : print "The standard list of verbs works here." ;
@@ -218,6 +224,9 @@ on_command {
    }
    : match "verb _;verbs _" {
       : gosub "verb_list" ;
+   }
+   : match "about _" {
+      : gosub "meta_about" ;
    }
    : match "drop _" {
       : print "While classic text adventures often required the player to use DROP due to inventory limits, this is often regarded as needless fiddling today. Text adventures often take steps to keep the player's inventory manageable so they can focus on puzzles, getting rid of items that are no longer necessary.";
