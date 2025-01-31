@@ -43,6 +43,8 @@ booleans {
    tutorial_x_me_done : boolean "false" ;
    tutorial_x_me_cued : boolean "false" ;
 
+   tutorial_done: boolean "false" ;
+
    ## parser shortcut booleans
    look_warn: boolean "false" ;
    examine_warn: boolean "false" ;
@@ -126,6 +128,11 @@ subroutines {
          : print {( tutorial_x_me_cued ? "One convention of text adventures is that you want to examine yourself first, to give clues about who you are and what you're doing here. <X ME<#0f0>> will do this." : "<X ME<#0f0>> should be your first command." )} ;
          : set_true "tutorial_x_me_cued" ;
       }
+   }
+   tutorial_complete : subroutine {
+      : print "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use HINT or HELP or HINTS.";
+      : set_true "tutorial_done";
+      : set_false "in_tutorial";
    }
    meta_about : subroutine {
       : print {( qt + " was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." )} ;
@@ -258,6 +265,13 @@ on_command {
          : print "You find something called Ooh, Task to Ask." ;
          : gosub "add_point";
       }
+   }
+   : match "x ooh;x task;x task;x ask" {
+      : if (is_carried "ooh_task") {
+         : print "It is a request to find the <Rare-Thing-There Ring<#f80>>." ;
+         : set_true "tutorial_x_ask_done";
+         : gosub "tutorial_complete" ;
+         }
    }
    : match "score _"  {
       : if (in_tutorial) {
