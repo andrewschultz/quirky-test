@@ -244,11 +244,11 @@ themes {
       }
       system_messages {
 
-	ask_new_game                                   = Would you like to restart Quirky Test?
-	ask_quit                                       = Do you wish to quit Quirky Test?
-	post_quit = I hope you enjoyed the experience. Pressing any key will restart the game.
-	you_cant_go_that_direction                     = There's no exit that way. EXITS will show which there are.
-	unknown_verb                                   = Nothing comes up from that. <VERBS<#f80>> gives a list of what you need, though there are ones to guess, too.
+   ask_new_game                                   = Would you like to restart {qt}?
+   ask_quit                                       = Do you wish to quit {qt}?
+   post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
+   you_cant_go_that_direction                     = There's no exit that way. <EXITS<#f80>> will show which there are.
+   unknown_verb                                   = Nothing comes up from that. <VERBS<#f80>> gives a list of basic standard verbs, though you will have a few to guess based on rules.
    }
       }
    }
