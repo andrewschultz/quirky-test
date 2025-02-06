@@ -181,12 +181,13 @@ subroutines {
          : print {( tut + "The last thing to do is to <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as that's a reserved word." )} ;
          : return;
       }
-      : print "I should have had something to do for the tutorial. This is a bug, but you're done.";
-   }
-   tutorial_complete : subroutine {
-      : print "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use HINT or HELP or HINTS.";
-      : set_true "tutorial_done";
-      : set_false "in_tutorial";
+      : if (tutorial_x_ask_done) {
+         : print "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use HINT or HELP or HINTS.";
+         : set_true "tutorial_done";
+         : set_false "in_tutorial";
+         : return ;
+      }
+      : print "I should have had something to do for the tutorial. This is a bug, but not a game-breaker. It probably means you're done with the tutorial.";
    }
    meta_about : subroutine {
       : print {( qt + " was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." )} ;
