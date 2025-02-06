@@ -72,7 +72,7 @@ strings {
 ## Objects with vocabulary
 
 objects {
-  ooh_task : object "Ooh Task to Ask ('Ooh Task')" ;
+  ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
 }
 
 vocabulary {
@@ -356,11 +356,11 @@ on_command {
       }
    }
    : match "x ooh;x task;x task;x ask" {
-      : if (is_carried "ooh_task") {
-         : print "It is a request to find the <Rare-Thing-There Ring<#f80>>." ;
-         : set_true "tutorial_x_ask_done";
-         : gosub "tutorial_complete" ;
+      : if (is_carried "ooh_task" && !tutorial_x_ask_done) {
+         : mask {
+            : set_true "tutorial_x_ask_done";
          }
+      }
    }
    : match "score _"  {
       : if (in_tutorial) {
