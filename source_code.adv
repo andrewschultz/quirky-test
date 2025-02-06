@@ -34,6 +34,7 @@ booleans {
    look_warn: boolean "false" ;
    examine_warn: boolean "false" ;
    inventory_warn : boolean "false" ;
+   long_word_warn : boolean "false" ;
 }
 
 integers {
@@ -128,7 +129,7 @@ subroutines {
      : print "Because you went through once, footnotes are now available.";
      : press_any_key ;
      }
-  : clear_screen ;
+   : clear_screen ;
    }
    tutorial_choice : subroutine {
    : ask_bool { ##? how do we put QT in here?
@@ -140,6 +141,12 @@ subroutines {
       : print {( "Note you can change in and out of tutorial mode with <TUTORIAL<#00f>> " + yn + " before you have completed the first few tasks, though this may break narrative continuity." )} ;
       : press_any_key ;
       : clear_screen ;
+   }
+   long_words_note : subroutine {
+      : if (!long_word_warn) {
+      : print "<ALSO<#f0f>>: in general, longer words will work, but parser conventions have evolved to help save the player keystrokes." ;
+      : set_true "long_word_warn" ;
+      }
    }
    debug_commands : subroutine {
       : match "wingame _"  {
@@ -297,6 +304,7 @@ on_pre_command {
       : match "examine *;look *" {
          : if (original "verb" == "examine") {
             : print {( otn + " to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." )} ;
+            : gosub "long_words_note" ;
             : set_true "examine_warn" ;
             : press_any_key ;
          }
@@ -306,6 +314,7 @@ on_pre_command {
       : match "look -" {
          : if (original "verb" == "look") {
             : print {( otn + " you only need to type <L<#0f0>> to look." )} ;
+            : gosub "long_words_note" ;
             : set_true "look_warn" ;
             : press_any_key ;
             : redescribe ;
@@ -316,6 +325,7 @@ on_pre_command {
       : match "inventory _" {
          : if (original "verb" == "inventory") {
             : print {( otn + " you only need to type <I<#0f0>> to take inventory." )} ;
+            : gosub "long_words_note" ;
             : set_true "inventory_warn" ;
             : press_any_key ;
          }
