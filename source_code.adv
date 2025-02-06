@@ -292,21 +292,29 @@ on_describe {
 
 ## Test VERB NOUN that the player types and executes conditional actions
 
-on_command {
+on_pre_command {
    : if (!examine_warn) {
-      : match "examine _" {
-         : print "One-time note: you only need to type <X<#0f0>> to examine.";
-         : set_true "examine_warn" ;
-         : press_any_key ;
+      : match "examine *;look *" {
+         : if (original "verb" == "examine" && !examine_warn) {
+            : print {( xwarn )} ;
+            : set_true "examine_warn" ;
+            : press_any_key ;
+         }
       }
    }
    : if (!look_warn) {
-      : match "look _" {
-         : print "One-time note: you only need to type <L<#0f0>> to look.";
-         : set_true "look_warn" ;
-         : redescribe ;
+      : match "look -" {
+         : if (original "verb" == "look" && !look_warn) {
+            : print "One-time note: you only need to type <L<#0f0>> to look.";
+            : set_true "look_warn" ;
+            : press_any_key ;
+            : redescribe ;
+         }
       }
    }
+}
+
+on_command {
    : match "salesmen _"  {
       : if (is_at "nameless_lameness") {
          : print "Good guess, if this were an anagram game." ;
