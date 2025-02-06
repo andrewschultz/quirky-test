@@ -33,6 +33,7 @@ booleans {
    ## parser shortcut booleans
    look_warn: boolean "false" ;
    examine_warn: boolean "false" ;
+   inventory_warn : boolean "false" ;
 }
 
 integers {
@@ -295,7 +296,7 @@ on_describe {
 on_pre_command {
    : if (!examine_warn) {
       : match "examine *;look *" {
-         : if (original "verb" == "examine" && !examine_warn) {
+         : if (original "verb" == "examine") {
             : print {( xwarn )} ;
             : set_true "examine_warn" ;
             : press_any_key ;
@@ -304,11 +305,20 @@ on_pre_command {
    }
    : if (!look_warn) {
       : match "look -" {
-         : if (original "verb" == "look" && !look_warn) {
+         : if (original "verb" == "look") {
             : print "One-time note: you only need to type <L<#0f0>> to look.";
             : set_true "look_warn" ;
             : press_any_key ;
             : redescribe ;
+         }
+      }
+   }
+   : if (!inventory_warn) {
+      : match "inventory _" {
+         : if (original "verb" == "inventory") {
+            : print "One-time note: you only need to type <I<#0f0>> to take inventory.";
+            : set_true "inventory_warn" ;
+            : press_any_key ;
          }
       }
    }
