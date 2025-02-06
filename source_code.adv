@@ -68,8 +68,7 @@ strings {
 
    # tutorial stuff in purple
    tut : string "<TUTORIAL NOTE:<#f0f>> " ;
-
-   xwarn : string "One-time note: to save keystrokes, you only need to type <X<#0f0>> (noun) to examine. <EXAMINE<#0f0>> and <LOOK<#0f0>> will work, but parser conventions over the years have allowed for shortcuts." ;
+   otn : string "<ONE-TIME NOTE:<#f0f>> " ;
 
    ## dynamic strings
 
@@ -297,7 +296,7 @@ on_pre_command {
    : if (!examine_warn) {
       : match "examine *;look *" {
          : if (original "verb" == "examine") {
-            : print {( xwarn )} ;
+            : print {( otn + " to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." )} ;
             : set_true "examine_warn" ;
             : press_any_key ;
          }
@@ -306,7 +305,7 @@ on_pre_command {
    : if (!look_warn) {
       : match "look -" {
          : if (original "verb" == "look") {
-            : print "One-time note: you only need to type <L<#0f0>> to look.";
+            : print {( otn + " you only need to type <L<#0f0>> to look." )} ;
             : set_true "look_warn" ;
             : press_any_key ;
             : redescribe ;
@@ -316,7 +315,7 @@ on_pre_command {
    : if (!inventory_warn) {
       : match "inventory _" {
          : if (original "verb" == "inventory") {
-            : print "One-time note: you only need to type <I<#0f0>> to take inventory.";
+            : print {( otn + " you only need to type <I<#0f0>> to take inventory." )} ;
             : set_true "inventory_warn" ;
             : press_any_key ;
          }
