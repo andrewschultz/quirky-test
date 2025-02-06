@@ -325,10 +325,10 @@ on_command {
          : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
       }
       : else {
-	     : print {( point_first_base ? "You snicker at what you've found, but then figure you better not do so to Thor's face." : "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" )} ;
-		 : set_true "bonus_point_theory_bore" ;
-		 : gosub "add_bonus" ;
-	 }
+        : print {( point_first_base ? "You snicker at what you've found, but then figure you better not do so to Thor's face." : "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" )} ;
+       : set_true "bonus_point_theory_bore" ;
+       : gosub "add_bonus" ;
+    }
    }
    : match "turkey quest" {
       : if (bonus_point_turkey_quest) {
@@ -390,6 +390,9 @@ on_command {
       : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of " + max_bonus_score + "." )} ;
       }
    : match "option _;options _;opts _;opt _" {
+      : gosub "options_list";
+   }
+   : match "notify _" {
       : gosub "options_notify";
    }
    : match "meta _" {
