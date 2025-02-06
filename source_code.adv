@@ -50,10 +50,16 @@ strings {
    ## short stubs
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
-   verbs : string "<VERBS<#f80>>" ;
+   exits : string "<EXITS<#f80>>" ;
+   sco : string "<SCORE<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
+   verbs : string "<VERBS<#f80>>" ;
+
+   # yes-or-no
+   yn : string "<YES<#f88>> or <NO<#f88>>" ;
 
    # options in blue 00f
+   notif : string "<NOTIFY<#00f>>" ;
 
    # regular commands in green
    xme : string "<X ME<#ff0>>" ;
@@ -62,11 +68,13 @@ strings {
    # tutorial stuff in purple
    tut : string "<TUTORIAL NOTE:<#f0f>> " ;
 
+   xwarn : string "One-time note: to save keystrokes, you only need to type <X<#0f0>> (noun) to examine. <EXAMINE<#0f0>> and <LOOK<#0f0>> will work, but parser conventions over the years have allowed for shortcuts." ;
+
    ## dynamic strings
 
    my_score : dynamic_string {( score + "/" + max_score )}
-   bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and SCORE will let you know your progress." : "" )}
-   notify_string : string "You need to specify <NOTIFY YES<#00f>> or <NOTIFY NO<#00f>> for score notification changes.";
+   bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and " + sco + " will let you know your progress." : "" )}
+   notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
 }
 
 ## Objects with vocabulary
@@ -129,7 +137,7 @@ subroutines {
       no_answer  = No, I don't need the tutorial.
       var        = in_tutorial
       }
-      : print "Note you can change in and out of tutorial mode with <TUTORIAL YES<#00f>> and <TUTORIAL NO<#00f>> before you have completed the first few tasks, though this may break narrative continuity.";
+      : print {( "Note you can change in and out of tutorial mode with <TUTORIAL<#00f>> " + yn + " before you have completed the first few tasks, though this may break narrative continuity." )} ;
       : press_any_key ;
       : clear_screen ;
    }
@@ -139,6 +147,9 @@ subroutines {
          : set_true "footnotes_available";
          : win_game ;
       }
+   }
+   options_list : subroutine {
+      : print {( "The only current option is " + notif + ", for score notification." )};
    }
    options_notify: subroutine {
       : match "notify yes;notify y" {
@@ -169,7 +180,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_additional_metaverb_done) {
-         : print {( tut + "The " + abt + " and " + verbs + " meta-commands tipped off additional other meta-commands. You should try one now." )};
+         : print {( tut + "The " + abt + " and " + verbs + " meta-commands tipped off additional other meta-commands that may help you get your bearings. You should try one now." )};
          : return ;
       }
       : if (!tutorial_x_me_done) {
@@ -247,8 +258,8 @@ themes {
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
-   you_cant_go_that_direction                     = There's no exit that way. <EXITS<#f80>> will show which there are.
-   unknown_verb                                   = Nothing comes up from that. <VERBS<#f80>> gives a list of basic standard verbs, though you will have a few to guess based on rules.
+   you_cant_go_that_direction                     = There's no exit that way. {exits} will show which there are.
+   unknown_verb                                   = Nothing comes up from that. {verbs} gives a list of basic standard verbs, though you will have a few to guess based on rules.
    }
       }
    }
