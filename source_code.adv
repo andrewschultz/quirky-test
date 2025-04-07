@@ -76,12 +76,17 @@ strings {
    my_score : dynamic_string {( score + "/" + max_score )}
    bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and " + sco + " will let you know your progress." : "" )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
+
+   ## location strings
+   burst_face_after : string "You're at first base now." ;
+   burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 }
 
 ## Objects with vocabulary
 
 objects {
   ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
+  beery_thor : object "Beery Thor" msg="Big and strong.";
 }
 
 vocabulary {
@@ -93,6 +98,7 @@ vocabulary {
 locations {
    nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" ;
    bold_hub  : location "You are in a bold hub." ;
+   burst_face : location "{ point_first_base ? burst_face_before : burst_face_after }" ;
 }
 
 connections {
@@ -400,6 +406,17 @@ on_command {
             : set_true "tutorial_x_ask_done";
          }
       }
+   }
+   : match "burst face" {
+      : if (is_at "burst_face") {
+         : if (point_first_base) {
+            : print "Already changed things." ;
+			: return ;
+         }
+		 : set_true "point_first_base" ;
+		 : create "beery_thor" ;
+		 : gosub "add_point" ;
+	  }
    }
    : match "score _"  {
       : if (in_tutorial) {
