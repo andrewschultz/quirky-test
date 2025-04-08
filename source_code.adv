@@ -154,7 +154,7 @@ subroutines {
       : if (score_notify) {
          : print "<You just found a bonus point!<6>>" ;
          : if (bonus_score == 0) {
-             : print {( otn + "There are a few of these in " + qt + ", and " + score + " will let you know your progress there." )};
+             : print {( otn + "There are a few of these in " + qt + ", and " + sco + " will let you know your progress there." )};
          }
       }
       : increment "bonus_score";
@@ -229,7 +229,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_x_me_done) {
-         : print {( tut + (tutorial_x_me_cued ? xme + "is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " should be your first in-world command.")  )} ;
+         : print {( tut + (tutorial_x_me_cued ? xme + " is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " should be your first in-world command.")  )} ;
          : set_true "tutorial_x_me_cued" ;
          : return ;
       }
