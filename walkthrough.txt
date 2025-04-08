@@ -1,0 +1,57 @@
+The tutorial is mainly there for people to be acquainted with meta-commands they may not be aware of. There's a puzzle, too, but it's solvable by trial and error.
+
+At first, you are given a way to learn about the game's basics.
+
+> ABOUT
+
+This opens up the THANKS and VERBS commands. They can be done in any order, but the tutorial says to try VERBS first.
+
+> VERBS
+
+This opens up a more meta-verbs.
+
+Here any one of META, THANKS and OPTIONS will get you to the next step of the tutorial.
+
+> THANKS
+
+After this bit, the tutorial says X ME is one of the first commands to use. So why not do so?
+
+> X ME
+
+Hmm! You find something on you. While you know what it is, the tutorial wants you to be comfortable with INVENTORY.
+
+> I
+
+We should now examine what we've gotten.
+
+> X TASK
+
+This provides a clue. The veering choice cheering voice is out there. But what is it saying? The tutorial says, use your senses..
+
+> LISTEN
+
+"Whoa! Guest!"
+
+You may be able to brute-force which way to go, since there are only eight directions.
+
+There is the Rare-Thing-There Ring.
+The initial location is Nameless Lameness.
+The paper's name is Ooh, Task to Ask.
+
+How would Whoa Guest fit in this?
+
+With GO WEST.
+
+This brings you to the burst face. It's a starting point, but ... well, still a bit more to do.
+
+> FIRST BASE
+
+Now Beery Thor says there is a way out.
+
+> TALK THOR
+
+"Hold, bub," he says. Where is he "protecting" you from?
+
+> BOLD HUB
+
+Now the game opens up a bit.
