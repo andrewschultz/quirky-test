@@ -310,6 +310,13 @@ on_startup {
 ## on_tick is primarily used for the tutorial
 
 on_tick {
+   : if (is_at "nameless_lameness" && is_carried "ooh_task" && !tutorial_x_ask_done && noun1_is "task" ) {
+      : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>." ;
+      : set_true "tutorial_x_ask_done" ;
+   }
+   : else_if (is_at "nameless_lameness" && is_carried "ooh_task" && tutorial_x_ask_done && !is_beside "cheering_voice" ) {
+      : print "But it's no longer silent. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>.";
+   }
    : if (in_tutorial) {
       : gosub "tutorial_progress" ;
    }
