@@ -54,6 +54,8 @@ strings {
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
    exits : string "<EXITS<#f80>>" ;
+   exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice reall means." :
+      "There's no exit that way. {exits} will show which there are." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
@@ -312,7 +314,7 @@ themes {
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
-   you_cant_go_that_direction                     = There's no exit that way. {exits} will show which there are.
+   you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = Nothing comes up from that. {verbs} gives a list of basic standard verbs, though you will have a few to guess based on rules.
    }
       }
