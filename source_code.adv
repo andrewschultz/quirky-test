@@ -77,7 +77,6 @@ strings {
    ## dynamic strings
 
    my_score : dynamic_string {( score + "/" + max_score )}
-   bonus_alert : dynamic_string {( bonus_score == 0 ? " There are a few in the game, and " + sco + " will let you know your progress." : "" )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
 
    ## location strings
@@ -135,7 +134,10 @@ subroutines {
       }
    add_bonus : subroutine {
       : if (score_notify) {
-         : print {( "<" + "You just found a bonus point!" + bonus_alert + "<6>>" )};
+         : print "<You just found a bonus point!<6>>" ;
+         : if (bonus_score == 0) {
+             : print {( otn + "There are a few of these in " + qt + ", and " + score + " will let you know your progress there." )};
+         }
       }
       : increment "bonus_score";
       }
