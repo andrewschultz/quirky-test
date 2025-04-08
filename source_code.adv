@@ -274,6 +274,9 @@ themes {
          : header_text;
          : dynamic_text "my_score" ;
       }
+      theme_settings {
+         parser_delay  = 0
+      }
       colors {
          status_bar_pen   = 15
          status_bar_paper = 9
