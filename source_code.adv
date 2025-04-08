@@ -15,6 +15,7 @@ booleans {
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
+   thor_talk: boolean "false" ;
 
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
@@ -106,8 +107,25 @@ locations {
       }
       }
    };
-   bold_hub  : location "You are in a bold hub." ;
-   burst_face : location "{ point_first_base ? burst_face_after : burst_face_before }" ;
+   burst_face : location "{ point_first_base ? burst_face_after : burst_face_before }" {
+      on_command {
+         : match "talk _;talk thor"  {
+            : print "\"Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"";
+            : set_true "thor_talk" ;
+         }
+         : match "bold hub" {
+            : if (thor_talk) {
+               : print "\"Yes, that's where we'll go next.\"";
+               : gosub "add_point" ;
+               : press_any_key ;
+               : create "beery_thor" target = "bold_hub" ;
+               : goto "bold_hub";
+               : redescribe ;
+            }
+         }
+      };
+   };
+   bold_hub  : location "You are in a bold hub. You can go in pretty much any direction." ;
 }
 
 connections {
