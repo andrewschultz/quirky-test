@@ -94,7 +94,7 @@ objects {
 }
 
 vocabulary {
-   : noun      / aliases = [task, ask]
+   : noun      / aliases = [ooh, task, ask]
 }
 
 ## Locations with connections
@@ -108,7 +108,7 @@ locations {
       }
    };
    bold_hub  : location "You are in a bold hub." ;
-   burst_face : location "{ point_first_base ? burst_face_before : burst_face_after }" ;
+   burst_face : location "{ point_first_base ? burst_face_after : burst_face_before }" ;
 }
 
 connections {
@@ -364,7 +364,7 @@ on_command {
          }
       }
    : match "theory bore" {
-      : if (bonus_point_theory_bore) {
+      : if (is_beside "beery_thor" && bonus_point_theory_bore) {
          : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
       }
       : else {
@@ -425,7 +425,7 @@ on_command {
          }
       }
    }
-   : match "burst face" {
+   : match "first base" {
       : if (is_at "burst_face") {
          : if (point_first_base) {
             : print "Already changed things." ;
