@@ -389,7 +389,7 @@ on_command {
    }
    : match "turkey quest" {
       : if (bonus_point_turkey_quest) {
-         : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke." ;
+         : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke might make things a bit stale." ;
          }
       : else {
          : print "Ah! Yes, you are in the spirit of things, here. Have a bonus point." ;
@@ -421,21 +421,37 @@ on_command {
    : match "drop _" {
       : print "While classic text adventures often required the player to use <DROP<#0f0>> due to inventory limits, this is often regarded as needless fiddling today. Text adventures often take steps to keep the player's inventory manageable so they can focus on puzzles, getting rid of items that are no longer necessary.";
    }
+   : match "listen _; hear _" {
+      : if (is_at "nameless_lameness" && tutorial_x_ask_done) {
+         : print "The Veering Choice Cheering Voice greets you, sort of, with a \"Whoa! Guest!\"" ;
+         : create "cheering_voice" ;
+      }
+      : else {
+            : print "You don't hear anything right now." ;
+      }
+   }
+   : match "go west" {
+      : print "1";
+      : if (is_beside "cheering_voice") {
+         : print "Yes, the voice says, that is the way!" ;
+         : goto "burst_face" ;
+      }
+   }
    : match "x me" {
       : if (is_carried "ooh_task") {
          : print "Got what you need." ;
       }
       : else {
          : pocket "ooh_task" ;
-         : print "You find something called Ooh, Task to Ask." ;
+         : print "You search yourself, wondering if you forgot something, and hoping something will turn up. And guess what? There's something called <Ooh, Task to Ask<#00f>>." ;
+         : print "You're not sure who slipped it in there, or how, but all the same, you're glad you might have some direction, now." ;
          : gosub "add_point";
          : set_true "tutorial_x_me_done";
       }
    }
-   : match "x ooh;x task;x task;x ask" {
+   : match "x ooh;x task;x ask" {
       : if (is_carried "ooh_task" && !tutorial_x_ask_done) {
          : mask {
-            : set_true "tutorial_x_ask_done";
          }
       }
    }
@@ -455,7 +471,7 @@ on_command {
          : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#ff0>>." )} ;
       }
       : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
-      : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of " + max_bonus_score + "." )} ;
+      : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )} ;
       }
    : match "option _;options _;opts _;opt _" {
       : gosub "options_list";
