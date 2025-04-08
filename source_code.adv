@@ -53,6 +53,7 @@ strings {
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
    exits : string "<EXITS<#f80>>" ;
+   meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    verbs : string "<VERBS<#f80>>" ;
@@ -63,9 +64,11 @@ strings {
    # options in blue 00f
    notif : string "<NOTIFY<#00f>>" ;
 
-   # regular commands in green
-   xme : string "<X ME<#ff0>>" ;
+   # game title
    qt : string "<Quirky Test<#ff0>>" ;
+
+   # regular commands in green
+   xme : string "<X ME<#0f0>>" ;
 
    # tutorial stuff in purple
    tut : string "<TUTORIAL NOTE:<#f0f>> " ;
