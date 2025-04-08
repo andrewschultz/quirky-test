@@ -121,9 +121,11 @@ connections {
 }
 
 barriers {
-
+   block_disorientate : block {
+      block_when_not  = tutorial_x_ask_done
+      message         = In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first.
+   }
 }
-
 subroutines {
    add_point : subroutine {
       : if (score_notify) {
