@@ -332,10 +332,12 @@ on_describe {
 on_pre_command {
    : match "west _" {
       : if (is_beside "cheering_voice") {
-      : print "The voice says 'Yes, yes. That is the way.'";
-      : goto "burst_face" ;
-      : redescribe ;
       : gosub "add_point" ;
+      : print "The voice says \"Yes, yes. That is the way.\" The fogginess clears a bit, and as go west, a large, strong man waves to you. \"I'm Beery Thor. Nice to meet you. Got a few things to share with you. Just TALK to me...";
+      : press_any_key;
+      : goto "burst_face" ;
+      : create "beery_thor" ;
+      : redescribe ;
       }
    }
    : if (!examine_warn) {
