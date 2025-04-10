@@ -156,6 +156,17 @@ locations {
             : print "\"Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"";
             : set_true "thor_talk" ;
          }
+         : match "first base" {
+            : if (is_at "burst_face") {
+               : if (point_first_base) {
+                  : print "Already changed things." ;
+               : return ;
+               }
+            : set_true "point_first_base" ;
+            : create "beery_thor" ;
+            : gosub "add_point" ;
+            }
+         }
          : match "bold hub" {
             : if (thor_talk) {
                : print "\"Yes, that's where we'll go next.\"";
@@ -517,17 +528,6 @@ on_command {
          : mask {
          }
       }
-   }
-   : match "first base" {
-      : if (is_at "burst_face") {
-         : if (point_first_base) {
-            : print "Already changed things." ;
-			: return ;
-         }
-		 : set_true "point_first_base" ;
-		 : create "beery_thor" ;
-		 : gosub "add_point" ;
-	  }
    }
    : match "score _"  {
       : if (in_tutorial) {
