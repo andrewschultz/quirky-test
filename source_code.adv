@@ -20,6 +20,7 @@ booleans {
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
    bonus_point_theory_bore : boolean "false" ;
+   bonus_point_death_sentence : boolean "false" ;
 
    ## tutorial booleans
    in_tutorial: boolean "false" ;
@@ -44,7 +45,7 @@ integers {
    score : integer "0" ;
    max_score : integer "1" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "2" ;
+   max_bonus_score : integer "3" ;
 }
 
 ## strings
@@ -94,9 +95,15 @@ strings {
 ## Objects with vocabulary
 
 objects {
+  # in inventory
   ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
+
+  # scenery
   cheering_voice : scenery "cheering voice" msg="It gives a cheery \"Whoa! Guest!\"" conspicuous="false";
-  beery_thor : object "Beery Thor" msg="Big and strong.";
+  seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="bold_hub" conspicuous="false";
+
+  # NPC(s)
+  beery_thor : object "Beery Thor" msg="Big and strong and friendly.";
 }
 
 vocabulary {
@@ -131,7 +138,18 @@ locations {
          }
       };
    };
-   bold_hub  : location "You are in a bold hub. You can go in pretty much any direction." ;
+   bold_hub  : location "You are in a bold hub. You can go in pretty much any direction." {
+      on_command {
+         : if (is_beside "seth_dentons") {
+            : match "death sentence" {
+               : print "\"Yes, that's it. This is one of those traps where you're given adequate warning that going somewhere might kill you.\"";
+               : set_true "bonus_point_death_sentence" ;
+               : destroy "seth_dentons" ;
+               : gosub "add_bonus" ;
+            }
+         }
+      }
+   };
 }
 
 connections {
