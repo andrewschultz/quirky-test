@@ -126,7 +126,10 @@ locations {
             }
          }
          : match "x me" {
-            : if (is_carried "ooh_task") {
+            : if (in_tutorial && (!tutorial_about_done || !tutorial_verbs_done || !tutorial_additional_metaverb_done)) {
+               : print {( "While " + xme + " is a useful command, and one you'll be using in this tutorial, we're a bit on rails. There are meta-commands to acquaint yourself with first." )};
+            }
+            : else_if (is_carried "ooh_task") {
                : print "Got what you need." ;
             }
             : else {
