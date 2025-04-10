@@ -28,6 +28,8 @@ booleans {
    tutorial_verbs_done : boolean "false" ;
    tutorial_x_me_done : boolean "false" ;
    tutorial_x_me_cued : boolean "false" ;
+   tutorial_inventory_done : boolean "false" ;
+   tutorial_inventory_cued : boolean "false" ;
    tutorial_item_taken: boolean "false" ;
    tutorial_additional_metaverb_done : boolean "false" ;
    tutorial_x_ask_done : boolean "false" ;
@@ -259,6 +261,10 @@ subroutines {
          : set_true "tutorial_x_me_cued" ;
          : return ;
       }
+      : if (!tutorial_inventory_done) {
+         : print {( tcue + "Now you examined yourself with " + xme + ", another common command is to take inventory to verify you are carrying the item you found. This can be shortened with <I<#f80>>." )} ;
+         : return;
+      }
       : if (!tutorial_x_ask_done) {
          : print {( tut + "Now that you have found something, the last thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as that's a reserved word." )} ;
          : return;
@@ -354,6 +360,9 @@ on_startup {
 ## on_tick is primarily used for the tutorial
 
 on_tick {
+   : if (is_at "nameless_lameness" && verb_is "i") {
+      : set_true "tutorial_inventory_done" ;
+   }
    : if (is_at "nameless_lameness" && is_carried "ooh_task" && !tutorial_x_ask_done && noun1_is "task" ) {
       : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can use one of your senses and pick up a clue." ;
       : set_true "tutorial_x_ask_done" ;
