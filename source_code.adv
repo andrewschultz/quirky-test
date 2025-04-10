@@ -45,7 +45,7 @@ integers {
    tutorial_score : integer "0" ;
    max_tutorial_score : integer "1";
    score : integer "0" ;
-   max_score : integer "1" ;
+   max_score : integer "4" ;
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
 }
@@ -57,7 +57,8 @@ strings {
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
    exits : string "<EXITS<#f80>>" ;
-   exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice reall means." :
+   exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
+      is_at "nameless_lameness" ? "You don't want to wandering off without any direction, but maybe that voice could offer a clue." :
       "There's no exit that way. {exits} will show which there are." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
@@ -484,7 +485,7 @@ on_command {
    }
    : match "listen _; hear _" {
       : if (is_at "nameless_lameness" && tutorial_x_ask_done) {
-         : print "The Veering Choice Cheering Voice greets you, sort of, with a \"Whoa! Guest!\"" ;
+         : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a \"Whoa! Guest!\" You'd like to see where it's from. But which direction is that?" ;
          : create "cheering_voice" ;
       }
       : else {
