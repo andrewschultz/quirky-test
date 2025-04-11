@@ -217,19 +217,55 @@ locations {
       }
    };
 
-   tricky_quips: location "{sub_hub}";
-   quickie_trips: location "{sub_hub}";
+   tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
+   quickie_trips: location "QUICKIE TRIPS{sub_hub}";
+
+   tq_n : location "Unwritten.";
+   tq_ne : location "Unwritten.";
+   tq_e : location "Unwritten.";
+   tq_se : location "Unwritten.";
+   tq_sw : location "Unwritten.";
+   tq_w : location "Unwritten.";
+   tq_nw : location "Unwritten.";
+
+   qt_n : location "Unwritten.";
+   qt_ne : location "Unwritten.";
+   qt_e : location "Unwritten.";
+   qt_se : location "Unwritten.";
+   qt_sw : location "Unwritten.";
+   qt_w : location "Unwritten.";
+   qt_nw : location "Unwritten.";
+};
+
+# connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
 
 connections {
 
    from, direction, to = [
 
+      ## two-way stuff first
+      tricky_quips, north, tq_n,
+      tricky_quips, northeast, tq_ne,
+      tricky_quips, east, tq_e,
+      tricky_quips, southeast, tq_se,
+      tricky_quips, southwest, tq_sw,
+      tricky_quips, west, tq_w,
+      tricky_quips, northwest, tq_nw,
+
+      quickie_trips, north, qt_n,
+      quickie_trips, northeast, qt_ne,
+      quickie_trips, east, qt_e,
+      quickie_trips, southeast, qt_se,
+      quickie_trips, southwest, qt_sw,
+      quickie_trips, west, qt_w,
+      quickie_trips, northwest, qt_nw,
+
       ## one-way stuff below
 
       bold_hub, west_oneway, quickie_trips,
-      quickie_trips, down_oneway, bold_hub,
+      quickie_trips, south_oneway, bold_hub,
       bold_hub, east_oneway, tricky_quips,
-      tricky_quips, down_oneway, bold_hub,
+      tricky_quips, south_oneway, bold_hub,
       tricky_quips, up_oneway, quickie_trips,
       quickie_trips, up_oneway, tricky_quips
    ]
