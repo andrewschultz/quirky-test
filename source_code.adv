@@ -58,6 +58,7 @@ strings {
    abt : string "<ABOUT<#f80>>" ;
    exits : string "<EXITS<#f80>>" ;
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
+      tutorial_x_ask_done ? "In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first." :
       is_at "nameless_lameness" ? "You don't want to wandering off without any direction, but maybe that voice could offer a clue." :
       "There's no exit that way. {exits} will show which there are." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
@@ -111,7 +112,8 @@ objects {
 }
 
 vocabulary {
-   : noun      / aliases = [ooh, task, ask]
+   : noun / aliases = [ooh, task, ask]
+   : verb / aliases = [tut, tutorial]
 }
 
 ## Locations with connections
@@ -223,12 +225,6 @@ connections {
    ]
 }
 
-barriers {
-   block_disorientate : block {
-      block_when_not  = tutorial_x_ask_done
-      message         = In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first.
-   }
-}
 subroutines {
    add_point : subroutine {
       : if (score_notify) {
@@ -301,6 +297,25 @@ subroutines {
       }
       : match "notify *" {
          : print {( "The argument after <NOTIFY<#0f0>> wasn't recognized. " + notify_string )};
+      }
+   }
+   options_tutorial: subroutine {
+      : match "tutorial yes;tutorial y" {
+         : print "Score notify is now on.";
+         : set_true "score_notify";
+         : done ;
+      }
+      : match "tutorial no;tutorial n" {
+         : print "Tutorial mode is now off.";
+         : set_false "score_notify";
+         : done ;
+      }
+      : match "tutorial -" {
+         : print {( "Toggling <TUTORIAL<#0f0>> without an argument is not supported. " + notify_string )};
+         : done ;
+      }
+      : match "tutorial *" {
+         : print {( "The argument after <TUTORIAL<#0f0>> wasn't recognized. " + notify_string )};
       }
    }
    tutorial_progress : subroutine {
@@ -559,6 +574,9 @@ on_command {
    }
    : match "notify _" {
       : gosub "options_notify";
+   }
+   : match "tutorial _" {
+      : gosub "options_tutorial";
    }
    : match "meta _" {
       : gosub "verb_meta_list";
