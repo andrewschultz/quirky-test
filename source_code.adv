@@ -12,10 +12,10 @@ booleans {
    score_notify: boolean "true" ;
    tutorial_done: boolean "false" ;
    footnotes_available : boolean "false" scope="survivor";
+   talked_to_thor: boolean "false";
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
-   thor_talk: boolean "false" ;
 
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
@@ -156,22 +156,33 @@ locations {
    burst_face : location "{ point_first_base ? burst_face_after : burst_face_before }" {
       on_command {
          : match "talk _;talk thor"  {
-            : print "\"Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"";
-            : set_true "thor_talk" ;
+            : if (!talked_to_thor) {
+               : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say Whoa, Guest. What can you do with the burst face?\"";
+               : set_true "talked_to_thor";
+               : if (in_tutorial) {
+                  : print "Congratulations! You've finished the tutorial." ;
+               }
+            }
+            : else {
+               : print {( point_first_base ? "\"Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
+               : set_true "talked_to_thor" ;
+            }
          }
          : match "first base" {
-            : if (is_at "burst_face") {
-               : if (point_first_base) {
-                  : print "Already changed things." ;
+            : if (point_first_base) {
+               : print "Already changed things." ;
                : return ;
-               }
+            } : else_if (!talked_to_thor) {
+               : print "\"That's the right idea, but I'm bigger than you. I'm going to make you talk to me first. Don't worry, I'm interesting. Or I think I am.\"";
+               : return ;
+            }
+            : print "Ah, there we go. That'll make paths clearer.";
             : set_true "point_first_base" ;
             : create "beery_thor" ;
             : gosub "add_point" ;
-            }
          }
          : match "bold hub" {
-            : if (thor_talk) {
+            : if (talked_to_thor) {
                : print "\"Yes, that's where we'll go next.\"";
                : gosub "add_point" ;
                : press_any_key ;
@@ -180,7 +191,7 @@ locations {
                : redescribe ;
             }
          }
-      };
+      }
    };
    bold_hub  : location "You are in a bold hub. You can go in pretty much any direction." {
       on_command {
@@ -299,7 +310,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_x_me_done) {
-         : print {( tcue + (tutorial_x_me_cued ? xme + " is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " should be your first in-world command.")  )} ;
+         : print {( tcue + (tutorial_x_me_cued ? xme + " is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " makes sense as your first in-world command.")  )} ;
          : set_true "tutorial_x_me_cued" ;
          : return ;
       }
@@ -312,7 +323,7 @@ subroutines {
          : return;
       }
       : if (!is_beside "cheering_voice") {
-         : print {( tcue + "sometimes a game will indicate you should use one of your senses." )};
+         : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
          : return;
       }
       : print {( tcue + "the \"Whoa! Guest!\" must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
