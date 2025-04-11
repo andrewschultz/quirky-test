@@ -95,6 +95,8 @@ strings {
    ## location strings
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
+
+   sub_hub: string "Another mini-hub here. You can go up over a hill, down back to the bold hub, or in any of the eight directions." ;
 }
 
 ## Objects with vocabulary
@@ -214,14 +216,22 @@ locations {
          }
       }
    };
-}
+
+   tricky_quips: location "{sub_hub}";
+   quickie_trips: location "{sub_hub}";
 
 connections {
 
-   ## Connects locations together (bidirectional)
-
    from, direction, to = [
-      ## bold_hub,     north, bold_hub
+
+      ## one-way stuff below
+
+      bold_hub, west_oneway, quickie_trips,
+      quickie_trips, down_oneway, bold_hub,
+      bold_hub, east_oneway, tricky_quips,
+      tricky_quips, down_oneway, bold_hub,
+      tricky_quips, up_oneway, quickie_trips,
+      quickie_trips, up_oneway, tricky_quips
    ]
 }
 
