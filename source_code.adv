@@ -119,10 +119,14 @@ vocabulary {
 locations {
    nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" {
       on_command {
+         : if ((verb_is "inventory") && in_tutorial && !tutorial_x_me_done) {
+            : print "Taking inventory is a good thing to do early in a text adventure, but we're not there yet in the tutorial. Once you've found an item, the tutorial will nudge you to do take inventory.";
+         }
          : match "listen _; hear _" {
             : if (tutorial_x_ask_done) {
                : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a \"Whoa! Guest!\" You'd like to see where it's from. But which direction is that?" ;
                : create "cheering_voice" ;
+               : return ;
             }
          }
          : match "x me" {
@@ -150,6 +154,9 @@ locations {
       on_describe {
          : if ( is_beside "cheering_voice") {
             : print "The cheering voice still floats around. You can HEAR it or LISTEN.";
+         }
+         : else_if (is_carried "ooh_task" && tutorial_x_ask_done) {
+            : print "But it's no longer silent. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>.";
          }
       }
    };
@@ -413,15 +420,12 @@ on_startup {
 ## on_tick is primarily used for the tutorial
 
 on_tick {
-   : if (is_at "nameless_lameness" && verb_is "i") {
+   : if (is_at "nameless_lameness" && verb_is "i" && is_carried "ooh_task") {
       : set_true "tutorial_inventory_done" ;
    }
    : if (is_at "nameless_lameness" && is_carried "ooh_task" && !tutorial_x_ask_done && noun1_is "task" ) {
       : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can use one of your senses and pick up a clue." ;
       : set_true "tutorial_x_ask_done" ;
-   }
-   : else_if (is_at "nameless_lameness" && is_carried "ooh_task" && tutorial_x_ask_done && !is_beside "cheering_voice" ) {
-      : print "But it's no longer silent. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>.";
    }
    : if (in_tutorial) {
       : gosub "tutorial_progress" ;
