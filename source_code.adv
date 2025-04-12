@@ -122,6 +122,8 @@ strings {
    ## quickie trips seeding for dynamic strings
    qt_plaster_man : string "A plaster man stands here. Perhaps there is something inside it." ;
    qt_master_plan : string "With the plaster man destroyed, there's not much left here." ;
+   qt_malice_chap : string "You feel the malice here from the malice chap." ;
+   qt_chalice_map : string "You got the chalice map here. There can't really be anything left to do." ;
    qt_gift_shoals : string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
    qt_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
 
@@ -278,7 +280,24 @@ locations {
          }
       }
    };
-   qt_ne : location "Unwritten.";
+   qt_ne : location "{point_chalice_map ? qt_chalice_map : qt_malice_chap}" {
+      on_command {
+      : match "chalice map" {
+         : if (point_chalice_map) {
+            : print "You already got the chalice map from the malice chap.";
+            }
+         : else
+         {
+            : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts." ;
+            : gosub "add_point" ;
+            : set_true "point_chalice_map" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+
    qt_e : location "Unwritten.";
    qt_se : location "Unwritten.";
    qt_sw : location "{point_shift_goals ? qt_shift_goals : qt_gift_shoals}" {
@@ -367,7 +386,13 @@ barriers {
    block_qt_n : block {
       location = qt_n
       block_when = point_master_plan
-      message = You got the master plan, so you don't really need to go back.
+      message = You got the master plan, so you don't really need to go back north.
+   }
+   block_qt_ne : block {
+      location = qt_ne
+      block_when = point_chalice_map
+      message = You got the chalice map, so you don't really need to go back northeast.
+   }
    }
    block_qt_sw : block {
       location = qt_sw
