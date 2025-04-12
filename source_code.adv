@@ -8,15 +8,32 @@ start_theme = my_theme
 
 booleans {
    ## game state booleans
-   in_debug: boolean "false" ;
-   score_notify: boolean "true" ;
-   tutorial_done: boolean "false" ;
+   in_debug : boolean "false" ;
+   score_notify : boolean "true" ;
+   tutorial_done : boolean "false" ;
    footnotes_available : boolean "false" scope="survivor";
-   talked_to_thor: boolean "false";
+   talked_to_thor : boolean "false";
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
+
+   ## QT goals, north then clockwise
+   point_master_plan : boolean "false" ;
+   point_chalice_map : boolean "false" ;
+   point_fell_short : boolean "false" ;
+   point_take_crackers : boolean "false" ;
+   point_shift_goals : boolean "false" ;
+   point_hunters_grill : boolean "false" ;
+   point_fellow_yield : boolean "false" ;
+
+   ## TQ goals, north then clockwise
+   point_flaring_score : boolean "false" ;
+   point_bending_truth : boolean "false" ;
+   point_boring_way: boolean "false" ;
    point_dirt_home : boolean "false" ;
+   point_roaring_pain : boolean "false" ;
+   point_money_fountain : boolean "false" ;
+   point_grim_tune : boolean "false" ;
 
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
@@ -98,6 +115,9 @@ strings {
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 
    sub_hub: string "Another mini-hub here. You can go up over a hill, south back to the bold hub, or in any of the eight directions." ;
+
+   qt_giftshoals: string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
+   qt_shiftgoals: string "The shoals seem more peaceful now that you have fixed your mindset." ;
 
    tq_hurtdome : string "hurt dome" ;
    tq_dirthome : string "dirt home" ;
@@ -258,7 +278,23 @@ locations {
    qt_ne : location "Unwritten.";
    qt_e : location "Unwritten.";
    qt_se : location "Unwritten.";
-   qt_sw : location "Unwritten.";
+   qt_sw : location "{point_shift_goals ? qt_shiftgoals : qt_giftshoals}" {
+      on_command {
+      : match "shift goals" {
+         : if (point_shift_goals) {
+            : print "But you don't want to shift your goals back." ;
+            }
+         :else
+         {
+            : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
+            : gosub "add_point" ;
+            : set_true "point_shift_goals" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
    qt_w : location "Unwritten.";
    qt_nw : location "Unwritten.";
 };
