@@ -32,7 +32,7 @@ booleans {
    point_boring_way: boolean "false" ;
    point_dirt_home : boolean "false" ;
    point_roaring_pain : boolean "false" ;
-   point_money_fountain : boolean "false" ;
+   point_funny_mountain : boolean "false" ;
    point_grim_tune : boolean "false" ;
 
    ## quasi-point
@@ -119,7 +119,7 @@ strings {
 
    sub_hub: string "Another mini-hub here. You can go up over a hill, south back to the bold hub, or in any of the eight directions." ;
 
-   ## quickie trips seeding for dynamic strings
+   ## quickie trips seeding for dynamic strings, starting north and going clockwise
    qt_plaster_man : string "A plaster man stands here. Perhaps there is something inside it." ;
    qt_master_plan : string "With the plaster man destroyed, there's not much left here." ;
    qt_malice_chap : string "You feel the malice here from the malice chap." ;
@@ -127,7 +127,7 @@ strings {
    qt_gift_shoals : string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
    qt_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
 
-   ## tricky quips seeding for dynamic strings
+   ## tricky quips seeding for dynamic strings, starting north and going clockwise
    tq_hurt_dome : string "hurt dome" ;
    tq_dirt_home : string "dirt home" ;
 
@@ -393,16 +393,66 @@ barriers {
       block_when = point_chalice_map
       message = You got the chalice map, so you don't really need to go back northeast.
    }
+   block_qt_e : block {
+      location = qt_e
+      block_when = point_fell_short
+      message = You dismantled the shell fort, so you don't need to go back east.
+   }
+   block_qt_se : block {
+      location = qt_se
+      block_when = point_take_crackers
+      message = You already got some crackers from the cake trackers. There can't be anything more back southeast.
    }
    block_qt_sw : block {
       location = qt_sw
       block_when = point_shift_goals
-      message = With your goals shifted, you've gotten all the mindfulness or whatever you need from the shoals.
+      message = With your goals shifted, you've gotten all the mindfulness or whatever you need from the shoals to the southwest.
+   }
+   block_qt_w : block {
+      location = qt_w
+      block_when = point_hunters_grill
+      message = You helped the hunters fire up their grill. There's nothing really left to do to the west.
+   }
+   block_qt_nw : block {
+      location = qt_nw
+      block_when = point_fellow_yield
+      message = You got the fellow to yield in the yellow field, which was pretty barren otherwise. So you don't need to go back northwest.
+   }
+
+   block_tq_n : block {
+      location = tq_n
+      block_when = point_flaring_score
+      message = The scaring floor to the north is no longer scary, but it also has nothing else to offer you.
+   }
+   block_tq_ne : block {
+      location = tq_ne
+      block_when = point_bending_truth
+      message = You already bent the truth a bit to the northeast. You don't want to do too much of that sort of thing. At least, I hope you don't.
+   }
+   block_tq_e : block {
+      location = tq_e
+      block_when = point_boring_way
+      message = You cooled off the warring bay to the east. While you wouldn't die of boredom in the now-boring way to the east, hanging around there wouldn't get you any closer to your goals.
    }
    block_tq_se : block {
       location = tq_se
       block_when = point_dirt_home
-      message = You changed the hurt dome to a dirt home. You don't need to do much else.
+      message = You changed the hurt dome to a dirt home. You can't think of anything else you need to do to the southeast.
+   }
+   block_tq_sw : block {
+      location = tq_sw
+      block_when = point_roaring_pain
+      message = You changed the roaring pain to pouring rain. You really can't see any reason to go get soaked more do to the southwest.
+   }
+   block_tq_w : block {
+      location = tq_w
+      block_when = point_funny_mountain
+      message = You changed the funny mountain to a money fountain. You can't think of anything else you need to do to the west.
+   }
+   block_tq_nw : block {
+      location = tq_nw
+      block_when = point_grim_tune
+      message = You chased the trim goon with a grim tune. You can't think of anything else you need to do to the northwest.
    }
 }
 
