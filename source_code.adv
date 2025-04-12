@@ -254,7 +254,22 @@ locations {
    quickie_trips: location "QUICKIE TRIPS\n{sub_hub}";
    tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
 
-   qt_n : location "{point_master_plan ? qt_master_plan : qt_plaster_man}";
+   qt_n : location "{point_master_plan ? qt_master_plan : qt_plaster_man}" {
+      on_command {
+      : match "master plan" {
+         : if (point_master_plan) {
+            : print "You already got the master plan.";
+            }
+         : else
+         {
+            : print "You have reason to find a master plan, so you bust open the master plan and find it." ;
+            : gosub "add_point" ;
+            : set_true "point_master_plan" ;
+         }
+         : done ;
+         }
+      }
+   };
    qt_ne : location "Unwritten.";
    qt_e : location "Unwritten.";
    qt_se : location "Unwritten.";
@@ -264,7 +279,7 @@ locations {
          : if (point_shift_goals) {
             : print "But you don't want to shift your goals back." ;
             }
-         :else
+         : else
          {
             : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
             : gosub "add_point" ;
