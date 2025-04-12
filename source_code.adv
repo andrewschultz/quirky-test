@@ -116,11 +116,15 @@ strings {
 
    sub_hub: string "Another mini-hub here. You can go up over a hill, south back to the bold hub, or in any of the eight directions." ;
 
-   qt_giftshoals: string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
-   qt_shiftgoals: string "The shoals seem more peaceful now that you have fixed your mindset." ;
+   ## quickie trips seeding for dynamic strings
+   qt_plaster_man : string "A plaster man stands here. Perhaps there is something inside it." ;
+   qt_master_plan : string "With the plaster man destroyed, there's not much left here." ;
+   qt_gift_shoals : string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
+   qt_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
 
-   tq_hurtdome : string "hurt dome" ;
-   tq_dirthome : string "dirt home" ;
+   ## tricky quips seeding for dynamic strings
+   tq_hurt_dome : string "hurt dome" ;
+   tq_dirt_home : string "dirt home" ;
 
 }
 
@@ -247,13 +251,37 @@ locations {
       }
    };
 
-   tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
    quickie_trips: location "QUICKIE TRIPS\n{sub_hub}";
+   tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
+
+   qt_n : location "{point_master_plan ? qt_master_plan : qt_plaster_man}";
+   qt_ne : location "Unwritten.";
+   qt_e : location "Unwritten.";
+   qt_se : location "Unwritten.";
+   qt_sw : location "{point_shift_goals ? qt_shift_goals : qt_gift_shoals}" {
+      on_command {
+      : match "shift goals" {
+         : if (point_shift_goals) {
+            : print "But you don't want to shift your goals back." ;
+            }
+         :else
+         {
+            : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
+            : gosub "add_point" ;
+            : set_true "point_shift_goals" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   qt_w : location "Unwritten.";
+   qt_nw : location "Unwritten.";
 
    tq_n : location "Unwritten.";
    tq_ne : location "Unwritten.";
    tq_e : location "Unwritten.";
-   tq_se : location "There's a {point_dirt_home ? tq_dirthome : tq_hurtdome} here." {
+   tq_se : location "There's a {point_dirt_home ? tq_dirt_home : tq_hurt_dome} here." {
       on_command {
       : match "dirt home" {
          : if (point_dirt_home) {
@@ -274,29 +302,6 @@ locations {
    tq_w : location "Unwritten.";
    tq_nw : location "Unwritten.";
 
-   qt_n : location "Unwritten.";
-   qt_ne : location "Unwritten.";
-   qt_e : location "Unwritten.";
-   qt_se : location "Unwritten.";
-   qt_sw : location "{point_shift_goals ? qt_shiftgoals : qt_giftshoals}" {
-      on_command {
-      : match "shift goals" {
-         : if (point_shift_goals) {
-            : print "But you don't want to shift your goals back." ;
-            }
-         :else
-         {
-            : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
-            : gosub "add_point" ;
-            : set_true "point_shift_goals" ;
-            : update_graphic ;
-         }
-         : done ;
-         }
-      }
-   };
-   qt_w : location "Unwritten.";
-   qt_nw : location "Unwritten.";
 };
 
 # connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
