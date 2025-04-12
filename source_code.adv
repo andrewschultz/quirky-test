@@ -97,7 +97,7 @@ strings {
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 
-   sub_hub: string "Another mini-hub here. You can go up over a hill, down back to the bold hub, or in any of the eight directions." ;
+   sub_hub: string "Another mini-hub here. You can go up over a hill, south back to the bold hub, or in any of the eight directions." ;
 
    tq_hurtdome : string "hurt dome" ;
    tq_dirthome : string "dirt home" ;
@@ -123,7 +123,7 @@ vocabulary {
    : verb / aliases = [tut, tutorial]
 }
 
-## Locations with connections
+## Locations and location-specific parser rules
 
 locations {
    nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" {
@@ -186,7 +186,7 @@ locations {
          }
          : match "first base" {
             : if (point_first_base) {
-               : print "Already changed things." ;
+               : print "You already changed things here." ;
                : return ;
             } : else_if (!talked_to_thor) {
                : print "\"That's the right idea, but I'm bigger than you. I'm going to make you talk to me first. Don't worry, I'm interesting. Or I think I am.\"";
@@ -220,10 +220,15 @@ locations {
             }
          }
       }
+      on_describe {
+         : if (is_beside "seth_dentons") {
+            : print "An establishment called Seth Denton's is off to the side here. You have a feeling you don't want to go IN, and maybe you can figure why." ;
+         }
+      }
    };
 
    tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
-   quickie_trips: location "QUICKIE TRIPS{sub_hub}";
+   quickie_trips: location "QUICKIE TRIPS\n{sub_hub}";
 
    tq_n : location "Unwritten.";
    tq_ne : location "Unwritten.";
@@ -487,6 +492,7 @@ themes {
 
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
+   invalid_choice                                 = Please choose YES/Y or NO/N.
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
    you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = Nothing comes up from that. {verbs} gives a list of basic standard verbs, though you will have a few to guess based on rules.
