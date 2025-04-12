@@ -124,8 +124,16 @@ strings {
    qt_master_plan : string "With the plaster man destroyed, there's not much left here." ;
    qt_malice_chap : string "You feel the malice here from the malice chap." ;
    qt_chalice_map : string "You got the chalice map here. There can't really be anything left to do." ;
+   qt_shell_fort : string "A shell fort sits here. It occasionally fires rounds that get close to you. While there's no danger of you getting hit, it's still annoying and gets in the way of trying to find anything." ;
+   qt_fell_short : string "The shell fort lies barren now. You even ransacked it for rations." ;
+   qt_cake_trackers : string "Cake trackers mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
+   qt_take_crackers : string "It's empty here now since you took the crackers. Not much else to do." ;
    qt_gift_shoals : string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
    qt_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
+   qt_grunters_hill : string "Grunts emanate from here. It's like people are trying to forage for food, but of course their making noise makes it hard. Their grunts are mainly about not having enough food." ;
+   qt_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
+   qt_yellow_field : string "Someone is blocking you here in this yellow field. Why, or from what, you're not sure." ;
+   qt_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
    ## tricky quips seeding for dynamic strings, starting north and going clockwise
    tq_hurt_dome : string "hurt dome" ;
@@ -297,9 +305,40 @@ locations {
          }
       }
    };
-
-   qt_e : location "Unwritten.";
-   qt_se : location "Unwritten.";
+   qt_e : location "{point_fell_short ? qt_fell_short : qt_shell_fort}" {
+      on_command {
+      : match "fell short" {
+         : if (point_fell_short) {
+            : print "You already managed to make the artillery miss you. No need to taunt.";
+            }
+         : else
+         {
+            : print "You believe in yourself and use the power of words to make the artillery fall short. The people inside give up on you. They have much easier targets." ;
+            : gosub "add_point" ;
+            : set_true "point_fell_short" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   qt_se : location "{point_take_crackers ? qt_take_crackers : qt_cake_trackers}" {
+      on_command {
+      : match "take crackers" {
+         : if (point_take_crackers) {
+            : print "Don't get greedy! You have enough crackers.";
+            }
+         : else
+         {
+            : print "While the cake trackers aren't looking, you pinch a box of crackers. They don't notice at first, but when they fail to find any cake, they start getting mad and accusing each other." ;
+            : gosub "add_point" ;
+            : set_true "point_take_crackers" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
    qt_sw : location "{point_shift_goals ? qt_shift_goals : qt_gift_shoals}" {
       on_command {
       : match "shift goals" {
@@ -317,8 +356,40 @@ locations {
          }
       }
    };
-   qt_w : location "Unwritten.";
-   qt_nw : location "Unwritten.";
+   qt_w : location "{point_hunters_grill ? qt_hunters_grill : qt_grunters_hill}" {
+      on_command {
+      : match "hunters grill" {
+         : if (point_hunters_grill) {
+            : print "But you already had enough of a feast. Any more, and you wouldn't be able to move around." ;
+            }
+         : else
+         {
+            : print "You tell people to stop whining and start making a fire, or something. You're surprised they agree with you, especially when you show them some crackers and ???." ;
+            : gosub "add_point" ;
+            : set_true "point_hunters_grill" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   qt_nw : location "{point_fellow_yield ? qt_fellow_yield : qt_yellow_field}" {
+      on_command {
+      : match "fellow yield" {
+         : if (point_fellow_yield) {
+            : print "You feel no need to relive past victories." ;
+            }
+         : else
+         {
+            : print "You take a balanced tone of friendship and defiance. You're surprised how well it works." ;
+            : gosub "add_point" ;
+            : set_true "point_fellow_yield" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
 
    tq_n : location "Unwritten.";
    tq_ne : location "Unwritten.";
