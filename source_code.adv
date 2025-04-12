@@ -265,6 +265,7 @@ locations {
             : print "You have reason to find a master plan, so you bust open the master plan and find it." ;
             : gosub "add_point" ;
             : set_true "point_master_plan" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -354,7 +355,17 @@ connections {
 }
 
 barriers {
-   block_dirt_home : block {
+   block_qt_n : block {
+      location = qt_n
+      block_when = point_master_plan
+      message = You got the master plan, so you don't really need to go back.
+   }
+   block_qt_sw : block {
+      location = qt_sw
+      block_when = point_shift_goals
+      message = With your goals shifted, you've gotten all the mindfulness or whatever you need from the shoals.
+   }
+   block_tq_se : block {
       location = tq_se
       block_when = point_dirt_home
       message = You changed the hurt dome to a dirt home. You don't need to do much else.
@@ -724,8 +735,11 @@ on_command {
 assets {
    graphics {
       lameness_16 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVSUlKtra2fn5+YmJimpqZgYGBnZ2dubm5ZWVl1dXWRkZGDg4NLS0u0tLR8fHyKioo9s6mBAAAB6ElEQVRYw+XYIZaDMBAGYHIELrACvQ6JRdUjse0RKmvpARBcAIHEcgFEZS0KzxXovja0ZCYzJARq9r8A3yOTySSeJyN8meGVPnym+SR45SaTPXMtZBKZtJsSP1O9c5xylrmMf/HemQA/CiCCgN8J0G4NEAuAWgsoICCZvn9/AQ5rAQMBuOkBuTvA0wJCqgQAIEGAOAZrYAoYDAFKCeQIcLcHCBUAtkHNAhIEiJ0BoAgCUIO3+QrMfkAKAYfVgH4OqCEg+zIgAICWWoEUlMAHUMrvnwyLUC0CY0C3OSDSArIvAAYdQPkBmi7gABAEINQBsozog+l6gG8BaNcAKh4AjwIAqHcH+DYAOAyQZyELOP87QMkBBAmIdIB2c4C/AGi4Rjirwq4jzwJ+CXy8CwflPNadRRsCxFaAlAaU3wXcScBRB/BJQMQAPjNxYQBg54FlQL09YHQAtBCQE/eS2VD4Bpw4wGwX9jsDLmaAhgNcdwWENoACAdDFoASAcdRtQ1dAQgOqVYCo4XaBpggYQMkAyMOwsQXgIqiITrQE6HWX42VA4ggAUzn5PIEAhSNAIAD/PkIDUC+kbqcXK0C9NwBN5b0tIKeGIrQCchsAgNC9TyBAYAHoqE6o7EP+jSqC7yMmALgG6AcovfgBhBvnaozG45IAAAAASUVORK5CYII=";
+      masterplan_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAiUlEQVRYw+3VuRGAMAxEUfdfihI1QkVKFl+4ATPzk9VArIcu2gNHM8AAAwwwwAADDDDAAANwQMBxA9B8K4UAVOPpyZWFAE5acS2IXfwkAD13ja9XLwUyA70DWg2AAPEBKoqbgdsBvN6CNYTQHThrWNAdiNV8UXcgdw1UyoDWMPdfgGnBzEoCfosXzzjyF/ZYz+8AAAAASUVORK5CYII=";
+      plasterman_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAhElEQVRYw+3UywkAIQyE4RRg/0XkYgtbgLCteA7CrGwJIvz7yNwlH0OiNTiWgAQkIAHLL88BAyQWcErj3w3MHShwA8PoHThQgKSOAwoK6FYK3IDRgNES8AmAL2YCwjfkvYC6SWCr46PKa4CAKXBHAeIBAQOcBsQDAGIB9yliH9GuJCABF2/W9E17T7/QAAAAAElFTkSuQmCC";
       dirthome_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAy0lEQVRYw+3VMQ6DMAyF4XcFlJNY7M19uRZ7lxwgLUKiHYhkWy/JgD0gFqKPP0Hg7RhZbid51oLjmX1pzGsQQFqANAbQDOBKAGIAVwIwA3gSgBnAkwDUAI4EoAZwJAA3gD0BuAHsCUAOYE4AcgBzArADWBOgWkY0gGRa0gQoq2pyN0DWAUovQKk6QM2dAFkLKL22QAuojwGcX93v9jtjAWmV4/J3K88AXK0DMOsQxhYE4Dh5MvkQnoBZ/4LrVQMQAApgs4wOYFpyOuAD2wKbyFO+eg8AAAAASUVORK5CYII=";
       hurtdome_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABi0lEQVRYw8WXXY7FIAiFzw5Yf1c1W+G1Twwo/lRvJrk0Mr1pa65RP+EAFvLmgl4k76aID+W6uDL8DwBjb2UCMPChmQiAvnF9M6UDsN3Up+BsgLo2lmYiAJrzWwyEnYA3EWCvqZkIAO5CcPdz1AQxANoBJBOAHWASIb9T0/c5oBrCNEAOEPQBYjFYVlNDQMUHnwdpADARaCFi014RgcYiBU0QAahrwYTwoz91P1WqJAD2Uei1gNwvSQC6Ho0o7C+S0NkEAQn2rdM8hRoCOQDSt4r7uq6mPcR8gNCItulb5OZhjkgcIBADw/szQOs7DVB3SaMCeh2MngoQkEDzgyUC8jTQKkIWgGXgsnah0AckC2DOPvYoMbkE5lEAmgdSEyUtvSctQH8A4DwAu7tHMEznYwTTypcanI6iNEdkuTMAbPeuuv51XOQoWQAl+KjV4RoGUknOA0D6Aez5beiZiE4D9GW2r2PE4jAGsIzkYf0cAKzGxrNKHQfY5MaPrhwAbDU6GYC2v/MA+DMAQgC/9ff8qf8Ctc8AAAAASUVORK5CYII=";
+      qt_n : dynamic_graphic {( point_master_plan ? "masterplan_after" : "plasterman_before" )} ;
       tq_se : dynamic_graphic {( point_dirt_home ? "dirthome_after" : "hurtdome_before" )} ;
    }
 }
