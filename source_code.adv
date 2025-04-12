@@ -35,6 +35,9 @@ booleans {
    point_money_fountain : boolean "false" ;
    point_grim_tune : boolean "false" ;
 
+   ## quasi-point
+   fh_travel_grail : boolean "false" ;
+
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
    bonus_point_theory_bore : boolean "false" ;
@@ -126,6 +129,9 @@ strings {
    tq_hurt_dome : string "hurt dome" ;
    tq_dirt_home : string "dirt home" ;
 
+   ## fate hills
+   fate_hills_desc: dynamic_string {( fh_travel_grail ? "Well, finding the travel grail wasn't your ultimate fate, but it probably helped you get here. Not much more to do." : "You feel something fateful in the air. Like you need to do something, and you need to be prepared."
+   )};
 }
 
 ## Objects with vocabulary
@@ -253,6 +259,7 @@ locations {
 
    quickie_trips: location "QUICKIE TRIPS\n{sub_hub}";
    tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
+   fate_hills: location "FATE HILLS\n{fate_hills_desc}\nYou can go back west to the quickie trips or east to the tricky quips.";
 
    qt_n : location "{point_master_plan ? qt_master_plan : qt_plaster_man}" {
       on_command {
@@ -349,8 +356,10 @@ connections {
       quickie_trips, south_oneway, bold_hub,
       bold_hub, east_oneway, tricky_quips,
       tricky_quips, south_oneway, bold_hub,
-      tricky_quips, up_oneway, quickie_trips,
-      quickie_trips, up_oneway, tricky_quips
+      tricky_quips, up_oneway, fate_hills,
+      quickie_trips, up_oneway, fate_hills,
+      fate_hills, west_oneway, quickie_trips,
+      fate_hills, east_oneway, tricky_quips
    ]
 }
 
