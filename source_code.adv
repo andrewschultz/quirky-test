@@ -16,6 +16,7 @@ booleans {
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
+   point_dirt_home : boolean "false" ;
 
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
@@ -45,7 +46,7 @@ integers {
    tutorial_score : integer "0" ;
    max_tutorial_score : integer "1";
    score : integer "0" ;
-   max_score : integer "4" ;
+   max_score : integer "5" ;
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
 }
@@ -97,6 +98,10 @@ strings {
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 
    sub_hub: string "Another mini-hub here. You can go up over a hill, down back to the bold hub, or in any of the eight directions." ;
+
+   tq_hurtdome : string "hurt dome" ;
+   tq_dirthome : string "dirt home" ;
+
 }
 
 ## Objects with vocabulary
@@ -223,7 +228,23 @@ locations {
    tq_n : location "Unwritten.";
    tq_ne : location "Unwritten.";
    tq_e : location "Unwritten.";
-   tq_se : location "Unwritten.";
+   tq_se : location "There's a {point_dirt_home ? tq_dirthome : tq_hurtdome} here." {
+      on_command {
+      : match "dirt home" {
+         : if (point_dirt_home) {
+            : print "You already made the dirt home." ;
+            }
+         : else
+         {
+            : print "Poof! The hurt dome transforms into a dirt home." ;
+            : gosub "add_point" ;
+            : set_true "point_dirt_home" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
    tq_sw : location "Unwritten.";
    tq_w : location "Unwritten.";
    tq_nw : location "Unwritten.";
@@ -269,6 +290,14 @@ connections {
       tricky_quips, up_oneway, quickie_trips,
       quickie_trips, up_oneway, tricky_quips
    ]
+}
+
+barriers {
+   block_dirt_home : block {
+      location = tq_se
+      block_when = point_dirt_home
+      message = You changed the hurt dome to a dirt home. You don't need to do much else.
+   }
 }
 
 subroutines {
@@ -633,5 +662,8 @@ on_command {
 assets {
    graphics {
       lameness_16 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVSUlKtra2fn5+YmJimpqZgYGBnZ2dubm5ZWVl1dXWRkZGDg4NLS0u0tLR8fHyKioo9s6mBAAAB6ElEQVRYw+XYIZaDMBAGYHIELrACvQ6JRdUjse0RKmvpARBcAIHEcgFEZS0KzxXovja0ZCYzJARq9r8A3yOTySSeJyN8meGVPnym+SR45SaTPXMtZBKZtJsSP1O9c5xylrmMf/HemQA/CiCCgN8J0G4NEAuAWgsoICCZvn9/AQ5rAQMBuOkBuTvA0wJCqgQAIEGAOAZrYAoYDAFKCeQIcLcHCBUAtkHNAhIEiJ0BoAgCUIO3+QrMfkAKAYfVgH4OqCEg+zIgAICWWoEUlMAHUMrvnwyLUC0CY0C3OSDSArIvAAYdQPkBmi7gABAEINQBsozog+l6gG8BaNcAKh4AjwIAqHcH+DYAOAyQZyELOP87QMkBBAmIdIB2c4C/AGi4Rjirwq4jzwJ+CXy8CwflPNadRRsCxFaAlAaU3wXcScBRB/BJQMQAPjNxYQBg54FlQL09YHQAtBCQE/eS2VD4Bpw4wGwX9jsDLmaAhgNcdwWENoACAdDFoASAcdRtQ1dAQgOqVYCo4XaBpggYQMkAyMOwsQXgIqiITrQE6HWX42VA4ggAUzn5PIEAhSNAIAD/PkIDUC+kbqcXK0C9NwBN5b0tIKeGIrQCchsAgNC9TyBAYAHoqE6o7EP+jSqC7yMmALgG6AcovfgBhBvnaozG45IAAAAASUVORK5CYII=";
+      dirthome_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAy0lEQVRYw+3VMQ6DMAyF4XcFlJNY7M19uRZ7lxwgLUKiHYhkWy/JgD0gFqKPP0Hg7RhZbid51oLjmX1pzGsQQFqANAbQDOBKAGIAVwIwA3gSgBnAkwDUAI4EoAZwJAA3gD0BuAHsCUAOYE4AcgBzArADWBOgWkY0gGRa0gQoq2pyN0DWAUovQKk6QM2dAFkLKL22QAuojwGcX93v9jtjAWmV4/J3K88AXK0DMOsQxhYE4Dh5MvkQnoBZ/4LrVQMQAApgs4wOYFpyOuAD2wKbyFO+eg8AAAAASUVORK5CYII=";
+      hurtdome_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABi0lEQVRYw8WXXY7FIAiFzw5Yf1c1W+G1Twwo/lRvJrk0Mr1pa65RP+EAFvLmgl4k76aID+W6uDL8DwBjb2UCMPChmQiAvnF9M6UDsN3Up+BsgLo2lmYiAJrzWwyEnYA3EWCvqZkIAO5CcPdz1AQxANoBJBOAHWASIb9T0/c5oBrCNEAOEPQBYjFYVlNDQMUHnwdpADARaCFi014RgcYiBU0QAahrwYTwoz91P1WqJAD2Uei1gNwvSQC6Ho0o7C+S0NkEAQn2rdM8hRoCOQDSt4r7uq6mPcR8gNCItulb5OZhjkgcIBADw/szQOs7DVB3SaMCeh2MngoQkEDzgyUC8jTQKkIWgGXgsnah0AckC2DOPvYoMbkE5lEAmgdSEyUtvSctQH8A4DwAu7tHMEznYwTTypcanI6iNEdkuTMAbPeuuv51XOQoWQAl+KjV4RoGUknOA0D6Aez5beiZiE4D9GW2r2PE4jAGsIzkYf0cAKzGxrNKHQfY5MaPrhwAbDU6GYC2v/MA+DMAQgC/9ff8qf8Ctc8AAAAASUVORK5CYII=";
+      tq_se : dynamic_graphic {( point_dirt_home ? "dirthome_after" : "hurtdome_before" )} ;
    }
 }
