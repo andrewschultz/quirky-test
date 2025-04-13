@@ -27,11 +27,11 @@ booleans {
    point_fellow_yield : boolean "false" ;
 
    ## TQ goals, north then clockwise
-   point_flaring_score : boolean "false" ;
+   point_fly_score : boolean "false" ;
    point_bending_truth : boolean "false" ;
    point_boring_way: boolean "false" ;
    point_dirt_home : boolean "false" ;
-   point_roaring_pain : boolean "false" ;
+   point_pouring_rain : boolean "false" ;
    point_funny_mountain : boolean "false" ;
    point_grim_tune : boolean "false" ;
 
@@ -136,6 +136,8 @@ strings {
    qt_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
    ## tricky quips seeding for dynamic strings, starting north and going clockwise
+   tq_sky_floor : string "The sky/floor here gives you poetic thoughts. Well, maybe not quite poetic, maybe wordless. You're not quite sure, but when you figure it out, you're sure you'll think up something cool." ;
+   tq_fly_score : string "It was inspirational to think up a neat little tune here, but you want to share it now." ;
    tq_hurt_dome : string "hurt dome" ;
    tq_dirt_home : string "dirt home" ;
 
@@ -391,9 +393,25 @@ locations {
       }
    };
 
-   tq_n : location "Unwritten.";
    tq_ne : location "Unwritten.";
    tq_e : location "Unwritten.";
+   tq_n : location "{point_fly_score ? tq_fly_score : tq_sky_floor}" {
+      on_command {
+      : match "fly score" {
+         : if (point_fly_score) {
+            : print "You already imagined a fly score, but you recite it again, s you don't forget it." ;
+            }
+         : else
+         {
+            : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to." ;
+            : gosub "add_point" ;
+            : set_true "point_fly_score" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
    tq_se : location "There's a {point_dirt_home ? tq_dirt_home : tq_hurt_dome} here." {
       on_command {
       : match "dirt home" {
@@ -492,8 +510,8 @@ barriers {
 
    block_tq_n : block {
       location = tq_n
-      block_when = point_flaring_score
-      message = The scaring floor to the north is no longer scary, but it also has nothing else to offer you.
+      block_when = point_fly_score
+      message = You don't feel as though the sky/floor to the north has anything more to offer you. Well, maybe you can go back for new artistic inspiration, after you completed the quest for Thor.
    }
    block_tq_ne : block {
       location = tq_ne
@@ -512,7 +530,7 @@ barriers {
    }
    block_tq_sw : block {
       location = tq_sw
-      block_when = point_roaring_pain
+      block_when = point_pouring_rain
       message = You changed the roaring pain to pouring rain. You really can't see any reason to go get soaked more do to the southwest.
    }
    block_tq_w : block {
