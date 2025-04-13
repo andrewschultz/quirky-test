@@ -67,6 +67,8 @@ integers {
    max_tutorial_score : integer "1";
    score : integer "0" ;
    max_score : integer "5" ;
+   points_left_side : integer "0" ;
+   points_right_side : integer "0" ;
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
 }
@@ -292,9 +294,8 @@ locations {
          : else
          {
             : print "You have reason to find a master plan, so you bust open the master plan and find it." ;
-            : gosub "add_point" ;
             : set_true "point_master_plan" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -309,9 +310,8 @@ locations {
          : else
          {
             : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts." ;
-            : gosub "add_point" ;
             : set_true "point_chalice_map" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -326,9 +326,8 @@ locations {
          : else
          {
             : print "You believe in yourself and use the power of words to make the artillery fall short. The people inside give up on you. They have much easier targets." ;
-            : gosub "add_point" ;
             : set_true "point_fell_short" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -343,9 +342,8 @@ locations {
          : else
          {
             : print "While the cake trackers aren't looking, you pinch a box of crackers. They don't notice at first, but when they fail to find any cake, they start getting mad and accusing each other." ;
-            : gosub "add_point" ;
             : set_true "point_take_crackers" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -360,9 +358,8 @@ locations {
          : else
          {
             : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
-            : gosub "add_point" ;
             : set_true "point_shift_goals" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -377,9 +374,8 @@ locations {
          : else
          {
             : print "You tell people to stop whining and start making a fire, or something. You're surprised they agree with you, especially when you show them some crackers and ???." ;
-            : gosub "add_point" ;
             : set_true "point_hunters_grill" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -394,9 +390,8 @@ locations {
          : else
          {
             : print "You take a balanced tone of friendship and defiance. You're surprised how well it works." ;
-            : gosub "add_point" ;
             : set_true "point_fellow_yield" ;
-            : update_graphic ;
+            : gosub "add_point_qt" ;
          }
          : done ;
          }
@@ -412,9 +407,8 @@ locations {
          : else
          {
             : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to." ;
-            : gosub "add_point" ;
             : set_true "point_fly_score" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -429,9 +423,8 @@ locations {
          : else
          {
             : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks will stay with you." ;
-            : gosub "add_point" ;
             : set_true "point_bending_truth" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -446,9 +439,8 @@ locations {
          : else
          {
             : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best. Peace may be boring, but then again, the excitement of war is draining." ;
-            : gosub "add_point" ;
             : set_true "point_boring_way" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -463,9 +455,8 @@ locations {
          : else
          {
             : print "Poof! The hurt dome transforms into a dirt home." ;
-            : gosub "add_point" ;
             : set_true "point_dirt_home" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -480,9 +471,8 @@ locations {
          : else
          {
             : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic." ;
-            : gosub "add_point" ;
             : set_true "point_pouring_rain" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -497,9 +487,8 @@ locations {
          : else
          {
             : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so." ;
-            : gosub "add_point" ;
             : set_true "point_funny_mountain" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -514,9 +503,8 @@ locations {
          : else
          {
             : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to help other people." ;
-            : gosub "add_point" ;
             : set_true "point_grim_tune" ;
-            : update_graphic ;
+            : gosub "add_point_tq" ;
          }
          : done ;
          }
@@ -640,9 +628,19 @@ barriers {
 subroutines {
    add_point : subroutine {
       : if (score_notify) {
-         : print "<Your score just went up by a point!<#ff0>>";
+         : print "<Your score just went up by a point!<#ff0>>" ;
       }
-      : increment "score";
+      : increment "score" ;
+      }
+   add_point_qt : subroutine {
+      : increment "points_left_side" ;
+      : gosub "add_point" ;
+      : update_graphic ;
+      }
+   add_point_tq : subroutine {
+      : increment "points_right_side" ;
+      : gosub "add_point" ;
+      : update_graphic ;
       }
    add_bonus : subroutine {
       : if (score_notify) {
@@ -980,6 +978,9 @@ on_command {
          : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#ff0>>." )} ;
       }
       : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
+      : if ((has_visited "quickie_trips") && (has_visited "tricky_quips")) {
+         : print {("You've solved " + points_left_side + " of 7 quickie trips and " + points_right_side + " of 7 tricky quips.")}
+      }
       : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )} ;
       }
    : match "option _;options _;opts _;opt _" {
