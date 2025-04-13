@@ -138,8 +138,18 @@ strings {
    ## tricky quips seeding for dynamic strings, starting north and going clockwise
    tq_sky_floor : string "The sky/floor here gives you poetic thoughts. Well, maybe not quite poetic, maybe wordless. You're not quite sure, but when you figure it out, you're sure you'll think up something cool." ;
    tq_fly_score : string "It was inspirational to think up a neat little tune here, but you want to share it now." ;
+   tq_trending_booth : string "A trending booth sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
+   tq_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
+   tq_warring_bay : string "You don't know how or why a war started in this warring bay, but it's ongoing and seems like it has for a while. Everyone there seems to find it very, very exciting." ;
+   tq_boring_way : string "Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
    tq_hurt_dome : string "hurt dome" ;
    tq_dirt_home : string "dirt home" ;
+   tq_roaring_pain : string "You feel roaring pain. While there's some shelter here from above, it doesn't help with the internal stuff." ;
+   tq_pouring_rain : string "The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
+   tq_money_fountain : string "A money fountain is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
+   tq_funny_mountain : string "A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
+   tq_trim_goon : string "A trim goon sits here, ready to rough you up. They seem quite pleased to have the job they do." ;
+   tq_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## fate hills
    fate_hills_desc: dynamic_string {( fh_travel_grail ? "Well, finding the travel grail wasn't your ultimate fate, but it probably helped you get here. Not much more to do." : "You feel something fateful in the air. Like you need to do something, and you need to be prepared."
@@ -393,8 +403,6 @@ locations {
       }
    };
 
-   tq_ne : location "Unwritten.";
-   tq_e : location "Unwritten.";
    tq_n : location "{point_fly_score ? tq_fly_score : tq_sky_floor}" {
       on_command {
       : match "fly score" {
@@ -406,6 +414,40 @@ locations {
             : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to." ;
             : gosub "add_point" ;
             : set_true "point_fly_score" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   tq_ne : location "{point_bending_truth ? tq_bending_truth : tq_trending_booth}" {
+      on_command {
+      : match "bending truth" {
+         : if (point_bending_truth) {
+            : print "You've seen through the trending booth's lies. Rehashing that sort of thing too much makes you go in circles." ;
+            }
+         : else
+         {
+            : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks will stay with you." ;
+            : gosub "add_point" ;
+            : set_true "point_bending_truth" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   tq_e : location "{point_boring_way ? tq_boring_way : tq_warring_bay}" {
+      on_command {
+      : match "boring way" {
+         : if (point_boring_way) {
+            : print "The way is now plenty boring. You don't want to risk dying of boredom after preventing so much death from war. That'd make for an embarrassing headstone!" ;
+            }
+         : else
+         {
+            : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best. Peace may be boring, but then again, the excitement of war is draining." ;
+            : gosub "add_point" ;
+            : set_true "point_boring_way" ;
             : update_graphic ;
          }
          : done ;
@@ -429,10 +471,57 @@ locations {
          }
       }
    };
-   tq_sw : location "Unwritten.";
-   tq_w : location "Unwritten.";
-   tq_nw : location "Unwritten.";
-
+   tq_sw : location "{point_pouring_rain ? tq_pouring_rain : tq_roaring_pain}" {
+      on_command {
+      : match "pouring rain" {
+         : if (point_pouring_rain) {
+            : print "You already made the dirt home." ;
+            }
+         : else
+         {
+            : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic." ;
+            : gosub "add_point" ;
+            : set_true "point_pouring_rain" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   tq_w : location "{point_funny_mountain ? tq_funny_mountain : tq_money_fountain}" {
+      on_command {
+      : match "funny mountain" {
+         : if (point_funny_mountain) {
+            : print "You already changed the scenery here for the better. Making the mountain bigger might destabilize it." ;
+            }
+         : else
+         {
+            : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so." ;
+            : gosub "add_point" ;
+            : set_true "point_funny_mountain" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
+   tq_nw : location "{point_grim_tune ? tq_grim_tune : tq_trim_goon}" {
+      on_command {
+      : match "grim tune" {
+         : if (point_grim_tune) {
+            : print "You already thought up a grim tune. Any more, and you might be so depressed you forget what you wrote, or you wonder why even bother to share it." ;
+            }
+         : else
+         {
+            : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to help other people." ;
+            : gosub "add_point" ;
+            : set_true "point_grim_tune" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
+   };
 };
 
 # connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
@@ -458,12 +547,15 @@ connections {
       quickie_trips, west, qt_w,
       quickie_trips, northwest, qt_nw,
 
-      ## one-way stuff below
+      ## one-way/bending path stuff below
+      ## hub bending paths
 
       bold_hub, west_oneway, quickie_trips,
       quickie_trips, south_oneway, bold_hub,
       bold_hub, east_oneway, tricky_quips,
       tricky_quips, south_oneway, bold_hub,
+
+      ## fate hills bending paths
       tricky_quips, up_oneway, fate_hills,
       quickie_trips, up_oneway, fate_hills,
       fate_hills, west_oneway, quickie_trips,
