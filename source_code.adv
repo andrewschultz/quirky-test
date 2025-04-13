@@ -12,7 +12,8 @@ booleans {
    score_notify : boolean "true" ;
    tutorial_done : boolean "false" ;
    footnotes_available : boolean "false" scope="survivor";
-   talked_to_thor : boolean "false";
+   talked_to_thor : boolean "false" ;
+   jump_commands_notified : boolean "false" ;
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
@@ -281,9 +282,23 @@ locations {
       }
    };
 
-   quickie_trips: location "QUICKIE TRIPS\n{sub_hub}";
-   tricky_quips: location "TRICKY QUIPS\n{sub_hub}";
-   fate_hills: location "FATE HILLS\n{fate_hills_desc}\nYou can go back west to the quickie trips or east to the tricky quips.";
+   quickie_trips: location "QUICKIE TRIPS\n{sub_hub}" {
+      on_describe {
+         : gosub "list_jump_commands" ;
+      }
+   };
+
+   tricky_quips: location "TRICKY QUIPS\n{sub_hub}" {
+      on_describe {
+         : gosub "list_jump_commands" ;
+      }
+   };
+
+   fate_hills: location "FATE HILLS\n{fate_hills_desc}\nYou can go back west to the quickie trips or east to the tricky quips." {
+      on_describe {
+         : gosub "list_jump_commands" ;
+      }
+   };
 
    qt_n : location "{point_master_plan ? qt_master_plan : qt_plaster_man}" {
       on_command {
@@ -651,6 +666,16 @@ subroutines {
       }
       : increment "bonus_score";
       }
+   list_jump_commands : subroutine {
+      : if (jump_commands_notified) {
+         : return ;
+      }
+      : if ((!has_visited("bold_hub")) || (!has_visited("quickie_trips")) || (!has_visited("tricky_quips")) || (!has_visited("fate_hills"))) {
+         : return ;
+      }
+      : set_true "jump_commands_notified" ;
+      : print "You've seen all the main locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\n\nFH = fate hills\n\nQT = quickie trips\n\nTQ = tricky quips" ;
+   }
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
    : print "Submitted for the 2025 TALP competition." ;
@@ -788,6 +813,9 @@ subroutines {
       : print "There are no diagonal directions, only N S E W U D and IN and OUT. You can use the long form of each direction, but it is not necessary." ;
       : print "You can <TAKE<#0f0>> an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> toggles options." )} ;
+      : if (jump_commands_notified) {
+         : print "To save keystrokes, you can jump around hub locations with BH/bold hub, FH/fate hills, QT/quickie trips, TQ/tricky quips." ;
+      }
       : if (in_debug) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
