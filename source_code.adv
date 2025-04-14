@@ -62,6 +62,7 @@ booleans {
    bonus_point_death_sentence : boolean "false" ;
 
    ## tutorial booleans, organized by order you see/do them in
+   in_number_choice: boolean "true" ;
    in_tutorial: boolean "false" ;
    tutorial_about_done : boolean "false" ;
    tutorial_verbs_done : boolean "false" ;
@@ -129,6 +130,8 @@ strings {
    otn : string "<ONE-TIME NOTE:<#f0f>> " ;
 
    ## dynamic strings
+
+   YN_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
 
    my_score : dynamic_string {( score + "/" + max_score )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
@@ -244,6 +247,7 @@ locations {
          }
       }
       on_describe {
+         : set_false "in_number_choice" ;
          : if ( is_beside "cheering_voice") {
             : print "The cheering voice still floats around. You can HEAR it or LISTEN.";
          }
@@ -964,7 +968,7 @@ themes {
 
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
-   invalid_choice                                 = Please choose YES/Y or NO/N.
+   invalid_choice                                 = {YN_or_12}
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
    you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = Nothing comes up from that. {verbs} gives a list of basic standard verbs, though you will have a few to guess based on rules.
