@@ -347,6 +347,9 @@ locations {
          : if (point_healing_still) {
          : print "You already found the healing still that contained the travel grail." ;
          }
+         : else_if ((!point_chalice_map || !point_master_plan) && (!cheat_dont_require)) {
+            : print "With the stealing hill watching you, it'll be tough to nab anything. You'll need to know what you want and how to get there." ;
+         }
          : else
          {
             : print "With the chalice map handy as well as the master plan, you know what to look for and where. Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
@@ -369,6 +372,9 @@ locations {
          : if (point_master_plan) {
             : print "You already got the master plan.";
             }
+         : else_if ((!point_shift_goals || !point_hunters_grill) && (!cheat_dont_require)) {
+            : print "You sort of hope there's a master plan inside the plaster man, but you're not sure. You sense either you're not focused on what really matters, or you're not nourished enough to break him down." ;
+         }
          : else
          {
             : print "You have reason to find a master plan, so you bust open the master plan and find it." ;
@@ -385,6 +391,9 @@ locations {
          : if (point_chalice_map) {
             : print "You already got the chalice map from the malice chap.";
             }
+         : else_if ((!point_fellow_yield || !point_grim_tune) && (!cheat_dont_require)) {
+            : print "This guy's tough. Maybe if you've built experience and confidence blowing off two other belligerent fellows, you could outsmart him." ;
+         }
          : else
          {
             : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts." ;
@@ -433,6 +442,9 @@ locations {
          : if (point_shift_goals) {
             : print "But you don't want to shift your goals back." ;
             }
+         : else_if ((!point_funny_mountain || !point_boring_way) && (!cheat_dont_require)) {
+            : print "You want to shift your goals, but you don't know if you can. You haven't helped others shift theirs away from Needing More enough yet.";
+         }
          : else
          {
             : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
@@ -449,6 +461,9 @@ locations {
          : if (point_hunters_grill) {
             : print "But you already had enough of a feast. Any more, and you wouldn't be able to move around." ;
             }
+         : else_if ((!point_take_crackers || !point_fell_short) && (!cheat_dont_require)) {
+            : print "You try to start up a feast, but alas, you don't have enough food to do so." ;
+         }
          : else
          {
             : print "You tell people to stop whining and start making a fire, or something. You're surprised they agree with you, especially when you show them some crackers and ???." ;
@@ -465,6 +480,9 @@ locations {
          : if (point_fellow_yield) {
             : print "You feel no need to relive past victories." ;
             }
+         : else_if ((!point_dirt_home || !point_bending_truth) && (!cheat_dont_require)) {
+            : print "You'd like to convince the fellow to yield, but you either aren't sneaky enough, or you can't give him a safe place to go once he's yielded." ;
+         }
          : else
          {
             : print "You take a balanced tone of friendship and defiance. You're surprised how well it works." ;
@@ -578,6 +596,10 @@ locations {
          : if (point_grim_tune) {
             : print "You already thought up a grim tune. Any more, and you might be so depressed you forget what you wrote, or you wonder why even bother to share it." ;
             }
+         : else_if ((!point_fly_score || !point_pouring_rain) && (!cheat_dont_require))
+         {
+            : print "You'd like to think of a grim tune, but you don't have a combination of music and lyrics, yet." ;
+         }
          : else
          {
             : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to help other people." ;
