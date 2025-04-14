@@ -1057,6 +1057,44 @@ on_pre_command {
 }
 
 on_command {
+   : if (jump_commands_notified) {
+      : match "sh -" {
+         : if (point_healing_still) {
+            : print "You don't want to go back to the stealing hill after, well, stealing from it." ;
+            : done ;
+         }
+         : if (is_at "stealing_hill") {
+            : print "You're already here!";
+            : done ;
+         }
+         : goto "stealing_hill" ;
+         : redescribe ;
+      }
+      : match "qt -" {
+         : if (is_at "quickie_trips") {
+            : print "You're already here!";
+            : done ;
+         }
+         : goto "quickie_trips" ;
+         : redescribe ;
+      }
+      : match "tq -" {
+         : if (is_at "tricky_quips") {
+            : print "You're already here!";
+            : done ;
+         }
+         : goto "tricky_quips" ;
+         : redescribe ;
+      }
+      : match "bh -" {
+         : if (is_at "bold_hub") {
+            : print "You're already here!";
+            : done ;
+         }
+         : goto "bold_hub" ;
+         : redescribe ;
+      }
+   }
    : match "gravel trail" {
       : if (!is_carried "travel_grail") {
          : mask ;
