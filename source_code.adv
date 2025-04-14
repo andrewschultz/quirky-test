@@ -54,6 +54,7 @@ booleans {
 
    ## endgame points
    point_healing_still : boolean "false" ;
+   point_gravel_trail : boolean "false" ;
 
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
@@ -177,7 +178,10 @@ strings {
 
    gravel_trail_house : dynamic_string {(
       point_missing_house ? ", or you can go NORTH inside the house you made." : ""
-   )}
+   )};
+
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own." : "Glee simmers here as you think, yes, this really is MY HOUSE!\nAnd yet, homeownership is nice and all, but ... what about Thor's quest?"
+   )};
 }
 
 ## Objects with vocabulary
@@ -593,6 +597,29 @@ locations {
          }
       }
    };
+   my_house : location "{my_house_description}" {
+      on_command {
+         : match "see glimmers;see glimmering" {
+            : if (point_see_glimmering) {
+               : print "You already found something unusual in the house. You need an assistant to look through it." ;
+            }
+            : else {
+               : print "You remember what you came for. The rare-thing-there ring. Where could it be? Well, there are a lot of glimmering things, here. It would take you a while to search, especially since they are in odd corners. If only you had someone or something willing to help with the busy work!" ;
+               : set_true "point_see_glimmering" ;
+               : gosub "add_point" ;
+            }
+         }
+         : match "hi mouse;high mouse" {
+            : if (point_see_glimmering) {
+               : print "Yes! You win.";
+               : win_game ;
+            }
+            : else {
+               : print "Hmm, it might be worth calling the mouse back to look around, but you don't have anything concrete for it to search. Maybe look around." ;
+            }
+         }
+      }
+   }
 };
 
 # connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
@@ -634,6 +661,7 @@ connections {
 
       ## endgame stuff
       bold_hub, north, gravel_trail,
+      gravel_trail, north, my_house
    ]
 }
 
@@ -718,6 +746,11 @@ barriers {
       location = gravel_trail
       block_when_not = point_gravel_trail
       message = Thor looks over. "Perhaps there'll be something there, but you'll need a magic object to see the way through."
+   }
+   block_my_house: block {
+      location = my_house
+      block_when_not = point_missing_house
+      message = The hissing mouse guards the way. Besides, there's nothing there. Well, not yet.
    }
 }
 
