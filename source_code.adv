@@ -28,6 +28,7 @@ booleans {
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
+   point_bold_hub : boolean "false" ;
 
    ## QT goals, north then clockwise
    point_master_plan : boolean "false" ;
@@ -266,6 +267,9 @@ locations {
                   : print "Congratulations! You've finished the tutorial." ;
                }
             }
+            : else_if (point_bold_hub) {
+               : print "Ask me about any rule in Graham Nelson's Player's Bill of Rights, with ASK (1-10). (Not implemented) I can't give you spoilers." ;
+            }
             : else {
                : print {( point_first_base ? "\"Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
                : set_true "talked_to_thor" ;
@@ -286,11 +290,12 @@ locations {
          }
          : match "bold hub" {
             : if (talked_to_thor) {
-               : print "\"Yes, that's where we'll go next.\"";
+               : print "\"Yes, that's where we'll go next.\"" ;
+               : set_true "point_bold_hub" ;
                : gosub "add_point" ;
                : press_any_key ;
                : create "beery_thor" target = "bold_hub" ;
-               : goto "bold_hub";
+               : goto "bold_hub" ;
                : redescribe ;
             }
          }
