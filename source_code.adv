@@ -307,6 +307,10 @@ locations {
             : set_true "point_first_base" ;
             : create "beery_thor" ;
             : gosub "add_point" ;
+            : done ;
+         }
+         : match "first _;_ base" {
+            : print {( "One word right" + (talked_to_thor ? "" : ", but talk to Thor first") + "." )} ;
          }
          : if (know_hold_bub) {
             : match "bold hub" {
@@ -380,6 +384,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_healing_still) {
+         : match "healing _;_ still" {
+            : print "One word right." ;
+         }
+      }
       }
       on_describe {
          : gosub "list_jump_commands" ;
@@ -405,6 +414,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_master_plan) {
+         : match "master _;_ plan" {
+            : print "One word right." ;
+            }
+         }
       }
    };
    qt_ne : location "{point_chalice_map ? qt_chalice_map : qt_malice_chap}" {
@@ -426,6 +440,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_chalice_map) {
+         : match "chalice _;_ map" {
+            : print "One word right." ;
+            }
+         }
       }
    };
    qt_e : location "{point_fell_short ? qt_fell_short : qt_shell_fort}" {
@@ -442,6 +461,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_fell_short) {
+         : match "fell _;_ short" {
+            : print "One word right." ;
+         }
+      }
       }
    };
    qt_se : location "{point_take_crackers ? qt_take_crackers : qt_cake_trackers}" {
@@ -457,6 +481,11 @@ locations {
             : gosub "add_point_qt" ;
          }
          : done ;
+         }
+      : if (!point_take_crackers) {
+         : match "take _;_ crackers" {
+            : print "One word right." ;
+            }
          }
       }
    };
@@ -479,6 +508,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_shift_goals) {
+         : match "shift _;_ goals" {
+            : print "One word right." ;
+            }
+         }
       }
    };
    qt_w : location "{point_hunters_grill ? qt_hunters_grill : qt_grunters_hill}" {
@@ -500,6 +534,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_hunters_grill) {
+         : match "hunters _;_ grill" {
+            : print "One word right." ;
+         }
+      }
       }
    };
    qt_nw : location "{point_fellow_yield ? qt_fellow_yield : qt_yellow_field}" {
@@ -521,6 +560,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_fellow_yield) {
+         : match "fellow _;_ yield" {
+            : print "One word right." ;
+            }
+         }
       }
    };
 
@@ -538,6 +582,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_fly_score) {
+         : match "fly _;_ score" {
+            : print "One word right." ;
+         }
+      }
       }
    };
    tq_ne : location "{point_bending_truth ? tq_bending_truth : tq_trending_booth}" {
@@ -554,6 +603,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_bending_truth) {
+         : match "bending _;_ truth" {
+            : print "One word right." ;
+         }
+      }
       }
    };
    tq_e : location "{point_boring_way ? tq_boring_way : tq_warring_bay}" {
@@ -569,6 +623,11 @@ locations {
             : gosub "add_point_tq" ;
          }
          : done ;
+         }
+      : if (!point_boring_way) {
+         : match "boring _;_ way" {
+            : print "One word right." ;
+            }
          }
       }
    };
@@ -586,6 +645,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_dirt_home) {
+         : match "dirt _;_ home" {
+            : print "One word right." ;
+            }
+         }
       }
    };
    tq_sw : location "{point_pouring_rain ? tq_pouring_rain : tq_roaring_pain}" {
@@ -602,6 +666,11 @@ locations {
          }
          : done ;
          }
+      : if (!point_pouring_rain) {
+         : match "pouring _;_ rain" {
+            : print "One word right." ;
+            }
+         }
       }
    };
    tq_w : location "{point_funny_mountain ? tq_funny_mountain : tq_money_fountain}" {
@@ -617,6 +686,11 @@ locations {
             : gosub "add_point_tq" ;
          }
          : done ;
+         }
+      : if (!point_funny_mountain) {
+         : match "funny _;_ mountain" {
+            : print "One word right." ;
+            }
          }
       }
    };
@@ -639,6 +713,11 @@ locations {
             : gosub "add_point_tq" ;
          }
          : done ;
+         }
+      : if (!point_grim_tune) {
+         : match "grim _;_ tune" {
+            : print "One word right." ;
+            }
          }
       }
    };
@@ -665,6 +744,11 @@ locations {
                : gosub "add_point" ;
             }
          }
+         : if (!point_see_glimmering) {
+            : match "missing _;_ house" {
+               : print "One word right." ;
+            }
+         }
       }
    };
    my_house : location "{my_house_description}" {
@@ -678,6 +762,12 @@ locations {
                : set_true "point_see_glimmering" ;
                : gosub "add_point" ;
             }
+            : done ;
+         }
+         : if (!point_see_glimmering) {
+            : match "see _;_ glimmering;_ glimmers" {
+               : print "One word right." ;
+            }
          }
          : match "hi mouse;high mouse" {
             : if (point_see_glimmering) {
@@ -689,6 +779,10 @@ locations {
             : else {
                : print "Hmm, it might be worth calling the mouse back to look around, but you don't have anything concrete for it to search. Maybe look around." ;
             }
+            : done ;
+         }
+         : match "hi _;high _;_ mouse" {
+            : print "One word right." ;
          }
       }
    }
@@ -1208,21 +1302,25 @@ on_command {
          : redescribe ;
       }
    }
-   : match "gravel trail" {
-      : if (!is_carried "travel_grail") {
-         : mask ;
-         }
-      : else_if (is_at "bold_hub") {
-         : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"Oh my goodness,\" he booms. \"How I'll let you do the last part yourself.\"";
-         : destroy "travel_grail" ;
-         : set_true "point_gravel_trail" ;
-         : gosub "add_point" ;
-         : update_graphic ;
+   : if (is_carried("travel_grail")) {
+      : match "gravel trail" {
+         : if (is_at "bold_hub") {
+            : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"Oh my goodness,\" he booms. \"How I'll let you do the last part yourself.\"";
+            : destroy "travel_grail" ;
+            : set_true "point_gravel_trail" ;
+            : gosub "add_point" ;
+            : update_graphic ;
          }
       : else {
          : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
          }
       }
+      : if (!point_gravel_trail) {
+         : match "gravel _;_ trail" {
+            : print "One word right." ;
+         }
+      }
+   }
    : match "salesmen _"  {
       : if (is_at "nameless_lameness") {
          : print "Good guess, if this were an anagram game." ;
