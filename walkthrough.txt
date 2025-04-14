@@ -8,7 +8,7 @@ This opens up the THANKS and VERBS commands. They can be done in any order, but 
 
 > VERBS
 
-This opens up a more meta-verbs.
+This opens up more meta-verbs.
 
 Here any one of META, THANKS and OPTIONS will get you to the next step of the tutorial.
 
@@ -40,18 +40,169 @@ The paper's name is Ooh, Task to Ask.
 
 How would Whoa Guest fit in this?
 
-With GO WEST.
+With ...
 
-This brings you to the burst face. It's a starting point, but ... well, still a bit more to do.
+> GO WEST
 
-> FIRST BASE
+Note you only have to type W or WEST. I could've been nitpicky, but Adventuron's parser is simple, and I wanted people to be able to guess if possible.
 
-Now Beery Thor says there is a way out.
+This brings you to the burst face. It's a starting point, but ... well, still a bit more to do. Thor makes you talk to him.
+
+> TALK THOR
+
+> FIRST BASE (1)
+
+Now Beery Thor says there is a way out, if you TALK to him.
 
 > TALK THOR
 
 "Hold, bub," he says. Where is he "protecting" you from?
 
-> BOLD HUB
+> BOLD HUB (1)
 
 Now the game opens up a bit. You can dispel Seth Denton's, but that is a bonus point.
+
+It doesn't matter which way you go first. You will eventually get there. The object is to find fourteen spoonerisms that work as follows:
+
+* 8 level 1 spoonerisms
+* 4 level 2 spoonerisms, each of which needs 2 level 1 spoonerisms solved first
+* 2 level 3 spoonerisms, each of which needs 2 level 2 spoonerisms solved first
+* a final level 4 spoonerism, which unlocks the endgame
+
+There are three rooms beyond. Tricky Quips is first if you want to go faster. It has trickier spoonerisms.
+
+This provides perhaps not the quickest way to go through things, but quick enough.
+
+> N
+
+> FLY SCORE
+
+> S
+
+Note that once you solve a spoonerised area, you can't go back. This is hopefully to make things clearer and remind you what you need to do.
+
+> NE
+
+> BENDING TRUTH
+
+> SW
+
+> E
+
+> BORING WAY
+
+> W
+
+> SE
+
+> DIRT HOME
+
+> NW
+
+> SW
+
+> POURING RAIN
+
+> NE
+
+> W
+
+> FUNNY MOUNTAIN
+
+> E
+
+One thing about going northeast: if you'd gone there right away, you wouldn't have been able to convert. It requires the flaring score and roaring pain.
+
+> NW
+
+> GRIM TUNE
+
+> SE
+
+> U
+
+You can't do anything with the hills yet.
+
+> W
+
+You should now get notification you can jump around. You don't really need to, though.
+
+> E
+
+> SHELL FORT
+
+Fun trivia: this is the only one on the west side you can get by itself.
+
+> W
+
+> SE
+
+> TAKE CRACKERS
+
+> NW
+
+> SW
+
+> SHIFT GOALS
+
+> NE
+
+> W
+
+> GRUNTERS HILL
+
+> E
+
+> NW
+
+> FELLOW YIELD
+
+> SE
+
+> N
+
+> MASTER PLAN
+
+> S
+
+> NE
+
+> CHALICE MAP
+
+> SW
+
+Okay, now we can go up the hill!
+
+> U
+
+> HEALING STILL
+
+Now for the endgame.
+
+> W
+
+Or east.
+
+> S
+
+You're back at the Bold Hub, but there's one more exit! If you prepare it. What to do with the travel grail?
+
+> GRAVEL TRAIL
+
+> N
+
+Oh no! A hissing mouse!
+
+> MISSING HOUSE
+
+> N
+
+Glee simmers.
+
+> SEE GLIMMERS
+
+Now how to you reach those glimmers in My House? Perhaps a recently gained friend...
+
+> HI MOUSE
+
+Congratulations, you win!
