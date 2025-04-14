@@ -214,7 +214,7 @@ vocabulary {
 ## Locations and location-specific parser rules
 
 locations {
-   nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey." graphic = "lameness_16" {
+   nameless_lameness      : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "lameness_16" {
       on_command {
          : if ((verb_is "inventory") && in_tutorial && !tutorial_x_me_done) {
             : print "Taking inventory is a good thing to do early in a text adventure, but we're not there yet in the tutorial. Once you've found an item, the tutorial will nudge you to do take inventory.";
@@ -271,7 +271,7 @@ locations {
                : print "Ask me about any rule in Graham Nelson's Player's Bill of Rights, with ASK (1-10). (Not implemented) I can't give you spoilers." ;
             }
             : else {
-               : print {( point_first_base ? "\"Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
+               : print {( point_first_base ? "\"This is just meant to be a fun little adventure. But there's some education here. You had the tutorial with basic commands, but I wanted to give a little theory, too. About what you can expect from a text adventure in terms of fairness. I'm cribbing from Graham Nelson's Player's Bill of Rights and showing you how it applies to your adventure here. You can ask me about it at any time with RULE (1-10). Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
                : set_true "talked_to_thor" ;
             }
          }
@@ -283,7 +283,7 @@ locations {
                : print "\"That's the right idea, but I'm bigger than you. I'm going to make you talk to me first. Don't worry, I'm interesting. Or I think I am.\"";
                : return ;
             }
-            : print "Ah, there we go. That'll make paths clearer.";
+            : print "\"Ah, there we go. That'll make paths clearer. Now let's have another little TALK, about what we're doing here and why.\"";
             : set_true "point_first_base" ;
             : create "beery_thor" ;
             : gosub "add_point" ;
@@ -620,8 +620,10 @@ locations {
          }
          : match "hi mouse;high mouse" {
             : if (point_see_glimmering) {
-               : print "Yes! The mouse uncovers the rare thing there ring. You're glad to give it a cut of the useless but shiny trinkets. You win. (Fill in Thor's congratulations later.)";
+               : print "Yes! The mouse uncovers the rare thing there ring. You're glad to give it a cut of the useless but shiny trinkets. You win. (Fill in Thor's congratulations later and create a final image.)";
+               : gosub "add_point" ;
                : win_game ;
+               : done ;
             }
             : else {
                : print "Hmm, it might be worth calling the mouse back to look around, but you don't have anything concrete for it to search. Maybe look around." ;
