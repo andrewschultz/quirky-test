@@ -11,8 +11,11 @@ game_settings {
 ## Booleans and integers
 
 booleans {
-   ## game state booleans
+   ## testing booleans
    in_debug : boolean "false" ;
+   cheat_dont_require : boolean "false" ;
+
+   ## game state booleans
    footnotes_available : boolean "false" scope="survivor";
 
    ## game option booleans
@@ -62,6 +65,15 @@ booleans {
    bonus_point_turkey_quest : boolean "false" ;
    bonus_point_theory_bore : boolean "false" ;
    bonus_point_death_sentence : boolean "false" ;
+
+   ## "think" booleans: alphabetical so it is not spoiled in-game
+   think_chalice_map : boolean "false" ;
+   think_fellow_yield : boolean "false" ;
+   think_grim_tune : boolean "false" ;
+   think_healing_still : boolean "false" ;
+   think_hunters_grill : boolean "false" ;
+   think_master_plan : boolean "false" ;
+   think_shift_goals : boolean "false" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -349,12 +361,14 @@ locations {
          }
          : else_if ((!point_chalice_map || !point_master_plan) && (!cheat_dont_require)) {
             : print "With the stealing hill watching you, it'll be tough to nab anything. You'll need to know what you want and how to get there." ;
+            : set_true "think_healing_still" ;
          }
          : else
          {
             : print "With the chalice map handy as well as the master plan, you know what to look for and where. Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
             : gosub "add_point" ;
             : set_true "point_healing_still" ;
+            : set_false "think_healing_still" ;
             : pocket "travel_grail" ;
             : update_graphic ;
          }
@@ -374,11 +388,13 @@ locations {
             }
          : else_if ((!point_shift_goals || !point_hunters_grill) && (!cheat_dont_require)) {
             : print "You sort of hope there's a master plan inside the plaster man, but you're not sure. You sense either you're not focused on what really matters, or you're not nourished enough to break him down." ;
+            : set_true "think_master_plan" ;
          }
          : else
          {
             : print "You have reason to find a master plan, so you bust open the master plan and find it." ;
             : set_true "point_master_plan" ;
+            : set_false "think_master_plan" ;
             : gosub "add_point_qt" ;
          }
          : done ;
@@ -393,11 +409,13 @@ locations {
             }
          : else_if ((!point_fellow_yield || !point_grim_tune) && (!cheat_dont_require)) {
             : print "This guy's tough. Maybe if you've built experience and confidence blowing off two other belligerent fellows, you could outsmart him." ;
+            : set_true "think_chalice_map" ;
          }
          : else
          {
             : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts." ;
             : set_true "point_chalice_map" ;
+            : set_false "think_chalice_map" ;
             : gosub "add_point_qt" ;
          }
          : done ;
@@ -444,11 +462,13 @@ locations {
             }
          : else_if ((!point_funny_mountain || !point_boring_way) && (!cheat_dont_require)) {
             : print "You want to shift your goals, but you don't know if you can. You haven't helped others shift theirs away from Needing More enough yet.";
+            : set_true "think_shift_goals" ;
          }
          : else
          {
             : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
             : set_true "point_shift_goals" ;
+            : set_false "think_shift_goals" ;
             : gosub "add_point_qt" ;
          }
          : done ;
@@ -463,11 +483,13 @@ locations {
             }
          : else_if ((!point_take_crackers || !point_fell_short) && (!cheat_dont_require)) {
             : print "You try to start up a feast, but alas, you don't have enough food to do so." ;
+            : set_true "think_hunters_grill" ;
          }
          : else
          {
             : print "You tell people to stop whining and start making a fire, or something. You're surprised they agree with you, especially when you show them some crackers and ???." ;
             : set_true "point_hunters_grill" ;
+            : set_false "think_hunters_grill" ;
             : gosub "add_point_qt" ;
          }
          : done ;
@@ -482,11 +504,13 @@ locations {
             }
          : else_if ((!point_dirt_home || !point_bending_truth) && (!cheat_dont_require)) {
             : print "You'd like to convince the fellow to yield, but you either aren't sneaky enough, or you can't give him a safe place to go once he's yielded." ;
+            : set_true "think_fellow_yield" ;
          }
          : else
          {
             : print "You take a balanced tone of friendship and defiance. You're surprised how well it works." ;
             : set_true "point_fellow_yield" ;
+            : set_false "think_fellow_yield" ;
             : gosub "add_point_qt" ;
          }
          : done ;
@@ -599,11 +623,13 @@ locations {
          : else_if ((!point_fly_score || !point_pouring_rain) && (!cheat_dont_require))
          {
             : print "You'd like to think of a grim tune, but you don't have a combination of music and lyrics, yet." ;
+            : set_true "think_grim_tune" ;
          }
          : else
          {
             : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to help other people." ;
             : set_true "point_grim_tune" ;
+            : set_false "think_grim_tune" ;
             : gosub "add_point_tq" ;
          }
          : done ;
