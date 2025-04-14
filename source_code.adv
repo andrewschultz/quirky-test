@@ -41,8 +41,8 @@ booleans {
    point_see_glimmering : boolean "false" ;
    point_hi_mouse : boolean "false" ;
 
-   ## quasi-point
-   fh_travel_grail : boolean "false" ;
+   ## endgame points
+   point_healing_still : boolean "false" ;
 
    ## bonus point tally booleans
    bonus_point_turkey_quest : boolean "false" ;
@@ -159,8 +159,8 @@ strings {
    tq_trim_goon : string "A trim goon sits here, ready to rough you up. They seem quite pleased to have the job they do." ;
    tq_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
-   ## fate hills
-   fate_hills_desc: dynamic_string {( fh_travel_grail ? "Well, finding the travel grail wasn't your ultimate fate, but it probably helped you get here. Not much more to do." : "You feel something fateful in the air. Like you need to do something, and you need to be prepared."
+   ## stealing hill
+   stealing_hill_desc: dynamic_string {( point_healing_still ? "You probably don't want to deal much with the stealing hill now that you got the travel grail." : "A stealing hill glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
 }
 
@@ -169,6 +169,7 @@ strings {
 objects {
   # in inventory
   ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
+  travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
 
   # scenery
   cheering_voice : scenery "cheering voice" msg="It gives a cheery \"Whoa! Guest!\"" conspicuous="false";
@@ -299,7 +300,23 @@ locations {
       }
    };
 
-   fate_hills: location "FATE HILLS\n{fate_hills_desc}\nYou can go back west to the quickie trips or east to the tricky quips." {
+   stealing_hill: location "FATE HILLS\n{stealing_hill_desc}\nYou can go back west to the quickie trips or east to the tricky quips." {
+      on_command {
+      : match "healing still" {
+         : if (point_healing_still) {
+         : print "You already found the healing still that contained the travel grail." ;
+         }
+         : else
+         {
+            : print "With the chalice map handy as well as the master plan, you know what to look for and where. Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
+            : gosub "add_point" ;
+            : set_true "point_healing_still" ;
+            : pocket "travel_grail" ;
+            : update_graphic ;
+         }
+         : done ;
+         }
+      }
       on_describe {
          : gosub "list_jump_commands" ;
       }
@@ -564,10 +581,10 @@ connections {
       tricky_quips, south_oneway, bold_hub,
 
       ## fate hills bending paths
-      tricky_quips, up_oneway, fate_hills,
-      quickie_trips, up_oneway, fate_hills,
-      fate_hills, west_oneway, quickie_trips,
-      fate_hills, east_oneway, tricky_quips
+      tricky_quips, up_oneway, stealing_hill,
+      quickie_trips, up_oneway, stealing_hill,
+      stealing_hill, west_oneway, quickie_trips,
+      stealing_hill, east_oneway, tricky_quips
    ]
 }
 
@@ -675,11 +692,11 @@ subroutines {
       : if (jump_commands_notified) {
          : return ;
       }
-      : if ((!has_visited("bold_hub")) || (!has_visited("quickie_trips")) || (!has_visited("tricky_quips")) || (!has_visited("fate_hills"))) {
+      : if ((!has_visited("bold_hub")) || (!has_visited("quickie_trips")) || (!has_visited("tricky_quips")) || (!has_visited("stealing_hill"))) {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print "You've seen all the main locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\nFH = fate hills\nQT = quickie trips\nTQ = tricky quips" ;
+      : print "You've seen all the main locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\nSH = fate hills\nQT = quickie trips\nTQ = tricky quips" ;
    }
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
@@ -1097,8 +1114,8 @@ assets {
 
       ## fate hills
 
-      fate_hills : dynamic_graphic {( fh_travel_grail ? "fate_hills_after" : "fate_hills_before" )} ;
-      fate_hills_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAjklEQVRYw+3Ryw2AMAyDYc+SAdh/HgboDAghXiUxl1q9uDf0legnoE0+cIADHOAABzjAAe/H2M9SXx/v+DAZoXBkXkyQOFKP4O8PdOSeTBD5FbB2F/otqhxF4OcjVM4C4mfAEAfx5xpljuIPdRN0DhZ4b1Hn4B5N7eB+7FDpID/oHCB1xOTjAAc4wAEO2AC0LOen6hBz4QAAAABJRU5ErkJggg==";
-      fate_hills_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAtElEQVRYw+2TOw7EMAhE5yx0NHvYdFwvB8gZVtkiCgScxqOsFJAb69mj5w/YHi60QAu0QAu0QAu0gJ/KXp96+XyOCx5EMDgyXiRQOFIuMt4/kSPnSQKJHwJrWBBvkcXhBNXKQ7C4FzBdqgQWhxNcxIprpHGcX0h/I0vgcYQvqvln5XGEFskDiByhRTVrFiZHaFFLAqgcfu7b5FrzeRCw8X4CDwI3ByBwyMP1bzfQT9ACLxT4AnDS/G/6PRvaAAAAAElFTkSuQmCC";
+      stealing_hill : dynamic_graphic {( point_healing_still ? "stealing_hill_after" : "stealing_hill_before" )} ;
+      stealing_hill_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAjklEQVRYw+3Ryw2AMAyDYc+SAdh/HgboDAghXiUxl1q9uDf0legnoE0+cIADHOAABzjAAe/H2M9SXx/v+DAZoXBkXkyQOFKP4O8PdOSeTBD5FbB2F/otqhxF4OcjVM4C4mfAEAfx5xpljuIPdRN0DhZ4b1Hn4B5N7eB+7FDpID/oHCB1xOTjAAc4wAEO2AC0LOen6hBz4QAAAABJRU5ErkJggg==";
+      stealing_hill_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAtElEQVRYw+2TOw7EMAhE5yx0NHvYdFwvB8gZVtkiCgScxqOsFJAb69mj5w/YHi60QAu0QAu0QAu0gJ/KXp96+XyOCx5EMDgyXiRQOFIuMt4/kSPnSQKJHwJrWBBvkcXhBNXKQ7C4FzBdqgQWhxNcxIprpHGcX0h/I0vgcYQvqvln5XGEFskDiByhRTVrFiZHaFFLAqgcfu7b5FrzeRCw8X4CDwI3ByBwyMP1bzfQT9ACLxT4AnDS/G/6PRvaAAAAAElFTkSuQmCC";
    }
 }
