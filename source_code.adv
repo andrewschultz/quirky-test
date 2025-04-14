@@ -36,6 +36,11 @@ booleans {
    point_funny_mountain : boolean "false" ;
    point_grim_tune : boolean "false" ;
 
+   point_travel_grail : boolean "false" ;
+   point_missing_house : boolean "false" ;
+   point_see_glimmering : boolean "false" ;
+   point_hi_mouse : boolean "false" ;
+
    ## quasi-point
    fh_travel_grail : boolean "false" ;
 
@@ -674,7 +679,7 @@ subroutines {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print "You've seen all the main locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\n\nFH = fate hills\n\nQT = quickie trips\n\nTQ = tricky quips" ;
+      : print "You've seen all the main locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\nFH = fate hills\nQT = quickie trips\nTQ = tricky quips" ;
    }
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
@@ -1029,6 +1034,10 @@ on_command {
 assets {
    graphics {
       lameness_16 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVSUlKtra2fn5+YmJimpqZgYGBnZ2dubm5ZWVl1dXWRkZGDg4NLS0u0tLR8fHyKioo9s6mBAAAB6ElEQVRYw+XYIZaDMBAGYHIELrACvQ6JRdUjse0RKmvpARBcAIHEcgFEZS0KzxXovja0ZCYzJARq9r8A3yOTySSeJyN8meGVPnym+SR45SaTPXMtZBKZtJsSP1O9c5xylrmMf/HemQA/CiCCgN8J0G4NEAuAWgsoICCZvn9/AQ5rAQMBuOkBuTvA0wJCqgQAIEGAOAZrYAoYDAFKCeQIcLcHCBUAtkHNAhIEiJ0BoAgCUIO3+QrMfkAKAYfVgH4OqCEg+zIgAICWWoEUlMAHUMrvnwyLUC0CY0C3OSDSArIvAAYdQPkBmi7gABAEINQBsozog+l6gG8BaNcAKh4AjwIAqHcH+DYAOAyQZyELOP87QMkBBAmIdIB2c4C/AGi4Rjirwq4jzwJ+CXy8CwflPNadRRsCxFaAlAaU3wXcScBRB/BJQMQAPjNxYQBg54FlQL09YHQAtBCQE/eS2VD4Bpw4wGwX9jsDLmaAhgNcdwWENoACAdDFoASAcdRtQ1dAQgOqVYCo4XaBpggYQMkAyMOwsQXgIqiITrQE6HWX42VA4ggAUzn5PIEAhSNAIAD/PkIDUC+kbqcXK0C9NwBN5b0tIKeGIrQCchsAgNC9TyBAYAHoqE6o7EP+jSqC7yMmALgG6AcovfgBhBvnaozG45IAAAAASUVORK5CYII=";
+      tricky_quips : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABj0lEQVRYw+2WYY6EIAxGv+wegCts8AKb8f536g1YCqiIONtS+TdNJKiEPp9Fgf8/lvWI13ZxbeLt4DcBwRjfS3QH0LtmBug91Q2AVoAMoPdYNwBaAUKAznP1AdQChAAxHZQhFCAFWFYXVEFCAVIArwfwzwIsjqLXeLjgAqU2OMREnA2xw+cUe+DTOOT1MIDnBJwOgZMjnVAGoBBcAUgt3yY/C4A4D7cpGTd8oAbg27MBcp6A3M1AlYEwEQAbADgNOgCpJGYBpHLbCy/lPgGkImQuOcAqjGKANoD99bcG0iKMy1AYWgBOXIqQDgBXFWEulHkA1TJ0BYBCXnmhALipAOT2DxEKQHrzfK28gvQhmgGg+xR/AJ4G0O8HHga4id9v4wQfAPG/4LQNPXYbP1/dnat8VjlAf/4KwKt3xDqA/vQ1wJAC2AScAIYUwCbgDDCiADYBZ4ARBbAJaAAGFMAmoAEYUACbgBZArwA2AS2AXgFsAi4AagWwCbgAqBXAJuAKoFUAm4ArgFYBbAI6AEoFf6Nz3WvHUTc3AAAAAElFTkSuQmCC";
+      quickie_trips : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABbklEQVRYw+2WUY6EIAxAm50DcIUNXmAy3v9OvUEXJKwCxWkpOj9TIwFDyuOJCPj3sax7vPLDtYrTzicBgj6eG6gHwD0zA3Cz6gBoBcgAuGl1ALQChADMvHgAtQAhQBgOlCEUIAVYVkeqQKEAKYDXA/i5AIsjhHCH1BSrFEpCpCA7VGIZbtrasenwNRnAuzhuBkgXuVhPE6a97WIn9NMBQtqUO5cbz8cAiJKSDgDdAbDV0xooASgulhsAgAoDh0VI6OQAqzAaAGhewbGN0rwaAHTnizC38RqAbYT/T5D7DK8GCBtR3oLqjahYhGkjugBAuRV/AWYD6M8DkwE68XwYE3wBxP+C4hi6nzZ+f9iTqzyrHIDPfwDw6hOxDoBPfwQYUgA2AQXAkAKwCSgBRhSATUAJMKIAbAIqgAEFYBNQAQwoAJuAGkCvAGwCagC9ArAJaADUCsAmoAFQKwCbgBZAqwBsAloArQKwCWAAlAr+ADhk6qlVb5HUAAAAAElFTkSuQmCC";
+      fate_hills_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAjklEQVRYw+3Ryw2AMAyDYc+SAdh/HgboDAghXiUxl1q9uDf0legnoE0+cIADHOAABzjAAe/H2M9SXx/v+DAZoXBkXkyQOFKP4O8PdOSeTBD5FbB2F/otqhxF4OcjVM4C4mfAEAfx5xpljuIPdRN0DhZ4b1Hn4B5N7eB+7FDpID/oHCB1xOTjAAc4wAEO2AC0LOen6hBz4QAAAABJRU5ErkJggg==";
+      fate_hills_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAtElEQVRYw+2TOw7EMAhE5yx0NHvYdFwvB8gZVtkiCgScxqOsFJAb69mj5w/YHi60QAu0QAu0QAu0gJ/KXp96+XyOCx5EMDgyXiRQOFIuMt4/kSPnSQKJHwJrWBBvkcXhBNXKQ7C4FzBdqgQWhxNcxIprpHGcX0h/I0vgcYQvqvln5XGEFskDiByhRTVrFiZHaFFLAqgcfu7b5FrzeRCw8X4CDwI3ByBwyMP1bzfQT9ACLxT4AnDS/G/6PRvaAAAAAElFTkSuQmCC";
       masterplan_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAiUlEQVRYw+3VuRGAMAxEUfdfihI1QkVKFl+4ATPzk9VArIcu2gNHM8AAAwwwwAADDDDAAANwQMBxA9B8K4UAVOPpyZWFAE5acS2IXfwkAD13ja9XLwUyA70DWg2AAPEBKoqbgdsBvN6CNYTQHThrWNAdiNV8UXcgdw1UyoDWMPdfgGnBzEoCfosXzzjyF/ZYz+8AAAAASUVORK5CYII=";
       plasterman_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAhElEQVRYw+3UywkAIQyE4RRg/0XkYgtbgLCteA7CrGwJIvz7yNwlH0OiNTiWgAQkIAHLL88BAyQWcErj3w3MHShwA8PoHThQgKSOAwoK6FYK3IDRgNES8AmAL2YCwjfkvYC6SWCr46PKa4CAKXBHAeIBAQOcBsQDAGIB9yliH9GuJCABF2/W9E17T7/QAAAAAElFTkSuQmCC";
       fell_short_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQQAAAAoBAMAAADqP5nAAAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABLUlEQVRYw8XWQRKDIAwF0N9tFky5gGdPt5wKL+AZah3bWqsQSDJ+ddwovJGQEdN58i3OweQc1AT+BlQF7gbUBd4GCATOBkgEvgaIBK4GyASeBggFjgZIBX4GiAXmBpwRzgXGhoxwTCgJyoYxNgEWQjgglAXV7zC2LAPWydEkODUM6z22Gf4JGYIcDRetyjEjVnOfQmXkQUMIWUKoZRw0m9KEoOsLPYTQvTOsCMflKapPI8KnxVl1x2aCQjD3RxMC0N8ov60pbcICwvZ5/Ly9S0zlUOJ1FAWBQYUpHmUB0+tUEsqCWnj5ECoCiKAQLBNDRQCzSrDDdBB4OS4lEPF8XUtg5uRCEPyxvMsZZLUS6N1RVxP8FqKB4FWOLSvhtClb3mOmiwkJVoJk1WUVeQKxBKKctnM+FgAAAABJRU5ErkJggg==";
@@ -1056,5 +1065,6 @@ assets {
       tq_sw : dynamic_graphic {( point_pouring_rain ? "pouring_rain_after" : "roaring_pain_before" )} ;
       tq_w : dynamic_graphic {( point_funny_mountain ? "funny_mountain_after" : "money_fountain_before" )} ;
       tq_n : dynamic_graphic {( point_fly_score ? "flyscore_after" : "skyfloor_before" )} ;
+      fate_hills : dynamic_graphic {( fh_travel_grail ? "fate_hills_after" : "fate_hills_before" )} ;
    }
 }
