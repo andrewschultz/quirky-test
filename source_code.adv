@@ -25,6 +25,7 @@ booleans {
    ## game progress booleans
    tutorial_done : boolean "false" ;
    talked_to_thor : boolean "false" ;
+   know_hold_bub : boolean "false" ;
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
@@ -291,7 +292,7 @@ locations {
             }
             : else {
                : print {( point_first_base ? "\"This is just meant to be a fun little adventure. But there's some education here. You had the tutorial with basic commands, but I wanted to give a little theory, too. About what you can expect from a text adventure in terms of fairness. I'm cribbing from Graham Nelson's Player's Bill of Rights and showing you how it applies to your adventure here. You can ask me about it at any time with RULE (1-10). Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
-               : set_true "talked_to_thor" ;
+               : set_true "know_hold_bub" ;
             }
          }
          : match "first base" {
@@ -307,8 +308,8 @@ locations {
             : create "beery_thor" ;
             : gosub "add_point" ;
          }
-         : match "bold hub" {
-            : if (talked_to_thor) {
+         : if (know_hold_bub) {
+            : match "bold hub" {
                : print "\"Yes, that's where we'll go next.\"" ;
                : set_true "point_bold_hub" ;
                : gosub "add_point" ;
@@ -316,6 +317,11 @@ locations {
                : create "beery_thor" target = "bold_hub" ;
                : goto "bold_hub" ;
                : redescribe ;
+               : done ;
+            }
+            : match "bold _;_ hub" {
+               ## don't need any other condition -- saying so moves us to next room
+               : print "One word right." ;
             }
          }
       }
