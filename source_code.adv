@@ -126,6 +126,12 @@ strings {
    lishea : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    xme : string "<X ME<#0f0>>" ;
 
+   # warp commands in orange
+   v_bh : string "<BH<#f80>>" ;
+   v_qt : string "<QT<#f80>>" ;
+   v_sh : string "<SH<#f80>>" ;
+   v_tq : string "<TQ<#f80>>" ;
+
    # tutorial stuff in purple
    tnote : string "<TUTORIAL NOTE:<#f0f>> " ;
    tcue : string "<TUTORIAL CUE:<#f0f>> " ;
@@ -665,7 +671,7 @@ connections {
       bold_hub, east_oneway, tricky_quips,
       tricky_quips, south_oneway, bold_hub,
 
-      ## fate hills bending paths
+      ## Stealing Hill bending paths
       tricky_quips, up_oneway, stealing_hill,
       quickie_trips, up_oneway, stealing_hill,
       stealing_hill, west_oneway, quickie_trips,
@@ -800,7 +806,7 @@ subroutines {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\nSH = fate hills\nQT = quickie trips\nTQ = tricky quips" ;
+      : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_bh + " = bold hub\n" + v_qt + " = quickie trips\n" + v_sh + " = Stealing Hill\n" + v_tq + " = tricky quips" )} ;
    }
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
@@ -952,7 +958,7 @@ subroutines {
       : print "You can <TAKE<#0f0>> an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle." )} ;
       : if (jump_commands_notified) {
-         : print "To save keystrokes, you can jump around hub locations with BH/bold hub, FH/fate hills, QT/quickie trips, TQ/tricky quips." ;
+         : print {( "To save keystrokes, you can jump around hub locations with " + v_bh + "(bold hub,) " + (point_healing_still ? "" : v_sh + "(stealing hill,) ") + v_qt + " (quickie trips,) " + v_tq + " (tricky quips.)" )} ;
       }
       : if (in_debug) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
