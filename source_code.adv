@@ -166,14 +166,18 @@ strings {
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "You probably don't want to deal much with the stealing hill now that you got the travel grail." : "A stealing hill glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
+   stealing_hill_mad: string "As you approach the stealing hill, you hear a loud scream! It must have discovered the missing chalice while you were gone. You figure it's best not to risk agitating it further. You probably don't need any more treasure." ;
+
+   gravel_trail_house : dynamic_string {(
+      point_missing_house ? ", or you can go NORTH inside the house you made." : ""
+   )}
 }
 
 ## Objects with vocabulary
 
 objects {
   # in inventory
-  ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
-  travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
+   ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
 
   # scenery
   cheering_voice : scenery "cheering voice" msg="It gives a cheery \"Whoa! Guest!\"" conspicuous="false";
@@ -181,6 +185,10 @@ objects {
 
   # NPC(s)
   beery_thor : object "Beery Thor" msg="Big and strong and friendly.";
+
+   # found later
+   travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
+   hissing_mouse: scenery "A hissing mouse" at= "gravel_trail" conspicuous="false" ;
 }
 
 vocabulary {
@@ -274,7 +282,7 @@ locations {
          }
       }
    };
-   bold_hub  : location "You are in a bold hub. You can go in pretty much any direction." {
+   bold_hub  : location "You are in a bold hub. While you can't go in every direction from here, you can go east and west to smaller hubs. You don't see any way back to the burst face." {
       on_command {
          : if (is_beside "seth_dentons") {
             : match "death sentence" {
@@ -288,6 +296,9 @@ locations {
       on_describe {
          : if (is_beside "seth_dentons") {
             : print "An establishment called Seth Denton's is off to the side here. You have a feeling you don't want to go IN, and maybe you can figure why." ;
+         }
+         : if (point_travel_grail) {
+            : print "Your travel grail opened up a path north." ;
          }
       }
    };
@@ -551,6 +562,30 @@ locations {
          }
       }
    };
+   gravel_trail : location "This is a gravel trail. You can go back south to the bold hub{gravel_trail_house}." {
+      on_describe {
+         : if (is_beside "hissing_mouse") {
+            : print "A hissing mouse hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
+         }
+      }
+      on_command {
+         : match "x mouse" {
+            : if (is_beside "hissing_mouse") {
+               : print "The hissing appears more defensive than anything." ;
+            }
+         }
+         : match "missing house" {
+            : if (point_missing_house) {
+               : print "You already brought the house back." ;
+            }
+            : else {
+               : print "BOOM! A missing house appears. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter." ;
+               : set_true "point_missing_house" ;
+               : gosub "add_point" ;
+            }
+         }
+      }
+   };
 };
 
 # connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
@@ -588,7 +623,10 @@ connections {
       tricky_quips, up_oneway, stealing_hill,
       quickie_trips, up_oneway, stealing_hill,
       stealing_hill, west_oneway, quickie_trips,
-      stealing_hill, east_oneway, tricky_quips
+      stealing_hill, east_oneway, tricky_quips,
+
+      ## endgame stuff
+      bold_hub, north, gravel_trail,
    ]
 }
 
@@ -664,6 +702,16 @@ barriers {
       block_when = point_grim_tune
       message = You chased the trim goon with a grim tune. You can't think of anything else you need to do to the northwest.
    }
+   block_stealing_hill: block {
+      location = stealing_hill
+      block_when = point_healing_still
+      message = {stealing_hill_mad}
+   }
+   block_gravel_trail: block {
+      location = gravel_trail
+      block_when_not = point_gravel_trail
+      message = Thor looks over. "Perhaps there'll be something there, but you'll need a magic object to see the way through."
+   }
 }
 
 subroutines {
@@ -700,7 +748,7 @@ subroutines {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print "You've seen all the main locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\nSH = fate hills\nQT = quickie trips\nTQ = tricky quips" ;
+      : print "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\nBH = bold hub\nSH = fate hills\nQT = quickie trips\nTQ = tricky quips" ;
    }
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
@@ -969,6 +1017,21 @@ on_pre_command {
 }
 
 on_command {
+   : match "gravel trail" {
+      : if (!is_carried "travel_grail") {
+         : mask ;
+         }
+      : else_if (is_at "bold_hub") {
+         : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"Oh my goodness,\" he booms. \"How I'll let you do the last part yourself.\"";
+         : destroy "travel_grail" ;
+         : set_true "point_gravel_trail" ;
+         : gosub "add_point" ;
+         : update_graphic ;
+         }
+      : else {
+         : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
+         }
+      }
    : match "salesmen _"  {
       : if (is_at "nameless_lameness") {
          : print "Good guess, if this were an anagram game." ;
