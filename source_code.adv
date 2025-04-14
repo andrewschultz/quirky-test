@@ -2,6 +2,10 @@
 start_at = nameless_lameness
 start_theme = my_theme
 
+game_settings {
+   enable_standard_all_behaviour = false
+}
+
 ## we start with simplest defined then move to more complex
 
 ## Booleans and integers
