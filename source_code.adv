@@ -866,6 +866,36 @@ subroutines {
      }
    : clear_screen ;
    }
+   think_thoughts : subroutine {
+      : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
+   && !think_shift_goals) {
+         : print "There's nothing on your mind that you tried to do but weren't able to." ;
+         : return ;
+      }
+      : print "Here is what you tried to do, and you haven't gotten it to work yet:" ;
+      : if (think_chalice_map) {
+         : print "-- get the CHALICE MAP";
+      }
+      : if (think_fellow_yield) {
+         : print "-- make the FELLOW YIELD";
+      }
+      : if (think_grim_tune) {
+         : print "-- sing a GRIM TUNE";
+      }
+      : if (think_healing_still) {
+         : print "-- feel (or discover a) HEALING STILL";
+      }
+      : if (think_hunters_grill) {
+         : print "-- start up the HUNTERS GRILL with a gift of food";
+      }
+      : if (think_master_plan) {
+         : print "-- have the strength and self-belief to get the MASTER PLAN";
+      }
+      : if (think_shift_goals) {
+         : print "-- help others out enough to be able to SHIFT GOALS";
+      }
+      : return ;
+   }
    tutorial_choice : subroutine {
    : ask_bool { ##? how do we put QT in here?
       question   = <Quirky Test<#ff0>> has a tutorial mode for the first few puzzles. Would you like to use it?
@@ -1015,6 +1045,7 @@ subroutines {
    verb_meta_list : subroutine {
       : print {( abt + " gives info about the game." )} ;
       : print {( thx + " gives info about people who helped with the game. I usually use <CREDITS<#f80>>, but Adventuron reserves that for its own." )} ;
+      : print {( "<THINK<#f80>> reminds you of commands you tried that should work, or will work in the future, but your character wasn't prepared enough. Yet." )} ;
       : print {( "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." )} ;
       : print {( "Adventuron-specific " + meta + " commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." )} ;
       : set_true "tutorial_additional_metaverb_done";
@@ -1222,6 +1253,9 @@ on_command {
       : else {
          : print "I should list exits here.";
       }
+   }
+   : match "think _" {
+      : gosub "think_thoughts" ;
    }
    : match "verb _;verbs _" {
       : gosub "verb_list" ;
