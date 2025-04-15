@@ -105,6 +105,7 @@ integers {
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
+   tempint : integer "0" ;
 }
 
 ## strings
@@ -161,7 +162,16 @@ strings {
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 
-   sub_hub: string "Another mini-hub here. You can go up over a hill, south back to the bold hub, or in any of the eight directions." ;
+   sub_hub: dynamic_string {( "Here in the " + (is_at "quickie_trips" ? "west" : "east" ) + " mini-hub, you can go south back to the bold hub or " + (has_visited("bold_hub") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
+   spokes_word: dynamic_string {( tempint == 6 ? "one" :
+      tempint == 5 ? "three" :
+      tempint == 4 ? "three" :
+      tempint == 3 ? "four" :
+      tempint == 2 ? "five" :
+      tempint == 1 ? "six" :
+      "(error, bug, {tempint})"
+      )};
+   spokes_left: dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven spokes here." : (tempint == 7 ? "You've taken care of business in all seven remaining planar directions." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
    ## quickie trips seeding for dynamic strings, starting north and going clockwise
    qt_plaster_man : string "A plaster man stands here. Perhaps there is something inside it." ;
@@ -352,12 +362,18 @@ locations {
    };
 
    quickie_trips: location "QUICKIE TRIPS\n{sub_hub}" {
+      on_pre_describe {
+         : set_integer var = "tempint" {(points_right_side)} ;
+      }
       on_describe {
          : gosub "list_jump_commands" ;
       }
    };
 
    tricky_quips: location "TRICKY QUIPS\n{sub_hub}" {
+      on_pre_describe {
+         : set_integer var = "tempint" {(points_right_side)} ;
+      }
       on_describe {
          : gosub "list_jump_commands" ;
       }
