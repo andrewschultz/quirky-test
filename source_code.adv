@@ -126,6 +126,7 @@ strings {
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
+   tut : string "<TUTORIAL<#88f>>" ;
    verbs : string "<VERBS<#f80>>" ;
 
    # yes-or-no
@@ -134,7 +135,7 @@ strings {
    off : string "<OFF<#f88>>" ;
 
    # options in blue 00f
-   notif : string "<NOTIFY<#00f>>" ;
+   notif : string "<NOTIFY<#88f>>" ;
 
    # game title
    qt : string "<Quirky Test<#ff0>>" ;
@@ -273,7 +274,7 @@ locations {
             }
             : else {
                : pocket "ooh_task" ;
-               : print "You search yourself, wondering if you forgot something, and hoping something will turn up. And guess what? There's something called <Ooh, Task to Ask<#00f>>." ;
+               : print "You search yourself, wondering if you forgot something, and hoping something will turn up. And guess what? There's something called <Ooh, Task to Ask<#88f>>." ;
                : print "You're not sure who slipped it in there, or how, but all the same, you're glad you might have some direction, now." ;
                : set_true "tutorial_x_me_done";
             }
@@ -1031,7 +1032,7 @@ subroutines {
       no_answer  = No, I don't need the tutorial.
       var        = in_tutorial
       }
-      : print {( "Note you can change in and out of tutorial mode with <TUTORIAL<#00f>> " + yn + " before you have completed the first few tasks, though this may break narrative continuity." )} ;
+      : print {( "Note you can change in and out of tutorial mode with " + tut + " " + yn + " before you have completed the first few tasks, though this may break narrative continuity." )} ;
       : press_any_key ;
       : clear_screen ;
    }
@@ -1069,10 +1070,10 @@ subroutines {
    }
 
    options_list : subroutine {
-      : print {( "Many games have options for sound, etc. " + qt + " uses <YOUROPT YES/Y<#00f>> and <YOUROPT NO/N<#00f>> to change them. <YOUROPT <#00f>> shows its status." )} ;
+      : print {( "Many games have options for sound, etc. " + qt + " uses <YOUROPT YES/Y<#88f>> and <YOUROPT NO/N<#88f>> to change them. <YOUROPT <#88f>> shows its status." )} ;
       : if (tutorial_in_options)
       {
-         : print {( "<TUTORIAL<#0f0>> is the first option command, " + (tutorial_done ? "but you've finished the tutorial, so I won't mention it again" : "though it's disabled once the tutorial is done" ) + "." )} ;
+         : print {( tut + " is the first option command, " + (tutorial_done ? "but you've finished the tutorial, so I won't mention it again" : "though it's disabled once the tutorial is done" ) + "." )} ;
          : if (tutorial_done) {
             : set_false "tutorial_in_options" ;
          }
@@ -1116,11 +1117,11 @@ subroutines {
          : done ;
       }
       : match "tutorial -" {
-         : print {( "Toggling <TUTORIAL<#0f0>> without an argument is not supported. " + notify_string )};
+         : print {( "Toggling " + tut + " without an argument is not supported. " + notify_string )};
          : done ;
       }
       : match "tutorial *" {
-         : print {( "The argument after <TUTORIAL<#0f0>> wasn't recognized. " + notify_string )};
+         : print {( "The argument after " + tut + " wasn't recognized. " + notify_string )};
       }
    }
    tutorial_progress : subroutine {
