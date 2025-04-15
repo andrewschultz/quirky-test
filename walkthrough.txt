@@ -42,7 +42,7 @@ How would Whoa Guest fit in this?
 
 With ...
 
-> GO WEST
+> GO WEST (1)
 
 Note you only have to type W or WEST. I could've been nitpicky, but Adventuron's parser is simple, and I wanted people to be able to guess if possible.
 
@@ -75,7 +75,7 @@ This provides perhaps not the quickest way to go through things, but quick enoug
 
 > N
 
-> FLY SCORE
+> FLY SCORE (1)
 
 > S
 
@@ -83,31 +83,31 @@ Note that once you solve a spoonerised area, you can't go back. This is hopefull
 
 > NE
 
-> BENDING TRUTH
+> BENDING TRUTH (1)
 
 > SW
 
 > E
 
-> BORING WAY
+> BORING WAY (1)
 
 > W
 
 > SE
 
-> DIRT HOME
+> DIRT HOME (1)
 
 > NW
 
 > SW
 
-> POURING RAIN
+> POURING RAIN (1)
 
 > NE
 
 > W
 
-> FUNNY MOUNTAIN
+> FUNNY MOUNTAIN (1)
 
 > E
 
@@ -115,7 +115,7 @@ One thing about going northeast: if you'd gone there right away, you wouldn't ha
 
 > NW
 
-> GRIM TUNE
+> GRIM TUNE (1)
 
 > SE
 
@@ -129,7 +129,7 @@ You should now get notification you can jump around. You don't really need to, t
 
 > E
 
-> SHELL FORT
+> FELL SHORT (1)
 
 Fun trivia: this is the only one on the west side you can get by itself.
 
@@ -137,37 +137,37 @@ Fun trivia: this is the only one on the west side you can get by itself.
 
 > SE
 
-> TAKE CRACKERS
+> TAKE CRACKERS (1)
 
 > NW
 
 > SW
 
-> SHIFT GOALS
+> SHIFT GOALS (1)
 
 > NE
 
 > W
 
-> GRUNTERS HILL
+> HUNTERS GRILL (1)
 
 > E
 
 > NW
 
-> FELLOW YIELD
+> FELLOW YIELD (1)
 
 > SE
 
 > N
 
-> MASTER PLAN
+> MASTER PLAN (1)
 
 > S
 
 > NE
 
-> CHALICE MAP
+> CHALICE MAP (1)
 
 > SW
 
@@ -175,7 +175,7 @@ Okay, now we can go up the hill!
 
 > U
 
-> HEALING STILL
+> HEALING STILL (1)
 
 Now for the endgame.
 
@@ -187,22 +187,22 @@ Or east.
 
 You're back at the Bold Hub, but there's one more exit! If you prepare it. What to do with the travel grail?
 
-> GRAVEL TRAIL
+> GRAVEL TRAIL (1)
 
 > N
 
 Oh no! A hissing mouse!
 
-> MISSING HOUSE
+> MISSING HOUSE (1)
 
 > N
 
 Glee simmers.
 
-> SEE GLIMMERS
+> SEE GLIMMERS (1)
 
 Now how to you reach those glimmers in My House? Perhaps a recently gained friend...
 
-> HI MOUSE
+> HI MOUSE (1)
 
 Congratulations, you win!
