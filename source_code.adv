@@ -22,6 +22,7 @@ booleans {
    ## game option booleans
    score_notify : boolean "true" ;
    tutorial_in_options : boolean "true" ;
+   use_color_coding : boolean "true" ;
 
    ## game progress booleans
    tutorial_done : boolean "false" ;
@@ -219,6 +220,8 @@ strings {
    my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own." : "Glee simmers here as you think, yes, this really is MY HOUSE!\nAnd yet, homeownership is nice and all, but ... what about Thor's quest?"
    )};
 
+   ## color code stuff
+   cc_whoaguest : dynamic_string {( use_color_coding ? "<\"Whoa! Guest!\"<#f88>>" : "\"Whoa! Guest!\"" )} ;
 }
 
 ## Objects with vocabulary
@@ -228,7 +231,7 @@ objects {
    ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
 
   # scenery
-  cheering_voice : scenery "cheering voice" msg="It gives a cheery \"Whoa! Guest!\"" conspicuous="false";
+  cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoaguest}" conspicuous="false";
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="bold_hub" conspicuous="false";
 
   # NPC(s)
@@ -256,7 +259,7 @@ locations {
          }
          : match "listen _; hear _" {
             : if (tutorial_x_ask_done) {
-               : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a \"Whoa! Guest!\" You'd like to see where it's from. But which direction is that?" ;
+               : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a {cc_whoaguest} You'd like to see where it's from. But which direction is that?" ;
                : create "cheering_voice" ;
                : return ;
             }
@@ -296,7 +299,7 @@ locations {
       on_command {
          : match "talk _;talk thor"  {
             : if (!talked_to_thor) {
-               : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say Whoa, Guest. What can you do with the burst face?\"";
+               : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say {cc_whoaguest} What can you do with the burst face?\"";
                : set_true "talked_to_thor";
                : if (in_tutorial) {
                   : print "Congratulations! You've finished the tutorial." ;
@@ -1150,7 +1153,7 @@ subroutines {
          : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
          : return;
       }
-      : print {( tcue + "the \"Whoa! Guest!\" must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
+      : print {( tcue + "the {cc_whoaguest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
       : return ;
    }
 
