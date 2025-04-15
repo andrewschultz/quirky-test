@@ -218,6 +218,7 @@ strings {
 
    my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own." : "Glee simmers here as you think, yes, this really is MY HOUSE!\nAnd yet, homeownership is nice and all, but ... what about Thor's quest?"
    )};
+
 }
 
 ## Objects with vocabulary
@@ -367,7 +368,7 @@ locations {
 
    quickie_trips: location "QUICKIE TRIPS\n{sub_hub}" {
       on_pre_describe {
-         : set_integer var = "tempint" {(points_right_side)} ;
+         : set_integer var = "tempint" {(points_left_side)} ;
       }
       on_describe {
          : gosub "list_jump_commands" ;
@@ -1073,6 +1074,9 @@ subroutines {
             : set_false "tutorial_in_options" ;
          }
       }
+      : if (in_debug) {
+         : print "DEBUG OPTION: CHEAT turns off/on restrictions in hub puzzles so you can do them in any order." ;
+      }
       : print {( "The only main option is " + notif + ", for score notification." )};
       : print {( "Note that we use " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is reserved by Adventuron." )};
       : print {( "Also note that a verb alone will not be recognized. At least, not in the initial version of " + qt + "." )} ;
@@ -1175,7 +1179,7 @@ subroutines {
    verb_list : subroutine {
       : set_true "tutorial_verbs_done" ;
       : print {( "While " + qt + " requires you to guess some verbs as part of a puzzle, it doesn't require any nonstandard verbs to move around or manipulate objects or NPCs." )} ;
-      : print "There are no diagonal directions, only N S E W U D and IN and OUT. You can use the long form of each direction, but it is not necessary." ;
+      : print {( qt + " uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary." )} ;
       : print "You can <TAKE<#0f0>> an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle." )} ;
       : if (jump_commands_notified) {
@@ -1412,10 +1416,7 @@ on_command {
    }
    : match "exits _" {
       : if (is_at "nameless_lameness") {
-         : print "There's a puzzle here to start. The tutorial can walk you through it." ;
-         }
-      : else {
-         : print "I should list exits here.";
+         : print "There's a puzzle here to start, before you get a clue which way to go. The tutorial can walk you through it." ;
       }
    }
    : match "think _" {
