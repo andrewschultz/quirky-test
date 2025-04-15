@@ -1037,6 +1037,25 @@ subroutines {
       }
    }
 
+   options_cheat : subroutine {
+      : match "cheat -" {
+         : print "CHEAT alone doesn't work. You need to CHEAT YES or CHEAT NO." ;
+         : done ;
+      }
+      : match "cheat yes;cheat y" {
+         : print "CHEAT is now activated. You don't have to do puzzles in order." ;
+         : set_true "cheat_dont_require" ;
+         : done ;
+      }
+      : match "cheat no;cheat n" {
+         : print "CHEAT is now deactivated. You will have to do puzzles in order." ;
+         : set_false "cheat_dont_require" ;
+         : done ;
+      }
+      : print "CHEAT requires YES or NO." ;
+      : done ;
+   }
+
    options_list : subroutine {
       : print {( "Many games have options for sound, etc. " + qt + " uses <YOUROPT YES/Y<#00f>> and <YOUROPT NO/N<#00f>> to change them. <YOUROPT <#00f>> shows its status." )} ;
       : if (tutorial_in_options)
@@ -1412,14 +1431,19 @@ on_command {
    : match "option _;options _;opts _;opt _" {
       : gosub "options_list";
    }
+   : if (in_debug) {
+      : match "cheat _" {
+         : gosub "options_cheat" ;
+      }
+   }
    : match "notify _" {
-      : gosub "options_notify";
+      : gosub "options_notify" ;
    }
    : match "tutorial _" {
-      : gosub "options_tutorial";
+      : gosub "options_tutorial" ;
    }
    : match "meta _" {
-      : gosub "verb_meta_list";
+      : gosub "verb_meta_list" ;
    }
 }
 
