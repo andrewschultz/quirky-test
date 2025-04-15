@@ -179,42 +179,42 @@ strings {
       tempint == 1 ? "six" :
       "(error, bug, {tempint})"
       )};
-   spokes_left: dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven spokes here." : (tempint == 7 ? "You've taken care of business in all seven remaining planar directions." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
+   spokes_left: dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven spokes here." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
    ## quickie trips seeding for dynamic strings, starting north and going clockwise
-   qt_plaster_man : string "A plaster man stands here. Perhaps there is something inside it." ;
+   qt_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
    qt_master_plan : string "With the plaster man destroyed, there's not much left here." ;
-   qt_malice_chap : string "You feel the malice here from the malice chap." ;
+   qt_malice_chap : string "You feel the malice here from the {cc_malice_chap}." ;
    qt_chalice_map : string "You got the chalice map here. There can't really be anything left to do." ;
-   qt_shell_fort : string "A shell fort sits here. It occasionally fires rounds that get close to you. While there's no danger of you getting hit, it's still annoying and gets in the way of trying to find anything." ;
+   qt_shell_fort : string "A {cc_shell_fort} sits here. It occasionally fires rounds that get close to you. While there's no danger of you getting hit, it's still annoying and gets in the way of trying to find anything." ;
    qt_fell_short : string "The shell fort lies barren now. You even ransacked it for rations." ;
-   qt_cake_trackers : string "Cake trackers mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
+   qt_cake_trackers : string "{cc_cake_trackers} mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
    qt_take_crackers : string "Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
-   qt_gift_shoals : string "Gift shoals are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
+   qt_gift_shoals : string "{cc_gift_shoals} are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
    qt_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
-   qt_grunters_hill : string "Grunts from hills, here. That must make the hills grunters' hills. It's like people are trying to forage for food, but of course their making noise makes it hard. Their grunts are mainly about not having enough food." ;
+   qt_grunters_hill : string "Grunts from a big hill, here. That must make it a {cc_grunters_hill}. It's like people are trying to forage for food, but of course their making noise makes it hard. Their grunts are mainly about not having enough food." ;
    qt_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
-   qt_yellow_field : string "Someone is blocking you here in this yellow field. Why, or from what, you're not sure." ;
+   qt_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure." ;
    qt_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
    ## tricky quips seeding for dynamic strings, starting north and going clockwise
-   tq_sky_floor : string "The sky/floor here gives you poetic thoughts. Well, maybe not quite poetic, maybe wordless. You're not quite sure, but when you figure it out, you're sure you'll think up something cool." ;
+   tq_sky_floor : string "The {cc_sky_floor} here gives you poetic thoughts. Well, maybe not quite poetic, maybe wordless. You're not quite sure, but when you figure it out, you're sure you'll think up something cool." ;
    tq_fly_score : string "It was inspirational to think up a neat little tune here, but you want to share it now." ;
-   tq_trending_booth : string "A trending booth sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
+   tq_trending_booth : string "A {cc_trending_booth} sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
    tq_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
-   tq_warring_bay : string "You don't know how or why a war started in this warring bay, but it's ongoing and seems like it has for a while. Everyone there seems to find it very, very exciting." ;
+   tq_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}, but it's ongoing and seems like it has for a while. Everyone there seems to find it very, very exciting." ;
    tq_boring_way : string "Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
-   tq_hurt_dome : string "hurt dome" ;
-   tq_dirt_home : string "dirt home" ;
-   tq_roaring_pain : string "You feel roaring pain. While there's some shelter here from above, it doesn't help with the internal stuff." ;
+   tq_hurt_dome : string "A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to actively hurt anyone or anything. But it'd still be nice to make sure." ;
+   tq_dirt_home : string "The dirt home you summoned stands here, infinitely less menacing than its previous form" ;
+   tq_roaring_pain : string "You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
    tq_pouring_rain : string "The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
-   tq_money_fountain : string "A money fountain is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
+   tq_money_fountain : string "A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
    tq_funny_mountain : string "A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
-   tq_trim_goon : string "A trim goon sits here, ready to rough you up. They seem quite pleased to have the job they do." ;
+   tq_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up. They seem quite pleased to have the job they do." ;
    tq_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## stealing hill
-   stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A stealing hill glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
+   stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ;
 
@@ -222,11 +222,40 @@ strings {
       point_missing_house ? ", or you can go NORTH inside the house you made." : ""
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own." : "Glee simmers here as you think, yes, this really is MY HOUSE!\nAnd yet, homeownership is nice and all, but ... what about Thor's quest?"
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}!\nAnd yet, homeownership is nice and all, but ... what about Thor's quest?"
    )};
 
    ## color code stuff
-   cc_whoaguest : dynamic_string {( use_color_coding ? "<\"Whoa! Guest!\"<#f88>>" : "\"Whoa! Guest!\"" )} ;
+
+   ## intro first
+   cc_whoa_guest : dynamic_string {( use_color_coding ? "<\"Whoa! Guest!\"<#f88>>" : "\"Whoa! Guest!\"" )} ;
+   cc_burst_face : dynamic_string {( use_color_coding ? "<burst face<#f88>>" : "burst face")}
+   cc_hold_bub : dynamic_string {( use_color_coding ? "<HOLD, BUB<#f88>>" : "HOLD, BUB")}
+
+   ## west hub
+   cc_plaster_man : dynamic_string {( use_color_coding ? "<plaster man<#f88>>" : "plaster man" )} ;
+   cc_malice_chap : dynamic_string {( use_color_coding ? "<malice chap<#f88>>" : "malice chap" )} ;
+   cc_shell_fort : dynamic_string {( use_color_coding ? "<shell fort<#f88>>" : "shell fort")} ;
+   cc_cake_trackers : dynamic_string {( use_color_coding ? "<Cake trackers<#f88>>" : "Cake trackers")} ;
+   cc_gift_shoals : dynamic_string {( use_color_coding ? "<Gift shoals<#f88>>" : "Gift shoals")} ;
+   cc_grunters_hill : dynamic_string {( use_color_coding ? "<grunters' hill<#f88>>" : "grunters' hill")} ;
+   cc_yellow_field : dynamic_string {( use_color_coding ? "<yellow field<#f88>>" : "yellow field")} ;
+
+   ## east hub
+   cc_sky_floor : dynamic_string {( use_color_coding ? "<sky floor<#f88>>" : "sky floor")}
+   cc_trending_booth : dynamic_string {( use_color_coding ? "<trending booth<#f88>>" : "trending booth")}
+   cc_warring_bay : dynamic_string {( use_color_coding ? "<warring bay<#f88>>" : "warring bay")}
+   cc_hurt_dome : dynamic_string {( use_color_coding ? "<hurt dome<#f88>>" : "hurt dome")}
+   cc_roaring_pain : dynamic_string {( use_color_coding ? "<roaring pain<#f88>>" : "roaring pain")}
+   cc_money_fountain : dynamic_string {( use_color_coding ? "<money fountain<#f88>>" : "money fountain")}
+   cc_trim_goon : dynamic_string {( use_color_coding ? "<trim goon<#f88>>" : "trim goon")} ;
+
+   ## endgame
+   cc_stealing_hill : dynamic_string {( use_color_coding ? "<stealing hill<#f88>>" : "stealing hill")}
+   cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "travel grail")} ## may not be used
+   cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")}
+   cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "glee simmers")}
+   cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")}
 }
 
 ## Objects with vocabulary
@@ -236,7 +265,7 @@ objects {
    ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
 
   # scenery
-  cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoaguest}" conspicuous="false";
+  cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false";
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="bold_hub" conspicuous="false";
 
   # NPC(s)
@@ -264,7 +293,7 @@ locations {
          }
          : match "listen _; hear _" {
             : if (tutorial_x_ask_done) {
-               : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a {cc_whoaguest} You'd like to see where it's from. But which direction is that?" ;
+               : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a {cc_whoa_guest} You'd like to see where it's from. But which direction is that?" ;
                : create "cheering_voice" ;
                : return ;
             }
@@ -304,7 +333,7 @@ locations {
       on_command {
          : match "talk _;talk thor"  {
             : if (!talked_to_thor) {
-               : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say {cc_whoaguest} What can you do with the burst face?\"";
+               : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say {cc_whoa_guest} What can you do with the burst face?\"";
                : set_true "talked_to_thor";
                : if (in_tutorial) {
                   : print "Congratulations! You've finished the tutorial." ;
@@ -314,7 +343,7 @@ locations {
                : print "Ask me about any rule in Graham Nelson's Player's Bill of Rights, with ASK (1-10). (Not implemented) I can't give you spoilers." ;
             }
             : else {
-               : print {( point_first_base ? "\"This is just meant to be a fun little adventure. But there's some education here. You had the tutorial with basic commands, but I wanted to give a little theory, too. About what you can expect from a text adventure in terms of fairness. I'm cribbing from Graham Nelson's Player's Bill of Rights and showing you how it applies to your adventure here. You can ask me about it at any time with RULE (1-10). Here's where I boom HOLD, BUB. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
+               : print {( point_first_base ? "\"This is just meant to be a fun little adventure. But there's some education here. You had the tutorial with basic commands, but I wanted to give a little theory, too. About what you can expect from a text adventure in terms of fairness. I'm cribbing from Graham Nelson's Player's Bill of Rights and showing you how it applies to your adventure here. You can ask me about it at any time with RULE (1-10). Here's where I boom {cc_hold_bub}. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
                : set_true "know_hold_bub" ;
             }
          }
@@ -661,7 +690,7 @@ locations {
          }
       }
    };
-   tq_se : location "There's a {point_dirt_home ? tq_dirt_home : tq_hurt_dome} here." {
+   tq_se : location "{point_dirt_home ? tq_dirt_home : tq_hurt_dome}" {
       on_command {
       : match "dirt home" {
          : if (point_dirt_home) {
@@ -754,7 +783,7 @@ locations {
    gravel_trail : location "This is a gravel trail. You can go back south to the bold hub{gravel_trail_house}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
-            : print "A hissing mouse hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
+            : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
          }
       }
       on_command {
@@ -1267,7 +1296,7 @@ subroutines {
          : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
          : return;
       }
-      : print {( tcue + "the {cc_whoaguest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
+      : print {( tcue + "the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
       : return ;
    }
 
