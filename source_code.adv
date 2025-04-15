@@ -289,7 +289,7 @@ locations {
       on_describe {
          : set_false "in_number_choice" ;
          : if ( is_beside "cheering_voice") {
-            : print "The cheering voice still floats around. You can HEAR it or LISTEN.";
+            : print "The cheering voice still floats around. You can {lishea} it.";
          }
          : else_if (is_carried "ooh_task" && tutorial_x_ask_done) {
             : print "But it's no longer silent. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>.";
@@ -801,7 +801,11 @@ locations {
          : match "hi mouse;high mouse" {
             : if (point_see_glimmering) {
                : print "Yes! The mouse uncovers the rare thing there ring. You're glad to give it a cut of the useless but shiny trinkets. You win. (Fill in Thor's congratulations later and create a final image.)";
+               : if (!footnotes_available) {
+                  : print "Thor congratulates you, noting that footnotes will be available on replay, if you choose to have them." ;
+               }
                : gosub "add_point" ;
+               : set_true "footnotes_available";
                : win_game ;
                : done ;
             }
@@ -1026,8 +1030,8 @@ subroutines {
       : return ;
    }
    tutorial_choice : subroutine {
-   : ask_bool { ##? how do we put QT in here?
-      question   = <Quirky Test<#ff0>> has a tutorial mode for the first few puzzles. Would you like to use it?
+   : ask_bool {
+      question   = {qt} has a tutorial mode for the first few puzzles. Would you like to use it?
       yes_answer = Yes, I'd like to use the tutorial.
       no_answer  = No, I don't need the tutorial.
       var        = in_tutorial
@@ -1257,8 +1261,8 @@ themes {
 ## On_debug and on_startup call the INIT subroutine, but on_debug sets a flag or flags to allow for cheat commands
 
 on_debug {
-##   : set_true "in_debug" ;
-##   : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
+   : set_true "in_debug" ;
+   : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
    : gosub "init" ;
    : gosub "tutorial_choice" ;
 }
