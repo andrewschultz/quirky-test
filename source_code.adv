@@ -1035,6 +1035,12 @@ subroutines {
       : print {( "Note you can change in and out of tutorial mode with " + tut + " " + yn + " before you have completed the first few tasks, though this may break narrative continuity." )} ;
       : press_any_key ;
       : clear_screen ;
+      : ask_bool {
+      question   = {qt} also allows for color-coded hinting for important location details. This may help, or it may spoil things, too. You can change this option in-game, but I want the player to be aware of it to start. Would you like to activate it?
+      yes_answer = Yes, I'd like color-coded hinting.
+      no_answer  = No, I'd prefer not to have color-coded hinting.
+      var        = use_color_coding
+      }
    }
    long_words_note : subroutine {
       : if (!long_word_warn) {
@@ -1066,6 +1072,25 @@ subroutines {
          : done ;
       }
       : print "CHEAT requires YES or NO." ;
+      : done ;
+   }
+
+   options_colorhint : subroutine {
+      : match "ch -;colorhint -" {
+         : print "CH or COLORHINT alone doesn't work. You need to CH YES or CH NO." ;
+         : done ;
+      }
+      : match "ch yes;ch y;colorhint yes;colorhint y" {
+         : print "Color hints are now activated." ;
+         : set_true "use_color_coding" ;
+         : done ;
+      }
+      : match "ch no;ch n;colorhint n;colorhint no" {
+         : print "Color hints are now deactivated." ;
+         : set_false "use_color_coding" ;
+         : done ;
+      }
+      : print "CH/COLORHINT requires YES or NO." ;
       : done ;
    }
 
@@ -1474,6 +1499,9 @@ on_command {
    }
    : match "meta _" {
       : gosub "verb_meta_list" ;
+   }
+   : match "ch _;colorhint _" {
+      : gosub "options_colorhint" ;
    }
 }
 
