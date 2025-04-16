@@ -43,6 +43,8 @@ booleans {
    read_footnote_3 : boolean "false" ;
    revealed_footnote_4 : boolean "false" ;
    read_footnote_4 : boolean "false" ;
+   revealed_footnote_5 : boolean "false" ;
+   read_footnote_5 : boolean "false" ;
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
@@ -181,7 +183,7 @@ strings {
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 
-   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why." : "" )} ;
+   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_travel_grail ? ", and your travel grail opened up a path north" : "" )} ;
 
    sub_hub: dynamic_string {( "Here in the " + (is_at "quickie_trips" ? "west" : "east" ) + " mini-hub, you can go south back to the bold hub or " + (has_visited("bold_hub") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
@@ -272,10 +274,11 @@ strings {
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
 
    ## footnote notifications and other dynamic strings
-   footnote_1_reveal : dynamic_string {( revealed_footnote_1 && footnotes_available ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
-   footnote_2_reveal : dynamic_string {( revealed_footnote_2 && footnotes_available ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
-   footnote_3_reveal : dynamic_string {( revealed_footnote_3 && footnotes_available ? "" : " (<FOOTNOTE 3<#f80>>)" )} ;
-   footnote_4_reveal : dynamic_string {( revealed_footnote_4 && footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
+   footnote_1_reveal : dynamic_string {( revealed_footnote_1 || !footnotes_available ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
+   footnote_2_reveal : dynamic_string {( revealed_footnote_2 || !footnotes_available ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
+   footnote_3_reveal : dynamic_string {( revealed_footnote_3 || !footnotes_available ? "" : " (<FOOTNOTE 3<#f80>>)" )} ;
+   footnote_4_reveal : dynamic_string {( revealed_footnote_4 || !footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
+   footnote_5_reveal : dynamic_string {( revealed_footnote_5 || !footnotes_available ? "" : " (<FOOTNOTE 5<#f80>>)" )} ;
 }
 
 ## Objects with vocabulary
@@ -1198,6 +1201,16 @@ subroutines {
          : print "\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts." ;
          : print "Also, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun." ;
          : set_true "read_footnote_4" ;
+         : done ;
+      }
+      : match "f 5" {
+         : if (!revealed_footnote_5) {
+            : print "You haven't revealed footnote 5 yet." ;
+            : done ;
+         }
+         : print "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous." ;
+         : print "Other names that need a plural include Sean Kent's conscience (if you don't pronounce PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common." ;
+         : set_true "read_footnote_5" ;
          : done ;
       }
       : print {( "I couldn't find a footnote numbered " + original "noun1" + ". At least, not one I revealed, yet." )} ;
