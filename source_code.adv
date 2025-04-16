@@ -19,6 +19,7 @@ booleans {
    footnotes_available : boolean "false" scope="survivor";
    hill_aware_you_stole : boolean "false" ;
    ask_fifth : boolean "false" ;
+   xme_twice : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -303,7 +304,11 @@ locations {
                : print {( "While " + xme + " is a useful command, and one you'll be using in this tutorial, we're a bit on rails. There are meta-commands to acquaint yourself with first." )};
             }
             : else_if (is_carried "ooh_task") {
-               : print "Got what you need." ;
+               : print "As AFGNCAAPy as ever!" ;
+               : if (!xme_twice) {
+                  : print "Oh, and nothing further was hidden on you." ;
+                  : set_true "xme_twice" ;
+               }
             }
             : else {
                : pocket "ooh_task" ;
