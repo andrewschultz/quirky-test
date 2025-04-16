@@ -37,6 +37,8 @@ booleans {
    ## footnote check booleans
    revealed_footnote_1 : boolean "false" ;
    read_footnote_1 : boolean "false" ;
+   revealed_footnote_2 : boolean "false" ;
+   read_footnote_2 : boolean "false" ;
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
@@ -267,6 +269,7 @@ strings {
 
    ## footnote notifications and other dynamic strings
    footnote_1_reveal : dynamic_string {( revealed_footnote_1 ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
+   footnote_2_reveal : dynamic_string {( revealed_footnote_2 ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
 }
 
 ## Objects with vocabulary
@@ -329,13 +332,14 @@ locations {
             }
             : else_if (is_carried "ooh_task") {
                : print "As AFGNCAAPy as ever!{footnote_1_reveal}" ;
-               : if ((footnotes_available) && (!revealed_footnote_1)) {
-                  : set_true "revealed_footnote_1" ;
-               }
                : if (!xme_twice) {
                   : print "Oh, and nothing further was hidden on you." ;
                   : set_true "xme_twice" ;
                }
+               : if (!revealed_footnote_1) {
+                  : set_true "revealed_footnote_1" ;
+               }
+               : gosub "f_footnote_notify" ;
             }
             : else {
                : pocket "ooh_task" ;
@@ -1656,6 +1660,13 @@ on_command {
    : match "drop _" {
       : print {( drop_referenced ? "No need to <DROP<#0f0>> anything." : "While classic text adventures often required the player to use <DROP<#0f0>> due to inventory limits, this is often regarded as needless fiddling today. Modern text adventures, such as this, often take steps to keep the player's inventory manageable so they can focus on puzzles, finding plot-plausible reasons to dispose of items that are no longer necessary. Plus there aren't many items to carry here." )};
       : set_true "drop_referenced" ;
+   }
+   : match "xyzzy _" {
+      : print "A low voice booms \"Vexing howl? Hexing?! VOWELS!\"{footnote_2_reveal}";
+      : if (footnotes_available && (!revealed_footnote_2)) {
+         : set_true "revealed_footnote_2" ;
+         : gosub "f_footnote_notify" ;
+      }
    }
    : match "listen _; hear _" {
       : print "You don't hear anything right now." ;
