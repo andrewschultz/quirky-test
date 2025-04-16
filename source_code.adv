@@ -858,14 +858,6 @@ connections {
    from, direction, to = [
 
       ## two-way stuff first
-      tricky_quips, north, tq_n,
-      tricky_quips, northeast, tq_ne,
-      tricky_quips, east, tq_e,
-      tricky_quips, southeast, tq_se,
-      tricky_quips, southwest, tq_sw,
-      tricky_quips, west, tq_w,
-      tricky_quips, northwest, tq_nw,
-
       quickie_trips, north, qt_n,
       quickie_trips, northeast, qt_ne,
       quickie_trips, east, qt_e,
@@ -874,7 +866,32 @@ connections {
       quickie_trips, west, qt_w,
       quickie_trips, northwest, qt_nw,
 
-      ## one-way/bending path stuff below
+      tricky_quips, north, tq_n,
+      tricky_quips, northeast, tq_ne,
+      tricky_quips, east, tq_e,
+      tricky_quips, southeast, tq_se,
+      tricky_quips, southwest, tq_sw,
+      tricky_quips, west, tq_w,
+      tricky_quips, northwest, tq_nw,
+
+      ## one-way facilitations
+      qt_n, leave_oneway, quickie_trips,
+      qt_ne, leave_oneway, quickie_trips,
+      qt_e, leave_oneway, quickie_trips,
+      qt_se, leave_oneway, quickie_trips,
+      qt_sw, leave_oneway, quickie_trips,
+      qt_w, leave_oneway, quickie_trips,
+      qt_nw, leave_oneway, quickie_trips,
+
+      tq_n, leave_oneway, tricky_quips,
+      tq_ne, leave_oneway, tricky_quips,
+      tq_e, leave_oneway, tricky_quips,
+      tq_se, leave_oneway, tricky_quips,
+      tq_sw, leave_oneway, tricky_quips,
+      tq_w, leave_oneway, tricky_quips,
+      tq_nw, leave_oneway, tricky_quips,
+
+      ## one-way between connected rooms
       ## hub bending paths
 
       bold_hub, west_oneway, quickie_trips,
@@ -984,6 +1001,16 @@ barriers {
 }
 
 subroutines {
+   init : subroutine {
+   : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
+   : print "Submitted for the 2025 TALP competition." ;
+   : press_any_key ;
+   : if (footnotes_available) {
+     : print "Because you went through once, footnotes are now available.";
+     : press_any_key ;
+     }
+   : clear_screen ;
+   }
    add_point : subroutine {
       : if (score_notify) {
          : print "<Your score just went up by a point!<#ff0>>" ;
@@ -1101,16 +1128,6 @@ subroutines {
       }
       : set_true "jump_commands_notified" ;
       : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_bh + " = bold hub\n" + v_qt + " = quickie trips\n" + v_sh + " = Stealing Hill\n" + v_tq + " = tricky quips" )} ;
-   }
-   init : subroutine {
-   : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
-   : print "Submitted for the 2025 TALP competition." ;
-   : press_any_key ;
-   : if (footnotes_available) {
-     : print "Because you went through once, footnotes are now available.";
-     : press_any_key ;
-     }
-   : clear_screen ;
    }
    think_thoughts : subroutine {
       : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
