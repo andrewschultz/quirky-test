@@ -45,6 +45,8 @@ booleans {
    read_footnote_4 : boolean "false" ;
    revealed_footnote_5 : boolean "false" ;
    read_footnote_5 : boolean "false" ;
+	revealed_footnote_6 : boolean "false" ;
+	read_footnote_6 : boolean "false" ;
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
@@ -279,6 +281,7 @@ strings {
    footnote_3_reveal : dynamic_string {( revealed_footnote_3 || !footnotes_available ? "" : " (<FOOTNOTE 3<#f80>>)" )} ;
    footnote_4_reveal : dynamic_string {( revealed_footnote_4 || !footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
    footnote_5_reveal : dynamic_string {( revealed_footnote_5 || !footnotes_available ? "" : " (<FOOTNOTE 5<#f80>>)" )} ;
+	footnote_6_reveal : dynamic_string {( revealed_footnote_6 || !footnotes_available ? "" : " (<FOOTNOTE 6<#f80>>)" )} ;
 }
 
 ## Objects with vocabulary
@@ -370,6 +373,10 @@ locations {
    };
    burst_face : location "{ point_first_base ? burst_face_after : burst_face_before }" {
       on_command {
+         : match "east _" {
+            : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_6_reveal}" )} ;
+            : set_true "revealed_footnote_6";
+         }
          : match "talk _;talk thor"  {
             : if (!talked_to_thor) {
                : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say {cc_whoa_guest} What can you do with the burst face?\"";
@@ -1213,6 +1220,15 @@ subroutines {
          : set_true "read_footnote_5" ;
          : done ;
       }
+		: match "f 6" {
+			: if (!revealed_footnote_6) {
+				: print "You haven't revealed footnote 6 yet." ;
+				: done ;
+			}
+			: print "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a dead end. Which can be fun for a bit, until it really, really isn't." ;
+			: set_true "read_footnote_6" ;
+			: done ;
+		}
       : print {( "I couldn't find a footnote numbered " + original "noun1" + ". At least, not one I revealed, yet." )} ;
       : done ;
    }
