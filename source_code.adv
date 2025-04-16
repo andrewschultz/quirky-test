@@ -1,3 +1,5 @@
+## warning about this code: even the variable names contain spoilers!
+## so you may want to play through the game first.
 
 start_at = nameless_lameness
 start_theme = my_theme
@@ -230,8 +232,8 @@ strings {
 
    ## intro first
    cc_whoa_guest : dynamic_string {( use_color_coding ? "<\"Whoa! Guest!\"<#f88>>" : "\"Whoa! Guest!\"" )} ;
-   cc_burst_face : dynamic_string {( use_color_coding ? "<burst face<#f88>>" : "burst face")}
-   cc_hold_bub : dynamic_string {( use_color_coding ? "<HOLD, BUB<#f88>>" : "HOLD, BUB")}
+   cc_burst_face : dynamic_string {( use_color_coding ? "<burst face<#f88>>" : "burst face")} ;
+   cc_hold_bub : dynamic_string {( use_color_coding ? "<HOLD, BUB<#f88>>" : "HOLD, BUB")} ;
 
    ## west hub
    cc_plaster_man : dynamic_string {( use_color_coding ? "<plaster man<#f88>>" : "plaster man" )} ;
@@ -243,20 +245,20 @@ strings {
    cc_yellow_field : dynamic_string {( use_color_coding ? "<yellow field<#f88>>" : "yellow field")} ;
 
    ## east hub
-   cc_sky_floor : dynamic_string {( use_color_coding ? "<sky floor<#f88>>" : "sky floor")}
-   cc_trending_booth : dynamic_string {( use_color_coding ? "<trending booth<#f88>>" : "trending booth")}
-   cc_warring_bay : dynamic_string {( use_color_coding ? "<warring bay<#f88>>" : "warring bay")}
-   cc_hurt_dome : dynamic_string {( use_color_coding ? "<hurt dome<#f88>>" : "hurt dome")}
-   cc_roaring_pain : dynamic_string {( use_color_coding ? "<roaring pain<#f88>>" : "roaring pain")}
-   cc_money_fountain : dynamic_string {( use_color_coding ? "<money fountain<#f88>>" : "money fountain")}
+   cc_sky_floor : dynamic_string {( use_color_coding ? "<sky floor<#f88>>" : "sky floor")} ;
+   cc_trending_booth : dynamic_string {( use_color_coding ? "<trending booth<#f88>>" : "trending booth")} ;
+   cc_warring_bay : dynamic_string {( use_color_coding ? "<warring bay<#f88>>" : "warring bay")} ;
+   cc_hurt_dome : dynamic_string {( use_color_coding ? "<hurt dome<#f88>>" : "hurt dome")} ;
+   cc_roaring_pain : dynamic_string {( use_color_coding ? "<roaring pain<#f88>>" : "roaring pain")} ;
+   cc_money_fountain : dynamic_string {( use_color_coding ? "<money fountain<#f88>>" : "money fountain")} ;
    cc_trim_goon : dynamic_string {( use_color_coding ? "<trim goon<#f88>>" : "trim goon")} ;
 
    ## endgame
-   cc_stealing_hill : dynamic_string {( use_color_coding ? "<stealing hill<#f88>>" : "stealing hill")}
+   cc_stealing_hill : dynamic_string {( use_color_coding ? "<stealing hill<#f88>>" : "stealing hill")} ;
    cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "travel grail")} ## may not be used
-   cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")}
-   cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "glee simmers")}
-   cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")}
+   cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
+   cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "glee simmers")} ;
+   cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
 }
 
 ## Objects with vocabulary
@@ -269,14 +271,15 @@ objects {
   cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false";
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="bold_hub" conspicuous="false";
 
-  # NPC(s)
-  beery_thor : object "Beery Thor" msg="Big and strong and friendly.";
+   ## NPC(s)
+   beery_thor : object "Beery Thor" msg="Big and strong and friendly.";
 
-   # found later
+   ## found later
    crackers: object "Crackers" msg="More crackers than you could ever want." ;
    pacing_rations: object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ;
    travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
    hissing_mouse: scenery "A hissing mouse" at= "gravel_trail" conspicuous="false" ;
+
 }
 
 vocabulary {
@@ -1340,9 +1343,9 @@ subroutines {
       : set_true "tutorial_about_done" ;
    }
    meta_thanks : subroutine {
-      : print "Thanks to TALP admins past and future.";
-      : print "Thanks to Chris Ainsley (sp?) for creating Adventuron.";
-      : print "Thanks to my testers.";
+      : print "Thanks to TALP admins past and future: Chris Ainsley and Garry Francis.";
+      : print "Thanks to Chris Ainsley for creating Adventuron.";
+      : print "Thanks to my testers: Wade Clarke, (others).";
       : print "Thanks to you, for playing this game.";
       : if (in_tutorial && !tutorial_done) {
          : gosub "check_additional_meta" ;
