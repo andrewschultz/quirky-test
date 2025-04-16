@@ -281,7 +281,19 @@ objects {
 
 vocabulary {
    : noun / aliases = [ooh, task, ask]
+   : noun / aliases = [hill, hills]
+   : noun / aliases = [no, n]
+   : noun / aliases = [yes, y]
+   : verb / aliases = [ab, about]
+   : verb / aliases = [glimmer, glimmers, glimmering]
+   : verb / aliases = [ch, colorhint]
+   : verb / aliases = [exit, out]
+   : verb / aliases = [hi, high]
+   : verb / aliases = [not, noti, notif, notify]
+   : verb / aliases = [tx, thx, thank, thanks]
+   : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
+   : verb / aliases = [verb, verbs]
 }
 
 ## Locations and location-specific parser rules
@@ -1200,12 +1212,12 @@ subroutines {
          : print "CHEAT alone doesn't work. You need to CHEAT YES or CHEAT NO." ;
          : done ;
       }
-      : match "cheat yes;cheat y" {
+      : match "cheat yes" {
          : print "CHEAT is now activated. You don't have to do puzzles in order." ;
          : set_true "cheat_dont_require" ;
          : done ;
       }
-      : match "cheat no;cheat n" {
+      : match "cheat no" {
          : print "CHEAT is now deactivated. You will have to do puzzles in order." ;
          : set_false "cheat_dont_require" ;
          : done ;
@@ -1215,16 +1227,16 @@ subroutines {
    }
 
    options_colorhint : subroutine {
-      : match "ch -;colorhint -" {
-         : print "CH or COLORHINT alone doesn't work. You need to CH YES or CH NO." ;
+      : match "ch -" {
+         : print "CH/COLORHINT alone doesn't work. You need to CH YES or CH NO." ;
          : done ;
       }
-      : match "ch yes;ch y;colorhint yes;colorhint y" {
+      : match "ch yes" {
          : print "Color hints are now activated." ;
          : set_true "use_color_coding" ;
          : done ;
       }
-      : match "ch no;ch n;colorhint n;colorhint no" {
+      : match "ch no" {
          : print "Color hints are now deactivated." ;
          : set_false "use_color_coding" ;
          : done ;
@@ -1251,12 +1263,12 @@ subroutines {
    }
 
    options_notify: subroutine {
-      : match "notify yes;notify y" {
+      : match "notify yes" {
          : print "Score notify is now on.";
          : set_true "score_notify";
          : done ;
       }
-      : match "notify no;notify n" {
+      : match "notify no" {
          : print "Score notify is now off.";
          : set_false "score_notify";
          : done ;
@@ -1590,13 +1602,13 @@ on_command {
    : match "think _" {
       : gosub "think_thoughts" ;
    }
-   : match "verb _;verbs _" {
+   : match "verbs _" {
       : gosub "verb_list" ;
    }
    : match "about _" {
       : gosub "meta_about" ;
    }
-   : match "thank _;thanks _" {
+   : match "thanks _" {
       : gosub "meta_thanks" ;
    }
    : match "drop _" {
@@ -1606,7 +1618,7 @@ on_command {
    : match "listen _; hear _" {
       : print "You don't hear anything right now." ;
    }
-   : match "x ooh;x task;x ask" {
+   : match "x ooh" {
       : if (is_carried "ooh_task" && !tutorial_x_ask_done) {
          : mask {
          }
