@@ -354,12 +354,6 @@ locations {
                : set_true "tutorial_x_me_done";
             }
          }
-         : match "go west" {
-            : if (is_beside "cheering_voice") {
-               : print "Yes, the voice says, that is the way!" ;
-               : goto "burst_face" ;
-            }
-         }
       }
       on_describe {
          : set_false "in_number_choice" ;
@@ -1577,11 +1571,15 @@ on_pre_command {
 }
 
 on_command {
-   : if (footnotes_available) {
-      : match "footnote *" {
+   : match "footnote _" {
+      : if (footnotes_available) {
          : gosub "footnote_printer" ;
          : done ;
       }
+      : else {
+         : print "Footnotes aren't available until after you've won the game." ;
+      }
+      : done ;
    }
    : if (jump_commands_notified) {
       : match "sh -" {
