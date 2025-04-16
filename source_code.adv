@@ -268,8 +268,8 @@ strings {
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
 
    ## footnote notifications and other dynamic strings
-   footnote_1_reveal : dynamic_string {( revealed_footnote_1 ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
-   footnote_2_reveal : dynamic_string {( revealed_footnote_2 ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
+   footnote_1_reveal : dynamic_string {( revealed_footnote_1 && footnotes_available ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
+   footnote_2_reveal : dynamic_string {( revealed_footnote_2 && footnotes_available ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
 }
 
 ## Objects with vocabulary
@@ -1165,6 +1165,18 @@ subroutines {
          : print "\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.";
          : print "It's a joke I like a lot, because I throw in a lot of AFGNCAAPs. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this a solipsism. But I think it helps to focus on the puzzles." ;
          : set_true "read_footnote_1" ;
+         : done ;
+      }
+      : match "f 2" {
+         : if (!revealed_footnote_2) {
+            : print "You haven't revealed footnote 2 yet." ;
+            : done ;
+         : print "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure." ;
+         : set_true "read_footnote_2" ;
+         : done ;
+         : print "I couldn't find a footnote numbered {noun}. At least, not one I revealed, yet.";
+         : done ;
+      }
       }
    }
    f_footnote_notify: subroutine {
