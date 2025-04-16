@@ -451,6 +451,7 @@ locations {
       }
       on_describe {
          : gosub "list_jump_commands" ;
+         : gosub "footnote_3_check_function" ;
       }
    };
 
@@ -1202,11 +1203,18 @@ subroutines {
       : print {( "I couldn't find a footnote numbered " + original "noun1" + ". At least, not one I revealed, yet." )} ;
       : done ;
    }
-   f_footnote_notify: subroutine {
+   f_footnote_notify : subroutine {
       : if (!footnote_shortcut_noted) {
          : set_true "footnote_shortcut_noted" ;
          : print "{otn}you can view footnotes with <FOOTNOTE<#8f0>> # or, for brevity, <F<#f80>> #. I won't reveal how many there are, but you can figure them out by guessing and getting different error messages.";
       }
+   }
+   footnote_3_check_function : subroutine {
+      : if (revealed_footnote_3 || !footnotes_available) {
+         : return ;
+      }
+      : print {( "For some history on both Quickie Trips and Tricky Quips, look at{footnote_3_reveal}." )} ;
+      : set_true "revealed_footnote_3" ;
    }
    list_jump_commands : subroutine {
       : if (jump_commands_notified) {
