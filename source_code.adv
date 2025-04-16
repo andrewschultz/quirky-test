@@ -41,6 +41,8 @@ booleans {
    read_footnote_2 : boolean "false" ;
    revealed_footnote_3 : boolean "false" ;
    read_footnote_3 : boolean "false" ;
+   revealed_footnote_4 : boolean "false" ;
+   read_footnote_4 : boolean "false" ;
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
@@ -273,6 +275,7 @@ strings {
    footnote_1_reveal : dynamic_string {( revealed_footnote_1 && footnotes_available ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
    footnote_2_reveal : dynamic_string {( revealed_footnote_2 && footnotes_available ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
    footnote_3_reveal : dynamic_string {( revealed_footnote_3 && footnotes_available ? "" : " (<FOOTNOTE 3<#f80>>)" )} ;
+   footnote_4_reveal : dynamic_string {( revealed_footnote_4 && footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
 }
 
 ## Objects with vocabulary
@@ -1191,6 +1194,17 @@ subroutines {
          : set_true "read_footnote_3" ;
          : done ;
       }
+      : match "f 4" {
+         : if (!revealed_footnote_4) {
+            : print "You haven't revealed footnote 4 yet." ;
+            : done ;
+         }
+         : print "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys." ;
+         : print "\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts." ;
+         : print "Also, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun." ;
+         : set_true "read_footnote_4" ;
+         : done ;
+      }
       : print {( "I couldn't find a footnote numbered " + original "noun1" + ". At least, not one I revealed, yet." )} ;
       : done ;
    }
@@ -1516,7 +1530,8 @@ on_pre_command {
    : match "west _" {
       : if (is_beside "cheering_voice") {
       : gosub "add_point" ;
-      : print "The voice says \"Yes, yes. That is the way.\" The fogginess clears a bit, and as go west, a large, strong man waves to you. \"I'm Beery Thor. Nice to meet you. Got a few things to share with you. Just TALK to me...";
+      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_4_reveal} The fogginess clears a bit, and as go west, a large, strong man waves to you. \"I'm Beery Thor. Nice to meet you. Got a few things to share with you. Just TALK to me...";
+      : set_true "revealed_footnote_4" ;
       : if (in_tutorial) {
          : print {( "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use " + hint + ", though <HELP<#f80>>, another often useful command, is reserved by Adventuron for general parser guidance." )};
       }
