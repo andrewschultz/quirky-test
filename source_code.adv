@@ -115,7 +115,10 @@ booleans {
    ask_15_yet : boolean "false" ;
    ask_16_yet : boolean "false" ;
    ask_17_yet : boolean "false" ;
+
+   ## achievement booleans
    achieve_tyyt: boolean "false" ;
+   achieve_cnnc: boolean "false" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -303,6 +306,7 @@ strings {
 	footnote_6_reveal : dynamic_string {( revealed_footnote_6 || !footnotes_available ? "" : " (<FOOTNOTE 6<#f80>>)" )} ;
 
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
+   achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
 }
 
 ## Objects with vocabulary
@@ -1531,7 +1535,7 @@ subroutines {
    }
    track_achievements : subroutine {
       : if (achieve_tyyt) {
-         : print "(Already got the {achievement_tyyt} achievement)";
+         : print "(Already got the {achievement_tyyt} achievement for ASKing Thor everything)";
       }
       : else_if (ask_1_yet && ask_2_yet && ask_3_yet && ask_4_yet && ask_5_yet && ask_6_yet && ask_7_yet && ask_8_yet && ask_9_yet && ask_10_yet && ask_11_yet && ask_12_yet && ask_13_yet && ask_14_yet && ask_15_yet && ask_16_yet && ask_17_yet) {
          : print "For asking Thor about all the rules in the Player's Bill of Rights, you win the {achievement_tyyt} achievement!" ;
@@ -1540,6 +1544,17 @@ subroutines {
       : else {
          : print "You haven't unlocked the {achievement_tyyt} achievement yet." ;
       }
+      : if (achieve_cnnc) {
+         : print "(Already got the {achievement_tyyt} achievement for finding all bonus points)" ;
+      }
+      : else_if (bonus_point_turkey_quest && bonus_point_theory_bore && bonus_point_death_sentence &&    bonus_point_racing_passions) {
+         : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
+         : set_true "achieve_cnnc" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
+      }
+
    }
 }
 
