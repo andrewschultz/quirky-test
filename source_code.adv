@@ -33,6 +33,10 @@ booleans {
    talked_to_thor : boolean "false" ;
    know_hold_bub : boolean "false" ;
 
+   ## footnote check booleans
+   revealed_footnote_1 : boolean "false" ;
+   read_footnote_1 : boolean "false" ;
+
    ## verb notifications
    jump_commands_notified : boolean "false" ;
    drop_referenced : boolean "false" ;
@@ -259,6 +263,9 @@ strings {
    cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
    cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "glee simmers")} ;
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
+
+   ## footnote notifications and other dynamic strings
+   footnote_1_reveal : dynamic_string {( revealed_footnote_1 ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
 }
 
 ## Objects with vocabulary
@@ -288,6 +295,7 @@ vocabulary {
    : noun / aliases = [no, n]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
+   : verb / aliases = [f, foot, footnote, footnotes]
    : verb / aliases = [glimmer, glimmers, glimmering]
    : verb / aliases = [ch, colorhint]
    : verb / aliases = [exit, out]
@@ -319,7 +327,10 @@ locations {
                : print {( "While " + xme + " is a useful command, and one you'll be using in this tutorial, we're a bit on rails. There are meta-commands to acquaint yourself with first." )};
             }
             : else_if (is_carried "ooh_task") {
-               : print "As AFGNCAAPy as ever!" ;
+               : print "As AFGNCAAPy as ever!{footnote_1_reveal}" ;
+               : if ((footnotes_available) && (!revealed_footnote_1)) {
+                  : set_true "revealed_footnote_1" ;
+               }
                : if (!xme_twice) {
                   : print "Oh, and nothing further was hidden on you." ;
                   : set_true "xme_twice" ;
@@ -1139,6 +1150,18 @@ subroutines {
       }
       : print "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either.\"" ;
    }
+   footnote_printer : subroutine {
+      : match "f 1" {
+         : if (!revealed_footnote_1) {
+            : print "You haven't revealed footnote 1 yet." ;
+            : done ;
+         }
+         : print "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.";
+         : print "\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.";
+         : print "It's a joke I like a lot, because I throw in a lot of AFGNCAAPs. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this a solipsism. But I think it helps to focus on the puzzles." ;
+         : set_true "read_footnote_1" ;
+      }
+   }
    list_jump_commands : subroutine {
       : if (jump_commands_notified) {
          : return ;
@@ -1498,6 +1521,12 @@ on_pre_command {
 }
 
 on_command {
+   : if (footnotes_available) {
+      : match "footnote *" {
+         : gosub "footnote_printer" ;
+         : done ;
+      }
+   }
    : if (jump_commands_notified) {
       : match "sh -" {
          : if (point_healing_still) {
