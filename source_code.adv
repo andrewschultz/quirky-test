@@ -115,7 +115,7 @@ booleans {
    ask_15_yet : boolean "false" ;
    ask_16_yet : boolean "false" ;
    ask_17_yet : boolean "false" ;
-   achieve_ask_all: boolean "false" ;
+   achieve_tyyt: boolean "false" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -301,6 +301,8 @@ strings {
    footnote_4_reveal : dynamic_string {( revealed_footnote_4 || !footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
    footnote_5_reveal : dynamic_string {( revealed_footnote_5 || !footnotes_available ? "" : " (<FOOTNOTE 5<#f80>>)" )} ;
 	footnote_6_reveal : dynamic_string {( revealed_footnote_6 || !footnotes_available ? "" : " (<FOOTNOTE 6<#f80>>)" )} ;
+
+   achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
 }
 
 ## Objects with vocabulary
@@ -330,12 +332,14 @@ vocabulary {
    : noun / aliases = [no, n]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
+   : verb / aliases = [ask, rule]
    : verb / aliases = [f, foot, footnote, footnotes]
    : verb / aliases = [glimmer, glimmers, glimmering]
    : verb / aliases = [ch, colorhint]
    : verb / aliases = [exit, out]
    : verb / aliases = [hi, high]
    : verb / aliases = [not, noti, notif, notify]
+   : verb / aliases = [t, talk]
    : verb / aliases = [tx, thx, thank, thanks]
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
@@ -901,7 +905,8 @@ locations {
                   : print "Thor congratulates you, noting that footnotes will be available on replay, if you choose to have them." ;
                }
                : gosub "add_point" ;
-               : set_true "footnotes_available";
+               : set_true "footnotes_available" ;
+               : gosub "track_achievements" ;
                : win_game ;
                : done ;
             }
@@ -1523,6 +1528,18 @@ subroutines {
       : print {( "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." )} ;
       : print {( "Adventuron-specific " + meta + " commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." )} ;
       : set_true "tutorial_additional_metaverb_done";
+   }
+   track_achievements : subroutine {
+      : if (achieve_tyyt) {
+         : print "(Already got the {achievement_tyyt} achievement)";
+      }
+      : else_if (ask_1_yet && ask_2_yet && ask_3_yet && ask_4_yet && ask_5_yet && ask_6_yet && ask_7_yet && ask_8_yet && ask_9_yet && ask_10_yet && ask_11_yet && ask_12_yet && ask_13_yet && ask_14_yet && ask_15_yet && ask_16_yet && ask_17_yet) {
+         : print "For asking Thor about all the rules in the Player's Bill of Rights, you win the {achievement_tyyt} achievement!" ;
+         : set_true "achieve_tyyt" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_tyyt} achievement yet." ;
+      }
    }
 }
 
