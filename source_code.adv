@@ -1680,6 +1680,15 @@ on_pre_command {
 }
 
 on_command {
+   : match "credits _" {
+      : if (!credits_to_thanks_note) {
+         : mask {
+            : print "{otn}Since Adventuron reserves {cred}, {thx} is the command to use to see people who helped specifically with {qt}." ;
+            : press_any_key ;
+            : set_true "credits_to_thanks_note" ;
+         }
+      }
+   }
    : match "footnote _" {
       : if (footnotes_available) {
          : gosub "footnote_printer" ;
