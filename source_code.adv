@@ -22,6 +22,7 @@ booleans {
    footnote_shortcut_noted : boolean "false" scope="survivor" ;
    hill_aware_you_stole : boolean "false" ;
    xme_twice : boolean "false" ;
+   credits_to_thanks_note : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -158,6 +159,7 @@ strings {
    ## short stubs
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
+   cred : string "<CREDITS<#f80>>" ;
    exits : string "<EXITS<#f80>>" ;
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
       (tutorial_x_ask_done && is_at "nameless_lameness") ? "You don't want to wandering off without any direction, but maybe that voice could offer a clue." :
@@ -167,6 +169,9 @@ strings {
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
+   tx_ca : string "<Chris Ainsley<#0f0>>" ;
+   tx_gf : string "<Gerry Francis<#0f0>>" ;
+   tx_wc : string "<Wade Clarke<#0f0>>" ;
    tut : string "<TUTORIAL<#88f>>" ;
    verbs : string "<VERBS<#f80>>" ;
 
@@ -1493,9 +1498,9 @@ subroutines {
       : set_true "tutorial_about_done" ;
    }
    meta_thanks : subroutine {
-      : print "Thanks to TALP admins past and future: Chris Ainsley and Garry Francis.";
-      : print "Thanks to Chris Ainsley for creating Adventuron.";
-      : print "Thanks to my testers: Wade Clarke, (others).";
+      : print "Thanks to TALP admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than usual.";
+      : print "Thanks to {tx_ca} for creating Adventuron.";
+      : print "Thanks to my testers: {tx_wc}, {tx_gf}.";
       : print "Thanks to you, for playing this game.";
       : if (in_tutorial && !tutorial_done) {
          : gosub "check_additional_meta" ;
@@ -1527,7 +1532,7 @@ subroutines {
    }
    verb_meta_list : subroutine {
       : print {( abt + " gives info about the game." )} ;
-      : print {( thx + " gives info about people who helped with the game. I usually use <CREDITS<#f80>>, but Adventuron reserves that for its own." )} ;
+      : print {( thx + " gives info about people who helped with the game. I usually use {cred}, but Adventuron reserves that for its own." )} ;
       : print {( "<THINK<#f80>> reminds you of commands you tried that should work, or will work in the future, but your character wasn't prepared enough. Yet." )} ;
       : print {( "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." )} ;
       : print {( "Adventuron-specific " + meta + " commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." )} ;
