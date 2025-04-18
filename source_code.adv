@@ -1166,6 +1166,10 @@ subroutines {
       : increment "bonus_score";
       }
    ask_thor : subroutine {
+      : if (!is_int(original "noun1")) {
+         : print "You need a number (1-17) for the rule to ask Thor about." ;
+         : done ;
+      }
       : match "ask 1" {
          : print {( "The first rule in Graham Nelson's Player's Bill of Rights is <not to be killed without warning<#ff0>>. There" + ((bonus_point_death_sentence) ? "was" : "'s") + " only one way to die, and, well, I think it's lampshaded right here." )} ;
          : set_true "ask_1_yet" ;
@@ -1315,6 +1319,7 @@ subroutines {
          }
          : print "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous." ;
          : print "Other names that need a plural include Sean Kent's conscience (if you don't pronounce PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common." ;
+         : print "Hearty Pat's came to mind as a store, too. But that's not a proper name." ;
          : set_true "read_footnote_5" ;
          : done ;
       }
@@ -1748,6 +1753,8 @@ on_pre_command {
       }
    }
 }
+
+## main on_command
 
 on_command {
    : match "credits _" {
