@@ -1349,6 +1349,9 @@ subroutines {
       : return ;
    }
    tutorial_choice : subroutine {
+      : if (footnotes_available) {
+         : return ;
+      }
    : ask_bool {
       question   = {qt} has a tutorial mode for the first few puzzles. Would you like to use it?
       yes_answer = Yes, I'd like to use the tutorial.
@@ -1566,13 +1569,14 @@ subroutines {
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_tyyt} achievement for finding all bonus points)" ;
       }
-      : else_if (bonus_point_turkey_quest && bonus_point_theory_bore && bonus_point_death_sentence &&    bonus_point_racing_passions) {
+      : else_if (bonus_score == max_bonus_score) {
          : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
          : set_true "achieve_cnnc" ;
       }
       : else {
-         : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
+         : print "You haven't unlocked the {achievement_cnnc} achievement yet. You got {bonus_score} of {max_bonus_score} this time around." ;
       }
+      : press_any_key ;
 
    }
 }
