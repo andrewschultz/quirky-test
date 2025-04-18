@@ -34,6 +34,9 @@ booleans {
    talked_to_thor : boolean "false" ;
    know_hold_bub : boolean "false" ;
    hill_aware_you_stole : boolean "false" ;
+   noted_north_from_east : boolean "false" ;
+   noted_north_from_west : boolean "false" ;
+   bend_seen_yet : boolean "false" ;
 
    ## footnote check booleans
    revealed_footnote_1 : boolean "false" scope="survivor" ;
@@ -157,6 +160,10 @@ integers {
 ## strings
 
 strings {
+
+   tempstr: string "" ;
+   tempstr2: string "" ;
+
    ## short stubs
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
@@ -475,7 +482,7 @@ locations {
          }
       }
    };
-   bold_hub  : location "You are in a bold hub. While you can't go in every direction from here, you can go east and west to smaller hubs{describe_travel_grail}. You don't see any way back to the burst face.{describe_seth_denton}" {
+   bold_hub  : location "You are in a bold hub. While you can't go in every direction from here, you notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}" {
       on_command {
          : if (is_beside "seth_dentons") {
             : match "death sentence" {
@@ -486,8 +493,18 @@ locations {
             }
          }
          : match "ask *" {
-         : gosub "ask_thor" ;
+            : gosub "ask_thor" ;
          }
+      : if (!noted_north_from_west) {
+         : match "west _" {
+            : gosub "note_north_bend_from_hub" ;
+         }
+      }
+      : if (!noted_north_from_east) {
+         : match "east _" {
+            : gosub "note_north_bend_from_hub" ;
+         }
+      }
       }
       on_describe {
          }
@@ -1324,6 +1341,19 @@ subroutines {
       }
       : set_true "jump_commands_notified" ;
       : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_bh + " = bold hub\n" + v_qt + " = quickie trips\n" + v_sh + " = Stealing Hill\n" + v_tq + " = tricky quips" )} ;
+   }
+   note_north_bend_from_hub: subroutine {
+      : mask {
+         : if (!bend_seen_yet) {
+            : set_string var = "tempstr" {( verb_is "east" ? "west" : "east" )} ;
+            : set_string var = "tempstr2" {( verb_is "east" ? "east" : "west" )} ;
+            : print {( "Interesting. The path bends north after a bit. So though you're going " + tempstr2 + ", you'll need to go south instead of " + tempstr + " to get back to Plain Base." )} ;
+         } : else {
+            : print {( "This path bends north, too, like the other one " + tempstr2 + " from Plain Base." )} ;
+         }
+         : set_true "bend_seen_yet" ;
+         : press_any_key ;
+      }
    }
    say_half : subroutine {
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
