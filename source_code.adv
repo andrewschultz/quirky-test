@@ -35,18 +35,18 @@ booleans {
    know_hold_bub : boolean "false" ;
 
    ## footnote check booleans
-   revealed_footnote_1 : boolean "false" ;
-   read_footnote_1 : boolean "false" ;
-   revealed_footnote_2 : boolean "false" ;
-   read_footnote_2 : boolean "false" ;
-   revealed_footnote_3 : boolean "false" ;
-   read_footnote_3 : boolean "false" ;
-   revealed_footnote_4 : boolean "false" ;
-   read_footnote_4 : boolean "false" ;
-   revealed_footnote_5 : boolean "false" ;
-   read_footnote_5 : boolean "false" ;
-	revealed_footnote_6 : boolean "false" ;
-	read_footnote_6 : boolean "false" ;
+   revealed_footnote_1 : boolean "false" scope="survivor" ;
+   read_footnote_1 : boolean "false" scope="survivor" ;
+   revealed_footnote_2 : boolean "false" scope="survivor" ;
+   read_footnote_2 : boolean "false" scope="survivor" ;
+   revealed_footnote_3 : boolean "false" scope="survivor" ;
+   read_footnote_3 : boolean "false" scope="survivor" ;
+   revealed_footnote_4 : boolean "false" scope="survivor" ;
+   read_footnote_4 : boolean "false" scope="survivor" ;
+   revealed_footnote_5 : boolean "false" scope="survivor" ;
+   read_footnote_5 : boolean "false" scope="survivor" ;
+	revealed_footnote_6 : boolean "false" scope="survivor" ;
+	read_footnote_6 : boolean "false" scope="survivor";
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
