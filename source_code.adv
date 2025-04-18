@@ -267,6 +267,7 @@ strings {
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
+   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("quickie_trips") ? "back west to Quickie Trips" : "west" ) + " or " + ( has_visited("tricky_quips") ? "back east to Tricky Quips" : "east" ) + "." )};
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ;
 
    gravel_trail_house : dynamic_string {(
@@ -503,7 +504,7 @@ locations {
       }
    };
 
-   stealing_hill: location "THE STEALING HILL\n{stealing_hill_desc}\nYou can go back west to the quickie trips or east to the tricky quips." {
+   stealing_hill: location "{loc_stealing_hill}" {
       on_command {
       : match "healing still" {
          : if (point_healing_still) {
