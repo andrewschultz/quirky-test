@@ -207,7 +207,7 @@ strings {
    v_pb : string "<PB<#f80>>" ;
    v_wt : string "<WT<#f80>>" ;
    v_sh : string "<SH<#f80>>" ;
-   v_tq : string "<TQ<#f80>>" ;
+   v_eb : string "<EB<#f80>>" ;
 
    # tutorial stuff in purple
    tnote : string "<TUTORIAL NOTE:<#f0f>> " ;
@@ -258,7 +258,7 @@ strings {
    qt_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure." ;
    qt_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
-   ## tricky quips seeding for dynamic strings, starting north and going clockwise
+   ## east branch seeding for dynamic strings, starting north and going clockwise
    tq_sky_floor : string "The {cc_sky_floor} here gives you poetic thoughts. Well, maybe not quite poetic, maybe wordless. You're not quite sure, but when you figure it out, you're sure you'll think up something cool." ;
    tq_fly_score : string "It was inspirational to think up a neat little tune here, but you want to share it now." ;
    tq_trending_booth : string "A {cc_trending_booth} sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
@@ -277,7 +277,7 @@ strings {
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
-   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("west_tiles") ? "back west to West Tiles" : "west" ) + " or " + ( has_visited("tricky_quips") ? "back east to Tricky Quips" : "east" ) + "." )};
+   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("west_tiles") ? "back west to West Tiles" : "west" ) + " or " + ( has_visited("east_branch") ? "back east to East Branch" : "east" ) + "." )};
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ;
 
    gravel_trail_house : dynamic_string {(
@@ -537,7 +537,7 @@ locations {
       }
    };
 
-   tricky_quips: location "TRICKY QUIPS\n{sub_hub}" {
+   east_branch: location "EAST BRANCH\n{sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_right_side)} ;
       }
@@ -1006,13 +1006,13 @@ connections {
       west_tiles, west, qt_w,
       west_tiles, northwest, qt_nw,
 
-      tricky_quips, north, tq_n,
-      tricky_quips, northeast, tq_ne,
-      tricky_quips, east, tq_e,
-      tricky_quips, southeast, tq_se,
-      tricky_quips, southwest, tq_sw,
-      tricky_quips, west, tq_w,
-      tricky_quips, northwest, tq_nw,
+      east_branch, north, tq_n,
+      east_branch, northeast, tq_ne,
+      east_branch, east, tq_e,
+      east_branch, southeast, tq_se,
+      east_branch, southwest, tq_sw,
+      east_branch, west, tq_w,
+      east_branch, northwest, tq_nw,
 
       ## one-way facilitations
       qt_n, leave_oneway, west_tiles,
@@ -1023,27 +1023,27 @@ connections {
       qt_w, leave_oneway, west_tiles,
       qt_nw, leave_oneway, west_tiles,
 
-      tq_n, leave_oneway, tricky_quips,
-      tq_ne, leave_oneway, tricky_quips,
-      tq_e, leave_oneway, tricky_quips,
-      tq_se, leave_oneway, tricky_quips,
-      tq_sw, leave_oneway, tricky_quips,
-      tq_w, leave_oneway, tricky_quips,
-      tq_nw, leave_oneway, tricky_quips,
+      tq_n, leave_oneway, east_branch,
+      tq_ne, leave_oneway, east_branch,
+      tq_e, leave_oneway, east_branch,
+      tq_se, leave_oneway, east_branch,
+      tq_sw, leave_oneway, east_branch,
+      tq_w, leave_oneway, east_branch,
+      tq_nw, leave_oneway, east_branch,
 
       ## one-way between connected rooms
       ## hub bending paths
 
       plain_base, west_oneway, west_tiles,
       west_tiles, south_oneway, plain_base,
-      plain_base, east_oneway, tricky_quips,
-      tricky_quips, south_oneway, plain_base,
+      plain_base, east_oneway, east_branch,
+      east_branch, south_oneway, plain_base,
 
       ## Stealing Hill bending paths
-      tricky_quips, up_oneway, stealing_hill,
+      east_branch, up_oneway, stealing_hill,
       west_tiles, up_oneway, stealing_hill,
       stealing_hill, west_oneway, west_tiles,
-      stealing_hill, east_oneway, tricky_quips,
+      stealing_hill, east_oneway, east_branch,
 
       ## endgame stuff
       plain_base, north, gravel_trail,
@@ -1307,8 +1307,8 @@ subroutines {
             : print "You haven't revealed footnote 3 yet." ;
             : done ;
          }
-         : print "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while Tricky Quips requires both switching leading letters and changing letters after." ;
-         : print "After designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of Tricky Quips did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky in their own way and vice versa." ;
+         : print "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch requires both switching leading letters and changing letters after." ;
+         : print "After designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky in their own way and vice versa." ;
          : set_true "read_footnote_3" ;
          : done ;
       }
@@ -1363,11 +1363,11 @@ subroutines {
       : if (jump_commands_notified) {
          : return ;
       }
-      : if ((!has_visited("plain_base")) || (!has_visited("west_tiles")) || (!has_visited("tricky_quips")) || (!has_visited("stealing_hill"))) {
+      : if ((!has_visited("plain_base")) || (!has_visited("west_tiles")) || (!has_visited("east_branch")) || (!has_visited("stealing_hill"))) {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_pb + " = plain base\n" + v_wt + " = west tiles\n" + v_sh + " = Stealing Hill\n" + v_tq + " = tricky quips" )} ;
+      : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_pb + " = plain base\n" + v_wt + " = west tiles\n" + v_sh + " = Stealing Hill\n" + v_eb + " = east branch" )} ;
    }
    note_north_bend_from_hub: subroutine {
       : mask {
@@ -1612,7 +1612,7 @@ subroutines {
       : print "You can <TALK<#0f0>> (<T<#0f0>>) to people you see. Adding \"to\" will actually throw Adventuron's parser off" ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
       : if (jump_commands_notified) {
-         : print {( "To save keystrokes, you can jump around hub locations with " + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " + v_tq + " (tricky quips.)" )} ;
+         : print {( "To save keystrokes, you can jump around hub locations with " + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " + v_eb + " (east branch.)" )} ;
       }
       : if (footnotes_available) {
          : print "By winning the game, you've opened up footnotes. <FOOTNOTE<#f80>> # or <F<#f80>> #.";
@@ -1809,11 +1809,11 @@ on_command {
          : redescribe ;
       }
       : match "tq -" {
-         : if (is_at "tricky_quips") {
+         : if (is_at "east_branch") {
             : print "You're already here!";
             : done ;
          }
-         : goto "tricky_quips" ;
+         : goto "east_branch" ;
          : redescribe ;
       }
       : match "pb -" {
@@ -1928,8 +1928,8 @@ on_command {
          : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#ff0>>." )} ;
       }
       : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
-      : if ((has_visited "west_tiles") && (has_visited "tricky_quips")) {
-         : print {("You've solved " + points_left_side + " parts of West Tiles and " + points_right_side + " of 7 tricky quips.")}
+      : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
+         : print {("You've solved " + points_left_side + " parts of West Tiles and " + points_right_side + " of 7 parts of East Branch.")}
       }
       : print {( bonus_score_string )} ;
       }
@@ -1961,7 +1961,7 @@ assets {
    graphics {
       lameness_16 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVSUlKtra2fn5+YmJimpqZgYGBnZ2dubm5ZWVl1dXWRkZGDg4NLS0u0tLR8fHyKioo9s6mBAAAB6ElEQVRYw+XYIZaDMBAGYHIELrACvQ6JRdUjse0RKmvpARBcAIHEcgFEZS0KzxXovja0ZCYzJARq9r8A3yOTySSeJyN8meGVPnym+SR45SaTPXMtZBKZtJsSP1O9c5xylrmMf/HemQA/CiCCgN8J0G4NEAuAWgsoICCZvn9/AQ5rAQMBuOkBuTvA0wJCqgQAIEGAOAZrYAoYDAFKCeQIcLcHCBUAtkHNAhIEiJ0BoAgCUIO3+QrMfkAKAYfVgH4OqCEg+zIgAICWWoEUlMAHUMrvnwyLUC0CY0C3OSDSArIvAAYdQPkBmi7gABAEINQBsozog+l6gG8BaNcAKh4AjwIAqHcH+DYAOAyQZyELOP87QMkBBAmIdIB2c4C/AGi4Rjirwq4jzwJ+CXy8CwflPNadRRsCxFaAlAaU3wXcScBRB/BJQMQAPjNxYQBg54FlQL09YHQAtBCQE/eS2VD4Bpw4wGwX9jsDLmaAhgNcdwWENoACAdDFoASAcdRtQ1dAQgOqVYCo4XaBpggYQMkAyMOwsQXgIqiITrQE6HWX42VA4ggAUzn5PIEAhSNAIAD/PkIDUC+kbqcXK0C9NwBN5b0tIKeGIrQCchsAgNC9TyBAYAHoqE6o7EP+jSqC7yMmALgG6AcovfgBhBvnaozG45IAAAAASUVORK5CYII=";
 
-      tricky_quips : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABj0lEQVRYw+2WYY6EIAxGv+wegCts8AKb8f536g1YCqiIONtS+TdNJKiEPp9Fgf8/lvWI13ZxbeLt4DcBwRjfS3QH0LtmBug91Q2AVoAMoPdYNwBaAUKAznP1AdQChAAxHZQhFCAFWFYXVEFCAVIArwfwzwIsjqLXeLjgAqU2OMREnA2xw+cUe+DTOOT1MIDnBJwOgZMjnVAGoBBcAUgt3yY/C4A4D7cpGTd8oAbg27MBcp6A3M1AlYEwEQAbADgNOgCpJGYBpHLbCy/lPgGkImQuOcAqjGKANoD99bcG0iKMy1AYWgBOXIqQDgBXFWEulHkA1TJ0BYBCXnmhALipAOT2DxEKQHrzfK28gvQhmgGg+xR/AJ4G0O8HHga4id9v4wQfAPG/4LQNPXYbP1/dnat8VjlAf/4KwKt3xDqA/vQ1wJAC2AScAIYUwCbgDDCiADYBZ4ARBbAJaAAGFMAmoAEYUACbgBZArwA2AS2AXgFsAi4AagWwCbgAqBXAJuAKoFUAm4ArgFYBbAI6AEoFf6Nz3WvHUTc3AAAAAElFTkSuQmCC";
+      east_branch : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABj0lEQVRYw+2WYY6EIAxGv+wegCts8AKb8f536g1YCqiIONtS+TdNJKiEPp9Fgf8/lvWI13ZxbeLt4DcBwRjfS3QH0LtmBug91Q2AVoAMoPdYNwBaAUKAznP1AdQChAAxHZQhFCAFWFYXVEFCAVIArwfwzwIsjqLXeLjgAqU2OMREnA2xw+cUe+DTOOT1MIDnBJwOgZMjnVAGoBBcAUgt3yY/C4A4D7cpGTd8oAbg27MBcp6A3M1AlYEwEQAbADgNOgCpJGYBpHLbCy/lPgGkImQuOcAqjGKANoD99bcG0iKMy1AYWgBOXIqQDgBXFWEulHkA1TJ0BYBCXnmhALipAOT2DxEKQHrzfK28gvQhmgGg+xR/AJ4G0O8HHga4id9v4wQfAPG/4LQNPXYbP1/dnat8VjlAf/4KwKt3xDqA/vQ1wJAC2AScAIYUwCbgDDCiADYBZ4ARBbAJaAAGFMAmoAEYUACbgBZArwA2AS2AXgFsAi4AagWwCbgAqBXAJuAKoFUAm4ArgFYBbAI6AEoFf6Nz3WvHUTc3AAAAAElFTkSuQmCC";
       west_tiles : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABbklEQVRYw+2WUY6EIAxAm50DcIUNXmAy3v9OvUEXJKwCxWkpOj9TIwFDyuOJCPj3sax7vPLDtYrTzicBgj6eG6gHwD0zA3Cz6gBoBcgAuGl1ALQChADMvHgAtQAhQBgOlCEUIAVYVkeqQKEAKYDXA/i5AIsjhHCH1BSrFEpCpCA7VGIZbtrasenwNRnAuzhuBkgXuVhPE6a97WIn9NMBQtqUO5cbz8cAiJKSDgDdAbDV0xooASgulhsAgAoDh0VI6OQAqzAaAGhewbGN0rwaAHTnizC38RqAbYT/T5D7DK8GCBtR3oLqjahYhGkjugBAuRV/AWYD6M8DkwE68XwYE3wBxP+C4hi6nzZ+f9iTqzyrHIDPfwDw6hOxDoBPfwQYUgA2AQXAkAKwCSgBRhSATUAJMKIAbAIqgAEFYBNQAQwoAJuAGkCvAGwCagC9ArAJaADUCsAmoAFQKwCbgBZAqwBsAloArQKwCWAAlAr+ADhk6qlVb5HUAAAAAElFTkSuQmCC";
 
       qt_n : dynamic_graphic {( point_master_plan ? "qt_n_after_master_plan" : "qt_n_before_plaster_man" )} ;
