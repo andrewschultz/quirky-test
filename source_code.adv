@@ -306,7 +306,7 @@ strings {
    cc_stealing_hill : dynamic_string {( use_color_coding ? "<stealing hill<#f88>>" : "stealing hill")} ;
    cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "travel grail")} ## may not be used
    cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
-   cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "glee simmers")} ;
+   cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "Glee simmers")} ;
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
 
    ## footnote notifications and other dynamic strings
@@ -723,7 +723,7 @@ locations {
       on_command {
       : match "fly score" {
          : if (point_fly_score) {
-            : print "You already imagined a fly score, but you recite it again, s you don't forget it." ;
+            : print "You already imagined a fly score, but you recite it again, so you don't forget it." ;
             }
          : else
          {
@@ -1647,7 +1647,7 @@ on_pre_command {
    : match "west _" {
       : if (is_beside "cheering_voice") {
       : gosub "add_point" ;
-      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_4_reveal} The fogginess clears a bit, and as go west, a large, strong man waves to you. \"I'm Beery Thor. Nice to meet you. Got a few things to share with you. Just TALK to me...";
+      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_4_reveal} The fogginess clears a bit, and as you go west, a large, strong man waves to you. \"I'm Beery Thor. Nice to meet you. Got a few things to share with you. Just TALK to me...";
       : set_true "revealed_footnote_4" ;
       : if (in_tutorial) {
          : print {( "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use " + hint + ", though <HELP<#f80>>, another often useful command, is reserved by Adventuron for general parser guidance." )};
