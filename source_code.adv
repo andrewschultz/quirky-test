@@ -262,7 +262,7 @@ strings {
    tq_fly_score : string "It was inspirational to think up a neat little tune here, but you want to share it now." ;
    tq_trending_booth : string "A {cc_trending_booth} sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
    tq_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
-   tq_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}, but it's ongoing and seems like it has for a while. Everyone there seems to find it very, very exciting." ;
+   tq_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
    tq_boring_way : string "Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
    tq_hurt_dome : string "A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to actively hurt anyone or anything. But it'd still be nice to make sure." ;
    tq_dirt_home : string "The dirt home you summoned stands here, infinitely less menacing than its previous form" ;
@@ -580,7 +580,7 @@ locations {
          }
          : else
          {
-            : print "You have reason to find a master plan, so you bust open the master plan and find it." ;
+            : print "You have reason to find a master plan, and your feast with the hunters has left you stronger. Without much trouble, you bust open the master plan and find it." ;
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
             : gosub "add_point_qt" ;
@@ -889,7 +889,7 @@ locations {
          }
          : else
          {
-            : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to help other people." ;
+            : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people.\n\nOkay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
             : set_true "point_grim_tune" ;
             : set_false "think_grim_tune" ;
             : gosub "add_point_tq" ;
@@ -1076,7 +1076,7 @@ barriers {
    block_tq_n : block {
       location = tq_n
       block_when = point_fly_score
-      message = You don't feel as though the sky/floor to the north has anything more to offer you. Well, maybe you can go back for new artistic inspiration, after you completed the quest for Thor.
+      message = You don't feel as though the sky/floor to the north has anything more to offer you, with the fly score stuck in your head. Well, maybe you can go back for new artistic inspiration, after you completed the quest for Thor.
    }
    block_tq_ne : block {
       location = tq_ne
@@ -1214,7 +1214,7 @@ subroutines {
          : return ;
       }
       : match "ask 9" {
-         : print "The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>. With the way these puzzles are formulated, and the relative lack of standard action verbs, this doesn't apply. But parser command abbreviations over the years have made this easier. People type I for inventory and X for examine, and so forth.." ;
+         : print "The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>. With the way these puzzles are formulated, and the relative lack of standard action verbs, this largely doesn't apply. But parser command abbreviations over the years have made this easier. People type I for inventory and X for examine, and so forth." ;
          : set_true "ask_9_yet" ;
          : return ;
       }
