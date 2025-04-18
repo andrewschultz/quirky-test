@@ -464,7 +464,12 @@ locations {
             : done ;
          }
          : match "first _;_ base" {
-            : print {( "One word right" + (talked_to_thor ? "" : ", but talk to Thor first") + "." )} ;
+            : if (!talked_to_thor) {
+                  : print "\nThor raises an eyebrow. \"Looks like you have some ideas, there. But how about we TALK first?\n";
+               } : else {
+                  : gosub "say_half" ;
+               }
+            : done ;
          }
          : if (know_hold_bub) {
             : match "bold hub" {
