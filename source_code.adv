@@ -211,7 +211,7 @@ strings {
    my_score : dynamic_string {( score + "/" + max_score )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
 
-   unknown_begin_note : dynamic_string {( point_first_base ? "" : ", though special phrases are needed for puzzles" )}
+   unknown_begin_note : dynamic_string {( point_first_base ? "" : ", though special commands are cued in puzzles throughout {qt}" )}
    bonus_score_string : dynamic_string {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )}
 
    ## location strings
@@ -243,7 +243,7 @@ strings {
    qt_take_crackers : string "Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
    qt_gift_shoals : string "{cc_gift_shoals} are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
    qt_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
-   qt_grunters_hill : string "Grunts from a big hill, here. That must make it a {cc_grunters_hill}. It's like people are trying to forage for food, but of course their making noise makes it hard. Their grunts are mainly about not having enough food." ;
+   qt_grunters_hill : string "Grunts from a big hill, here. That must make it a {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
    qt_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
    qt_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure." ;
    qt_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
@@ -261,7 +261,7 @@ strings {
    tq_pouring_rain : string "The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
    tq_money_fountain : string "A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
    tq_funny_mountain : string "A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
-   tq_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up. They seem quite pleased to have the job they do." ;
+   tq_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
    tq_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## stealing hill
@@ -271,10 +271,10 @@ strings {
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ;
 
    gravel_trail_house : dynamic_string {(
-      point_missing_house ? ", or you can go NORTH inside the house you made." : ""
+      point_missing_house ? ", or you can go NORTH inside the house you made" : ""
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}!\nAnd yet, homeownership is nice and all, but ... what about Thor's quest?"
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
 
    ## color code stuff
@@ -665,7 +665,7 @@ locations {
             : print "But you already had enough of a feast. Any more, and you wouldn't be able to move around." ;
             }
          : else_if ((!point_take_crackers || !point_fell_short) && (!cheat_dont_require)) {
-            : print "You try to start up a feast, but alas, you don't have enough food to do so." ;
+            : print {( "You try to start up a feast, but alas, you don't have enough food to do so. You need something besides the " + (point_take_crackers ? "crackers" : "pacing rations") + "." )} ;
             : set_true "think_hunters_grill" ;
          }
          : else
@@ -1546,7 +1546,7 @@ subroutines {
    verb_meta_list : subroutine {
       : print {( abt + " gives info about the game." )} ;
       : print {( thx + " gives info about people who helped with the game. I usually use {cred}, but Adventuron reserves that for its own." )} ;
-      : print {( "<THINK<#f80>> reminds you of commands you tried that should work, or will work in the future, but your character wasn't prepared enough. Yet." )} ;
+      : print {( "<THINK<#f80>> reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." )} ;
       : print {( "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." )} ;
       : print {( "Adventuron-specific " + meta + " commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." )} ;
       : set_true "tutorial_additional_metaverb_done";
@@ -1766,7 +1766,7 @@ on_command {
    : if (is_carried("travel_grail")) {
       : match "gravel trail" {
          : if (is_at "bold_hub") {
-            : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"Oh my goodness,\" he booms. \"How I'll let you do the last part yourself.\"";
+            : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"There you go,\" he cheers. \"The rest shouldn't be too hard, if you got this far. But wait, you'd better let me take this grail. I don't think you'll need it, but the next person to stop by might.\"\nYou'd sort of grown attached to it, but he is bigger than you, and it is a little heavy.";
             : destroy "travel_grail" ;
             : set_true "point_gravel_trail" ;
             : gosub "add_point" ;
