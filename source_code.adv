@@ -910,9 +910,13 @@ locations {
          }
       }
       on_command {
-         : match "x mouse" {
-            : if (is_beside "hissing_mouse") {
-               : print "The hissing appears more defensive than anything." ;
+         : if (is_beside("hissing_mouse")) {
+            : match "x mouse" {
+               : print "The mouse's hissing appears more defensive than anything." ;
+               : done ;
+            }
+            : match "get mouse" {
+               : print "Certainly not in its current agitated state." ;
             }
          }
          : match "missing house" {
@@ -926,7 +930,7 @@ locations {
                : gosub "add_point" ;
             }
          }
-         : if (!point_see_glimmering) {
+         : if (!point_missing_house) {
             : match "missing _;_ house" {
                : gosub "say_half" ;
             }
