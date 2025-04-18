@@ -2,19 +2,19 @@
 <trizbort version="1.7.0.0">
 	<info />
 	<map>
-		<room id="1" name="Nameless Lameness" subtitle="" x="-160" y="-192" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isStartRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
-		<room id="2" name="Burst Face" subtitle="" x="64" y="-192" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="1" name="Nameless Lameness" subtitle="" x="-160" y="-64" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isStartRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="2" name="Burst Face" subtitle="" x="64" y="-64" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<line id="3" name="" description="" flow="oneWay" midText="puzzle">
 			<dock index="0" id="1" port="e" />
 			<dock index="1" id="2" port="w" />
 		</line>
-		<room id="4" name="Bold Hub" subtitle="" x="288" y="-192" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="4" name="Plain Base" subtitle="" x="288" y="-64" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<line id="5" name="" description="" flow="oneWay" midText="puzzle">
 			<dock index="0" id="2" port="e" />
 			<dock index="1" id="4" port="w" />
 		</line>
-		<room id="6" name="Quickie Trips" subtitle="" x="32" y="-576" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
-		<room id="7" name="Tricky Quips" subtitle="" x="544" y="-576" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="6" name="West Tiles" subtitle="" x="32" y="-576" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="7" name="East Branch" subtitle="" x="544" y="-576" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<line id="9" name="" description="">
 			<dock index="0" id="4" port="wnw" />
 			<dock index="1" id="6" port="s" />
@@ -93,12 +93,12 @@
 			<dock index="0" id="35" port="w" />
 			<dock index="1" id="6" port="e" />
 		</line>
-		<room id="43" name="Gravel Trail" subtitle="" x="288" y="-320" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isEndRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="43" name="Gravel Trail" subtitle="" x="288" y="-192" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<line id="44" name="" description="" style="dashed">
 			<dock index="0" id="4" port="n" />
 			<dock index="1" id="43" port="s" />
 		</line>
-		<room id="39" name="Fate Hill" subtitle="" x="288" y="-640" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="39" name="Stealing Hill" subtitle="" x="288" y="-640" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<line id="40" name="" description="" startText="up" endText="west">
 			<dock index="0" id="6" port="ene" />
 			<dock index="1" id="39" port="wnw" />
@@ -106,6 +106,11 @@
 		<line id="41" name="" description="" startText="east" endText="up">
 			<dock index="0" id="39" port="ene" />
 			<dock index="1" id="7" port="wnw" />
+		</line>
+		<room id="8" name="My House" subtitle="" x="288" y="-320" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isEndRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<line id="42" name="" description="" style="dashed">
+			<dock index="0" id="43" port="n" />
+			<dock index="1" id="8" port="s" />
 		</line>
 	</map>
 	<settings>
