@@ -90,11 +90,20 @@ booleans {
    point_gravel_trail : boolean "false" ;
 
    ## bonus point tally booleans
+   ## any time points first
    bonus_point_turkey_quest : boolean "false" ;
    bonus_point_theory_bore : boolean "false" ;
-   bonus_point_death_sentence : boolean "false" ;
-   bonus_point_racing_passions : boolean "false" ;
+
+   ## bane place
    bonus_point_bane_place : boolean "false" ;
+   bonus_point_death_sentence : boolean "false" ;
+
+   ## the hubs
+   bonus_point_test_wiles : boolean "false" ;
+   bonus_point_beast_ranch : boolean "false" ;
+
+   ## beyond the hubs
+   bonus_point_racing_passions : boolean "false" ;
 
    ## "think" booleans: alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
@@ -156,7 +165,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "5" ;
+   max_bonus_score : integer "6" ;
    tempint : integer "0" ;
 }
 
@@ -528,7 +537,7 @@ locations {
          }
    };
 
-   west_tiles: location "WEST TILES\n{sub_hub}" {
+   west_tiles : location "WEST TILES\n{sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_left_side)} ;
       }
@@ -537,9 +546,21 @@ locations {
       }
    };
 
-   east_branch: location "EAST BRANCH\n{sub_hub}" {
+   east_branch : location "EAST BRANCH\n{sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_right_side)} ;
+      }
+      on_command {
+         : match "beast ranch" {
+            : if (!bonus_point_beast_ranch) {
+               : print "You wonder if, with your brains, you could tackle a huge beast ranch with mind over matter or something. Then common sense kicks in. But you have fun imagining." ;
+               : set_true "bonus_point_beast_ranch" ;
+               : gosub "add_bonus" ;
+            } : else {
+               : print "You don't want to tempt something like that into existence too often." ;
+            }
+            : done ;
+         }
       }
       on_describe {
          : gosub "list_jump_commands" ;
@@ -547,7 +568,7 @@ locations {
       }
    };
 
-   stealing_hill: location "{loc_stealing_hill}" {
+   stealing_hill : location "{loc_stealing_hill}" {
       on_command {
       : match "healing still" {
          : if (point_healing_still) {
