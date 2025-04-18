@@ -226,7 +226,7 @@ strings {
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
 
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
-   describe_gravel_trail : dynamic_string {( point_travel_grail ? ", and your travel grail opened up a path north" : "" )} ;
+   describe_gravel_trail : dynamic_string {( point_travel_grail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
 
    sub_hub: dynamic_string {( "Here in the " + (is_at "quickie_trips" ? "west" : "east" ) + " mini-hub, you can go south back to the bold hub or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
    spokes_word: dynamic_string {( tempint == 6 ? "one" :
@@ -1838,7 +1838,7 @@ on_command {
          : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
       }
       : else {
-        : print {( point_first_base ? "You snicker at what you've found, but then figure you better not do so to Thor's face." : "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" )} ;
+        : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, but then figure you better not do so to Thor's face." )} ;
        : set_true "bonus_point_theory_bore" ;
        : gosub "add_bonus" ;
     }
