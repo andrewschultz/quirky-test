@@ -470,7 +470,7 @@ locations {
             }
             : match "bold _;_ hub" {
                ## don't need any other condition -- saying so moves us to next room
-               : print "One word right." ;
+               : gosub "say_half" ;
             }
          }
       }
@@ -535,7 +535,7 @@ locations {
          }
       : if (!point_healing_still) {
          : match "healing _;_ still" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
       }
@@ -565,7 +565,7 @@ locations {
          }
       : if (!point_master_plan) {
          : match "master _;_ plan" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -591,7 +591,7 @@ locations {
          }
       : if (!point_chalice_map) {
          : match "chalice _;_ map" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -613,7 +613,7 @@ locations {
          }
       : if (!point_fell_short) {
          : match "fell _;_ short" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
       }
@@ -635,7 +635,7 @@ locations {
          }
       : if (!point_take_crackers) {
          : match "take _;_ crackers" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -661,7 +661,7 @@ locations {
          }
       : if (!point_shift_goals) {
          : match "shift _;_ goals" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -689,7 +689,7 @@ locations {
          }
       : if (!point_hunters_grill) {
          : match "hunters _;_ grill" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
       }
@@ -720,7 +720,7 @@ locations {
          }
       : if (!point_fellow_yield) {
          : match "fellow _;_ yield" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -742,7 +742,7 @@ locations {
          }
       : if (!point_fly_score) {
          : match "fly _;_ score" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
       }
@@ -763,7 +763,7 @@ locations {
          }
       : if (!point_bending_truth) {
          : match "bending _;_ truth" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
       }
@@ -784,7 +784,7 @@ locations {
          }
       : if (!point_boring_way) {
          : match "boring _;_ way" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -805,7 +805,7 @@ locations {
          }
       : if (!point_dirt_home) {
          : match "dirt _;_ home" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -826,7 +826,7 @@ locations {
          }
       : if (!point_pouring_rain) {
          : match "pouring _;_ rain" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -847,7 +847,7 @@ locations {
          }
       : if (!point_funny_mountain) {
          : match "funny _;_ mountain" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -874,7 +874,7 @@ locations {
          }
       : if (!point_grim_tune) {
          : match "grim _;_ tune" {
-            : print "One word right." ;
+            : gosub "say_half" ;
             }
          }
       }
@@ -904,7 +904,7 @@ locations {
          }
          : if (!point_see_glimmering) {
             : match "missing _;_ house" {
-               : print "One word right." ;
+               : gosub "say_half" ;
             }
          }
       }
@@ -924,7 +924,7 @@ locations {
          }
          : if (!point_see_glimmering) {
             : match "see _;_ glimmering;_ glimmers" {
-               : print "One word right." ;
+               : gosub "say_half" ;
             }
          }
          : match "hi mouse;high mouse" {
@@ -946,7 +946,7 @@ locations {
             : done ;
          }
          : match "hi _;high _;_ mouse" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
    }
@@ -1324,6 +1324,15 @@ subroutines {
       }
       : set_true "jump_commands_notified" ;
       : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_bh + " = bold hub\n" + v_qt + " = quickie trips\n" + v_sh + " = Stealing Hill\n" + v_tq + " = tricky quips" )} ;
+   }
+   say_half : subroutine {
+      : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
+      : print "One of those words felt right, but the other didn't. You must be halfway there." ;
+      : print "Again, you feel like you got halfway there." ;
+      on_exhausted {
+         : print "One word right, one word wrong." ;
+      }
+   }
    }
    think_thoughts : subroutine {
       : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
@@ -1785,7 +1794,7 @@ on_command {
       }
       : if (!point_gravel_trail) {
          : match "gravel _;_ trail" {
-            : print "One word right." ;
+            : gosub "say_half" ;
          }
       }
    }
