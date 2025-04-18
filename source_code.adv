@@ -6,6 +6,8 @@ start_theme = my_theme
 
 game_settings {
    enable_standard_all_behaviour = false
+   rewind_enabled   = true
+   rollback_enabled = true
 }
 
 ## we start with simplest defined then move to more complex
