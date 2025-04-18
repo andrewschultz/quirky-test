@@ -345,6 +345,7 @@ objects {
 vocabulary {
    : noun / aliases = [ooh, task, ask]
    : noun / aliases = [hill, hills]
+   : noun / aliases = [hunter, hunters]
    : noun / aliases = [no, n]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
@@ -356,7 +357,7 @@ vocabulary {
    : verb / aliases = [hi, high]
    : verb / aliases = [not, noti, notif, notify]
    : verb / aliases = [t, talk]
-   : verb / aliases = [tx, thx, thank, thanks]
+   : verb / aliases = [tx, thx, thank, thanks, credits]
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [verb, verbs]
