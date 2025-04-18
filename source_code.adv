@@ -94,6 +94,7 @@ booleans {
    bonus_point_theory_bore : boolean "false" ;
    bonus_point_death_sentence : boolean "false" ;
    bonus_point_racing_passions : boolean "false" ;
+   bonus_point_bane_place : boolean "false" ;
 
    ## "think" booleans: alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
@@ -155,7 +156,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "4" ;
+   max_bonus_score : integer "5" ;
    tempint : integer "0" ;
 }
 
@@ -511,6 +512,16 @@ locations {
          : match "east _" {
             : gosub "note_north_bend_from_hub" ;
          }
+      }
+      : match "plain base" { # no say_half for a bonus point
+         : if (!bonus_point_bane_place) {
+            : print "Thor chuckles a bit. \"Very observant. Yes, plain, but it does the job.\"";
+            : gosub "add_bonus" ;
+            : set_true "bonus_point_bane_place" ;
+         } : else {
+            : print "You already pointed out the, uh, functionality of this location. Don't be a rude guest.";
+         }
+         : done ;
       }
       }
       on_describe {
