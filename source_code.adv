@@ -1326,25 +1326,25 @@ subroutines {
       }
       : print "Here is what you tried to do, and you haven't gotten it to work yet:" ;
       : if (think_chalice_map) {
-         : print "-- get the CHALICE MAP";
+         : print "-- get the CHALICE MAP (west hub, NE)";
       }
       : if (think_fellow_yield) {
-         : print "-- make the FELLOW YIELD";
+         : print "-- make the FELLOW YIELD (west hub, NW)";
       }
       : if (think_grim_tune) {
-         : print "-- sing a GRIM TUNE";
+         : print "-- sing a GRIM TUNE (east hub, NE) once you have a melody and lyric inspiration";
       }
       : if (think_healing_still) {
-         : print "-- feel (or discover a) HEALING STILL";
+         : print "-- feel (or discover a) HEALING STILL (Stealing Hill)";
       }
       : if (think_hunters_grill) {
-         : print "-- start up the HUNTERS GRILL with a gift of food";
+         : print "-- start up the HUNTERS GRILL with a gift of food (west hub, W)";
       }
       : if (think_master_plan) {
-         : print "-- have the strength and self-belief to get the MASTER PLAN";
+         : print "-- have the strength and self-belief to get the MASTER PLAN (west hub, N)";
       }
       : if (think_shift_goals) {
-         : print "-- help others out enough to be able to SHIFT GOALS";
+         : print "-- help others out enough to be able to SHIFT GOALS (west hub, SW)";
       }
       : return ;
    }
