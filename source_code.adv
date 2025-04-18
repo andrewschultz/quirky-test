@@ -165,7 +165,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "6" ;
+   max_bonus_score : integer "7" ;
    tempint : integer "0" ;
 }
 
@@ -540,6 +540,18 @@ locations {
    west_tiles : location "WEST TILES\n{sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_left_side)} ;
+      }
+      on_command {
+         : match "test wiles" {
+            : if (!bonus_point_test_wiles) {
+               : print "Instead of worrying if this all is a task you can't complete, you see it as, well, a test of wiles. This boosts you momentarily, even if it offers no concrete benefits." ;
+               : set_true "bonus_point_test_wiles" ;
+               : gosub "add_bonus" ;
+            } : else {
+               : print "But you already framed this as a test of your wiles." ;
+            }
+            : done ;
+         }
       }
       on_describe {
          : gosub "list_jump_commands" ;
