@@ -210,6 +210,8 @@ strings {
    my_score : dynamic_string {( score + "/" + max_score )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
 
+   bonus_score_string : dynamic_string {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )}
+
    ## location strings
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
@@ -918,6 +920,7 @@ locations {
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
                : gosub "track_achievements" ;
+               : print "{bonus_score_string}" ;
                : win_game ;
                : done ;
             }
@@ -1845,7 +1848,7 @@ on_command {
       : if ((has_visited "quickie_trips") && (has_visited "tricky_quips")) {
          : print {("You've solved " + points_left_side + " of 7 quickie trips and " + points_right_side + " of 7 tricky quips.")}
       }
-      : print {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )} ;
+      : print {( bonus_score_string )} ;
       }
    : match "option _;options _;opts _;opt _" {
       : gosub "options_list";
