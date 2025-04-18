@@ -1481,7 +1481,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_verbs_done) {
-         : print {( tcue + "The " + verbs + " meta-command is useful to see what the most common commands are. You can try it now." )};
+         : print {( tcue + "The " + verbs + " meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass.\nYou should try " + verbs + " now." )};
          : return ;
       }
       : if (!tutorial_additional_metaverb_done) {
@@ -1533,12 +1533,13 @@ subroutines {
 
    verb_list : subroutine {
       : set_true "tutorial_verbs_done" ;
-      : print {( "While " + qt + " requires you to guess some verbs as part of a puzzle, it doesn't require any nonstandard verbs to move around or manipulate objects or NPCs." )} ;
-      : print {( qt + " uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary." )} ;
+      : print {( "While " + qt + " requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." )} ;
+      : print {( qt + " uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, <OUT<#0f0>> leaves if there is only one exit." )} ;
       : print "You can <TAKE<#0f0>> an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
-      : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle." )} ;
+      : print "You can <TALK<#0f0>> (<T<#0f0>>) to people you see. Adding \"to\" will actually throw Adventuron's parser off" ;
+      : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
       : if (jump_commands_notified) {
-         : print {( "To save keystrokes, you can jump around hub locations with " + v_bh + "(bold hub,) " + (point_healing_still ? "" : v_sh + "(stealing hill,) ") + v_qt + " (quickie trips,) " + v_tq + " (tricky quips.)" )} ;
+         : print {( "To save keystrokes, you can jump around hub locations with " + v_bh + " (bold hub,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_qt + " (quickie trips,) " + v_tq + " (tricky quips.)" )} ;
       }
       : if (footnotes_available) {
          : print "By winning the game, you've opened up footnotes. <FOOTNOTE<#f80>> # or <F<#f80>> #.";
