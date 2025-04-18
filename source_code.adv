@@ -17,12 +17,12 @@ booleans {
    in_debug : boolean "false" ;
    cheat_dont_require : boolean "false" ;
 
-   ## game state booleans
+   ## game cue state booleans
    footnotes_available : boolean "false" scope="survivor" ;
    footnote_shortcut_noted : boolean "false" scope="survivor" ;
-   hill_aware_you_stole : boolean "false" ;
    xme_twice : boolean "false" ;
    credits_to_thanks_note : boolean "false" ;
+   apostrophe_warn : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -33,6 +33,7 @@ booleans {
    tutorial_done : boolean "false" ;
    talked_to_thor : boolean "false" ;
    know_hold_bub : boolean "false" ;
+   hill_aware_you_stole : boolean "false" ;
 
    ## footnote check booleans
    revealed_footnote_1 : boolean "false" scope="survivor" ;
@@ -210,6 +211,7 @@ strings {
    my_score : dynamic_string {( score + "/" + max_score )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
 
+   unknown_begin_note : dynamic_string {( point_first_base ? "" : ", though special phrases are needed for puzzles" )}
    bonus_score_string : dynamic_string {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )}
 
    ## location strings
@@ -681,6 +683,11 @@ locations {
             : print "One word right." ;
          }
       }
+      }
+      on_tick {
+         : if (!apostrophe_warn) {
+            : print "{otn}Adventuron doesn't like apostrophes, so you don't want to use it here, even if it's in the description.";
+         }
       }
    };
    qt_nw : location "{point_fellow_yield ? qt_fellow_yield : qt_yellow_field}" {
@@ -1589,7 +1596,7 @@ themes {
    invalid_choice                                 = {YN_or_12}
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
    you_cant_go_that_direction                     = {exitserr}
-   unknown_verb                                   = Nothing comes up from that. {verbs} gives a list of basic standard verbs, though you will have a few to guess based on rules.
+   unknown_verb                                   = Nothing comes from that. {verbs} gives a list of basic standard verbs{unknown_begin_note}.
    }
       }
    }
