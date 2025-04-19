@@ -1,5 +1,7 @@
 The tutorial is mainly there for people to be acquainted with meta-commands they may not be aware of. There's a puzzle, too, but it's solvable by trial and error.
 
+Some of these commands are superfluous in non-tutorial mode.
+
 At first, you are given a way to learn about the game's basics.
 
 > ABOUT
@@ -26,7 +28,7 @@ We should now examine what we've gotten.
 
 > X TASK
 
-This provides a clue. The veering choice cheering voice is out there. But what is it saying? The tutorial says, use your senses..
+This provides a clue. The veering choice cheering voice is out there. But what is it saying? The tutorial says, use your senses.
 
 > LISTEN
 
@@ -38,6 +40,10 @@ There is the Rare-Thing-There Ring.
 The initial location is Nameless Lameness.
 The paper's name is Ooh, Task to Ask.
 
+But first, if you are using the tutorial, it will force you to TALK VOICE. The object is to get the player used to talking with other players.
+
+> T VOICE
+
 How would Whoa Guest fit in this?
 
 With ...
@@ -46,32 +52,34 @@ With ...
 
 Note you only have to type W or WEST. I could've been nitpicky, but Adventuron's parser is simple, and I wanted people to be able to guess if possible.
 
-This brings you to the burst face. It's a starting point, but ... well, still a bit more to do. Thor makes you talk to him.
-
-> TALK THOR
+This brings you to the burst face. It's a starting point, but ... well, still a bit more to do. There's almost a crack in it. It almost leads somewhere.
 
 > FIRST BASE (1)
 
-Now Beery Thor says there is a way out, if you TALK to him.
+Oh no! A Pro Boor!
 
-> TALK THOR
+> BRO POOR (1)
 
-"Hold, bub," he says. Where is he "protecting" you from?
+The Pro Boor leaves you with something called Prayer Lights. It has a double meaning, maybe more.
 
-> BOLD HUB (1)
+> PLAYER RIGHTS (1)
 
-Now the game opens up a bit. You can dispel Seth Denton's, but that is a bonus point.
+You've found your way, and it's time to move on. You find the source of the original voice, Beery Thor.
 
-It doesn't matter which way you go first. You will eventually get there. The object is to find fourteen spoonerisms that work as follows:
+Now the game opens up a bit. You can dispel Seth Denton's, but that is a bonus point. There are others I won't hint at too heavily in this walkthrough.
+
+But as for further progress? It doesn't matter which way you go first, though one way is faster than the other. You will eventually get there either way. The object is to find fifteen spoonerisms that work as follows:
 
 * 8 level 1 spoonerisms
 * 4 level 2 spoonerisms, each of which needs 2 level 1 spoonerisms solved first
 * 2 level 3 spoonerisms, each of which needs 2 level 2 spoonerisms solved first
 * a final level 4 spoonerism, which unlocks the endgame
 
-There are three rooms beyond. Tricky Quips is first if you want to go faster. It has trickier spoonerisms.
+There are three rooms beyond. East Branch is first if you want to go faster, though it has trickier spoonerisms. West Tiles has easier spoonerisms, but they rely on others.
 
 This provides perhaps not the quickest way to go through things, but quick enough.
+
+> E
 
 > N
 
@@ -79,7 +87,7 @@ This provides perhaps not the quickest way to go through things, but quick enoug
 
 > S
 
-Note that once you solve a spoonerised area, you can't go back. This is hopefully to make things clearer and remind you what you need to do.
+Note that once you solve a spoonerised area, you can't go back. This is hopefully to make progress clearer and help you focus on what you still need to do.
 
 > NE
 
@@ -111,7 +119,7 @@ Note that once you solve a spoonerised area, you can't go back. This is hopefull
 
 > E
 
-One thing about going northeast: if you'd gone there right away, you wouldn't have been able to convert. It requires the flaring score and roaring pain.
+This one requires the fly score and roaring pain.
 
 > NW
 
@@ -121,17 +129,15 @@ One thing about going northeast: if you'd gone there right away, you wouldn't ha
 
 > U
 
-You can't do anything with the hills yet.
+You're done here, so now we'll skip over the hills, which we can't do anything with, yet.
 
 > W
 
-You should now get notification you can jump around. You don't really need to, though.
+You should now get notification you can jump around with two-word commands. You don't really need to, though.
 
 > E
 
 > FELL SHORT (1)
-
-Fun trivia: this is the only one on the west side you can get by itself.
 
 > W
 
@@ -143,11 +149,15 @@ Fun trivia: this is the only one on the west side you can get by itself.
 
 > SW
 
+This one requires changing the money fountain and warring bay.
+
 > SHIFT GOALS (1)
 
 > NE
 
 > W
+
+This one requires two food items, from the cake trackers and shell fort.
 
 > HUNTERS GRILL (1)
 
@@ -155,11 +165,15 @@ Fun trivia: this is the only one on the west side you can get by itself.
 
 > NW
 
+This requires changing the hurt dome and trending booth.
+
 > FELLOW YIELD (1)
 
 > SE
 
 > N
+
+This requires solving the grunters' hill and the gift shoals.
 
 > MASTER PLAN (1)
 
@@ -167,17 +181,19 @@ Fun trivia: this is the only one on the west side you can get by itself.
 
 > NE
 
+This requires subduing the yellow field and trim goon.
+
 > CHALICE MAP (1)
 
 > SW
 
-Okay, now we can go up the hill!
+Okay, now we have what we need to find what's in the hill!
 
 > U
 
 > HEALING STILL (1)
 
-Now for the endgame.
+You won't be allowed back, but you don't need to come back. You're ready for the endgame.
 
 > W
 
@@ -185,7 +201,7 @@ Or east.
 
 > S
 
-You're back at the Bold Hub, but there's one more exit! If you prepare it. What to do with the travel grail?
+You're back at the Bold Hub, but there's one more exit! Well, if you prepare it. What to do with the travel grail?
 
 > GRAVEL TRAIL (1)
 
@@ -204,5 +220,7 @@ Glee simmers.
 Now how to you reach those glimmers in My House? Perhaps a recently gained friend...
 
 > HI MOUSE (1)
+
+(High mouse works too, since the trunk is high up.)
 
 Congratulations, you win!
