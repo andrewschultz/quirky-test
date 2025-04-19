@@ -165,6 +165,7 @@ booleans {
    tutorial_inventory_done : boolean "false" ;
    tutorial_inventory_cued : boolean "false" ;
    tutorial_7_listen_done : boolean "false" ;
+   tutorial_8_go_west : boolean "false" ;
    tutorial_item_taken: boolean "false" ;
    tutorial_x_ask_done : boolean "false" ;
 
@@ -1735,8 +1736,10 @@ subroutines {
          : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
          : return;
       }
-      : print {( tcue + "the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
-      : return ;
+      : if (!tutorial_8_go_west) {
+         : print {( tcue + "the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
+         : return ;
+      }
    }
 
    meta_about : subroutine {
@@ -1877,13 +1880,9 @@ on_pre_command {
       : gosub "add_point" ;
       : print "The voice says \"Yes, yes. That is the right way.\"{footnote_4_reveal} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting.\"";
       : set_true "revealed_footnote_4" ;
-      : if (in_tutorial) {
-         : print {( "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use " + hint + ", though <HELP<#f80>>, another often useful command, is reserved by Adventuron for general parser guidance." )};
-      }
-      : set_true "tutorial_done";
-      : set_false "in_tutorial";
-      : press_any_key;
       : set_true "point_go_west" ;
+      : set_true "tutorial_8_go_west" ;
+      : increment "tutorial_score" ;
       : goto "burst_face" ;
       : redescribe ;
       }
