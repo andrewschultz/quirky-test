@@ -29,7 +29,7 @@ booleans {
    ## done once in-game booleans
    xme_twice : boolean "false" ;
    entered_seth_dentons : boolean "false" ;
-   know_lush_shout : boolean "true" ;
+   know_lush_shout : boolean "false" ;
    thor_explained_seth : boolean "false" ;
    summoned_teary_chimes : boolean "false";
 
@@ -391,6 +391,14 @@ objects {
    master_plan : object "master plan" msg="It's written in clear language.\n{map_and_plan}" ; ## from plaster man
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from shell fort
    pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from cake trackers
+   focus : object "focus" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
+   fed_sated : object "fed, sated" msg="You feel fed, sated." ; ## from grunters' hill
+   confidence : object "Confidence" msg="You have {confidence_level} confidence from outwitting some obnoxious people." ; ## from yellow field / trim goon
+   low_song : object "low song" msg="They're notes to a song." ; ## fly score
+   frame_shy : object "frame shy" msg="You feel a slight shame blot for fighting mistruth with mistruth." ; ## trending booth
+   peace_surging : object "peace surging" msg="You feel peace surging within you." ; ## warring bay
+   trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
+   no_greed : object "You feel as though you have no greed." ;
 
    ## post-hub
    travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
