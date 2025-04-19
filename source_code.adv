@@ -126,7 +126,7 @@ booleans {
    ## endgame bonus point
    bonus_point_cheery_times : boolean "false" ;
 
-   ## "think" booleans: alphabetical so it is not spoiled in-game
+   ## "think" booleans: hub goals are alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
    think_fellow_yield : boolean "false" ;
    think_grim_tune : boolean "false" ;
@@ -134,6 +134,7 @@ booleans {
    think_hunters_grill : boolean "false" ;
    think_master_plan : boolean "false" ;
    think_shift_goals : boolean "false" ;
+   think_hi_mouse : boolean "false" ; ## put endgame at end
 
    ## achievement booleans
    achieve_tyyt: boolean "false" ;
@@ -1134,7 +1135,7 @@ locations {
                : gosub "say_half" ;
             }
          }
-         : match "hi mouse;high mouse" {
+         : match "hi mouse" {
             : if (point_see_glimmering) {
                : print "Yes! The mouse uncovers the rare thing there ring. You're glad to give it a cut of the useless but shiny trinkets. You win. (Fill in Thor's congratulations later and create a final image.)";
                : if (!footnotes_available) {
@@ -1142,6 +1143,7 @@ locations {
                }
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
+               : set_false "think_hi_mouse" ;
                : gosub "track_achievements" ;
                : print "{bonus_score_string}" ;
                : win_game ;
@@ -1149,6 +1151,7 @@ locations {
             }
             : else {
                : print "Hmm, it might be worth calling the mouse back to look around, but you don't have anything concrete for it to search. Maybe look around." ;
+               : set_true "think_hi_mouse" ;
             }
             : done ;
          }
@@ -1651,7 +1654,7 @@ subroutines {
    }
    think_thoughts : subroutine {
       : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
-   && !think_shift_goals) {
+   && !think_shift_goals && !think_hi_mouse) {
          : print "There's nothing on your mind that you tried to do but weren't able to." ;
          : return ;
       }
@@ -1676,6 +1679,9 @@ subroutines {
       }
       : if (think_shift_goals) {
          : print "-- help others out enough to be able to SHIFT GOALS (west hub, SW)";
+      }
+      : if (think_hi_mouse) {
+         : print "-- have a reason to say HI MOUSE to invite it back into your house";
       }
       : gosub "check_additional_meta" ;
       : return ;
