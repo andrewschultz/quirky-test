@@ -116,8 +116,9 @@ booleans {
    bonus_point_test_wiles : boolean "false" ;
    bonus_point_beast_ranch : boolean "false" ;
 
-   ## beyond the hubs
-   bonus_point_racing_passions : boolean "false" ;
+   ## objects beyond the hubs
+   bonus_point_racing_passions : boolean "false" ; ## w e
+   bonus_point_so_long : boolean "false" ; ## e n
 
    ## endgame bonus point
    bonus_point_cheery_times : boolean "false" ;
@@ -166,7 +167,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "10" ;
+   max_bonus_score : integer "11" ;
    tempint : integer "0" ;
 
    ## "ask" count integers
@@ -296,7 +297,7 @@ strings {
 
    ## east branch seeding for dynamic strings, starting north and going clockwise
    hub_e_sky_floor : string "The {cc_sky_floor} here gives you poetic thoughts. Well, maybe not quite poetic, maybe wordless. You're not quite sure, but when you figure it out, you're sure you'll think up something cool." ;
-   hub_e_fly_score : string "It was inspirational to think up a neat little tune here, but you want to share it now." ;
+   hub_e_fly_score : string "It was inspirational to think up a neat little tune here, but you realize you want to share it." ;
    hub_e_trending_booth : string "A {cc_trending_booth} sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
    hub_e_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
    hub_e_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
@@ -924,6 +925,7 @@ locations {
             : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to." ;
             : set_true "point_fly_score" ;
             : gosub "add_point_tq" ;
+            : pocket "low_song" ;
          }
          : done ;
          }
@@ -1511,6 +1513,17 @@ subroutines {
       : set_true "revealed_footnote_3" ;
    }
    item_based_points : subroutine {
+      : if (is_carried "low_song") {
+         : match "so long" {
+            : if (bonus_point_so_long) {
+               : print "A long (re-)good-bye is not really a good-bye." ;
+            } : else {
+               : print "You use the low song in your head to compose a kiss-off to people whom you don't want to stick in your memory, but they do. It helps lighten a few burdens." ;
+               : set_true "bonus_point_so_long" ;
+               : gosub "add_bonus" ;
+            }
+         }
+      }
       : if (is_carried "pacing_rations") {
          : match "racing passions" {
             : if (bonus_point_racing_passions) {
