@@ -131,25 +131,6 @@ booleans {
    think_master_plan : boolean "false" ;
    think_shift_goals : boolean "false" ;
 
-   ## "ask" booleans
-   ask_1_yet : boolean "false" ;
-   ask_2_yet : boolean "false" ;
-   ask_3_yet : boolean "false" ;
-   ask_4_yet : boolean "false" ;
-   ask_5_yet : boolean "false" ;
-   ask_6_yet : boolean "false" ;
-   ask_7_yet : boolean "false" ;
-   ask_8_yet : boolean "false" ;
-   ask_9_yet : boolean "false" ;
-   ask_10_yet : boolean "false" ;
-   ask_11_yet : boolean "false" ;
-   ask_12_yet : boolean "false" ;
-   ask_13_yet : boolean "false" ;
-   ask_14_yet : boolean "false" ;
-   ask_15_yet : boolean "false" ;
-   ask_16_yet : boolean "false" ;
-   ask_17_yet : boolean "false" ;
-
    ## achievement booleans
    achieve_tyyt: boolean "false" ;
    achieve_cnnc: boolean "false" ;
@@ -187,6 +168,26 @@ integers {
    bonus_score : integer "0" ;
    max_bonus_score : integer "10" ;
    tempint : integer "0" ;
+
+   ## "ask" count integers
+   ## there has to be a better way to do this, but this works
+   ask_1_count : integer "0" ;
+   ask_2_count : integer "0" ;
+   ask_3_count : integer "0" ;
+   ask_4_count : integer "0" ;
+   ask_5_count : integer "0" ;
+   ask_6_count : integer "0" ;
+   ask_7_count : integer "0" ;
+   ask_8_count : integer "0" ;
+   ask_9_count : integer "0" ;
+   ask_10_count : integer "0" ;
+   ask_11_count : integer "0" ;
+   ask_12_count : integer "0" ;
+   ask_13_count : integer "0" ;
+   ask_14_count : integer "0" ;
+   ask_15_count : integer "0" ;
+   ask_16_count : integer "0" ;
+   ask_17_count : integer "0" ;
 }
 
 ## strings
@@ -1344,98 +1345,87 @@ subroutines {
       }
       : match "ask 1" {
          : print {( "The first rule in Graham Nelson's Player's Bill of Rights is <not to be killed without warning<#ff0>>. There" + ((bonus_point_death_sentence) ? "was" : "'s") + " only one way to die, and, well, I think it's lampshaded right here." )} ;
-         : set_true "ask_1_yet" ;
+         : increment "ask_1_count" ;
          : return ;
       }
       : match "ask 2" {
          : print "\"The second rule in Graham Nelson's Player's Bill of Rights is <not to be given horribly unclear hints<#ff0>>. Well, the author has a penchant for tough puzzles, but he also hoped to establish a pattern here. You should see the spoonerisms by now? It would have been no fun to spell it out immediately.\"" ;
-         : set_true "ask_2_yet" ;
+         : increment "ask_2_count" ;
          : return ;
       }
       : match "ask 3" {
          : print "The third rule in Graham Nelson's Player's Bill of Rights is to be able to win without the experience of past lives. The author likes to wimp out about this by making games polite on the cruelty scale. And some of the puzzles may require trial and error, and some that build on each other may have tenuous links in the real world. But the author tried, honest!" ;
-         : set_true "ask_3_yet" ;
+         : increment "ask_3_count" ;
          : return ;
       }
       : match "ask 4" {
          : print "The fourth rule in Graham Nelson's Player's Bill of Rights is to be able to win without the knowledge of future events. The author likes to wimp out about this by making games polite on the cruelty scale. There's some overlap here, though not as much as George Carlin pointed out about the Ten Commandments." ;
-         : set_true "ask_4_yet" ;
+         : increment "ask_4_count" ;
          : return ;
       }
       : match "ask 5" {
-         : if (!ask_5_yet) {
-            : print "The fifth rule in Graham Nelson's Player's Bill of Rights is ..." ;
-            : press_any_key ;
-            : print "You know what? I could go for some lunch right now. I think I'll just kick you to a side room without warning. That seems fair, right?" ;
-            : press_any_key ;
-            : print "      * * * GAME OVER * * *";
-            : press_any_key ;
-            : print "Okay, not really. But that would violate the fifth rule, <not to have the game closed off without warning<#f88>>. This could mean putting the game in an unwinnable state." ;
-         }
-         : else {
-            : print "Also, a general side rule of style is, if you text-dump the player once, try to abbreviate things the next time. The TLDR here: don't lead the player down blind alleys." ;
-         }
-         : set_true "ask_5_yet" ;
+         : print "The fifth rule in Graham Nelson's Bill of Rights is <not to have the game closed off without warning<#f88>>." ;
+         : increment "ask_5_count" ;
          : return ;
       }
       : match "ask 6" {
          : print "The sixth rule in Graham Nelson's Player's Bill of Rights is <not to have to do unlikely things<#f88>>. Of course, in some of the most fun games you do generally unlikely things in real life. But if I suddenly switched to anagrams or palindromes, that'd violate this." ;
-         : set_true "ask_6_yet" ;
+         : increment "ask_6_count" ;
          : return ;
       }
       : match "ask 7" {
          : print "The seventh rule in Graham Nelson's Player's Bill of Rights is <not to need to do boring things for the sake of it<#f88>>. I'm worried we pushed things by making it to the hub, but I also wanted to give you simple puzzles to start. And the main swath of puzzles -- well, I hope they're about the right length. I also didn't want to force you to make a detailed map." ;
-         : set_true "ask_7_yet" ;
+         : increment "ask_7_count" ;
          : return ;
       }
       : match "ask 8" {
          : print "The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>. Oh dear! You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. And there's some latitude for spelling." ;
-         : set_true "ask_8_yet" ;
+         : increment "ask_8_count" ;
          : return ;
       }
       : match "ask 9" {
          : print "The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>. With the way these puzzles are formulated, and the relative lack of standard action verbs, this largely doesn't apply. But parser command abbreviations over the years have made this easier. People type I for inventory and X for examine, and so forth." ;
-         : set_true "ask_9_yet" ;
+         : increment "ask_9_count" ;
          : return ;
       }
       : match "ask 10" {
          : print "The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>. Adventuron's parser is that and more. From my end I wanted to make sure you got some clue if you got one word right, because that's a big help in this game. The player should know if they are close." ;
-         : set_true "ask_10_yet" ;
+         : increment "ask_10_count" ;
          : return ;
       }
       : match "ask 11" {
          : print "The eleventh rule in Graham Nelson's Player's Bill of Rights is <to have reasonable freedom of action<#f88>>. Well, there aren't a ton of verbs implemented, and the first bit was on rails, but I wanted to open it up and have something to do right away in the main area." ;
-         : set_true "ask_11_yet" ;
+         : increment "ask_11_count" ;
          : return ;
       }
       : match "ask 12" {
          : print "The twelfth rule in Graham Nelson's Player's Bill of Rights is <not to depend too much on luck<#f88>>. Well, there's no luck here whatsoever. Perhaps this is outdated, although some parser games encourage the player to strategize for a maximum score based on random events." ;
          : return ;
-         : set_true "ask_12_yet" ;
+         : increment "ask_12_count" ;
       }
       : match "ask 13" {
          : print "The thirteenth rule in Graham Nelson's Player's Bill of Rights is <to be able to understand a problem once it is solved<#f88>>. Well, in a one-trick pony adventure like this, that's not really a problem." ;
-         : set_true "ask_13_yet" ;
+         : increment "ask_13_count" ;
          : return ;
       }
       : match "ask 14" {
          : print "The fourteenth rule in Graham Nelson's Player's Bill of Rights is <not to be given too many red herrings<#f88>>. Well, there are a few bonus points I hope you enjoy." ;
-         : set_true "ask_14_yet" ;
+         : increment "ask_14_count" ;
          : return ;
       }
       : match "ask 15" {
          : print "The fifteenth rule in Graham Nelson's Player's Bill of Rights is <to have a good reason why something is impossible<#f88>>. This isn't a terribly ambitious game, and it doesn't have a ton to interact with. So this doesn't apply. But hopefully if you run into a puzzle where you have the right phrase, the reject makes some sense." ;
-         : set_true "ask_15_yet" ;
+         : increment "ask_15_count" ;
          : return ;
       }
       : match "ask 16" {
          : print "The sixteenth rule in Graham Nelson's Player's Bill of Rights is <not to need to be American<#f88>>. Oh dear. There's one slang word here that originate in the US, but it's a pretty common one. Of course, it's not just about being American. Obscure stuff specific to any culture might make it hard for people to enjoy things fully." ;
-         : set_true "ask_16_yet" ;
+         : increment "ask_16_count" ;
          : return ;
       }
       : match "ask 17" {
          : print "The seventeenth rule in Graham Nelson's Player's Bill of Rights is <to know how the game is getting on<#f88>>. That's done a bit artificially here, with points, and with the hub areas being closed off as you finish them. Of course, having a score hard-coding all this may be too on-the-nose." ;
-         : set_true "ask_17_yet" ;
+         : increment "ask_17_count" ;
          : return ;
       }
       : print "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either.\"" ;
@@ -1820,7 +1810,7 @@ subroutines {
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for ASKing Thor everything)";
       }
-      : else_if (ask_1_yet && ask_2_yet && ask_3_yet && ask_4_yet && ask_5_yet && ask_6_yet && ask_7_yet && ask_8_yet && ask_9_yet && ask_10_yet && ask_11_yet && ask_12_yet && ask_13_yet && ask_14_yet && ask_15_yet && ask_16_yet && ask_17_yet) {
+      : else_if (ask_1_count > 0 && ask_2_count > 0 && ask_3_count > 0 && ask_4_count > 0 && ask_5_count > 0 && ask_6_count > 0 && ask_7_count > 0 && ask_8_count > 0 && ask_9_count > 0 && ask_10_count > 0 && ask_11_count > 0 && ask_12_count > 0 && ask_13_count > 0 && ask_14_count > 0 && ask_15_count > 0 && ask_16_count > 0 && ask_17_count > 0 ) {
          : print "For asking Thor about all the rules in the Player's Bill of Rights, you win the {achievement_tyyt} achievement!" ;
          : set_true "achieve_tyyt" ;
       }
