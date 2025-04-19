@@ -166,6 +166,7 @@ booleans {
    tutorial_inventory_cued : boolean "false" ;
    tutorial_7_listen_done : boolean "false" ;
    tutorial_8_go_west : boolean "false" ;
+   tutorial_9_first_base : boolean "false" ;
    tutorial_item_taken: boolean "false" ;
    tutorial_x_ask_done : boolean "false" ;
 
@@ -178,7 +179,7 @@ booleans {
 
 integers {
    tutorial_score : integer "0" ;
-   max_tutorial_score : integer "1";
+   max_tutorial_score : integer "9";
    score : integer "0" ;
    max_score : integer "23" ;
    points_left_side : integer "0" ;
@@ -505,10 +506,13 @@ locations {
          : match "first base" {
             : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlesness lies.";
             : set_true "point_first_base" ;
+            : set_true "tutorial_9_first_base" ;
+            : increment "tutorial_score" ;
             : gosub "add_point" ;
             : goto "first_base" ;
             : press_any_key ;
             : redescribe ;
+            : gosub "tutorial_shutoff" ;
             : done ;
          }
          : match "first _;_ base" {
@@ -1740,6 +1744,19 @@ subroutines {
          : print {( tcue + "the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
          : return ;
       }
+      : if (!tutorial_9_first_base) {
+         : print "{tcue}{cc_whoa_guest} had you GO WEST. What about the {cc_burst_face}?" ;
+         : return ;
+      }
+      : print "This is a bug. You should have finished the tutorial by now. Let me know how this happened." ;
+   }
+   tutorial_shutoff : subroutine {
+      : if (in_tutorial) {
+         : print {( "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use " + hint + ", though <HELP<#f80>>, another often useful command, is reserved by Adventuron for general parser guidance." )};
+      }
+      : set_true "tutorial_done";
+      : set_false "in_tutorial";
+      : press_any_key;
    }
 
    meta_about : subroutine {
