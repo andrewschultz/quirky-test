@@ -137,10 +137,12 @@ booleans {
    think_hi_mouse : boolean "false" ; ## put endgame at end
 
    ## achievement booleans
-   achieve_tyyt: boolean "false" ;
-   achieve_qwwq: boolean "false" ;
-   achieve_kssn: boolean "false" ;
-   achieve_cnnc: boolean "false" ;
+   achieve_tyyt : boolean "false" scope="survivor";
+   achieve_qwwq : boolean "false" scope="survivor";
+   achieve_kssn : boolean "false" scope="survivor";
+   achieve_cnnc : boolean "false" scope="survivor";
+   achieve_haih : boolean "false" scope="survivor";
+   achieve_haih_pre : boolean "false" scope="survivor";
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -382,6 +384,7 @@ strings {
    achievement_qwwq : string "<Quell-Worrying-Well Querying<#f80>>" ;
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
+   achievement_haih : string "<Hi, All I Haul<#f80>>" ;
 }
 
 ## Objects with vocabulary
@@ -1920,6 +1923,16 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      : if (achieve_haih) {
+         : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
+      }
+      : else_if (achieve_haih_pre) {
+         : print "For taking inventory when carrying around the maximum number of items possible, you win the {achievement_haih} achievement!" ;
+         : set_true "achieve_haih" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
+      }
       : if (achieve_qwwq) {
          : print "(Already got the {achievement_qwwq} achievement for ASKing Thor about everything)";
       }
@@ -2231,6 +2244,11 @@ on_command {
    : if (in_debug) {
       : match "cheat _" {
          : gosub "options_cheat" ;
+      }
+   }
+   : match "i _" {
+      : if (carried() == 9) {
+         : set_true "achieve_haih_pre" ;
       }
    }
    : match "notify _" {
