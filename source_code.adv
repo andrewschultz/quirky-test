@@ -160,8 +160,8 @@ booleans {
    tutorial_about_done : boolean "false" ;
    tutorial_verbs_done : boolean "false" ;
    tutorial_additional_metaverb_done : boolean "false" ;
-   tutorial_x_me_done : boolean "false" ;
    tutorial_x_me_cued : boolean "false" ;
+   tutorial_x_me_done : boolean "false" ;
    tutorial_inventory_done : boolean "false" ;
    tutorial_inventory_cued : boolean "false" ;
    tutorial_item_taken: boolean "false" ;
@@ -464,7 +464,10 @@ locations {
                : pocket "ooh_task" ;
                : print "You search yourself, wondering if you forgot something, and hoping something will turn up. You stumble around a bit as you do so, and you kick something. It's a rolled-up parchment. You unroll it. It has <Ooh, Task to Ask<#88f>> in big letters." ;
                : print "Well, that's a start! You're not sure how or why it got here, but all the same, you're glad you might have some direction, now." ;
-               : set_true "tutorial_x_me_done";
+               : if (!tutorial_x_me_done) {
+                  : set_true "tutorial_x_me_done";
+                  : increment "tutorial_score" ;
+               }
             }
          }
       }
