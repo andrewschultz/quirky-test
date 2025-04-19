@@ -65,7 +65,7 @@ booleans {
 
    ## regular point tally booleans
    point_first_base : boolean "false" ;
-   point_bold_hub : boolean "false" ;
+   point_bro_poor : boolean "false" ;
 
    ## west tile (hub) goals, north then clockwise
    point_master_plan : boolean "false" ;
@@ -243,6 +243,8 @@ strings {
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step. Or you would, without that burst face in the way." ;
 
+   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "Someone crashes into view and unironically introduces themselves as a PRO BOOR. They seem to be warning you off something." : "The Pro Boor stands around, waiting for -- well, you don't know what. Maybe an argument. Hopefully not a fight.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
+
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to <TALK<#0f0>> about what to do and see here." : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to <TALK<#0f0>> whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_travel_grail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
@@ -310,6 +312,8 @@ strings {
    cc_burst_face : dynamic_string {( use_color_coding ? "<burst face<#f88>>" : "burst face")} ;
    cc_hold_bub : dynamic_string {( use_color_coding ? "<HOLD, BUB<#f88>>" : "HOLD, BUB")} ;
 
+   cc_prayer_lights : dynamic_string {( use_color_coding ? "<Prayer Lights<#f88>>" : "Prayer Lights" )} ;
+
    ## west hub
    cc_plaster_man : dynamic_string {( use_color_coding ? "<plaster man<#f88>>" : "plaster man" )} ;
    cc_malice_chap : dynamic_string {( use_color_coding ? "<malice chap<#f88>>" : "malice chap" )} ;
@@ -350,15 +354,17 @@ strings {
 ## Objects with vocabulary
 
 objects {
-  # in inventory
+  ## pedagogical stuff
    ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the <Rare-Thing-There Ring<#a33>>.";
+   prayer_lights : object "{cc_prayer_lights}" msg="It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.";
 
-  # scenery
+  ## scenery
   cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false";
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
 
    ## NPC(s)
-   beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at = "plain_base";
+   beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at = "plain_base" conspicuous="false";
+   pro_boor : scenery "A pro boor" msg="Seems upset about anything and everything." at = "first_base" conspicuous="false";
 
    ## found later
    crackers: object "Crackers" msg="More crackers than you could ever want." ;
