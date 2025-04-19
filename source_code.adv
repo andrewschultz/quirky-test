@@ -251,7 +251,7 @@ strings {
 
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "Someone crashes into view and unironically introduces themselves as a PRO BOOR. They seem to be warning you off something." : "The Pro Boor stands around, waiting for -- well, you don't know what. Maybe an argument. Hopefully not a fight.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to <TALK<#0f0>> about what to do and see here." : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to <TALK<#0f0>> whenever, about whatever.") )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to <TALK<#0f0>> about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to <TALK<#0f0>> whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
 
@@ -445,8 +445,8 @@ locations {
             }
             : else {
                : pocket "ooh_task" ;
-               : print "You search yourself, wondering if you forgot something, and hoping something will turn up. And guess what? There's something called <Ooh, Task to Ask<#88f>>." ;
-               : print "You're not sure who slipped it in there, or how, but all the same, you're glad you might have some direction, now." ;
+               : print "You search yourself, wondering if you forgot something, and hoping something will turn up. You stumble around a bit as you do so, and you kick something. It's a rolled-up parchment. You unroll it. It has <Ooh, Task to Ask<#88f>> in big letters." ;
+               : print "Well, that's a start! You're not sure how or why it got here, but all the same, you're glad you might have some direction, now." ;
                : set_true "tutorial_x_me_done";
             }
          }
@@ -507,9 +507,9 @@ locations {
                   : press_any_key ;
                   : set_true "point_player_rights" ;
                   : gosub "add_point" ;
+                  : goto "plain_base" ;
+                  : destroy "prayer_lights" ;
                   : redescribe ;
-               } : else {
-                  : print "Not again. You want to search for something more positive now." ;
                }
                : done ;
             }
