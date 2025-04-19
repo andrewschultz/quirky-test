@@ -407,17 +407,17 @@ objects {
    ## start in the west, going clockwise
    chalice_map : object "chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
    master_plan : object "master plan" msg="It's written in clear language.\n{map_and_plan}" ; ## from plaster man
-   crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from shell fort
-   pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from cake trackers
+   pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
+   crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "focus" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
-   fed_sated : object "fed, sated" msg="You feel fed, sated." ; ## from grunters' hill
+   meal_dude : object "fed, sated" msg="You had quite a meal, dude." ; ## from grunters' hill
    confidence : object "Confidence" msg="You have {confidence_level} confidence from outwitting some obnoxious people." ; ## from yellow field / trim goon
    low_song : object "low song" msg="They're notes to a song." ; ## fly score
    fast_vision : object "a fast vision" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
    peace_surging : object "peace surging" msg="You feel peace surging within you." ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
    rain_soul : object "rain soul" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out." ;
-   no_greed : object "You feel as though you have no greed." ;
+   no_greed : object "no greed" msg="You feel as though you have no greed." ;
 
    ## post-hub
    travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
@@ -756,6 +756,8 @@ locations {
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
             : gosub "add_point_qt" ;
+            : destroy "meal_dude" ;
+            : destroy "focus" ;
             : pocket "master_plan" ;
          }
          : done ;
@@ -857,6 +859,8 @@ locations {
             : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
             : set_true "point_shift_goals" ;
             : set_false "think_shift_goals" ;
+            : destroy "peace_surging" ;
+            : destroy "no_greed" ;
             : gosub "add_point_qt" ;
          }
          : done ;
@@ -1004,6 +1008,7 @@ locations {
          : else
          {
             : print "Poof! The hurt dome transforms into a dirt home." ;
+            : pocket "trial_pics" ;
             : set_true "point_dirt_home" ;
             : gosub "add_point_tq" ;
          }
@@ -1026,6 +1031,7 @@ locations {
          {
             : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic." ;
             : set_true "point_pouring_rain" ;
+            : pocket "rain_soul" ;
             : gosub "add_point_tq" ;
          }
          : done ;
@@ -1047,6 +1053,7 @@ locations {
          {
             : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so." ;
             : set_true "point_funny_mountain" ;
+            : pocket "no_greed" ;
             : gosub "add_point_tq" ;
          }
          : done ;
@@ -1074,6 +1081,8 @@ locations {
             : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people.\n\nOkay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
             : set_true "point_grim_tune" ;
             : set_false "think_grim_tune" ;
+            : destroy "rain_soul";
+            : destroy "low_song" ;
             : gosub "add_point_tq" ;
             : gosub "gain_confidence" ;
          }
