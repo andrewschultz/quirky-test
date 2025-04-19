@@ -1717,7 +1717,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_verbs_done) {
-         : print {( tcue + "The " + verbs + " meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass.\nYou should try " + verbs + " now." )};
+         : print "{tcue}The {verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass.\nWhile there are other meta-commands to try, {verbs} will give you the most useful information now, so let's try that next." ;
          : return ;
       }
       : if (!tutorial_additional_metaverb_done) {
@@ -1734,7 +1734,7 @@ subroutines {
          : return;
       }
       : if (!tutorial_x_ask_done) {
-         : print {( tcue + "Now that you verified you found something new, the last thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as that's a reserved word." )} ;
+         : print {( tcue + "Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as Adventuron ignores prepositions." )} ;
          : return;
       }
       : if (!tutorial_7_listen_done) {
@@ -1761,8 +1761,9 @@ subroutines {
    }
 
    meta_about : subroutine {
-      : print {( qt + " was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." )} ;
-      : print {( "You can find specific thanks in the " + thx + " command." )} ;
+      : print "{qt} was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." ;
+      : print "You can see what sort of commands {qt} uses with {verbs}." ;
+      : print "You can find specific thanks in the {thx} command." ;
       : if (!tutorial_about_done) {
          : set_true "tutorial_about_done" ;
          : increment "tutorial_score" ;
