@@ -1893,17 +1893,20 @@ on_command {
    : match "salesmen _"  {
       : if (is_at "nameless_lameness") {
          : print "Good guess, if this were an anagram game." ;
+         : done ;
          }
       }
-   : match "theory bore" {
-      : if (is_beside "beery_thor" && bonus_point_theory_bore) {
-         : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
+   : if (has_visited "plain_base") {
+      : match "theory bore" {
+         : if (is_beside "beery_thor" && bonus_point_theory_bore) {
+            : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
+         }
+         : else {
+            : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, but then figure you better not do so to Thor's face." )} ;
+            : set_true "bonus_point_theory_bore" ;
+            : gosub "add_bonus" ;
+         }
       }
-      : else {
-        : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, but then figure you better not do so to Thor's face." )} ;
-       : set_true "bonus_point_theory_bore" ;
-       : gosub "add_bonus" ;
-    }
    }
    : match "turkey quest" {
       : if (bonus_point_turkey_quest) {
