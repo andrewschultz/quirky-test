@@ -119,6 +119,7 @@ booleans {
    ## objects beyond the hubs
    bonus_point_racing_passions : boolean "false" ; ## w e
    bonus_point_so_long : boolean "false" ; ## e n
+   bonus_point_cease_purging : boolean "false" ; ## e e
 
    ## endgame bonus point
    bonus_point_cheery_times : boolean "false" ;
@@ -167,7 +168,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "11" ;
+   max_bonus_score : integer "12" ;
    tempint : integer "0" ;
 
    ## "ask" count integers
@@ -965,8 +966,9 @@ locations {
             }
          : else
          {
-            : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best. Peace may be boring, but then again, the excitement of war is draining." ;
+            : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best.\nYou feel peace surging within you. Peace may be boring, but then again, the excitement of war is draining." ;
             : set_true "point_boring_way" ;
+            : pocket "peace_surging" ;
             : gosub "add_point_tq" ;
          }
          : done ;
@@ -1513,6 +1515,17 @@ subroutines {
       : set_true "revealed_footnote_3" ;
    }
    item_based_points : subroutine {
+      : if (is_carried "peace_surging") {
+         : match "cease purging" {
+            : if (bonus_point_cease_purging) {
+               : print "One doesn't want to overthink good intentions." ;
+            } : else {
+               : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
+               : set_true "bonus_point_cease_purging" ;
+               : gosub "add_bonus" ;
+            }
+         }
+      }
       : if (is_carried "low_song") {
          : match "so long" {
             : if (bonus_point_so_long) {
