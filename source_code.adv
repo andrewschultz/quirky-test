@@ -240,6 +240,7 @@ strings {
    qt : string "<Quirky Test<#ff0>>" ;
 
    # regular commands in green
+   ask : string "<ASK<#0f0>>" ;
    lishea : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    xme : string "<X ME<#0f0>>" ;
    tak : string "<TAKE<#0f0>>" ;
@@ -273,7 +274,7 @@ strings {
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "Someone crashes into view and unironically introduces themselves as a PRO BOOR. They seem to be warning you off something." : "The Pro Boor stands around, waiting for -- well, you don't know what. Maybe an argument. Hopefully not a fight.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
 
@@ -503,7 +504,7 @@ locations {
             : print "The cheering voice still floats around. You can {lishea} it.";
          }
          : else_if (is_carried "ooh_task" && tutorial_6_x_ask_done) {
-            : print "But it's no longer silent. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>.";
+            : print "But it's no longer silent. Perhaps you can {lishea}.";
          }
       }
       on_tick {
@@ -606,9 +607,9 @@ locations {
       on_command {
          : match "talk -;talk thor" {
             : if (talked_to_thor) {
-               : print "Now you've broken the ice, probably better to <ASK<#0f0>> him about one of the rules, 1-17." ;
+               : print "Now you've broken the ice, probably better to {ask} him about one of the rules, 1-17." ;
             } : else {
-               : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. There were seventeen total rules. Some apply here more than other. You can <ASK<#0f0>> me about them by number, or <RULE<#0f0>> works, too. I have three things to say about each rule: the original idea, what it means and why it's there, and how it applies here.\"" ;
+               : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. There were seventeen total rules. Some apply here more than other. You can {ask} me about them by number, or <RULE<#0f0>> works, too. I have three things to say about each rule: the original idea, what it means and why it's there, and how it applies here.\"" ;
             }
             : set_true "talked_to_thor" ;
             : done ;
