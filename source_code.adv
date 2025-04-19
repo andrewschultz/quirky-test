@@ -651,13 +651,10 @@ locations {
             : gosub "ask_thor" ;
          }
       : if (!noted_diagonal_direction) {
-         : match "nw _" {
-            : gosub "note_diagonal_direction_from_hub" ;
-         }
-      }
-      : if (!noted_diagonal_direction) {
-         : match "ne _" {
-            : gosub "note_diagonal_direction_from_hub" ;
+         : match "nw _;ne _" {
+            : mask {
+               : gosub "note_diagonal_direction_from_hub" ;
+               }
          }
       }
       : match "plain base" { # no say_half for a bonus point
@@ -914,6 +911,7 @@ locations {
       on_tick {
          : if (!apostrophe_warn) {
             : print "{otn}Adventuron doesn't like apostrophes, so you don't want to use it here, even if it's in the description.";
+            : set_true "apostrophe_warn" ;
          }
       }
    };
@@ -1169,7 +1167,6 @@ locations {
                : set_true "footnotes_available" ;
                : set_false "think_hi_mouse" ;
                : gosub "track_achievements" ;
-               : print "{bonus_score_string}" ;
                : win_game ;
                : done ;
             }
@@ -1630,8 +1627,9 @@ subroutines {
                : gosub "add_point" ;
                : update_graphic ;
             } : else {
-            : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
+               : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
             }
+            : done ;
          }
          : if (!point_gravel_trail) {
             : match "gravel _;_ trail" {
@@ -1944,7 +1942,7 @@ subroutines {
          : set_true "achieve_haih" ;
       }
       : else {
-         : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
+         : print "You haven't unlocked the {achievement_haih} achievement yet." ;
       }
       : if (achieve_qwwq) {
          : print "(Already got the {achievement_qwwq} achievement for ASKing Thor about everything)";
@@ -1964,7 +1962,7 @@ subroutines {
          : set_true "achieve_kssn" ;
       }
       : else {
-         : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
+         : print "You haven't unlocked the {achievement_kssn} achievement yet." ;
       }
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_qwwq} achievement for finding all bonus points)" ;
@@ -1974,7 +1972,7 @@ subroutines {
          : set_true "achieve_cnnc" ;
       }
       : else {
-         : print "You haven't unlocked the {achievement_cnnc} achievement yet. You got {bonus_score} of {max_bonus_score} this time around." ;
+         : print "You haven't unlocked the {achievement_cnnc} achievement yet. You got {bonus_score} of {max_bonus_score} bonus points this time around." ;
       }
       : press_any_key ;
    }
