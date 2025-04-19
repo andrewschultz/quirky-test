@@ -31,6 +31,7 @@ booleans {
    entered_seth_dentons : boolean "false" ;
    know_lush_shout : boolean "true" ;
    thor_explained_seth : boolean "false" ;
+   summoned_teary_chimes : boolean "false";
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -118,6 +119,9 @@ booleans {
    ## beyond the hubs
    bonus_point_racing_passions : boolean "false" ;
 
+   ## endgame bonus point
+   bonus_point_cheery_times : boolean "false" ;
+
    ## "think" booleans: alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
    think_fellow_yield : boolean "false" ;
@@ -178,7 +182,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "8" ;
+   max_bonus_score : integer "10" ;
    tempint : integer "0" ;
 }
 
@@ -390,6 +394,7 @@ objects {
 
    ## post-hub
    travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
+   teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." ;
 
 }
 
@@ -1076,7 +1081,7 @@ locations {
                : print "You already found something unusual in the house. You need an assistant to look through it." ;
             }
             : else {
-               : print "You remember what you came for. The rare-thing-there ring. Where could it be? Well, there are a lot of glimmering things, here. It would take you a while to search, especially since they are in odd corners. If only you had someone or something willing to help with the busy work!" ;
+               : print "You remember what you came for. The rare-thing-there ring. Where could it be? Well, there are a lot of glimmering things, here. It would take you a while to search, especially since they are in odd corners. If only you had someone or something willing to help with the busy work!\nYou think you hear something new, too." ;
                : set_true "point_see_glimmering" ;
                : gosub "add_point" ;
             }
@@ -1956,6 +1961,15 @@ on_command {
          : redescribe ;
       }
    }
+   : if (is_exists "teary_chimes") {
+      : match "cheery times" {
+         : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
+         : destroy "teary_chimes" ;
+         : gosub "add_bonus" ;
+         : set_true "bonus_point_cheery_times" ;
+         : done ;
+      }
+   }
    : if (is_carried "pacing_rations") {
       : match "racing passions" {
          : if (bonus_point_racing_passions) {
@@ -2068,6 +2082,12 @@ on_command {
       }
    }
    : match "listen _; hear _" {
+      : if (point_see_glimmering && !summoned_teary_chimes && (is_at "gravel_trail" || is_at "my_house")) {
+         : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's something concrete to reflect on." ;
+         : create "teary_chimes" target="gravel_trail" ;
+         : set_true "summoned_teary_chimes" ;
+         : done ;
+      }
       : print "You don't hear anything right now." ;
    }
    : match "x ooh" {
