@@ -238,10 +238,11 @@ strings {
    unknown_begin_note : dynamic_string {( point_first_base ? "" : ", though special commands are cued in puzzles throughout {qt}" )}
    bonus_score_string : dynamic_string {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )}
 
-   ## location strings
+   ## description strings by location
    burst_face_after : string "You're at first base now." ;
-   burst_face_before : string "You're at a burst face. You feel about ready to take an initial step." ;
+   burst_face_before : string "You're at a burst face. You feel about ready to take an initial step. Or you would, without that burst face in the way." ;
 
+   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to <TALK<#0f0>> about what to do and see here." : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to <TALK<#0f0>> whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_travel_grail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
 
@@ -356,7 +357,7 @@ objects {
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
 
    ## NPC(s)
-   beery_thor : object "Beery Thor" msg="Big and strong and friendly." at = "plain_base";
+   beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at = "plain_base";
 
    ## found later
    crackers: object "Crackers" msg="More crackers than you could ever want." ;
@@ -473,7 +474,7 @@ locations {
          }
       }
    };
-   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesxting. You notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}" {
+   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesxting. You notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : if (is_beside "seth_dentons") {
             : match "death sentence" {
