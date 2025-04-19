@@ -351,7 +351,7 @@ objects {
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
 
    ## NPC(s)
-   beery_thor : object "Beery Thor" msg="Big and strong and friendly.";
+   beery_thor : object "Beery Thor" msg="Big and strong and friendly." at = "plain_base";
 
    ## found later
    crackers: object "Crackers" msg="More crackers than you could ever want." ;
@@ -445,59 +445,26 @@ locations {
             : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_6_reveal}" )} ;
             : set_true "revealed_footnote_6";
          }
-         : match "talk _;talk thor"  {
-            : if (!talked_to_thor) {
-               : print "\"Well, there's one last thing to do, here. You managed to GO WEST after hearing me say {cc_whoa_guest} What can you do with the burst face?\"";
-               : set_true "talked_to_thor";
-               : if (in_tutorial) {
-                  : print "Congratulations! You've finished the tutorial." ;
-               }
-            }
-            : else_if (point_bold_hub) {
-               : print "Ask me about any rule in Graham Nelson's Player's Bill of Rights, with ASK (1-10). (Not implemented) I can't give you spoilers." ;
-            }
-            : else {
-               : print {( point_first_base ? "\"This is just meant to be a fun little adventure. But there's some education here. You had the tutorial with basic commands, but I wanted to give a little theory, too. About what you can expect from a text adventure in terms of fairness. I'm cribbing from Graham Nelson's Player's Bill of Rights and showing you how it applies to your adventure here. You can ask me about it at any time with RULE (1-10). Here's where I boom {cc_hold_bub}. What am I hiding from you? Just one more test before you get to the main area.\"" : "\"You need to figure what to do with the burst face that's blocking your way.\"" )};
-               : set_true "know_hold_bub" ;
-            }
-         }
          : match "first base" {
-            : if (point_first_base) {
-               : print "You already changed things here." ;
-               : return ;
-            } : else_if (!talked_to_thor) {
-               : print "\"That's the right idea, but I'm bigger than you. I'm going to make you talk to me first. Don't worry, I'm interesting. Or I think I am.\"";
-               : return ;
-            }
-            : print "\"Ah, there we go. That'll make paths clearer. Now let's have another little TALK, about what we're doing here and why.\"";
+            : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlesness lies.";
             : set_true "point_first_base" ;
-            : create "beery_thor" ;
             : gosub "add_point" ;
+            : goto "first_base" ;
+            : press_any_key ;
+            : redescribe ;
             : done ;
          }
          : match "first _;_ base" {
-            : if (!talked_to_thor) {
-                  : print "\nThor raises an eyebrow. \"Looks like you have some ideas, there. But how about we TALK first?\n";
-               } : else {
-                  : gosub "say_half" ;
-               }
+            : gosub "say_half" ;
             : done ;
          }
-         : if (know_hold_bub) {
-            : match "bold hub" {
-               : print "\"Yes, that's where we'll go next.\"" ;
-               : set_true "point_bold_hub" ;
-               : gosub "add_point" ;
-               : press_any_key ;
-               : create "beery_thor" target = "plain_base" ;
-               : goto "plain_base" ;
-               : redescribe ;
-               : done ;
-            }
-            : match "bold _;_ hub" {
-               ## don't need any other condition -- saying so moves us to next room
-               : gosub "say_half" ;
-            }
+      }
+   };
+   first_base : location "Now you're getting somewhere! You think." {
+      on_command {
+         : match "jump _" {
+            : goto "plain_base" ;
+            : done ;
          }
       }
    };
@@ -1763,7 +1730,6 @@ on_pre_command {
       : set_false "in_tutorial";
       : press_any_key;
       : goto "burst_face" ;
-      : create "beery_thor" ;
       : redescribe ;
       }
    }
@@ -1927,6 +1893,8 @@ on_command {
    : match "exits _" {
       : if (is_at "nameless_lameness") {
          : print "There's a puzzle here to start, before you get a clue which way to go. The tutorial can walk you through it." ;
+      } : else_if (is_at "burst_face" ) {
+         : print "The way forward is beyond the burst face. It's not a direction, but it's similar to changing WHOA GUEST to GO WEST." ;
       }
    }
    : match "think _" {
