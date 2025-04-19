@@ -675,8 +675,12 @@ locations {
          }
          : done ;
          }
+      : match "take _" {
+         : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to <TAKE<#0f0>> here." )} ;
+         : done ;
+      }
       : if (!point_take_crackers) {
-         : match "take _;_ crackers" {
+         : match "_ crackers" {
             : gosub "say_half" ;
             }
          }
