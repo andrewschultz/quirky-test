@@ -1563,6 +1563,7 @@ subroutines {
       : if (think_shift_goals) {
          : print "-- help others out enough to be able to SHIFT GOALS (west hub, SW)";
       }
+      : gosub "check_additional_meta" ;
       : return ;
    }
    tutorial_choice : subroutine {
@@ -1652,6 +1653,7 @@ subroutines {
       : print {( "The only main option is " + notif + ", for score notification." )};
       : print {( "Note that we use " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is a preposition, which is rejected by the simplified version of Adventuron's parser  used here." )};
       : print {( "Also note that an option alone will not be recognized. At least, not in the initial version of " + qt + "." )} ;
+      : gosub "check_additional_meta" ;
    }
 
    options_notify: subroutine {
@@ -1771,7 +1773,7 @@ subroutines {
       : print {( "<THINK<#f80>> reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." )} ;
       : print {( "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." )} ;
       : print {( "Adventuron-specific " + meta + " commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." )} ;
-      : set_true "tutorial_additional_metaverb_done";
+      : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
       : if (achieve_tyyt) {
@@ -1795,7 +1797,6 @@ subroutines {
          : print "You haven't unlocked the {achievement_cnnc} achievement yet. You got {bonus_score} of {max_bonus_score} this time around." ;
       }
       : press_any_key ;
-
    }
 }
 
