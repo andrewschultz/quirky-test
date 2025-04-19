@@ -29,6 +29,7 @@ booleans {
    ## done once in-game booleans
    xme_twice : boolean "false" ;
    entered_seth_dentons : boolean "false" ;
+   know_lush_shout : boolean "true" ;
    thor_explained_seth : boolean "false" ;
 
    ## game option booleans
@@ -103,6 +104,7 @@ booleans {
    bonus_point_theory_bore : boolean "false" ;
 
    ## first base
+   bonus_point_shush_lout : boolean "false" ;
    bonus_rare_plights : boolean "false" ;
 
    ## bane place
@@ -250,6 +252,7 @@ strings {
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step. Or you would, without that burst face in the way." ;
 
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "Someone crashes into view and unironically introduces themselves as a PRO BOOR. They seem to be warning you off something." : "The Pro Boor stands around, waiting for -- well, you don't know what. Maybe an argument. Hopefully not a fight.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
+   lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to <TALK<#0f0>> about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to <TALK<#0f0>> whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
@@ -531,6 +534,23 @@ locations {
             : match "bro _;_ poor" {
                : gosub "say_half" ;
                : done ;
+            }
+         }
+         : if (is_beside "pro_boor" ) {
+            : match "talk -;talk boor" {
+               : print "The pro boor babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree." ;
+               : set_true "know_lush_shout" ;
+               : done ;
+            }
+         }
+         : if (know_lush_shout) {
+            : match "shush lout" {
+               : if (!bonus_point_shush_lout) {
+                  : print "The pro boor takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgiveable! Nevertheless, they do seem to quiet down a bit. Though to get rid of them, perhaps you need to take a different sort of dig. A more direct one." ;
+                  : set_true "bonus_point_shush_lout" ;
+               } : else {
+                  : print "You're not going to quiet the pro boor any further. How to get rid of them?" ;
+               }
             }
          }
       }
