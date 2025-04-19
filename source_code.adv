@@ -43,9 +43,7 @@ booleans {
    talked_to_thor : boolean "false" ;
    know_hold_bub : boolean "false" ;
    hill_aware_you_stole : boolean "false" ;
-   noted_north_from_east : boolean "false" ;
-   noted_north_from_west : boolean "false" ;
-   bend_seen_yet : boolean "false" ;
+   noted_diagonal_direction : boolean "false" ;
 
    ## footnote check booleans
    revealed_footnote_1 : boolean "false" scope="survivor" ;
@@ -642,14 +640,14 @@ locations {
          : match "ask _" {
             : gosub "ask_thor" ;
          }
-      : if (!noted_north_from_west) {
-         : match "west _" {
-            : gosub "note_north_bend_from_hub" ;
+      : if (!noted_diagonal_direction) {
+         : match "nw _" {
+            : gosub "note_diagonal_direction_from_hub" ;
          }
       }
-      : if (!noted_north_from_east) {
-         : match "east _" {
-            : gosub "note_north_bend_from_hub" ;
+      : if (!noted_diagonal_direction) {
+         : match "ne _" {
+            : gosub "note_diagonal_direction_from_hub" ;
          }
       }
       : match "plain base" { # no say_half for a bonus point
@@ -822,7 +820,7 @@ locations {
       }
       }
    };
-   hub_w_se : location "{point_take_crackers ? hub_w_take_crackers : hub_w_cake_trackers}" {
+   hub_w_s : location "{point_take_crackers ? hub_w_take_crackers : hub_w_cake_trackers}" {
       on_command {
       : match "take crackers" {
          : if (point_take_crackers) {
@@ -1025,7 +1023,7 @@ locations {
          }
       }
    };
-   hub_e_sw : location "{point_pouring_rain ? hub_e_pouring_rain : hub_e_roaring_pain}" {
+   hub_e_s : location "{point_pouring_rain ? hub_e_pouring_rain : hub_e_roaring_pain}" {
       on_command {
       : match "pouring rain" {
          : if (point_pouring_rain) {
@@ -1184,11 +1182,15 @@ connections {
 
    from, direction, to = [
 
+      ## from plain base
+      plain_base, northwest, west_tiles,
+      plain_base, northeast, east_branch,
+
       ## two-way stuff first
       west_tiles, north, hub_w_n,
       west_tiles, northeast, hub_w_ne,
       west_tiles, east, hub_w_e,
-      west_tiles, southeast, hub_w_se,
+      west_tiles, south, hub_w_s,
       west_tiles, southwest, hub_w_sw,
       west_tiles, west, hub_w_w,
       west_tiles, northwest, hub_w_nw,
@@ -1197,15 +1199,15 @@ connections {
       east_branch, northeast, hub_e_ne,
       east_branch, east, hub_e_e,
       east_branch, southeast, hub_e_se,
-      east_branch, southwest, hub_e_sw,
+      east_branch, south, hub_e_s,
       east_branch, west, hub_e_w,
       east_branch, northwest, hub_e_nw,
 
-      ## one-way facilitations
+      ## one-way / "exit" additional way out
       hub_w_n, leave_oneway, west_tiles,
       hub_w_ne, leave_oneway, west_tiles,
       hub_w_e, leave_oneway, west_tiles,
-      hub_w_se, leave_oneway, west_tiles,
+      hub_w_s, leave_oneway, west_tiles,
       hub_w_sw, leave_oneway, west_tiles,
       hub_w_w, leave_oneway, west_tiles,
       hub_w_nw, leave_oneway, west_tiles,
@@ -1214,17 +1216,9 @@ connections {
       hub_e_ne, leave_oneway, east_branch,
       hub_e_e, leave_oneway, east_branch,
       hub_e_se, leave_oneway, east_branch,
-      hub_e_sw, leave_oneway, east_branch,
+      hub_e_s, leave_oneway, east_branch,
       hub_e_w, leave_oneway, east_branch,
       hub_e_nw, leave_oneway, east_branch,
-
-      ## one-way between connected rooms
-      ## hub bending paths
-
-      plain_base, west_oneway, west_tiles,
-      west_tiles, south_oneway, plain_base,
-      plain_base, east_oneway, east_branch,
-      east_branch, south_oneway, plain_base,
 
       ## Stealing Hill bending paths
       east_branch, up_oneway, stealing_hill,
@@ -1254,8 +1248,8 @@ barriers {
       block_when = point_fell_short
       message = You dismantled the shell fort, so you don't need to go back east.
    }
-   block_hub_w_se : block {
-      location = hub_w_se
+   block_hub_w_s : block {
+      location = hub_w_s
       block_when = point_take_crackers
       message = You already got some crackers from the cake trackers. There can't be anything more back southeast.
    }
@@ -1295,8 +1289,8 @@ barriers {
       block_when = point_dirt_home
       message = You changed the hurt dome to a dirt home. You can't think of anything else you need to do to the southeast.
    }
-   block_hub_e_sw : block {
-      location = hub_e_sw
+   block_hub_e_s : block {
+      location = hub_e_s
       block_when = point_pouring_rain
       message = You changed the roaring pain to pouring rain. You really can't see any reason to go get soaked more do to the southwest.
    }
@@ -1646,18 +1640,10 @@ subroutines {
       : set_true "jump_commands_notified" ;
       : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_pb + " = plain base\n" + v_wt + " = west tiles\n" + v_sh + " = Stealing Hill\n" + v_eb + " = east branch" )} ;
    }
-   note_north_bend_from_hub: subroutine {
-      : mask {
-         : if (!bend_seen_yet) {
-            : set_string var = "tempstr" {( verb_is "east" ? "west" : "east" )} ;
-            : set_string var = "tempstr2" {( verb_is "east" ? "east" : "west" )} ;
-            : print {( "Interesting. The path bends north after a bit. So though you're going " + tempstr2 + ", you'll need to go south instead of " + tempstr + " to get back to Plain Base." )} ;
-         } : else {
-            : print {( "This path bends north, too, like the other one " + tempstr2 + " from Plain Base." )} ;
-         }
-         : set_true "bend_seen_yet" ;
-         : press_any_key ;
-      }
+   note_diagonal_direction_from_hub: subroutine {
+      : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical. And there are just hubs to the northwest and northeast.\"" ;
+      : set_true "noted_diagonal_direction" ;
+      : press_any_key ;
    }
    say_half : subroutine {
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
@@ -2299,9 +2285,9 @@ assets {
       hub_w_e_after_fell_short : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQQAAAAoBAMAAADqP5nAAAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABLUlEQVRYw8XWQRKDIAwF0N9tFky5gGdPt5wKL+AZah3bWqsQSDJ+ddwovJGQEdN58i3OweQc1AT+BlQF7gbUBd4GCATOBkgEvgaIBK4GyASeBggFjgZIBX4GiAXmBpwRzgXGhoxwTCgJyoYxNgEWQjgglAXV7zC2LAPWydEkODUM6z22Gf4JGYIcDRetyjEjVnOfQmXkQUMIWUKoZRw0m9KEoOsLPYTQvTOsCMflKapPI8KnxVl1x2aCQjD3RxMC0N8ov60pbcICwvZ5/Ly9S0zlUOJ1FAWBQYUpHmUB0+tUEsqCWnj5ECoCiKAQLBNDRQCzSrDDdBB4OS4lEPF8XUtg5uRCEPyxvMsZZLUS6N1RVxP8FqKB4FWOLSvhtClb3mOmiwkJVoJk1WUVeQKxBKKctnM+FgAAAABJRU5ErkJggg==";
       hub_w_e_before_shell_fort : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQQAAAAoBAMAAADqP5nAAAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABHUlEQVRYw9XWQY6DMAwF0N+tF1G5wJzd65wqvQBnKBOVKbQB7NhWNB/YBXjCsQXm45TbtASzLpNy/YwrgdagFpwQVoH+O3gR3oJoAwSCYAMkglgDRAKR4fHjSPgWCAy9giahJQisBaSCOAPEAncDjgjHAmdDQWoTzgSehlIJqUE4F3gaUI9vwpWgbehrx1WwJxQI4j6SsBNMl7nPKbIjUpEQYpvynxLScAIwmvA34rymo5pgECzz0YVgKMNmNOVNWEDYrsfubmUo8+spBgKD+gVMv6eRYBLUT2AkgMhShvpimAhgNgk+MB0ErsdQAhEv11gCM+cQguCPZd3OIK9KoLejRhPiCqEgRG1HTSWCmlJzHzMNJmR4CbLXlDXkCVh7pDUhiROjAAAAAElFTkSuQmCC";
 
-      hub_w_se : dynamic_graphic {( point_take_crackers ? "hub_w_se_after_take_crackers" : "hub_w_se_before_cake_trackers" )} ;
-      hub_w_se_before_cake_trackers : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABN0lEQVRYw92VwW7DIBBEV/6D9c0nWv9xjvxkkXuuMjGx4xoSt4GxN2r3gkZC8GCGRT5eXPJ3AYBBpwJwtgUIiKUOU91GI4Awb4fp7PEisNTxAOF7s24kcFcQoB5BSo1fAfhTvIQhBSiNg1TvP57c+yWF1QQEgFPtvC1ASAEQCfwdAMwscNGG7nUWdDohWAJkr8BHBF0aksErSGKgt2cAwz6QIgxXBAfLTpgxDGsDzH/Dx8aHw0L45MrH9YF85Rko57IDmPUGl4EFGwCFCFKfgA0LCk0QMgF0CoRMAJ0CIRNQkfsqANzp1AL8Mp8FCF9nSvMA2Sdbqn8C6J8qkHq7pG5aqWYB3qSh9D8AwGfL6B1uAMroPSx4bwm9SwaU0DxA3/TrI5XqXQD6tl7zAM04T9tqzXfC4+oCbO+g76wTpBYAAAAASUVORK5CYII=";
-      hub_w_se_after_take_crackers : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAADXUlEQVRYhc2Yy2oqQRCGhSGg7e1VBoqAEjznFQLi+whushRcucs6K8FlNj6AC2HWA4L74AMcyKnqduyqmp6bCSYVGVMO2t/8dZue1tsPW+s3ALy2mN3bpw86a2/k9/beyB9+eiO/++6N/H7qjfz2izfyBx/eyH+YeSOAV7b+cok+W3+3Q5+tfz6jz9bfbNBn6x8O6LP153P02frHI/ps/efnlhSgs5QC9HZSgOFZCtDdSAH6BylAey4FGBylAA8IIARYL6UA+50U4PMsBXjfSAHSgxTgZS4F+DhKAWYIwBOigwDc7yEA94cIwP0uAnC/jwDcbyMA9wcIwP0HAhARQAARAQQQEUAAEQEEEBFAABEBBBARQAARgSAArfSPAQDa30YACwkAf+zq+FYIAGMGcMZU4wAxWjMAGOHigEcLcAKg9emtCAAvcfyNCkCMay/wWw4A/yEJ6M0CTCH7uwLEEJcANFYA6OIhgmh0VeAEXoEpZJYBrMjRIbAYTAF7zAC2AE9XgCRNAFJ7sAB07UAUMLrmAImQ5UAIIOYATgGLwRSwRweAy0f0/QxgAhBP0hQmDoBORiMGYOMPvgpg+uheBQo4gGIFtsSLLxTBAdirQQnSWxVQOaBDoBWwV2hfXgFgCjTPAVcFKygIgVYALgrEEM6BGlXgQgCiD1AceCf0CrgC8ApgCjgFnkQVeIBAH+AKzDIBHkUnXKFkZQCsCogg9kmYB8h3woocIKMPxgzAh0AroMswD5CbBaIKQiGwAJEAKFFAN6LkAhBlAPHoGxRo0IqpBFJdBQtYwJdyoH4rTiJwEmR9gDKU9YEaVUCjSFdBfQVsEbJZcGlEDfqAbQO+D+z9NCpSQCShBrC/zVtxZQ5cG+EFwN8QhIfRVs0CBWDPtX0jqpwFJD5wgKACvBHlZoErwuRGBfwwDAPkWrGaBbYK8OwEbsyBnAIqBLlhpGYBpX9if7B2Fag7Ip0DFQpgCshZQArEXoHKPpC7JwSAMoBcKyYCNgt0DlR1wtBN6XhdEoJAK94GZkHZvkBWQem+wCgFjFLAqEZkFIBRAMZtTFwaIIBRAKZVd2/qFLh1b3qCgr3pmwIwCsCozbFRAEYBGAVg1ObYKACjAO7+eIIe0fDdqqGHNvf1f8VDqh+1/zZPM48vP43iAAAAAElFTkSuQmCC";
+      hub_w_s : dynamic_graphic {( point_take_crackers ? "hub_w_s_after_take_crackers" : "hub_w_s_before_cake_trackers" )} ;
+      hub_w_s_before_cake_trackers : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABN0lEQVRYw92VwW7DIBBEV/6D9c0nWv9xjvxkkXuuMjGx4xoSt4GxN2r3gkZC8GCGRT5eXPJ3AYBBpwJwtgUIiKUOU91GI4Awb4fp7PEisNTxAOF7s24kcFcQoB5BSo1fAfhTvIQhBSiNg1TvP57c+yWF1QQEgFPtvC1ASAEQCfwdAMwscNGG7nUWdDohWAJkr8BHBF0aksErSGKgt2cAwz6QIgxXBAfLTpgxDGsDzH/Dx8aHw0L45MrH9YF85Rko57IDmPUGl4EFGwCFCFKfgA0LCk0QMgF0CoRMAJ0CIRNQkfsqANzp1AL8Mp8FCF9nSvMA2Sdbqn8C6J8qkHq7pG5aqWYB3qSh9D8AwGfL6B1uAMroPSx4bwm9SwaU0DxA3/TrI5XqXQD6tl7zAM04T9tqzXfC4+oCbO+g76wTpBYAAAAASUVORK5CYII=";
+      hub_w_s_after_take_crackers : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAADXUlEQVRYhc2Yy2oqQRCGhSGg7e1VBoqAEjznFQLi+whushRcucs6K8FlNj6AC2HWA4L74AMcyKnqduyqmp6bCSYVGVMO2t/8dZue1tsPW+s3ALy2mN3bpw86a2/k9/beyB9+eiO/++6N/H7qjfz2izfyBx/eyH+YeSOAV7b+cok+W3+3Q5+tfz6jz9bfbNBn6x8O6LP153P02frHI/ps/efnlhSgs5QC9HZSgOFZCtDdSAH6BylAey4FGBylAA8IIARYL6UA+50U4PMsBXjfSAHSgxTgZS4F+DhKAWYIwBOigwDc7yEA94cIwP0uAnC/jwDcbyMA9wcIwP0HAhARQAARAQQQEUAAEQEEEBFAABEBBBARQAARgSAArfSPAQDa30YACwkAf+zq+FYIAGMGcMZU4wAxWjMAGOHigEcLcAKg9emtCAAvcfyNCkCMay/wWw4A/yEJ6M0CTCH7uwLEEJcANFYA6OIhgmh0VeAEXoEpZJYBrMjRIbAYTAF7zAC2AE9XgCRNAFJ7sAB07UAUMLrmAImQ5UAIIOYATgGLwRSwRweAy0f0/QxgAhBP0hQmDoBORiMGYOMPvgpg+uheBQo4gGIFtsSLLxTBAdirQQnSWxVQOaBDoBWwV2hfXgFgCjTPAVcFKygIgVYALgrEEM6BGlXgQgCiD1AceCf0CrgC8ApgCjgFnkQVeIBAH+AKzDIBHkUnXKFkZQCsCogg9kmYB8h3woocIKMPxgzAh0AroMswD5CbBaIKQiGwAJEAKFFAN6LkAhBlAPHoGxRo0IqpBFJdBQtYwJdyoH4rTiJwEmR9gDKU9YEaVUCjSFdBfQVsEbJZcGlEDfqAbQO+D+z9NCpSQCShBrC/zVtxZQ5cG+EFwN8QhIfRVs0CBWDPtX0jqpwFJD5wgKACvBHlZoErwuRGBfwwDAPkWrGaBbYK8OwEbsyBnAIqBLlhpGYBpX9if7B2Fag7Ip0DFQpgCshZQArEXoHKPpC7JwSAMoBcKyYCNgt0DlR1wtBN6XhdEoJAK94GZkHZvkBWQem+wCgFjFLAqEZkFIBRAMZtTFwaIIBRAKZVd2/qFLh1b3qCgr3pmwIwCsCozbFRAEYBGAVg1ObYKACjAO7+eIIe0fDdqqGHNvf1f8VDqh+1/zZPM48vP43iAAAAAElFTkSuQmCC";
 
       hub_w_sw : dynamic_graphic {( point_shift_goals ? "hub_w_sw_after_shift_goals" : "hub_w_sw_before_gift_shoals" )} ;
       hub_w_sw_before_gift_shoals : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQQAAAAoBAMAAADqP5nAAAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAACA0lEQVRYw83XMYvCMBQA4IcPB6lH/8LhTW7BrIJ/wSWzf0nc8i/ci3DQVVBwFKfuR+FwE3JpXtuktnJyzRHfZpW+ry8vLxW+gkXGKSAcgQcnlEWAgAQSMAxN0IJwBFoHDNkLnIduxyw8gb8QgYUiZOGr8CoEwNAEhsGrwF6jFwIO6LoVg1XBLUIYQuYWgcO+b/C/Bav3hHfC6fREeqRjmvZEb0LqjLnirsfjsRw5bszn7idofAc+ijCb1Q8XXS7JFk2WxcKmGY/H0EiMngmDwaBMwJLdOYno/nEcF1fNot/2BwUPlsUHgW0mU0kJLkUkhsBW6ipKQqz2Ks/dVnBq4YMwkhO5XlMRknPyRoShUGK5pE4ofnjI7XNX3eKFoLtxNtExNYQo2SXbnSEslI4rEWJ1U7lDaO5ND4SR3Mi1ITCAI0REGIqVWBKBKXVQ8X8RtIBJOZUjIhTrQAQmxFUMiQCgt4NqEbDcn/0JAHo7yHsCgN4OgghmHVoEakrsTeDlOrQIZh0eErCaT6w3Ie0kbPkzBPQzF3gnAbsJ2CAwP4TUIaAlcEtAS/jsHs89CdwS3uvJFKEl5HYsqLR9TvU/rFOH8FET6PZE+LaErqkA3CNhTU9VjCa0hGV1QmgCdhDQJ6GVwBCqPwpwd1L7OymrBHRSN19UzGh67hWuP6Gzy3+97MQPgAAKM+EiMO8AAAAASUVORK5CYII=";
@@ -2331,9 +2317,9 @@ assets {
       hub_e_se_before_hurt_dome : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABi0lEQVRYw8WXXY7FIAiFzw5Yf1c1W+G1Twwo/lRvJrk0Mr1pa65RP+EAFvLmgl4k76aID+W6uDL8DwBjb2UCMPChmQiAvnF9M6UDsN3Up+BsgLo2lmYiAJrzWwyEnYA3EWCvqZkIAO5CcPdz1AQxANoBJBOAHWASIb9T0/c5oBrCNEAOEPQBYjFYVlNDQMUHnwdpADARaCFi014RgcYiBU0QAahrwYTwoz91P1WqJAD2Uei1gNwvSQC6Ho0o7C+S0NkEAQn2rdM8hRoCOQDSt4r7uq6mPcR8gNCItulb5OZhjkgcIBADw/szQOs7DVB3SaMCeh2MngoQkEDzgyUC8jTQKkIWgGXgsnah0AckC2DOPvYoMbkE5lEAmgdSEyUtvSctQH8A4DwAu7tHMEznYwTTypcanI6iNEdkuTMAbPeuuv51XOQoWQAl+KjV4RoGUknOA0D6Aez5beiZiE4D9GW2r2PE4jAGsIzkYf0cAKzGxrNKHQfY5MaPrhwAbDU6GYC2v/MA+DMAQgC/9ff8qf8Ctc8AAAAASUVORK5CYII=";
       hub_e_se_after_dirt_home : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAy0lEQVRYw+3VMQ6DMAyF4XcFlJNY7M19uRZ7lxwgLUKiHYhkWy/JgD0gFqKPP0Hg7RhZbid51oLjmX1pzGsQQFqANAbQDOBKAGIAVwIwA3gSgBnAkwDUAI4EoAZwJAA3gD0BuAHsCUAOYE4AcgBzArADWBOgWkY0gGRa0gQoq2pyN0DWAUovQKk6QM2dAFkLKL22QAuojwGcX93v9jtjAWmV4/J3K88AXK0DMOsQxhYE4Dh5MvkQnoBZ/4LrVQMQAApgs4wOYFpyOuAD2wKbyFO+eg8AAAAASUVORK5CYII=";
 
-      hub_e_sw : dynamic_graphic {( point_pouring_rain ? "hub_e_sw_after_pouring_rain" : "hub_e_sw_before_roaring_pain" )} ;
-      hub_e_sw_before_roaring_pain : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAyElEQVRYw+3VOw6DMBAE0CkjFz5zSp8iovaptk3jM8QmRWK8KEixdxLhEUICgebxWUAiBxPw6QCBf9u63ctiBxDk0ABrOw2AVwgAVLEG1O2XcE2WgG17jh1AmnZLgCjXrgAGfYjU9mB2B0Rvt7sDorfbAzbtOwAMAuR5D0cA9b+pF+BZRAOkdBzg8wnCBMBDwASUbzX1EQyZgv8CsKcgj8DZAej9EiDmuLJaYhOn7VKO+ya/DWizuLIQAf0zAROAnXE7GSBOADEPrgZwvE2iMzYAAAAASUVORK5CYII=";
-      hub_e_sw_after_pouring_rain : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA1ElEQVRYw+2XMQ6DMAxFvRVxWrasHr1xhc4+YccGEimgOslA7SDhL4uF4T/lxUgA0ZrnUxvSDOSK1qwF8v8DuUJuSWkczvWBUi0fPsJEvSO6MrBX194ixEz2ClL29gRgrWC7nCUDFMApdgryYp7yCovZFkjtMQuZKDhcutKeAQwUSO3hAKCroNJeALQVoNwezBSg3G6nAOV2YwVx30MNQF9BKmoAaG9BB0BbQRdA/0PkClzB3RUo/5iMBuCYeXu8+Scz6+feAOwADvAsAH4yADvAwHwBk0EBGBu+j74AAAAASUVORK5CYII=";
+      hub_e_s : dynamic_graphic {( point_pouring_rain ? "hub_e_s_after_pouring_rain" : "hub_e_s_before_roaring_pain" )} ;
+      hub_e_s_before_roaring_pain : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAyElEQVRYw+3VOw6DMBAE0CkjFz5zSp8iovaptk3jM8QmRWK8KEixdxLhEUICgebxWUAiBxPw6QCBf9u63ctiBxDk0ABrOw2AVwgAVLEG1O2XcE2WgG17jh1AmnZLgCjXrgAGfYjU9mB2B0Rvt7sDorfbAzbtOwAMAuR5D0cA9b+pF+BZRAOkdBzg8wnCBMBDwASUbzX1EQyZgv8CsKcgj8DZAej9EiDmuLJaYhOn7VKO+ya/DWizuLIQAf0zAROAnXE7GSBOADEPrgZwvE2iMzYAAAAASUVORK5CYII=";
+      hub_e_s_after_pouring_rain : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA1ElEQVRYw+2XMQ6DMAxFvRVxWrasHr1xhc4+YccGEimgOslA7SDhL4uF4T/lxUgA0ZrnUxvSDOSK1qwF8v8DuUJuSWkczvWBUi0fPsJEvSO6MrBX194ixEz2ClL29gRgrWC7nCUDFMApdgryYp7yCovZFkjtMQuZKDhcutKeAQwUSO3hAKCroNJeALQVoNwezBSg3G6nAOV2YwVx30MNQF9BKmoAaG9BB0BbQRdA/0PkClzB3RUo/5iMBuCYeXu8+Scz6+feAOwADvAsAH4yADvAwHwBk0EBGBu+j74AAAAASUVORK5CYII=";
 
       hub_e_w : dynamic_graphic {( point_funny_mountain ? "hub_e_w_after_funny_mountain" : "hub_e_w_before_money_fountain" )} ;
       hub_e_w_before_money_fountain : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABQElEQVRYw+2WTQ6EIAyFu+f+l5jNdN+EC5F4gNnMGKNofxAEjJkElkbK5+P1WXg9vGAADIABMADMp9/7VhHA+0aAzwD4F4DpnjUAmgACUv4Ecr4fgCiGAD6HFABcNwBRLDgkUVwjza+g7wUgigVE4h9sIJFz5E8u4xLAodhyHIETAAppIoR1j30Z1wBisRUAxZVrpIlman9yGdcAYrGE4BrpcGzUjzm1xQPacoYHduGjfmxbSxcYTae7YLfeph+nrMuBZLhEJCOjNv24U6uSMBcuthTbLu7UKoBcuGgzLJKtunGnVgGIPLACmAcCk6zFAypckv8EHghcsvou0OGSbD4eCFyy+hxIeMAIYMEkJWudB+RfUQewuBUhWftAwnPACGDhy5O26TGSGR4on0q6zIRG6hTPZV0AimbDMZYXA/wAWFjFQbCRejAAAAAASUVORK5CYII=";
