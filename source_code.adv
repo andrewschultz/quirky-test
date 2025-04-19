@@ -390,10 +390,6 @@ locations {
          : if (verb_is "i" && is_carried "ooh_task") {
             : set_true "tutorial_inventory_done" ;
          }
-         : if (is_carried "ooh_task" && !tutorial_x_ask_done && noun1_is "task" ) {
-            : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can use one of your senses and pick up a clue." ;
-            : set_true "tutorial_x_ask_done" ;
-         }
          : if ((verb_is "inventory") && in_tutorial && !tutorial_x_me_done) {
             : print "Taking inventory is a good thing to do early in a text adventure, but we're not there yet in the tutorial. Once you've found an item, the tutorial will nudge you to do take inventory.";
          }
@@ -434,6 +430,12 @@ locations {
          }
          : else_if (is_carried "ooh_task" && tutorial_x_ask_done) {
             : print "But it's no longer silent. Perhaps you can <LISTEN<#0f0>> or <HEAR<#0f0>>.";
+         }
+      }
+      on_tick {
+         : if (is_carried "ooh_task" && !tutorial_x_ask_done && noun1_is "task" ) {
+            : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can use one of your senses and pick up a clue." ;
+            : set_true "tutorial_x_ask_done" ;
          }
       }
    };
