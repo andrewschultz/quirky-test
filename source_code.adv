@@ -164,6 +164,7 @@ booleans {
    tutorial_x_me_done : boolean "false" ;
    tutorial_inventory_done : boolean "false" ;
    tutorial_inventory_cued : boolean "false" ;
+   tutorial_7_listen_done : boolean "false" ;
    tutorial_item_taken: boolean "false" ;
    tutorial_x_ask_done : boolean "false" ;
 
@@ -446,6 +447,8 @@ locations {
          : match "listen _; hear _" {
             : if (tutorial_x_ask_done) {
                : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a {cc_whoa_guest} You'd like to see where it's from. But which direction is that?" ;
+               : set_true "tutorial_7_listen_done" ;
+               : increment "tutorial_score" ;
                : create "cheering_voice" ;
                : return ;
             }
@@ -1728,7 +1731,7 @@ subroutines {
          : print {( tcue + "Now that you verified you found something new, the last thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as that's a reserved word." )} ;
          : return;
       }
-      : if (!is_beside "cheering_voice") {
+      : if (!tutorial_7_listen_done) {
          : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
          : return;
       }
