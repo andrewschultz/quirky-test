@@ -430,6 +430,9 @@ vocabulary {
    : noun / aliases = [ooh, task, ask]
    : noun / aliases = [hill, hills]
    : noun / aliases = [hunter, hunters]
+   : noun / aliases = [fission, fishin]
+   : noun / aliases = [surge, surging]
+   : noun / aliases = [purge, purging]
    : noun / aliases = [no, n]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
@@ -1543,9 +1546,9 @@ subroutines {
       : set_true "revealed_footnote_3" ;
    }
    gain_confidence: subroutine {
+      : print {( "You gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
       : increment "confidence_meter" ;
       : pocket "confidence" ;
-      : print {( "You gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
       : return ;
    }
    item_based_points : subroutine {
@@ -1599,7 +1602,7 @@ subroutines {
             : if (bonus_point_sane_role) {
                : print "Fighting too hard for perfect sanity undoes the point." ;
             } : else {
-               : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right awayy." ;
+               : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
                : set_true "bonus_point_cease_purging" ;
                : gosub "add_bonus" ;
             }
