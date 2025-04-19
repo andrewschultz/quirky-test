@@ -482,6 +482,20 @@ locations {
                : destroy "seth_dentons" ;
                : gosub "add_bonus" ;
             }
+            : match "x seth" {
+               : print "Very seedy looking. Even its name, though common, seems ominous for some reason.";
+               : gosub "thor_on_seth" ;
+               : done ;
+            }
+            : match "enter _" {
+               : if (entered_seth_dentons) {
+                  : print "Nope, not again. Maybe you can figure the secret Beery Thor said it had." ;
+               } : else {
+               : print "It's a seedy place, it is. You are captured and put on trial. It looks bad for you, but before the verdict is rendered, Beery Thor clatters in and makes an argument that befuddles the courtroom.\n\"You're not the first person to try that,\" says Beery Thor., \"And I don't blame you." ;
+               : gosub "thor_on_seth" ;
+               : set_true "entered_seth_dentons" ;
+               }
+            }
          }
          : match "ask *" {
             : gosub "ask_thor" ;
@@ -1186,6 +1200,12 @@ subroutines {
          }
       }
       : increment "bonus_score";
+      }
+   thor_on_seth : subroutine {
+      : if (!thor_explained_seth) {
+         : print "Beery Thor casually mentions it'd be nice if it disappeared, but not critical. The ring's not there, but if it was, he would've taken care of things, already." ;
+         : set_true "thor_explained_seth" ;
+         }
       }
    ask_thor : subroutine {
       : if (!is_int(original "noun1")) {
