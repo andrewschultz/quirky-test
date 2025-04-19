@@ -99,6 +99,9 @@ booleans {
    bonus_point_turkey_quest : boolean "false" ;
    bonus_point_theory_bore : boolean "false" ;
 
+   ## first base
+   bonus_rare_plights : boolean "false" ;
+
    ## bane place
    bonus_point_bane_place : boolean "false" ;
    bonus_point_death_sentence : boolean "false" ;
@@ -170,7 +173,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "7" ;
+   max_bonus_score : integer "8" ;
    tempint : integer "0" ;
 }
 
@@ -475,6 +478,18 @@ locations {
    };
    first_base : location "Now you're getting somewhere! You think.\n{boor_or_not}" {
       on_command {
+         : if (is_carried "prayer_lights") {
+            : match "rare plights" {
+               : if (!bonus_rare_plights) {
+                  : print "You read about people's complaints. Some seem common and some seem exotic indeed. People hard done by mentally, physically, and financially. Their problems seem more interesting and exciting than yours. You know it's important to care about this sort of thing, and yet, there must be something else in {cc_prayer_lights}, something more uplifting, perhaps a justification you deserve more, even if you have a fun game like this to play." ;
+                  : set_true "bonus_rare_plights" ;
+                  : gosub "add_bonus" ;
+               } : else {
+                  : print "Not again. You want to search for something more positive now." ;
+               }
+               : done ;
+            }
+         }
          : match "bro poor" {
             : if (!point_bro_poor) {
                : print "The Pro Boor looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up. But all the same, they shove a something into your hands, a note of what you're getting into. It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
