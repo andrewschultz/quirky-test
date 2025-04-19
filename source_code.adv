@@ -64,6 +64,9 @@ booleans {
    drop_referenced : boolean "false" ;
 
    ## regular point tally booleans
+   ## some of these are never referred to, or they are fundamentally the same as other game states, but I put them here to make sure the point totals add up
+   point_go_west : boolean "false" ;
+
    point_first_base : boolean "false" ;
    point_bro_poor : boolean "false" ;
    point_player_rights : boolean "false" ;
@@ -86,13 +89,13 @@ booleans {
    point_funny_mountain : boolean "false" ;
    point_grim_tune : boolean "false" ;
 
-   point_missing_house : boolean "false" ;
-   point_see_glimmering : boolean "false" ;
-   point_hi_mouse : boolean "false" ;
-
    ## endgame points
    point_healing_still : boolean "false" ;
    point_gravel_trail : boolean "false" ;
+
+   point_missing_house : boolean "false" ;
+   point_see_glimmering : boolean "false" ;
+   point_hi_mouse : boolean "false" ;
 
    ## bonus point tally booleans
    ## any time points first
@@ -169,7 +172,7 @@ integers {
    tutorial_score : integer "0" ;
    max_tutorial_score : integer "1";
    score : integer "0" ;
-   max_score : integer "22" ;
+   max_score : integer "23" ;
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
@@ -1808,6 +1811,7 @@ on_pre_command {
       : set_true "tutorial_done";
       : set_false "in_tutorial";
       : press_any_key;
+      : set_true "point_go_west" ;
       : goto "burst_face" ;
       : redescribe ;
       }
