@@ -173,6 +173,7 @@ integers {
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
    max_bonus_score : integer "14" ;
+   confidence_meter : integer "2" ; ## yellow field, malice chap, trim goon
    tempint : integer "0" ;
 
    ## "ask" count integers
@@ -316,7 +317,8 @@ strings {
    hub_e_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
    hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
-   ## silly hub items
+   ## details for hub items
+   confidence_level : dynamic_string {( confidence_meter == 2 ? "peak" : "some" )} ;
    map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
       )} ;
 
@@ -911,6 +913,7 @@ locations {
             : set_true "point_fellow_yield" ;
             : set_false "think_fellow_yield" ;
             : gosub "add_point_qt" ;
+            : gosub "gain_confidence" ;
          }
          : done ;
          }
@@ -1068,6 +1071,7 @@ locations {
             : set_true "point_grim_tune" ;
             : set_false "think_grim_tune" ;
             : gosub "add_point_tq" ;
+            : gosub "gain_confidence" ;
          }
          : done ;
          }
@@ -1521,6 +1525,12 @@ subroutines {
       }
       : print {( "For some history on both West Tiles and East Branch, look at{footnote_3_reveal}." )} ;
       : set_true "revealed_footnote_3" ;
+   }
+   gain_confidence: subroutine {
+      : increment "confidence_meter" ;
+      : pocket "confidence" ;
+      : print {( "You gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
+      : return ;
    }
    item_based_points : subroutine {
       : if (is_carried "fast_vision") {
