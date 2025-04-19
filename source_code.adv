@@ -85,7 +85,6 @@ booleans {
    point_funny_mountain : boolean "false" ;
    point_grim_tune : boolean "false" ;
 
-   point_travel_grail : boolean "false" ;
    point_missing_house : boolean "false" ;
    point_see_glimmering : boolean "false" ;
    point_hi_mouse : boolean "false" ;
@@ -250,7 +249,7 @@ strings {
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to <TALK<#0f0>> about what to do and see here." : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to <ASK<#0f0>> about any of the rules in the Player's Bill of Rights." : "to <TALK<#0f0>> whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_5_reveal}" : "" )} ;
-   describe_gravel_trail : dynamic_string {( point_travel_grail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
+   describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
 
    sub_hub: dynamic_string {( "Here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub, you can go south back to the plain base or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
    spokes_word: dynamic_string {( tempint == 6 ? "one" :
@@ -299,7 +298,7 @@ strings {
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
    loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("west_tiles") ? "back west to West Tiles" : "west" ) + " or " + ( has_visited("east_branch") ? "back east to East Branch" : "east" ) + "." )};
-   stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ;
+   stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ; ## remove qualifier only when you used the travel grail
 
    gravel_trail_house : dynamic_string {(
       point_missing_house ? ", or you can go NORTH inside the house you made" : ""
