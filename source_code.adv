@@ -120,6 +120,7 @@ booleans {
    bonus_point_racing_passions : boolean "false" ; ## w e
    bonus_point_so_long : boolean "false" ; ## e n
    bonus_point_cease_purging : boolean "false" ; ## e e
+   bonus_point_sane_role : boolean "false" ; ## e sw
 
    ## endgame bonus point
    bonus_point_cheery_times : boolean "false" ;
@@ -168,7 +169,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "12" ;
+   max_bonus_score : integer "13" ;
    tempint : integer "0" ;
 
    ## "ask" count integers
@@ -404,6 +405,7 @@ objects {
    frame_shy : object "frame shy" msg="You feel a slight shame blot for fighting mistruth with mistruth." ; ## trending booth
    peace_surging : object "peace surging" msg="You feel peace surging within you." ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
+   rain_soul : object "rain soul" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out." ;
    no_greed : object "You feel as though you have no greed." ;
 
    ## post-hub
@@ -1547,6 +1549,17 @@ subroutines {
                : set_true "bonus_point_racing_passions" ;
             }
             : done ;
+         }
+      }
+      : if (is_carried "rain_soul") {
+         : match "sane role" {
+            : if (bonus_point_sane_role) {
+               : print "Fighting too hard for perfect sanity undoes the point." ;
+            } : else {
+               : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right awayy." ;
+               : set_true "bonus_point_cease_purging" ;
+               : gosub "add_bonus" ;
+            }
          }
       }
       : if (is_exists "teary_chimes") {
