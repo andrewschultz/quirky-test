@@ -1538,8 +1538,8 @@ subroutines {
          : print "DEBUG OPTION: CHEAT turns off/on restrictions in hub puzzles so you can do them in any order." ;
       }
       : print {( "The only main option is " + notif + ", for score notification." )};
-      : print {( "Note that we use " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is reserved by Adventuron." )};
-      : print {( "Also note that a verb alone will not be recognized. At least, not in the initial version of " + qt + "." )} ;
+      : print {( "Note that we use " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is a preposition, which is rejected by the simplified version of Adventuron's parser  used here." )};
+      : print {( "Also note that an option alone will not be recognized. At least, not in the initial version of " + qt + "." )} ;
    }
 
    options_notify: subroutine {
@@ -1641,7 +1641,7 @@ subroutines {
       : print {( "While " + qt + " requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." )} ;
       : print {( qt + " uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, <OUT<#0f0>> leaves if there is only one exit." )} ;
       : print "You can <TAKE<#0f0>> an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
-      : print "You can <TALK<#0f0>> (<T<#0f0>>) to people you see. Adding \"to\" will actually throw Adventuron's parser off" ;
+      : print "You can <TALK<#0f0>> (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
       : if (jump_commands_notified) {
          : print {( "To save keystrokes, you can jump around hub locations with " + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " + v_eb + " (east branch.)" )} ;
