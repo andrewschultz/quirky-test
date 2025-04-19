@@ -1510,6 +1510,47 @@ subroutines {
       : print {( "For some history on both West Tiles and East Branch, look at{footnote_3_reveal}." )} ;
       : set_true "revealed_footnote_3" ;
    }
+   item_based_points : subroutine {
+      : if (is_carried "pacing_rations") {
+         : match "racing passions" {
+            : if (bonus_point_racing_passions) {
+               : print "No. Best not get carried away." ;
+            } : else {
+               : print "You permit yourself to imagine being on a much higher-powered quest. Boy, you showed those boring old pacing rations! And the people who manufactured them! Or, well, you would have, if they were around.\nYour Walter Mitty moment over, you get back to focusing on your main quest." ;
+               : gosub "add_bonus" ;
+               : set_true "bonus_point_racing_passions" ;
+            }
+            : done ;
+         }
+      }
+      : if (is_exists "teary_chimes") {
+         : match "cheery times" {
+            : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
+            : destroy "teary_chimes" ;
+            : gosub "add_bonus" ;
+            : set_true "bonus_point_cheery_times" ;
+            : done ;
+         }
+      }
+      : if (is_carried("travel_grail")) {
+         : match "gravel trail" {
+            : if (is_at "plain_base") {
+               : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"There you go,\" he cheers. \"The rest shouldn't be too hard, if you got this far. But wait, you'd better let me take this grail. I don't think you'll need it, but the next person to stop by might.\"\nYou'd sort of grown attached to it, but he is bigger than you, and it is a little heavy.";
+               : destroy "travel_grail" ;
+               : set_true "point_gravel_trail" ;
+               : gosub "add_point" ;
+               : update_graphic ;
+            } : else {
+            : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
+            }
+         }
+         : if (!point_gravel_trail) {
+            : match "gravel _;_ trail" {
+               : gosub "say_half" ;
+            }
+         }
+      }
+   }
    list_jump_commands : subroutine {
       : if (jump_commands_notified) {
          : return ;
@@ -1997,47 +2038,7 @@ on_command {
          : redescribe ;
       }
    }
-   : if (is_exists "teary_chimes") {
-      : match "cheery times" {
-         : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
-         : destroy "teary_chimes" ;
-         : gosub "add_bonus" ;
-         : set_true "bonus_point_cheery_times" ;
-         : done ;
-      }
-   }
-   : if (is_carried "pacing_rations") {
-      : match "racing passions" {
-         : if (bonus_point_racing_passions) {
-            : print "No. Best not get carried away." ;
-         }
-         : else {
-            : print "You permit yourself to imagine being on a much higher-powered quest. Boy, you showed those boring old pacing rations! And the people who manufactured them! Or, well, you would have, if they were around.\nYour Walter Mitty moment over, you get back to focusing on your main quest." ;
-            : gosub "add_bonus" ;
-            : set_true "bonus_point_racing_passions" ;
-         }
-         : done ;
-      }
-   }
-   : if (is_carried("travel_grail")) {
-      : match "gravel trail" {
-         : if (is_at "plain_base") {
-            : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"There you go,\" he cheers. \"The rest shouldn't be too hard, if you got this far. But wait, you'd better let me take this grail. I don't think you'll need it, but the next person to stop by might.\"\nYou'd sort of grown attached to it, but he is bigger than you, and it is a little heavy.";
-            : destroy "travel_grail" ;
-            : set_true "point_gravel_trail" ;
-            : gosub "add_point" ;
-            : update_graphic ;
-         }
-      : else {
-         : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
-         }
-      }
-      : if (!point_gravel_trail) {
-         : match "gravel _;_ trail" {
-            : gosub "say_half" ;
-         }
-      }
-   }
+   : gosub "item_based_points" ;
    : match "salesmen _"  {
       : if (is_at "nameless_lameness") {
          : print "Good guess, if this were an anagram game." ;
