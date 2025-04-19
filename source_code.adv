@@ -298,6 +298,10 @@ strings {
    tq_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
    tq_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
+   ## silly hub items
+   map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
+      )} ;
+
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
@@ -371,12 +375,17 @@ objects {
    ## NPC(s)
    beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at = "plain_base" conspicuous="false";
    pro_boor : scenery "A pro boor" msg="Seems upset about anything and everything." at = "first_base" conspicuous="false";
-
-   ## found later
-   crackers: object "Crackers" msg="More crackers than you could ever want." ;
-   pacing_rations: object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ;
-   travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
    hissing_mouse: scenery "A hissing mouse" at= "gravel_trail" conspicuous="false" ;
+
+   ## hub side items that get used
+   ## start in the west, going clockwise
+   chalice_map : object "chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
+   master_plan : object "master plan" msg="It's written in clear language.\n{map_and_plan}" ; ## from plaster man
+   crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from shell fort
+   pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from cake trackers
+
+   ## post-hub
+   travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
 
 }
 
@@ -637,6 +646,8 @@ locations {
             : gosub "add_point" ;
             : set_true "point_healing_still" ;
             : set_false "think_healing_still" ;
+            : destroy "chalice_map" ;
+            : destroy "master_plan" ;
             : pocket "travel_grail" ;
             : update_graphic ;
          }
@@ -669,6 +680,7 @@ locations {
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
             : gosub "add_point_qt" ;
+            : pocket "master_plan" ;
          }
          : done ;
          }
@@ -695,6 +707,7 @@ locations {
             : set_true "point_chalice_map" ;
             : set_false "think_chalice_map" ;
             : gosub "add_point_qt" ;
+            : pocket "chalice_map" ;
          }
          : done ;
          }
