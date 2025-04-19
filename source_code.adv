@@ -154,8 +154,9 @@ booleans {
    tutorial_5_inventory_done : boolean "false" ;
    tutorial_6_x_ask_done : boolean "false" ;
    tutorial_7_listen_done : boolean "false" ;
-   tutorial_8_go_west : boolean "false" ;
-   tutorial_9_first_base : boolean "false" ;
+   tutorial_8_talk_voice_done : boolean "false" ;
+   tutorial_9_go_west : boolean "false" ;
+   tutorial_10_first_base : boolean "false" ;
    tutorial_item_taken: boolean "false" ;
 
    ## parser shortcut booleans
@@ -167,7 +168,7 @@ booleans {
 
 integers {
    tutorial_score : integer "0" ;
-   max_tutorial_score : integer "9";
+   max_tutorial_score : integer "10";
    score : integer "0" ;
    max_score : integer "23" ;
    points_left_side : integer "0" ;
@@ -269,7 +270,7 @@ strings {
    burst_face_after : string "You're at first base now." ;
    burst_face_before : string "You're at a burst face. You feel about ready to take an initial step. Or you would, without that burst face in the way." ;
 
-   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "Someone crashes into view and unironically introduces themselves as a PRO BOOR. They seem to be warning you off something." : "The Pro Boor stands around, waiting for -- well, you don't know what. Maybe an argument. Hopefully not a fight.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
+   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The pro boor starts blustering away." : "The Pro Boor stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
@@ -426,6 +427,7 @@ objects {
 
 vocabulary {
    : noun / aliases = [ooh, task, ask]
+   : noun / aliases = [voice, veering, choice, cheery, cheering]
    : noun / aliases = [hill, hills]
    : noun / aliases = [hunter, hunters]
    : noun / aliases = [fission, fishin]
@@ -453,6 +455,14 @@ vocabulary {
 locations {
    nameless_lameness : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "lameness_16" {
       on_command {
+         : if (is_beside "cheering_voice") {
+            : match "t -;t voice" {
+               : set_true "tutorial_8_talk_voice_done" ;
+               : increment "tutorial_score" ;
+               : print "You get no response from the voice, which is not surprising. It seems powerful, and it probably comes from afar. But it was worth a try. Perhaps you will get a better response from people or things closer by." ;
+               : done ;
+            }
+         }
          : if (verb_is "i" && is_carried "ooh_task" ) {
             : mask {
                : if (!tutorial_5_inventory_done) {
@@ -470,7 +480,7 @@ locations {
                : set_true "tutorial_7_listen_done" ;
                : increment "tutorial_score" ;
                : create "cheering_voice" ;
-               : return ;
+               : done ;
             }
          }
          : match "x me" {
@@ -525,13 +535,13 @@ locations {
          : match "first base" {
             : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlesness lies.";
             : set_true "point_first_base" ;
-            : set_true "tutorial_9_first_base" ;
+            : set_true "tutorial_10_first_base" ;
             : increment "tutorial_score" ;
             : gosub "add_point" ;
             : goto "first_base" ;
             : press_any_key ;
-            : redescribe ;
             : gosub "tutorial_shutoff" ;
+            : redescribe ;
             : done ;
          }
          : match "first _;_ base" {
@@ -1846,11 +1856,15 @@ subroutines {
          : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
          : return;
       }
-      : if (!tutorial_8_go_west) {
+      : if (!tutorial_8_talk_voice_done) {
+         : print {( tcue + "that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} or <TALK VOICE<#0f0>>." )};
+         : return;
+      }
+      : if (!tutorial_9_go_west) {
          : print {( tcue + "the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
          : return ;
       }
-      : if (!tutorial_9_first_base) {
+      : if (!tutorial_10_first_base) {
          : print "{tcue}{cc_whoa_guest} had you GO WEST. What about the {cc_burst_face}?" ;
          : return ;
       }
@@ -2029,12 +2043,17 @@ on_describe {
 on_pre_command {
    : match "west _" {
       : if (is_beside "cheering_voice") {
+         : if (in_tutorial && !tutorial_8_talk_voice_done) {
+            : print "That's the way to go, but since this is a tutorial, there's another hoop to walk through, first." ;
+            : done ;
+         }
       : gosub "add_point" ;
-      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_4_reveal} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting.\"";
+      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_4_reveal} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet somene who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
       : set_true "revealed_footnote_4" ;
       : set_true "point_go_west" ;
-      : set_true "tutorial_8_go_west" ;
+      : set_true "tutorial_9_go_west" ;
       : increment "tutorial_score" ;
+      : press_any_key ;
       : goto "burst_face" ;
       : redescribe ;
       }
