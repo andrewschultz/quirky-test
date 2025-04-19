@@ -137,6 +137,7 @@ booleans {
    ## achievement booleans
    achieve_tyyt: boolean "false" ;
    achieve_qwwq: boolean "false" ;
+   achieve_kssn: boolean "false" ;
    achieve_cnnc: boolean "false" ;
 
    ## tutorial booleans, organized by order you see/do them in
@@ -1896,6 +1897,16 @@ subroutines {
       : else_if (ask_1_count > 0 && ask_2_count > 0 && ask_3_count > 0 && ask_4_count > 0 && ask_5_count > 0 && ask_6_count > 0 && ask_7_count > 0 && ask_8_count > 0 && ask_9_count > 0 && ask_10_count > 0 && ask_11_count > 0 && ask_12_count > 0 && ask_13_count > 0 && ask_14_count > 0 && ask_15_count > 0 && ask_16_count > 0 && ask_17_count > 0 ) {
          : print "For asking Thor about all the rules in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
          : set_true "achieve_qwwq" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
+      }
+      : if (achieve_kssn) {
+         : print "(Already got the {achievement_kssn} achievement for ASKing Thor three times about everything)";
+      }
+      : else_if (ask_1_count > 2 && ask_2_count > 2 && ask_3_count > 2 && ask_4_count > 2 && ask_5_count > 2 && ask_6_count > 2 && ask_7_count > 2 && ask_8_count > 2 && ask_9_count > 2 && ask_10_count > 2 && ask_11_count > 2 && ask_12_count > 2 && ask_13_count > 2 && ask_14_count > 2 && ask_15_count > 2 && ask_16_count > 2 && ask_17_count > 2 ) {
+         : print "For asking Thor three times about all the rules in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
+         : set_true "achieve_kssn" ;
       }
       : else {
          : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
