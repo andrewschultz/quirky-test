@@ -1864,6 +1864,14 @@ on_command {
          : done ;
          }
       }
+   : match "talk _" {
+      : match "talk me" {
+         : print "\"Me so see-mo'!\", you mumble to yourself in encouragement." ;
+         : done ;
+      }
+      : print "I couldn't find anyone here to talk to." ;
+      : done ;
+   }
    : if (has_visited "plain_base") {
       : match "theory bore" {
          : if (is_beside "beery_thor" && bonus_point_theory_bore) {
