@@ -119,6 +119,7 @@ booleans {
    ## objects beyond the hubs
    bonus_point_racing_passions : boolean "false" ; ## w e
    bonus_point_so_long : boolean "false" ; ## e n
+   bonus_point_vast_fission : boolean "false" ; ## e ne
    bonus_point_cease_purging : boolean "false" ; ## e e
    bonus_point_sane_role : boolean "false" ; ## e sw
 
@@ -171,7 +172,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "13" ;
+   max_bonus_score : integer "14" ;
    tempint : integer "0" ;
 
    ## "ask" count integers
@@ -406,7 +407,7 @@ objects {
    fed_sated : object "fed, sated" msg="You feel fed, sated." ; ## from grunters' hill
    confidence : object "Confidence" msg="You have {confidence_level} confidence from outwitting some obnoxious people." ; ## from yellow field / trim goon
    low_song : object "low song" msg="They're notes to a song." ; ## fly score
-   frame_shy : object "frame shy" msg="You feel a slight shame blot for fighting mistruth with mistruth." ; ## trending booth
+   fast_vision : object "a fast vision" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
    peace_surging : object "peace surging" msg="You feel peace surging within you." ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
    rain_soul : object "rain soul" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out." ;
@@ -953,6 +954,7 @@ locations {
          {
             : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks will stay with you." ;
             : set_true "point_bending_truth" ;
+            : pocket "fast_vision" ;
             : gosub "add_point_tq" ;
          }
          : done ;
@@ -1521,13 +1523,13 @@ subroutines {
       : set_true "revealed_footnote_3" ;
    }
    item_based_points : subroutine {
-      : if (is_carried "peace_surging") {
-         : match "cease purging" {
-            : if (bonus_point_cease_purging) {
-               : print "One doesn't want to overthink good intentions." ;
+      : if (is_carried "fast_vision") {
+         : match "vast fission" {
+            : if (bonus_point_vast_fission) {
+               : print "You've already broken things down enough." ;
             } : else {
-               : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
-               : set_true "bonus_point_cease_purging" ;
+               : print "You extrapolate on the fast vision you have and re-interpret events from your past life in many new ways. The mental fission of previous complaints is fast. You make plans for, uh, fishin' for more, once this quest is over." ;
+               : set_true "bonus_point_vast_fission" ;
                : gosub "add_bonus" ;
             }
          }
@@ -1553,6 +1555,17 @@ subroutines {
                : set_true "bonus_point_racing_passions" ;
             }
             : done ;
+         }
+      }
+      : if (is_carried "peace_surging") {
+         : match "cease purging" {
+            : if (bonus_point_cease_purging) {
+               : print "One doesn't want to overthink good intentions." ;
+            } : else {
+               : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
+               : set_true "bonus_point_cease_purging" ;
+               : gosub "add_bonus" ;
+            }
          }
       }
       : if (is_carried "rain_soul") {
