@@ -473,11 +473,26 @@ locations {
          }
       }
    };
-   first_base : location "Now you're getting somewhere! You think." {
+   first_base : location "Now you're getting somewhere! You think.\n{boor_or_not}" {
       on_command {
-         : match "jump _" {
-            : goto "plain_base" ;
+         : match "bro poor" {
+            : if (!point_bro_poor) {
+               : print "The Pro Boor looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up. But all the same, they shove a something into your hands, a note of what you're getting into. It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
+               : set_true "point_bro_poor" ;
+               : destroy "pro_boor" ;
+               : pocket "prayer_lights" ;
+               : gosub "add_point" ;
+               : update_graphic ;
+               : done ;
+            }
+            : print "You permit yourself a touch of schadenfreude. Why not?" ;
             : done ;
+         }
+         : if (!point_bro_poor) {
+            : match "bro _;_ poor" {
+               : gosub "say_half" ;
+               : done ;
+            }
          }
       }
    };
