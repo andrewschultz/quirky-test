@@ -135,12 +135,14 @@ booleans {
    think_hi_mouse : boolean "false" ; ## put endgame at end
 
    ## achievement booleans
-   achieve_tyyt : boolean "false" scope="survivor";
-   achieve_qwwq : boolean "false" scope="survivor";
-   achieve_kssn : boolean "false" scope="survivor";
-   achieve_cnnc : boolean "false" scope="survivor";
-   achieve_haih : boolean "false" scope="survivor";
-   achieve_haih_pre : boolean "false" scope="survivor";
+   achieve_tyyt : boolean "false" scope="survivor" ;
+   achieve_qwwq : boolean "false" scope="survivor" ;
+   achieve_kssn : boolean "false" scope="survivor" ;
+   achieve_cnnc : boolean "false" scope="survivor" ;
+   achieve_haih : boolean "false" scope="survivor" ;
+   achieve_haih_pre : boolean "false" scope="survivor" ;
+   achieve_tmmt : boolean "false" scope="survivor" ;
+   achieve_tmmt_pre : boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -385,6 +387,7 @@ strings {
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
    achievement_haih : string "<Hi, All I Haul<#f80>>" ;
+   achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
 }
 
 ## Objects with vocabulary
@@ -1974,7 +1977,13 @@ subroutines {
       : else {
          : print "You haven't unlocked the {achievement_cnnc} achievement yet. You got {bonus_score} of {max_bonus_score} bonus points this time around." ;
       }
-      : press_any_key ;
+      : if (achieve_tmmt) {
+         : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
+      } : else_if (achieve_tmmt_pre) {
+         : print "For making a three-room jump, you win the {achievement_tmmt} achievement!" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_tmmt} achievement yet." ;
+      }
    }
 }
 
@@ -2125,6 +2134,9 @@ on_command {
          : redescribe ;
       }
       : match "wt -" {
+         : if (is_at("hub_e_n") || is_at("hub_e_ne") || is_at("hub_e_e") || is_at("hub_e_se") || is_at("hub_e_s") || is_at("hub_e_w") || is_at("hub_w_nw")) {
+            : set_true "achieve_tmmt_pre" ;
+         }
          : if (is_at "west_tiles") {
             : print "You're already here!";
             : done ;
@@ -2132,10 +2144,13 @@ on_command {
          : goto "west_tiles" ;
          : redescribe ;
       }
-      : match "tq -" {
+      : match "eb -" {
          : if (is_at "east_branch") {
             : print "You're already here!";
             : done ;
+         }
+         : if (is_at("hub_w_n") || is_at("hub_w_ne") || is_at("hub_w_e") || is_at("hub_w_s") || is_at("hub_w_sw") || is_at("hub_w_w") || is_at("hub_w_nw")) {
+            : set_true "achieve_tmmt_pre" ;
          }
          : goto "east_branch" ;
          : redescribe ;
