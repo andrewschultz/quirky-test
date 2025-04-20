@@ -148,6 +148,8 @@ booleans {
    achieve_cjjc: boolean "false" scope="survivor" ;
    achieve_cjjc_pre: boolean "false" scope="survivor" ;
    achieve_dbbd: boolean "false" scope="survivor" ;
+   achieve_cddc: boolean "false" scope="survivor" ;
+   achieve_cddc_pre: boolean "false" scope="survivor" ;
    achieve_gssg: boolean "false" scope="survivor" ;
    achieve_srrs: boolean "false" scope="survivor" ;
 
@@ -188,6 +190,7 @@ integers {
    tempint : integer "0" ;
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
+   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
 
 }
 
@@ -232,6 +235,10 @@ collections {
          0,
          0,
          1
+      ]
+   };
+   jump_order_list : set {
+      items = [
       ]
    };
    bad_jump : list {
@@ -433,6 +440,7 @@ strings {
    achievement_cjjc : string "<Chump, Joke Jump? Choke<#f80>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
    achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#f80>>" ;
+   achievement_cddc : string "<Cousin, Draft Dozen-Craft<#f80>>" ;
    achievement_gssg : string "<Great Style, Straight Guile<#f80>>" ;
    achievement_srrs : string "<Second Revvin' Reckoned? Seven<#f80>>" ;
 }
@@ -1571,6 +1579,27 @@ subroutines {
       }
       : print "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either.\"" ;
    }
+   evaluate_warp : subroutine {
+      : if (latest_warp_number == -2) {
+         : set_integer var = "latest_warp_number" "-1";
+         : return ;
+      }
+      : if (latest_warp_number == -1) {
+         : collection_clear "jump_order_list" ;
+         : return ;
+      }
+      : set_integer var = "tempint" {( collection_count("jump_order_list") )} ;
+      : collection_push { collection = "jump_order_list" content -> ("" + latest_warp_number) }
+      : if (collection_count("jump_order_list") == tempint) {
+         : collection_clear "jump_order_list" ;
+         : set_integer var = "latest_warp_number" "-3" ;
+         : return ;
+      }
+      : if (collection_count("jump_order_list") == 12) {
+         : set_true "achieve_cddc_pre" ;
+         : return ;
+      }
+   }
    footnote_printer : subroutine {
       : match "f 1" {
          : if (!revealed_footnote_1) {
@@ -1756,15 +1785,15 @@ subroutines {
    mark_jump : subroutine {
       : if (is_at("plain_base")) {
       } : else_if (is_at("west_tiles")) {
-         : set_integer var="tempint" {( tempint + 1 )} ;
+         : set_integer var="latest_warp_number" {( latest_warp_number + 1 )} ;
       } : else_if (is_at("east_branch")) {
-         : set_integer var="tempint" {( tempint+ 2 )} ;
+         : set_integer var="latest_warp_number" {( latest_warp_number + 2 )} ;
       } : else_if (is_at("stealing_hill")) {
-         : set_integer var="tempint" {( tempint + 3 )} ;
+         : set_integer var="latest_warp_number" {( latest_warp_number + 3 )} ;
       } : else {
          : return ;
       }
-      : collection_modify { collection = "jump_list" index -> (tempint) content -> ("1") ; }
+      : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
    }
    note_diagonal_direction_from_hub : subroutine {
       : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical. And there are just hubs to the northwest and northeast.\"" ;
@@ -1779,6 +1808,11 @@ subroutines {
          : print "One word right, one word wrong." ;
       }
    }
+   }
+   reflexive_warp_reject : subroutine {
+      : print "You're already here!";
+      : set_integer var = "latest_warp_number" "-1" ;
+      : done ;
    }
    think_thoughts : subroutine {
       : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
@@ -2101,6 +2135,13 @@ subroutines {
             : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
          }
       }
+      : if (achieve_cddc) {
+         : print "You already unlocked the {achievement_cddc} achievement." ;
+      } : else_if (achieve_cddc_pre) {
+         : print "For performing all twelve possible warp jumps without duplicating one path, you win the {achievement_cddc} achievement!" ;
+      } : else {
+            : print "You haven't unlocked the {achievement_cddc} achievement yet." ;
+      }
       : if (achieve_srrs) {
          : print "You already unlocked the {achievement_srrs} achievement." ;
       } : else {
@@ -2200,6 +2241,11 @@ on_tick {
       : print "As you walk away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, but the principle's the important thing." ;
       : set_true "hill_aware_you_stole" ;
    }
+   : if ((latest_warp_number != -3) && (!achieve_cddc_pre)) {
+      : print "Evaluating warp number {latest_warp_number}." ;
+      : press_any_key ;
+      : gosub "evaluate_warp" ;
+   }
 }
 
 ## on_describe is for moving around
@@ -2293,10 +2339,9 @@ on_command {
             : done ;
          }
          : if (is_at "stealing_hill") {
-            : print "You're already here!";
-            : done ;
+            : gosub "reflexive_warp_reject" ;
          }
-         : set_integer var = "tempint" "12";
+         : set_integer var = "latest_warp_number" "12";
          : gosub "mark_jump" ;
          : goto "stealing_hill" ;
          : redescribe ;
@@ -2306,33 +2351,30 @@ on_command {
             : set_true "achieve_tmmt_pre" ;
          }
          : if (is_at "west_tiles") {
-            : print "You're already here!";
-            : done ;
+            : gosub "reflexive_warp_reject" ;
          }
-         : set_integer var = "tempint" "4";
+         : set_integer var = "latest_warp_number" "4";
          : gosub "mark_jump" ;
          : goto "west_tiles" ;
          : redescribe ;
       }
       : match "eb -" {
          : if (is_at "east_branch") {
-            : print "You're already here!";
-            : done ;
+            : gosub "reflexive_warp_reject" ;
          }
          : if (is_at("hub_w_n") || is_at("hub_w_ne") || is_at("hub_w_e") || is_at("hub_w_s") || is_at("hub_w_sw") || is_at("hub_w_w") || is_at("hub_w_nw")) {
             : set_true "achieve_tmmt_pre" ;
          }
-         : set_integer var = "tempint" "8";
+         : set_integer var = "latest_warp_number" "8";
          : gosub "mark_jump" ;
          : goto "east_branch" ;
          : redescribe ;
       }
       : match "pb -" {
          : if (is_at "plain_base") {
-            : print "You're already here!";
-            : done ;
+            : gosub "reflexive_warp_reject" ;
          }
-         : set_integer var = "tempint" "0";
+         : set_integer var = "latest_warp_number" "0";
          : gosub "mark_jump" ;
          : goto "plain_base" ;
          : redescribe ;
