@@ -32,6 +32,8 @@ booleans {
    know_lush_shout : boolean "false" ;
    thor_explained_seth : boolean "false" ;
    summoned_teary_chimes : boolean "false";
+   have_asked_three : boolean "false" ;
+   have_asked_four : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -1445,6 +1447,16 @@ subroutines {
          : set_integer var="tempint2" value="4";
       }
       : collection_modify { collection = "ask_list" index -> (tempint) content -> ("" + tempint2) }
+      : if (tempint2 == 3 && ! have_asked_three) {
+         : set_true "have_asked_three";
+         : print "{otn}the up-arrow on your keyboard will show your previous command. This is useful for if you typed something wrong, or you want to see what you did, or you typed the right thing at the wrong time and want to save keystrokes. Or, here, you can just adjust the number at the end." ;
+         : return ;
+      }
+      : if (tempint2 == 4 && ! have_asked_four) {
+         : set_true "have_asked_four";
+         : print "{otn}I'll have to ask for some suspension of disbelief, here. Thor's responses for each rule come in cycles of three, the exact same thing every time, and he never gets bored." ;
+         : return ;
+      }
    }
    ask_thor : subroutine {
       : if (!talked_to_thor) {
