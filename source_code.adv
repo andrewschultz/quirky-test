@@ -338,7 +338,7 @@ strings {
       tempint == 1 ? "six" :
       "(error, bug, {tempint})"
       )};
-   spokes_left: dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here. (South leads back to the hub.)" : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
+   spokes_left: dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here. (South" + (is_at("east_branch") ? "west" : "east") + " leads back to the hub.)" : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
    ## west tiles seeding for dynamic strings, starting north and going clockwise
    hub_w_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
@@ -364,7 +364,7 @@ strings {
    hub_e_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
    hub_e_boring_way : string "Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
    hub_e_hurt_dome : string "A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to actively hurt anyone or anything. But it'd still be nice to make sure." ;
-   hub_e_dirt_home : string "The dirt home you summoned stands here, infinitely less menacing than its previous form" ;
+   hub_e_dirt_home : string "The dirt home you summoned stands here, infinitely less menacing than its previous form." ;
    hub_e_roaring_pain : string "You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
    hub_e_pouring_rain : string "The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
    hub_e_money_fountain : string "A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
@@ -2112,6 +2112,7 @@ subroutines {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
       } : else_if (achieve_tmmt_pre) {
          : print "For making a three-room jump, you win the {achievement_tmmt} achievement!" ;
+         : set_true "achieve_tmmt" ;
       } : else {
          : print "You haven't unlocked the {achievement_tmmt} achievement yet." ;
       }
@@ -2119,10 +2120,12 @@ subroutines {
          : print "(Already got the {achievement_cjjc} achievement for trying to jump to a blocked-off room)" ;
       } : else_if (achieve_tmmt_pre) {
          : print "For trying to jump to a blocked-off room, you win the {achievement_cjjc} achievement!" ;
+         : set_true "achieve_cjjc" ;
       } : else {
          : print "You haven't unlocked the {achievement_cjjc} achievement yet." ;
       }
       : if (achieve_dbbd) {
+         : print "You already unlocked the {achievement_dbbd} achievement." ;
       } : else {
          : collection_subtract {
             collection_1 = jump_list
@@ -2131,6 +2134,7 @@ subroutines {
          }
          : if (collection_count("jump_set") == 1) {
             : print "For performing all twelve jumps between jumpable rooms, you win the {achievement_dbbd} achievement!" ;
+            : set_true "achieve_dbbd" ;
          } : else {
             : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
          }
@@ -2139,6 +2143,7 @@ subroutines {
          : print "You already unlocked the {achievement_cddc} achievement." ;
       } : else_if (achieve_cddc_pre) {
          : print "For performing all twelve possible warp jumps without duplicating one path, you win the {achievement_cddc} achievement!" ;
+            : set_true "achieve_cddc" ;
       } : else {
             : print "You haven't unlocked the {achievement_cddc} achievement yet." ;
       }
@@ -2147,6 +2152,7 @@ subroutines {
       } : else {
          : if (hub_think_needed == 7) {
             : print "For trying to flip all seven hub rooms, including the hill, before you were ready, you win the {achievement_srrs} achievement!" ;
+            : set_true "achieve_srrs" ;
          } : else {
             : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
          }
@@ -2156,6 +2162,7 @@ subroutines {
       } : else {
          : if (hub_think_needed == 0) {
             : print "For not flipping any hub rooms out of order, you win the {achievement_gssg} achievement!" ;
+            : set_true "achieve_gssg" ;
          } : else {
             : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
          }
