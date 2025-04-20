@@ -144,6 +144,8 @@ booleans {
    achieve_tmmt : boolean "false" scope="survivor" ;
    achieve_tmmt_pre : boolean "false" scope="survivor" ;
    achieve_dbbd: boolean "false" scope="survivor" ;
+   achieve_gssg: boolean "false" scope="survivor" ;
+   achieve_srrs: boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -180,6 +182,7 @@ integers {
    max_bonus_score : integer "14" ;
    confidence_meter : integer "2" ; ## yellow field, malice chap, trim goon
    tempint : integer "0" ;
+   hub_think_needed : integer "0" ;
 
    ## "ask" count integers
    ## there has to be a better way to do this, but this works
@@ -421,6 +424,8 @@ strings {
    achievement_haih : string "<Hi, All I Haul<#f80>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
    achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#f80>>" ;
+   achievement_gssg : string "<Great Style, Straight Guile<#f80>>" ;
+   achievement_srrs : string "<Second Revvin' Reckoned? Seven<#f80>>" ;
 }
 
 ## Objects with vocabulary
@@ -759,6 +764,9 @@ locations {
          }
          : else_if ((!point_chalice_map || !point_master_plan) && (!cheat_dont_require)) {
             : print "With the stealing hill watching you, it'll be tough to nab anything. You'll need to know what you want and how to get there." ;
+            : if (!think_healing_still) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_healing_still" ;
          }
          : else
@@ -793,6 +801,9 @@ locations {
             }
          : else_if ((!point_shift_goals || !point_hunters_grill) && (!cheat_dont_require)) {
             : print "You sort of hope there's a master plan inside the plaster man, but you're not sure. You sense either you're not focused on what really matters, or you're not nourished enough to break him down." ;
+            : if (!think_master_plan) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_master_plan" ;
          }
          : else
@@ -822,6 +833,9 @@ locations {
             }
          : else_if ((!point_fellow_yield || !point_grim_tune) && (!cheat_dont_require)) {
             : print "This guy's tough. Maybe if you've built experience and confidence blowing off two other belligerent fellows, you could outsmart him." ;
+            : if (!think_chalice_map) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_chalice_map" ;
          }
          : else
@@ -897,6 +911,9 @@ locations {
             }
          : else_if ((!point_funny_mountain || !point_boring_way) && (!cheat_dont_require)) {
             : print "You want to shift your goals, but you don't know if you can. You haven't helped others shift theirs away from Needing More enough yet.";
+            : if (!think_shift_goals) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_shift_goals" ;
          }
          : else
@@ -925,6 +942,9 @@ locations {
             }
          : else_if ((!point_take_crackers || !point_fell_short) && (!cheat_dont_require)) {
             : print {( "You try to start up a feast, but alas, you don't have enough food to do so. You need something besides the " + (point_take_crackers ? "crackers" : "pacing rations") + "." )} ;
+            : if (!think_hunters_grill) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_hunters_grill" ;
          }
          : else
@@ -959,6 +979,9 @@ locations {
             }
          : else_if ((!point_dirt_home || !point_bending_truth) && (!cheat_dont_require)) {
             : print "You'd like to convince the fellow to yield, but you either aren't sneaky enough, or you can't give him a safe place to go once he's yielded." ;
+            : if (!think_fellow_yield) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_fellow_yield" ;
          }
          : else
@@ -1120,6 +1143,9 @@ locations {
          : else_if ((!point_fly_score || !point_pouring_rain) && (!cheat_dont_require))
          {
             : print "You'd like to think of a grim tune, but you don't have a combination of music and lyrics, yet." ;
+            : if (!think_grim_tune) {
+               : increment "hub_think_needed" ;
+            }
             : set_true "think_grim_tune" ;
          }
          : else
@@ -2041,6 +2067,24 @@ subroutines {
             : print "For performing all twelve jumps between jumpable rooms, you win the {achievement_dbbd} achievement!" ;
          } : else {
             : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
+         }
+      }
+      : if (achieve_srrs) {
+         : print "You already unlocked the {achievement_srrs} achievement." ;
+      } : else {
+         : if (hub_think_needed == 7) {
+            : print "For trying to flip all seven hub rooms, including the hill, before you were ready, you win the {achievement_srrs} achievement!" ;
+         } : else {
+            : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
+         }
+      }
+      : if (achieve_gssg) {
+         : print "You already unlocked the {achievement_gssg} achievement." ;
+      } : else {
+         : if (hub_think_needed == 0) {
+            : print "For not flipping any hub rooms out of order, you win the {achievement_gssg} achievement!" ;
+         } : else {
+            : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
          }
       }
    }
