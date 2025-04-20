@@ -143,6 +143,7 @@ booleans {
    achieve_haih_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
    achieve_tmmt_pre : boolean "false" scope="survivor" ;
+   achieve_dbbd: boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -199,6 +200,37 @@ integers {
    ask_15_count : integer "0" ;
    ask_16_count : integer "0" ;
    ask_17_count : integer "0" ;
+}
+
+collections {
+   jump_list : list {
+      items = [
+         1,
+         0,
+         0,
+         0,
+         0,
+         1,
+         0,
+         0,
+         0,
+         0,
+         1,
+         0,
+         0,
+         0,
+         0,
+         1
+      ]
+   };
+   bad_jump : list {
+      items = [
+         0,
+         1
+      ]
+   };
+   jump_set : set {
+   };
 }
 
 ## strings
@@ -388,6 +420,7 @@ strings {
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
    achievement_haih : string "<Hi, All I Haul<#f80>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
+   achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#f80>>" ;
 }
 
 ## Objects with vocabulary
@@ -1651,7 +1684,20 @@ subroutines {
       : set_true "jump_commands_notified" ;
       : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_pb + " = plain base\n" + v_wt + " = west tiles\n" + v_sh + " = Stealing Hill\n" + v_eb + " = east branch" )} ;
    }
-   note_diagonal_direction_from_hub: subroutine {
+   mark_jump : subroutine {
+      : if (is_at("plain_base")) {
+      } : else_if (is_at("west_tiles")) {
+         : set_integer var="tempint" {( tempint + 1 )} ;
+      } : else_if (is_at("east_branch")) {
+         : set_integer var="tempint" {( tempint+ 2 )} ;
+      } : else_if (is_at("stealing_hill")) {
+         : set_integer var="tempint" {( tempint + 3 )} ;
+      } : else {
+         : return ;
+      }
+      : collection_modify { collection = "jump_list" index -> (tempint) content -> ("1") ; }
+   }
+   note_diagonal_direction_from_hub : subroutine {
       : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical. And there are just hubs to the northwest and northeast.\"" ;
       : set_true "noted_diagonal_direction" ;
       : press_any_key ;
@@ -1984,6 +2030,19 @@ subroutines {
       } : else {
          : print "You haven't unlocked the {achievement_tmmt} achievement yet." ;
       }
+      : if (achieve_dbbd) {
+      } : else {
+         : collection_subtract {
+            collection_1 = jump_list
+            collection_2 = jump_list
+            result       = jump_set
+         }
+         : if (collection_count("jump_set") == 1) {
+            : print "For performing all twelve jumps between jumpable rooms, you win the {achievement_dbbd} achievement!" ;
+         } : else {
+            : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
+         }
+      }
    }
 }
 
@@ -2130,6 +2189,8 @@ on_command {
             : print "You're already here!";
             : done ;
          }
+         : set_integer var = "tempint" "12";
+         : gosub "mark_jump" ;
          : goto "stealing_hill" ;
          : redescribe ;
       }
@@ -2141,6 +2202,8 @@ on_command {
             : print "You're already here!";
             : done ;
          }
+         : set_integer var = "tempint" "4";
+         : gosub "mark_jump" ;
          : goto "west_tiles" ;
          : redescribe ;
       }
@@ -2152,6 +2215,8 @@ on_command {
          : if (is_at("hub_w_n") || is_at("hub_w_ne") || is_at("hub_w_e") || is_at("hub_w_s") || is_at("hub_w_sw") || is_at("hub_w_w") || is_at("hub_w_nw")) {
             : set_true "achieve_tmmt_pre" ;
          }
+         : set_integer var = "tempint" "8";
+         : gosub "mark_jump" ;
          : goto "east_branch" ;
          : redescribe ;
       }
@@ -2160,6 +2225,8 @@ on_command {
             : print "You're already here!";
             : done ;
          }
+         : set_integer var = "tempint" "0";
+         : gosub "mark_jump" ;
          : goto "plain_base" ;
          : redescribe ;
       }
