@@ -143,6 +143,8 @@ booleans {
    achieve_haih_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
    achieve_tmmt_pre : boolean "false" scope="survivor" ;
+   achieve_cjjc: boolean "false" scope="survivor" ;
+   achieve_cjjc_pre: boolean "false" scope="survivor" ;
    achieve_dbbd: boolean "false" scope="survivor" ;
    achieve_gssg: boolean "false" scope="survivor" ;
    achieve_srrs: boolean "false" scope="survivor" ;
@@ -422,6 +424,7 @@ strings {
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
    achievement_haih : string "<Hi, All I Haul<#f80>>" ;
+   achievement_cjjc : string "<Chump, Joke Jump? Choke<#f80>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
    achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#f80>>" ;
    achievement_gssg : string "<Great Style, Straight Guile<#f80>>" ;
@@ -2056,6 +2059,13 @@ subroutines {
       } : else {
          : print "You haven't unlocked the {achievement_tmmt} achievement yet." ;
       }
+      : if (achieve_cjjc) {
+         : print "(Already got the {achievement_cjjc} achievement for trying to jump to a blocked-off room)" ;
+      } : else_if (achieve_tmmt_pre) {
+         : print "For trying to jump to a blocked-off room, you win the {achievement_cjjc} achievement!" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_cjjc} achievement yet." ;
+      }
       : if (achieve_dbbd) {
       } : else {
          : collection_subtract {
@@ -2227,6 +2237,10 @@ on_command {
       : match "sh -" {
          : if (point_healing_still) {
             : print "{stealing_hill_mad}" ;
+            : if (!achieve_cjjc_pre) {
+               : print "(However, just trying to find this sort of loophole, making it back to a room the developer shut off, shows you're an enterpriing adventurer and might be a very good tester for other games. It's an important part of the whole process, as testers often see programmers' blind spots. And it can maybe help start you on the way to making your own game! Okay, ignore this if you already have. But either way, a small silly achievement awaits at game's end for trying this.)" ;
+            }
+            : set_true "achieve_cjjc_pre" ;
             : done ;
          }
          : if (is_at "stealing_hill") {
