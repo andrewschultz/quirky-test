@@ -553,8 +553,8 @@ locations {
             }
             : else_if (is_carried "ooh_task") {
                : print "As AFGNCAAPy as ever!{footnote_1_reveal}" ;
-               : if (!xme_twice) {
-                  : print "Oh, and nothing further was hidden on you." ;
+               : if (is_at("nameless_lameness") && !xme_twice) {
+                  : print "Also, just to make sure, you stumble about a bit to make sure nothing else interesting is lying around. It is not." ;
                   : set_true "xme_twice" ;
                }
                : if (!revealed_footnote_1) {
