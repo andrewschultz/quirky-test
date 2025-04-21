@@ -1436,7 +1436,7 @@ subroutines {
    : print "Submitted for the 2025 TALP competition." ;
    : press_any_key ;
    : if (footnotes_available) {
-      : gosub "footnote_write_to_survivors" ;
+      : gosub "footnote_read_from_survivors" ;
       : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}.";
       : press_any_key ;
    }
@@ -1912,7 +1912,7 @@ subroutines {
       : match "wingame _"  {
          : print {( footnotes_available ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
          : set_true "footnotes_available";
-         : win_game ;
+         : gosub "win_game_stub" ;
       }
    }
 
@@ -2287,13 +2287,11 @@ on_debug {
    : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
    : gosub "init" ;
    : gosub "tutorial_choice" ;
-   : gosub "footnote_read_from_survivors" ;
 }
 
 on_startup {
    : gosub "init" ;
    : gosub "tutorial_choice" ;
-   : gosub "footnote_read_from_survivors" ;
 }
 
 ## on_tick is primarily used for the tutorial
