@@ -350,8 +350,6 @@ strings {
    bonus_score_string : dynamic_string {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )}
 
    ## description strings by location
-   burst_face_after : string "You're at first base now." ;
-   burst_face_before : string "You're at a burst face. You feel about ready to take an initial step. Or you would, without that burst face in the way." ;
 
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The pro boor starts blustering away." : "The Pro Boor stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
@@ -611,7 +609,7 @@ locations {
          }
       }
    };
-   burst_face : location "{ point_first_base ? burst_face_after : burst_face_before }" {
+   burst_face : location "You're at a {cc_burst_face}. You feel about ready to take an initial step. Or you would, without that {cc_burst_face} in the way." {
       on_command {
          : match "east _" {
             : set_integer var="tempint" "6" ;
@@ -633,6 +631,12 @@ locations {
          : match "first _;_ base" {
             : gosub "say_half" ;
             : done ;
+         }
+         : match "talk -; talk face" {
+            : print "The {burstface} reveals no clues." ;
+         }
+         : match "listen _" {
+            : print "The {burstface} reveals no clues." ;
          }
       }
    };
@@ -2535,7 +2539,7 @@ on_command {
       : if (is_at "nameless_lameness") {
          : print "There's a puzzle here to start, before you get a clue which way to go. The tutorial can walk you through it." ;
       } : else_if (is_at "burst_face" ) {
-         : print "The way forward is beyond the burst face. It's not a direction, but it's similar to changing WHOA GUEST to GO WEST." ;
+         : print "The way forward is beyond the {cc_burst_face}. It's not a direction, but it's similar to changing WHOA GUEST to GO WEST." ;
       }
    }
    : match "think _" {
