@@ -308,6 +308,9 @@ strings {
    tcue : string "<TUTORIAL CUE:<#f0f>> " ;
    otn : string "<ONE-TIME NOTE:<#f0f>> " ;
 
+   ## honorary tutorial variable
+   footnote_cue : string "<FOOTNOTE<#f80>> # or, for brevity, <F<#f80>> #" ;
+
    ## dynamic strings
 
    YN_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
@@ -2132,7 +2135,7 @@ subroutines {
          : print {( "To save keystrokes, you can jump around hub locations with " + v_eb + " (east branch.)" + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " )} ;
       }
       : if (footnotes_available) {
-         : print "By winning the game, you've opened up footnotes. <FOOTNOTE<#f80>> # or <F<#f80>> #.";
+         : print "By winning the game, you've opened up footnotes. {footnote_cue}.";
       }
       : if (in_debug && !footnotes_available) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
