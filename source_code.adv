@@ -51,19 +51,6 @@ booleans {
    ever_note_footnote : boolean "false" scope="survivor" ;
    reveal_this_footnote : boolean "false" ;
 
-   revealed_footnote_1 : boolean "false" scope="survivor" ;
-   read_footnote_1 : boolean "false" scope="survivor" ;
-   revealed_footnote_2 : boolean "false" scope="survivor" ;
-   read_footnote_2 : boolean "false" scope="survivor" ;
-   revealed_footnote_3 : boolean "false" scope="survivor" ;
-   read_footnote_3 : boolean "false" scope="survivor" ;
-   revealed_footnote_4 : boolean "false" scope="survivor" ;
-   read_footnote_4 : boolean "false" scope="survivor" ;
-   revealed_footnote_5 : boolean "false" scope="survivor" ;
-   read_footnote_5 : boolean "false" scope="survivor" ;
-   revealed_footnote_6 : boolean "false" scope="survivor" ;
-   read_footnote_6 : boolean "false" scope="survivor";
-
    ## verb notifications
    jump_commands_notified : boolean "false" ;
    drop_referenced : boolean "false" ;
@@ -194,6 +181,14 @@ integers {
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
+
+   ## since Adventuron doesn't allow survivor scope for lists, I need to define these variables here.
+   footnote_1_status : integer "0" scope="survivor" ;
+   footnote_2_status : integer "0" scope="survivor" ;
+   footnote_3_status : integer "0" scope="survivor" ;
+   footnote_4_status : integer "0" scope="survivor" ;
+   footnote_5_status : integer "0" scope="survivor" ;
+   footnote_6_status : integer "0" scope="survivor" ;
 
 }
 
@@ -452,12 +447,6 @@ strings {
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
 
    ## footnote notifications and other dynamic strings
-   footnote_1_reveal : dynamic_string {( revealed_footnote_1 || !footnotes_available ? "" : " (<FOOTNOTE 1<#f80>>)" )} ;
-   footnote_2_reveal : dynamic_string {( revealed_footnote_2 || !footnotes_available ? "" : " (<FOOTNOTE 2<#f80>>)" )} ;
-   footnote_3_reveal : dynamic_string {( revealed_footnote_3 || !footnotes_available ? "" : " (<FOOTNOTE 3<#f80>>)" )} ;
-   footnote_4_reveal : dynamic_string {( revealed_footnote_4 || !footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
-   footnote_5_reveal : dynamic_string {( revealed_footnote_5 || !footnotes_available ? "" : " (<FOOTNOTE 5<#f80>>)" )} ;
-   footnote_6_reveal : dynamic_string {( revealed_footnote_6 || !footnotes_available ? "" : " (<FOOTNOTE 6<#f80>>)" )} ;
    footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
 
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
@@ -619,7 +608,6 @@ locations {
             : set_integer var="tempint" "6" ;
             : gosub "footnote_reveal" ;
             : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_reveal_text}" )} ;
-            : set_true "revealed_footnote_6";
          }
          : match "first base" {
             : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlesness lies.";
@@ -1281,7 +1269,7 @@ locations {
                : set_true "footnotes_available" ;
                : set_false "think_hi_mouse" ;
                : gosub "track_achievements" ;
-               : win_game ;
+               : gosub "win_game_stub" ;
                : done ;
             }
             : else {
@@ -1448,6 +1436,7 @@ subroutines {
    : print "Submitted for the 2025 TALP competition." ;
    : press_any_key ;
    : if (footnotes_available) {
+      : gosub "footnote_write_to_survivors" ;
       : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}.";
       : press_any_key ;
    }
@@ -1710,9 +1699,6 @@ subroutines {
       : collection_modify { collection = "footnote_status_list" index -> (tempint - 1) content -> ("1") ; }
    }
    footnote_3_check_function : subroutine {
-      : if (revealed_footnote_3 || !footnotes_available) {
-         : return ;
-      }
       : set_integer var="tempint" "3" ;
       : gosub "footnote_reveal" ;
       : print "For some history on both West Tiles and East Branch, look at {footnote_reveal_text}." ;
@@ -2244,6 +2230,28 @@ subroutines {
       : print "For asking Thor about all the rules in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
       : set_true "achieve_qwwq" ;
    }
+
+   footnote_read_from_survivors : subroutine {
+      : collection_modify { collection = "footnote_status_list" index -> (0) content -> ("" + footnote_1_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (1) content -> ("" + footnote_2_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (2) content -> ("" + footnote_3_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (3) content -> ("" + footnote_4_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (4) content -> ("" + footnote_5_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (5) content -> ("" + footnote_6_status) }
+
+   }
+   footnote_write_to_survivors : subroutine {
+      : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 1 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 2 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 3 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 4 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 5 ) }) )} ;
+   }
+   win_game_stub : subroutine {
+      : gosub "footnote_write_to_survivors" ;
+      : win_game ;
+   }
 }
 
 themes {
@@ -2279,11 +2287,13 @@ on_debug {
    : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
    : gosub "init" ;
    : gosub "tutorial_choice" ;
+   : gosub "footnote_read_from_survivors" ;
 }
 
 on_startup {
    : gosub "init" ;
    : gosub "tutorial_choice" ;
+   : gosub "footnote_read_from_survivors" ;
 }
 
 ## on_tick is primarily used for the tutorial
@@ -2326,7 +2336,6 @@ on_pre_command {
       : set_integer var="tempint" "4" ;
       : gosub "footnote_reveal" ;
       : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet somene who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
-      : set_true "revealed_footnote_4" ;
       : set_true "point_go_west" ;
       : set_true "tutorial_9_go_west" ;
       : increment "tutorial_score" ;
