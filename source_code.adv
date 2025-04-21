@@ -1545,7 +1545,7 @@ subroutines {
       : else_if (tempint == 8) {
          : cycle key = "rule_8" predictable_order = "true" skip_interval = "0" {
             : print "The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>.\"" ;
-            : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. It's a paradox of parsers that understand a lot of words may actually force the reader to work through their vocabulary. Since parsers are no longer shiny and new and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also note if there are two words and suggest the player try a different verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution.\n" ;
+            : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. It's a paradox of parsers that understand a lot of words may actually force the reader to work through their vocabulary. Since parsers are no longer shiny and new and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also note if there are two words and suggest the player try a different verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution.\"" ;
             : print "\"Uh, oh! Taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -1553,9 +1553,9 @@ subroutines {
       }
       : else_if (tempint == 9) {
          : cycle key = "rule_9" predictable_order = "true" skip_interval = "0" {
-         : print "\nThe ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>.\n" ;
-         : print "\nThis should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Directions were always abbreviated, since they were in real life, but eventually conventions settled on I for inventory and X for examine, and so forth. More commonly, Inform allows for pronouns, and MAN might be a synonym for SORCERER and WOMAN for SORCERESS, and so forth. NEWS and PAPER could cue NEWSPAPER. It's fun to be able to type things out if you want, but it shouldn't be a chore.\n" ;
-         : print "\nThere are a few synonyms in this game, but because of the oddness of the items, there's not too much that can be done. {qt} also short-circuits this by not making you use many items explicitly.\n" ;
+         : print "\"The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>.\"" ;
+         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Directions were always abbreviated, since they were in real life, but eventually conventions settled on I for inventory and X for examine, and so forth. More commonly, Inform allows for pronouns, and MAN might be a synonym for SORCERER and WOMAN for SORCERESS, and so forth. NEWS and PAPER could cue NEWSPAPER. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
+         : print "\"There are a few synonyms in this game, but because of the oddness of the items, there's not too much that can be done. {qt} also short-circuits this by not making you use many items explicitly.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -1688,7 +1688,8 @@ subroutines {
             : done ;
          }
          : print "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys." ;
-         : print "\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts." ;
+         : print "" ;
+         : print "But I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts." ;
          : print "Also, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun." ;
          : set_true "read_footnote_4" ;
          : done ;
@@ -1699,7 +1700,7 @@ subroutines {
             : done ;
          }
          : print "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous." ;
-         : print "Other names that need a plural include Sean Kent's conscience (if you don't pronounce PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common." ;
+         : print "Other names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common." ;
          : print "Hearty Pat's came to mind as a store, too. But that's not a proper name." ;
          : set_true "read_footnote_5" ;
          : done ;
@@ -1804,7 +1805,9 @@ subroutines {
       : if (is_carried("travel_grail")) {
          : match "gravel trail" {
             : if (is_at "plain_base") {
-               : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!\n\"There you go,\" he cheers. \"The rest shouldn't be too hard, if you got this far. But wait, you'd better let me take this grail. I don't think you'll need it, but the next person to stop by might.\"\nYou'd sort of grown attached to it, but he is bigger than you, and it is a little heavy.";
+               : print "You look over at Thor. He nods. You summon a gravel trail which appears to the north!" ;
+               : print "\"There you go,\" he cheers. \"The rest shouldn't be too hard, if you got this far. But wait, you'd better let me take this grail. I don't think you'll need it, but the next person to stop by might.\"" ;
+               : print "You'd sort of grown attached to it, but he is bigger than you, and it is a little heavy.";
                : destroy "travel_grail" ;
                : set_true "point_gravel_trail" ;
                : gosub "add_point" ;
@@ -1832,7 +1835,13 @@ subroutines {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print {( "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions.\n\n" + v_pb + " = plain base\n" + v_wt + " = west tiles\n" + v_sh + " = Stealing Hill\n" + v_eb + " = east branch" )} ;
+      : print "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions." ;
+      : print "" ;
+      : print "" ;
+      : print "{v_eb} = East Branch" ;
+      : print "{v_pb} = Plain Base" ;
+      : print "{v_sh} = Stealing Hills" ;
+      : print "{v_wt} = West Tiles" ;
    }
    mark_jump : subroutine {
       : if (is_at("plain_base")) {
@@ -2120,7 +2129,7 @@ subroutines {
       : print "You can {tlk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
       : if (jump_commands_notified) {
-         : print {( "To save keystrokes, you can jump around hub locations with " + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " + v_eb + " (east branch.)" )} ;
+         : print {( "To save keystrokes, you can jump around hub locations with " + v_eb + " (east branch.)" + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " )} ;
       }
       : if (footnotes_available) {
          : print "By winning the game, you've opened up footnotes. <FOOTNOTE<#f80>> # or <F<#f80>> #.";
