@@ -1477,109 +1477,155 @@ subroutines {
          : print "You need a number (1-17) for the rule to ask Thor about." ;
          : done ;
       }
+      : gosub "int_from_noun1" ;
+      : if (tempint < 1 || tempint > 17) {
+         : print "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either.\"" ;
+         : done ;
+      }
       : match "ask 1" {
-         : print {( "The first rule in Graham Nelson's Player's Bill of Rights is <not to be killed without warning<#ff0>>. There" + ((bonus_point_death_sentence) ? "was" : "'s") + " only one way to die, and, well, I think it's lampshaded right here." )} ;
-         : set_integer var="tempint" "1" ;
+         : cycle key = "rule_1" predictable_order = "true" skip_interval = "0" {
+            : print {( "\"The first rule in Graham Nelson's Player's Bill of Rights is <not to be killed without warning<#ff0>>.\"" )} ;
+            : print "\"This can refer to rooms you step into that just kill you. Even with <UNDO<#f80>> available, they're still a pain and can interrupt the flow of the game. Of course, there are exceptions. Groundhog Day style games where you learn more with each death can be very intricate and well-received.\"" ;
+            : print {( "\"Here, there" + ((bonus_point_death_sentence) ? "was" : "'s") + " only one way to potentially die, and even that, well, it's lampshaded or explained.\"" )} ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 2" {
-         : print "\"The second rule in Graham Nelson's Player's Bill of Rights is <not to be given horribly unclear hints<#ff0>>. Well, the author has a penchant for tough puzzles, but he also hoped to establish a pattern here. You should see the spoonerisms by now? It would have been no fun to spell it out immediately.\"" ;
-         : set_integer var="tempint" "2" ;
+         : cycle key = "rule_2" predictable_order = "true" skip_interval = "0" {
+            : print "\"The second rule in Graham Nelson's Player's Bill of Rights is <not to be given horribly unclear hints<#ff0>>.";
+            : print "\"There's a delicate balance, of course. It's fun to be able to solve tricky hints, and it's boring if they're too easy. And it's fun for a player to laugh at themselves ralizing they missed a hint in plain sight. But sometimes even something that works well and seems simple when it's done requires a lot of fiddling from the author.\"" ;
+            : print "\"Here hopefully the pattern of spoonerisms is established. The author tried to throw out a few in descriptions. There's a worry they may be stale if they go on too long.\"" ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 3" {
-         : print "The third rule in Graham Nelson's Player's Bill of Rights is to be able to win without the experience of past lives. The author likes to wimp out about this by making games polite on the cruelty scale. And some of the puzzles may require trial and error, and some that build on each other may have tenuous links in the real world. But the author tried, honest!" ;
-         : set_integer var="tempint" "3" ;
+         : cycle key = "rule_3" predictable_order = "true" skip_interval = "0" {
+            : print "\"The third rule in Graham Nelson's Player's Bill of Rights is <to be able to win without the experience of past lives<#ff0>>.\"" ;
+            : print "\"This can overlap with rule 1 about not getting killed unfairly, and while Groundhog Day games are a thing, that sort of exception may prove the rule. You're generally in a tight loop to start. Then the world expands as you learn more. This isn't just about death, though. Say you have a timed maze where you need to get through in X steps without a map, but you can't go down any dead ends. That creates a lot of busy work which shortly stops feeling like a game.\n\"An exception may be a game where you survive but lose contact with friends (a neutral ending,) and then you piece things together to escape with all your friends. Good-better-best endings are common and add depth to a game. But they should only be there if the player wants more.\"" ;
+            : print "\"The author likes to wimp out about this by allowing only joke deaths, or having a MISSED option in Inform for bonus points (for Adventuron, he's still learning!) And of course, if a puzzle is too hard, this rule is less important (The author's done that to players!)\"" ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 4" {
-         : print "The fourth rule in Graham Nelson's Player's Bill of Rights is to be able to win without the knowledge of future events. The author likes to wimp out about this by making games polite on the cruelty scale. There's some overlap here, though not as much as George Carlin pointed out about the Ten Commandments." ;
-         : set_integer var="tempint" "4" ;
+         : cycle key = "rule_4" predictable_order = "true" skip_interval = "0" {
+            : print "\"The fourth rule in Graham Nelson's Player's Bill of Rights is <to be able to win without the knowledge of future events<#ff0>>.\"" ;
+            : print "\"This ties into being able to win without the experience of past lives. But again there are exceptions, such as where you play as different people and piece together what actually happened.\"" ;
+            : print "\"The author avoids this by going in for abstract puzzle-fests. Yet it's sort of neat to have surprises thrown in the way. Just make them surmountable.\"" ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 5" {
-         : print "The fifth rule in Graham Nelson's Bill of Rights is <not to have the game closed off without warning<#f88>>." ;
+         : cycle key = "rule_5" predictable_order = "true" skip_interval = "0" {
+            : print "The fifth rule in Graham Nelson's Bill of Rights is <not to have the game closed off without warning<#f88>>." ;
+            : print "This means more than just not having the game shut down. It means you shouldn't have something arbitrary put it in a non-winnable state. But if, say, you are wearing a watch and need to do something by 10:30 PM, that is permissible. Whether or not these constraints are fair goes beyond the basic bill of rights.";
+            : print "Of course, certain fun minor things may be closed off. Here, there were two bonus points in First Base. {ask_5_notes}! While there's a special accomplishment for getting all bonus points, missing either doesn't impact your main quest, finding the {rttr}.\"" ;
+         }
          : set_integer var="tempint" "5" ;
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 6" {
-         : print "The sixth rule in Graham Nelson's Player's Bill of Rights is <not to have to do unlikely things<#f88>>. Of course, in some of the most fun games you do generally unlikely things in real life. But if I suddenly switched to anagrams or palindromes, that'd violate this." ;
-         : set_integer var="tempint" "6" ;
+         : cycle key = "rule_6" predictable_order = "true" skip_interval = "0" {
+            : print "\"The sixth rule in Graham Nelson's Player's Bill of Rights is <not to have to do unlikely things<#f88>>.\"" ;
+            : print "\"Of course, in some of the most fun games you do generally unlikely things in real life. But if you veer from swordfights to having to derive the cubic formula, well, that is not so easy to believe.\"" ;
+            : print "\"Here, you are constantly doing unlikely things, but they're all related. So hopefully it all makes sense in the small world created here.\"" ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 7" {
-         : print "The seventh rule in Graham Nelson's Player's Bill of Rights is <not to need to do boring things for the sake of it<#f88>>. I'm worried we pushed things by making it to the hub, but I also wanted to give you simple puzzles to start. And the main swath of puzzles -- well, I hope they're about the right length. I also didn't want to force you to make a detailed map." ;
-         : set_integer var="tempint" "7" ;
+         : cycle key = "rule_7" predictable_order = "true" skip_interval = "0" {
+         : print "\"The seventh rule in Graham Nelson's Player's Bill of Rights is <not to need to do boring things for the sake of it<#f88>>.\"" ;
+         : print "\"This was less of a worry when there were fewer games to play, and fewer games to fall back on and compare to, so even the busy work seemed new. But with time, there are certain puzzles everyone groans when they see, even if they were neat the first time: wolf/goat/cabbage, 5- and 4- and 3-liter jugs, Towers of Hanoi. Mazes are a 'favorite,' too, though authors have found many ways to subvert this nuisance or provide a reasonable way to jump through the maze.\"" ;
+         : print "\"Here the author realized having too many spoonerisms might ruin things. In fact, the original leadup to here had some buffer puzzles which were just me leading you on. I had a word with him.\"" ; ## put in footnote ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 8" {
-         : print "The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>. Oh dear! You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. And there's some latitude for spelling." ;
-         : set_integer var="tempint" "8" ;
+         : cycle key = "rule_8" predictable_order = "true" skip_interval = "0" {
+            : print "The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>.\"" ;
+            : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. It's a paradox of parsers that understand a lot of words may actually force the reader to work through their vocabulary. Since parsers are no longer shiny and new and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also note if there are two words and suggest the player try a different verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution.\n" ;
+            : print "\"Uh, oh! Taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 9" {
-         : print "The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>. With the way these puzzles are formulated, and the relative lack of standard action verbs, this largely doesn't apply. But parser command abbreviations over the years have made this easier. People type I for inventory and X for examine, and so forth." ;
-         : set_integer var="tempint" "9" ;
+         : cycle key = "rule_9" predictable_order = "true" skip_interval = "0" {
+         : print "\nThe ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>.\n" ;
+         : print "\nThis should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Directions were always abbreviated, since they were in real life, but eventually conventions settled on I for inventory and X for examine, and so forth. More commonly, Inform allows for pronouns, and MAN might be a synonym for SORCERER and WOMAN for SORCERESS, and so forth. NEWS and PAPER could cue NEWSPAPER. It's fun to be able to type things out if you want, but it shouldn't be a chore.\n" ;
+         : print "\nThere are a few synonyms in this game, but because of the oddness of the items, there's not too much that can be done. {qt} also short-circuits this by not making you use many items explicitly.\n" ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 10" {
-         : print "The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>. Adventuron's parser is that and more. From my end I wanted to make sure you got some clue if you got one word right, because that's a big help in this game. The player should know if they are close." ;
-         : set_integer var="tempint" "10" ;
+         : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
+         : print "The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>." ;
+         : print "This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different respons for SEARCH and EXAMINE may frustrate players.\n\"One thing that helps provide a buffer is a {verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {verbs}." ;
+         : print "I used Adventuron's simplified two-word parser. I didn't need any complex actions, so it worked well." ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 11" {
-         : print "The eleventh rule in Graham Nelson's Player's Bill of Rights is <to have reasonable freedom of action<#f88>>. Well, there aren't a ton of verbs implemented, and the first bit was on rails, but I wanted to open it up and have something to do right away in the main area." ;
-         : set_integer var="tempint" "11" ;
+         : cycle key = "rule_11" predictable_order = "true" skip_interval = "0" {
+         : print "The eleventh rule in Graham Nelson's Player's Bill of Rights is <to have reasonable freedom of action<#f88>>." ;
+         : print "Well, there aren't a ton of verbs implemented, and the first bit was on rails, but I wanted to open it up and have something to do right away in the main area." ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 12" {
-         : print "The twelfth rule in Graham Nelson's Player's Bill of Rights is <not to depend too much on luck<#f88>>. Well, there's no luck here whatsoever. Perhaps this is outdated, although some parser games encourage the player to strategize for a maximum score based on random events." ;
-         : set_integer var="tempint" "12" ;
+         : cycle key = "rule_12" predictable_order = "true" skip_interval = "0" {
+         : print "The twelfth rule in Graham Nelson's Player's Bill of Rights is <not to depend too much on luck<#f88>>." ;
+         : print "It's difficult, of course. If there is no luck, a game may not be replayable." ;
+         : print "Here, there's no luck whatsoever. Perhaps this is outdated, although some parser games encourage the player to strategize for a maximum score based on random events." ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 13" {
-         : print "The thirteenth rule in Graham Nelson's Player's Bill of Rights is <to be able to understand a problem once it is solved<#f88>>. Well, in a one-trick pony adventure like this, that's not really a problem." ;
-         : set_integer var="tempint" "13" ;
+         : cycle key = "rule_13" predictable_order = "true" skip_interval = "0" {
+         : print "The thirteenth rule in Graham Nelson's Player's Bill of Rights is <to be able to understand a problem once it is solved<#f88>>." ;
+         : print "\"Well, in a one-trick pony adventure like this, 'understand it once it's solved' is not really a problem. Of course, a problem from the other side is that the player says yeah, yeah, I get it, already.\"" ;
+         }
          : gosub "ask_thor_tally" ;
          : return ;
       }
       : match "ask 14" {
-         : print "The fourteenth rule in Graham Nelson's Player's Bill of Rights is <not to be given too many red herrings<#f88>>. Well, there are a few bonus points I hope you enjoy." ;
-         : set_integer var="tempint" "14" ;
+         : cycle key = "rule_14" predictable_order = "true" skip_interval = "0" {
+         : print "The fourteenth rule in Graham Nelson's Player's Bill of Rights is <not to be given too many red herrings<#f88>>." ;
+         : print "A too on-rails game is boring, It's fun to have those side ventures." ;
+         : print "Here, well, there are a few bonus points I hope you enjoy, but I kept the maze compact and hopefully the funny side locations just add flavor." ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 15" {
-         : print "The fifteenth rule in Graham Nelson's Player's Bill of Rights is <to have a good reason why something is impossible<#f88>>. This isn't a terribly ambitious game, and it doesn't have a ton to interact with. So this doesn't apply. But hopefully if you run into a puzzle where you have the right phrase, the reject makes some sense." ;
-         : set_integer var="tempint" "15" ;
+         : cycle key = "rule_15" predictable_order = "true" skip_interval = "0" {
+         : print "The fifteenth rule in Graham Nelson's Player's Bill of Rights is <to have a good reason why something is impossible<#f88>>." ;
+         : print "This isn't a terribly ambitious game, and it doesn't have a ton to interact with. So this doesn't apply. But hopefully if you run into a puzzle where you have the right phrase, the reject makes some sense." ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 16" {
-         : print "The sixteenth rule in Graham Nelson's Player's Bill of Rights is <not to need to be American<#f88>>. Oh dear. There's one slang word here that originate in the US, but it's a pretty common one. Of course, it's not just about being American. Obscure stuff specific to any culture might make it hard for people to enjoy things fully." ;
-         : set_integer var="tempint" "16" ;
+         : cycle key = "rule_16" predictable_order = "true" skip_interval = "0" {
+         : print "The sixteenth rule in Graham Nelson's Player's Bill of Rights is <not to need to be American<#f88>>." ;
+         : print "\"This was one of the more controversial rules, as the definition is not very exact. But of course, it's not just about being American. Needing to know obscure stuff specific to any culture or trivia might make it hard for people to enjoy things fully, even if along the way you learn interesting things about a culture or hobby.\"" ;
+         : print "Oh dear. There's a slang word or two here that originate in the US, but I tried to keep them common." ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
       : match "ask 17" {
-         : print "The seventeenth rule in Graham Nelson's Player's Bill of Rights is <to know how the game is getting on<#f88>>. That's done a bit artificially here, with points, and with the hub areas being closed off as you finish them. Of course, having a score hard-coding all this may be too on-the-nose." ;
-         : set_integer var="tempint" "17" ;
+         : cycle key = "rule_17" predictable_order = "true" skip_interval = "0" {
+         : print "\"The seventeenth rule in Graham Nelson's Player's Bill of Rights is <to know how the game is getting on<#f88>>.\"" ;
+         : print "\"Progress tracking with points is a staple of text adventures, but it can feel a bit artificial and distracting to look up, even if the score is in the upper right. But a murder mystery may ask you for five pieces of evidence, or you may know a mansion has three stories and you've only visited one.\"" ;
+         : print "\"Here, I tried to give an idea of progress by closing off hub areas as you found them.\"" ;
+         }
          : gosub "ask_thor_tally" ;
-         : return ;
       }
-      : print "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either.\"" ;
+      : print "I missed a case for asking Thor. This should never happen. It's a bug." ;
    }
    evaluate_warp : subroutine {
       : if (latest_warp_number == -2) {
