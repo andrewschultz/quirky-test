@@ -1461,13 +1461,12 @@ subroutines {
       : if (tempint2 == 3 && ! have_asked_three) {
          : set_true "have_asked_three";
          : print "{otn}the up-arrow on your keyboard will show your previous command. This is useful for if you typed something wrong, or you want to see what you did, or you typed the right thing at the wrong time and want to save keystrokes. Or, here, you can just adjust the number at the end." ;
-         : return ;
       }
-      : if (tempint2 == 4 && ! have_asked_four) {
+      : else_if (tempint2 == 4 && ! have_asked_four) {
          : set_true "have_asked_four";
-         : print "{otn}I'll have to ask for some suspension of disbelief, here. Thor's responses for each rule come in cycles of three, the exact same thing every time, and he never gets bored." ;
-         : return ;
+         : print "{otn}I'll have to ask for some suspension of disbelief, here. Thor's responses for each rule come in cycles of three, the exact same thing every time, and fortunately, unlike us mortals, he never gets bored." ;
       }
+      : done ;
    }
    ask_thor : subroutine {
       : if (!talked_to_thor) {
