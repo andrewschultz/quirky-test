@@ -1604,6 +1604,7 @@ subroutines {
       }
    }
    footnote_printer : subroutine {
+      : gosub "int_from_noun1" ;
       : match "f 1" {
          : if (!revealed_footnote_1) {
             : print "You haven't revealed footnote 1 yet." ;
@@ -1774,6 +1775,9 @@ subroutines {
             }
          }
       }
+   }
+   int_from_noun1 : subroutine {
+      : set_integer var="tempint" {( int("" + original "noun1") )} ;
    }
    list_jump_commands : subroutine {
       : if (jump_commands_notified) {
