@@ -721,6 +721,10 @@ locations {
    };
    plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesxting. You notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
+         : match "listen _" {
+            : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? tlk : ask) + "." )} ;
+            : done ;
+         }
          : match "talk -;talk thor" {
             : if (talked_to_thor) {
                : print "Now you've broken the ice, probably better to {ask} him about one of the rules, 1-17." ;
@@ -731,6 +735,9 @@ locations {
             : done ;
          }
          : if (is_beside "seth_dentons") {
+            : match "talk seth" {
+               : print "Thor's conversation would be much more interesting and sane." ;
+            }
             : match "death sentence" {
                : print "\"Yes, that's it. This is one of those traps where you're given adequate warning that going somewhere might kill you.\"";
                : set_true "bonus_point_death_sentence" ;
@@ -826,6 +833,10 @@ locations {
 
    stealing_hill : location "{loc_stealing_hill}" {
       on_command {
+      : match "talk _;listen _" {
+         : print "You're sort of glad the hill can't talk, or make any noise, really. It's sort of tense here, so any words would not be pleasant." ;
+         : done ;
+      }
       : match "healing still" {
          : if (point_healing_still) {
          : print "You already found the healing still that contained the travel grail." ;
@@ -1249,6 +1260,15 @@ locations {
             }
             : match "get mouse" {
                : print "Certainly not in its current agitated state." ;
+               : done ;
+            }
+            : match "talk -;talk mouse" {
+               : print "You couldn't understand each other's speech. But you do understand it's upset, and you wantto fix that." ;
+               : done ;
+            }
+            : match "listen _" {
+               : print "The mouse almost sounds a bit defensive. But it's still agitated." ;
+               : done ;
             }
          }
          : match "missing house" {
@@ -1271,6 +1291,9 @@ locations {
    };
    my_house : location "{my_house_description}" {
       on_command {
+         : match "talk _;listen _" {
+            : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
+         }
          : match "see glimmers;see glimmering" {
             : if (point_see_glimmering) {
                : print "You already found something unusual in the house. You need an assistant to look through it." ;
