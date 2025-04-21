@@ -20,8 +20,6 @@ booleans {
    cheat_dont_require : boolean "false" ;
 
    ## meta-command/parser-warning booleans
-   footnotes_available : boolean "false" scope="survivor" ;
-   footnote_shortcut_noted : boolean "false" scope="survivor" ;
    credits_to_thanks_note : boolean "false" ;
    apostrophe_warn : boolean "false" ;
    take_note : boolean "false" ;
@@ -48,6 +46,11 @@ booleans {
    noted_diagonal_direction : boolean "false" ;
 
    ## footnote check booleans
+   footnotes_available : boolean "false" scope="survivor" ;
+   ever_read_footnote : boolean "false" scope="survivor" ;
+   ever_note_footnote : boolean "false" scope="survivor" ;
+   reveal_this_footnote : boolean "false" ;
+
    revealed_footnote_1 : boolean "false" scope="survivor" ;
    read_footnote_1 : boolean "false" scope="survivor" ;
    revealed_footnote_2 : boolean "false" scope="survivor" ;
@@ -58,8 +61,8 @@ booleans {
    read_footnote_4 : boolean "false" scope="survivor" ;
    revealed_footnote_5 : boolean "false" scope="survivor" ;
    read_footnote_5 : boolean "false" scope="survivor" ;
-	revealed_footnote_6 : boolean "false" scope="survivor" ;
-	read_footnote_6 : boolean "false" scope="survivor";
+   revealed_footnote_6 : boolean "false" scope="survivor" ;
+   read_footnote_6 : boolean "false" scope="survivor";
 
    ## verb notifications
    jump_commands_notified : boolean "false" ;
@@ -215,6 +218,21 @@ collections {
          0,
          0,
          0
+      ]
+   };
+   footnote_status_list : list {
+      items = [
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+   };
+   footnote_text_list : list {
+      items = [
+         "!"
       ]
    };
    jump_list : list {
@@ -433,7 +451,8 @@ strings {
    footnote_3_reveal : dynamic_string {( revealed_footnote_3 || !footnotes_available ? "" : " (<FOOTNOTE 3<#f80>>)" )} ;
    footnote_4_reveal : dynamic_string {( revealed_footnote_4 || !footnotes_available ? "" : " (<FOOTNOTE 4<#f80>>)" )} ;
    footnote_5_reveal : dynamic_string {( revealed_footnote_5 || !footnotes_available ? "" : " (<FOOTNOTE 5<#f80>>)" )} ;
-	footnote_6_reveal : dynamic_string {( revealed_footnote_6 || !footnotes_available ? "" : " (<FOOTNOTE 6<#f80>>)" )} ;
+   footnote_6_reveal : dynamic_string {( revealed_footnote_6 || !footnotes_available ? "" : " (<FOOTNOTE 6<#f80>>)" )} ;
+   footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
 
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
    achievement_qwwq : string "<Quell-Worrying-Well Querying<#f80>>" ;
@@ -552,15 +571,13 @@ locations {
                : print {( "While " + xme + " is a useful command, and one you'll be using in this tutorial, we're a bit on rails. There are meta-commands to acquaint yourself with first." )};
             }
             : else_if (is_carried "ooh_task") {
-               : print "As AFGNCAAPy as ever!{footnote_1_reveal}" ;
+               : set_integer var="tempint" "1" ;
+               : gosub "footnote_reveal" ;
+               : print "As AFGNCAAPy as ever!{footnote_reveal_text}" ;
                : if (is_at("nameless_lameness") && !xme_twice) {
                   : print "Also, just to make sure, you stumble about a bit to make sure nothing else interesting is lying around. It is not." ;
                   : set_true "xme_twice" ;
                }
-               : if (!revealed_footnote_1) {
-                  : set_true "revealed_footnote_1" ;
-               }
-               : gosub "f_footnote_notify" ;
             }
             : else {
                : pocket "ooh_task" ;
@@ -1652,12 +1669,20 @@ subroutines {
       }
    }
    footnote_printer : subroutine {
+      : if (!is_int(original "noun1")) {
+         : print "Footnotes require a number." ;
+         : done ;
+      }
       : gosub "int_from_noun1" ;
+      : if (tempint > collection_count("footnote_status_list") || tempint < 1) {
+         : print {( "Footnotes must be between 1 and " + collection_count("footnote_status_list") + "." )} ;
+         : done ;
+      }
+      : if (int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint - 1)}) == 0 ) {
+         : print "You haven't revealed footnote {tempint} yet." ;
+         : done ;
+      }
       : match "f 1" {
-         : if (!revealed_footnote_1) {
-            : print "You haven't revealed footnote 1 yet." ;
-            : done ;
-         }
          : print "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.";
          : print "\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.";
          : print "It's a joke I like a lot, because I throw in a lot of AFGNCAAPs. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this a solipsism. But I think it helps to focus on the puzzles." ;
@@ -1665,31 +1690,17 @@ subroutines {
          : done ;
       }
       : match "f 2" {
-         : if (!revealed_footnote_2) {
-            : print "You haven't revealed footnote 2 yet." ;
-            : done ;
          : print "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure." ;
          : set_true "read_footnote_2" ;
          : done ;
       }
-         : print "I couldn't find a footnote numbered {noun}. At least, not one I revealed, yet.";
-         : done ;
-      }
       : match "f 3" {
-         : if (!revealed_footnote_3) {
-            : print "You haven't revealed footnote 3 yet." ;
-            : done ;
-         }
          : print "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch requires both switching leading letters and changing letters after." ;
          : print "After designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky in their own way and vice versa." ;
          : set_true "read_footnote_3" ;
          : done ;
       }
       : match "f 4" {
-         : if (!revealed_footnote_4) {
-            : print "You haven't revealed footnote 4 yet." ;
-            : done ;
-         }
          : print "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys." ;
          : print "" ;
          : print "But I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts." ;
@@ -1698,10 +1709,6 @@ subroutines {
          : done ;
       }
       : match "f 5" {
-         : if (!revealed_footnote_5) {
-            : print "You haven't revealed footnote 5 yet." ;
-            : done ;
-         }
          : print "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous." ;
          : print "Other names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common." ;
          : print "Hearty Pat's came to mind as a store, too. But that's not a proper name." ;
@@ -1709,10 +1716,6 @@ subroutines {
          : done ;
       }
 		: match "f 6" {
-			: if (!revealed_footnote_6) {
-				: print "You haven't revealed footnote 6 yet." ;
-				: done ;
-			}
 			: print "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a dead end. Which can be fun for a bit, until it really, really isn't." ;
 			: set_true "read_footnote_6" ;
 			: done ;
@@ -1720,11 +1723,17 @@ subroutines {
       : print {( "I couldn't find a footnote numbered " + original "noun1" + ". At least, not one I revealed, yet." )} ;
       : done ;
    }
-   f_footnote_notify : subroutine {
-      : if (!footnote_shortcut_noted) {
-         : set_true "footnote_shortcut_noted" ;
-         : print "{otn}you can view footnotes with <FOOTNOTE<#8f0>> # or, for brevity, <F<#f80>> #. I won't reveal how many there are, but you can figure them out by guessing and getting different error messages.";
+   footnote_reveal : subroutine {
+      : if (!footnotes_available) {
+         : return ;
       }
+      : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> (tempint - 1) }) )} ;
+      : set_false "reveal_this_footnote" ;
+      : if (tempint2 > 0) {
+         : return ;
+      }
+      : set_true "reveal_this_footnote" ;
+      : collection_modify { collection = "footnote_status_list" index -> (tempint - 1) content -> ("1") ; }
    }
    footnote_3_check_function : subroutine {
       : if (revealed_footnote_3 || !footnotes_available) {
@@ -2317,6 +2326,10 @@ on_tick {
       : press_any_key ;
       : gosub "evaluate_warp" ;
    }
+   : if (!ever_note_footnote && ever_read_footnote) {
+      : set_true "ever_note_footnote" ;
+      : print "{otn}you can view footnotes with {footnote_cue}. Each individual footnote's notification only appears once. I won't reveal how many there are, but you can figure the precise number out by guessing and getting different error messages.";
+   }
 }
 
 ## on_describe is for moving around
@@ -2528,7 +2541,6 @@ on_command {
       : print "A low voice booms \"Vexing howl? Hexing?! VOWELS!\"{footnote_2_reveal}";
       : if (footnotes_available && (!revealed_footnote_2)) {
          : set_true "revealed_footnote_2" ;
-         : gosub "f_footnote_notify" ;
       }
    }
    : match "listen _" {
