@@ -667,6 +667,20 @@ locations {
                : done ;
             }
          }
+         : if (is_beside("pro_boor")) {
+            : match "listen -;listen boor" {
+               : print "You're listening enough without trying. You just wish you could have a pithy comment, appropriate to your interlocutor, to brush them off." ;
+               : done ;
+            }
+            : match "talk -;talk boor" {
+               : print "The {cc_pro_boor} is not up for a conventional chat. Perhaps an appropriate verbal riposte would work." ;
+               : done ;
+            }
+         } : else {
+            : match "listen _;talk _" {
+               : print "It's mercifully silent, now, with nobody to talk to, and you like that. Time to figure out what {cc_prayer_lights} is REALLY all about." ;
+            }
+         }
          : match "bro poor" {
             : if (!point_bro_poor) {
                : print "The Pro Boor looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up. But all the same, they shove a something into your hands, a note of what you're getting into. It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
