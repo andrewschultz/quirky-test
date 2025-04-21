@@ -18,9 +18,8 @@ booleans {
    cheat_dont_require : boolean "false" ;
 
    ## meta-command/parser-warning booleans
-   credits_to_thanks_note : boolean "false" ;
    apostrophe_warn : boolean "false" ;
-   take_note : boolean "false" ;
+   credits_to_thanks_note : boolean "false" ;
 
    ## done once in-game booleans
    xme_twice : boolean "false" ;
@@ -50,8 +49,10 @@ booleans {
    reveal_this_footnote : boolean "false" ;
 
    ## verb notifications
-   jump_commands_notified : boolean "false" ;
    drop_referenced : boolean "false" ;
+   jump_commands_notified : boolean "false" ;
+   listen_no_subject_note : boolean "false" ;
+   take_note : boolean "false" ;
 
    ## regular point tally booleans
    ## some of these are never referred to, or they are fundamentally the same as other game states, but I put them here to make sure the point totals add up
@@ -2497,6 +2498,10 @@ on_command {
          : print "\"Me so see-mo'!\", you mumble to yourself in encouragement." ;
          : done ;
       }
+      : match "talk *" {
+         : print "Nobody here like that to talk to." ;
+         : done ;
+      }
       : print "I couldn't find anyone here to talk to." ;
       : done ;
    }
@@ -2571,6 +2576,10 @@ on_command {
          : done ;
       }
       : print "You don't hear anything right now." ;
+      : if (!listen_no_subject_note) {
+         : print "{otn} listening is a general command. It will ignore any subject." ;
+      }
+      : done ;
    }
    : match "x ooh" {
       : if (is_carried "ooh_task" && !tutorial_6_x_ask_done) {
