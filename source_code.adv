@@ -299,7 +299,6 @@ strings {
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_gf : string "<Gerry Francis<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
-   tut : string "<TUTORIAL<#88f>>" ;
    verbs : string "<VERBS<#f80>>" ;
 
    # yes-or-no
@@ -308,7 +307,9 @@ strings {
    off : string "<OFF<#f88>>" ;
 
    # options in blue 00f
+   ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
    notif : string "<NOTIFY<#88f>>" ;
+   tut : string "<TUTORIAL<#88f>>" ;
 
    # game title
    qt : string "<Quirky Test<#ff0>>" ;
@@ -1447,9 +1448,9 @@ subroutines {
    : print "Submitted for the 2025 TALP competition." ;
    : press_any_key ;
    : if (footnotes_available) {
-     : print "Because you went through once, footnotes are now available.";
-     : press_any_key ;
-     }
+      : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}.";
+      : press_any_key ;
+   }
    : clear_screen ;
    }
    add_point : subroutine {
@@ -1976,12 +1977,13 @@ subroutines {
             : set_false "tutorial_in_options" ;
          }
       }
-      : if (in_debug) {
-         : print "DEBUG OPTION: CHEAT turns off/on restrictions in hub puzzles so you can do them in any order." ;
-      }
-      : print {( "The only main option is " + notif + ", for score notification." )};
-      : print {( "Note that we use " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is a preposition, which is rejected by the simplified version of Adventuron's parser  used here." )};
+      : print "{ch} is used to toggle colored text hints." ;
+      : print "{notif} is used to toggle score notification." ;
+      : print {( "Note that {qt} uses " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is a preposition, which is rejected by the simplified version of Adventuron's parser  used here." )};
       : print {( "Also note that an option alone will not be recognized. At least, not in the initial version of " + qt + "." )} ;
+      : if (in_debug) {
+         : print "DEBUG OPTION: CHEAT turns off/on dependencies in hub puzzles so you can complete them in any order." ;
+      }
       : gosub "check_additional_meta" ;
    }
 
