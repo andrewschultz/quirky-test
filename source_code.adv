@@ -501,6 +501,7 @@ vocabulary {
    : verb / aliases = [glimmer, glimmers, glimmering]
    : verb / aliases = [ch, colorhint]
    : verb / aliases = [exit, out]
+   : verb / aliases = [listen, hear]
    : verb / aliases = [hi, high]
    : verb / aliases = [not, noti, notif, notify]
    : verb / aliases = [t, talk]
@@ -534,7 +535,7 @@ locations {
          : if ((verb_is "inventory") && in_tutorial && !tutorial_4_x_me_done) {
             : print "Taking inventory is a good thing to do early in a text adventure, but we're not there yet in the tutorial. Once you've found an item, the tutorial will nudge you to do take inventory.";
          }
-         : match "listen _; hear _" {
+         : match "listen _" {
             : if (tutorial_6_x_ask_done) {
                : print "You hear a voice. It's a happy one. For whatever reason, you mark it up as a Veering Choice Cheering Voice. It greets you, sort of, with a {cc_whoa_guest} You'd like to see where it's from. But which direction is that?" ;
                : set_true "tutorial_7_listen_done" ;
@@ -2469,7 +2470,7 @@ on_command {
          : gosub "f_footnote_notify" ;
       }
    }
-   : match "listen _; hear _" {
+   : match "listen _" {
       : if (point_see_glimmering && !summoned_teary_chimes && (is_at "gravel_trail" || is_at "my_house")) {
          : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's something concrete to reflect on." ;
          : create "teary_chimes" target="gravel_trail" ;
