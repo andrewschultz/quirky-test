@@ -222,13 +222,24 @@ collections {
    };
    footnote_finding_list : list {
       items = [
-         "X ME two times",
-         "XYZZY",
-         "Visit either hub",
-         "GO WEST for the first point",
-         "First description for Plain Base",
-         "Try going east from Plain Base",
-         "Return to Thor after visiting Stealing Hill"
+         "<X ME two times<#0f0>>",
+         "<XYZZY<#0f0>>",
+         "<Visit either hub<#0f0>>",
+         "<GO WEST for the first point<#0f0>>",
+         "<First description for Plain Base<#0f0>>",
+         "<Try going east from Plain Base<#0f0>>",
+         "<Return to Thor after visiting Stealing Hill<#0f0>>"
+      ]
+   }
+   footnote_hinting_list : list {
+      items = [
+         "<Try something again<#f00>>",
+         "<Magic word<#f00>>",
+         "{fnh}",
+         "{fnh}",
+         "{fnh}",
+         "<Looking back, sort of<#f00>>",
+         "{fnh}"
       ]
    }
    footnote_status_list : list {
@@ -464,6 +475,7 @@ strings {
 
    ## footnote notifications and other dynamic strings
    footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
+   fnh : string "<(must be done to win game)<#f00>>" ;
 
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
    achievement_qwwq : string "<Quell-Worrying-Well Querying<#f80>>" ;
@@ -1813,14 +1825,14 @@ subroutines {
       }
    }
    footnote_lister : subroutine {
-      : print "Here's a list of footnote numbers, with descriptions if you've found them:" ;
+      : print "Here's a list of footnote numbers. <Green<#0f0>> descriptions are ones you've found. <Red<#f00>> have clues for ones you've not (yet) found:" ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
          : if (tempint2 > 0) {
             : print {("" + (tempint + 1) + ". " + item())}
          } : else {
-            : print {( "" + (tempint + 1) + ". --" )} ;
+            : print {( "" + (tempint + 1) + ". " + (collection_get{ collection -> ("footnote_hinting_list") index -> ( tempint ) }) )} ;
          }
          : if (tempint == max_footnote_found) {
             : done ;
