@@ -1811,14 +1811,16 @@ subroutines {
       }
    }
    footnote_lister : subroutine {
-      : print "Here's what you've found so far, and how:" ;
+      : print "Here's a list of footnote numbers, with descriptions if you've found them:" ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
          : if (tempint2 > 0) {
             : print {("" + (tempint + 1) + ". " + item())}
+         } : else {
+            : print {( "" + (tempint + 1) + ". --" )} ;
          }
-         : if (tempint > max_footnote_found) {
+         : if (tempint == max_footnote_found) {
             : done ;
          }
          : increment "tempint" ;
@@ -1843,9 +1845,6 @@ subroutines {
          : print "You haven't revealed footnote {tempint} yet." ;
          : done ;
       }
-      : if (tempint > max_footnote_found) {
-         : set_integer var="tempint" {( int(max_footnote_found) )} ;
-      }
       : print {( collection_get{ collection -> ("footnote_text_list") index -> (tempint - 1) } )} ;
    }
    footnote_reveal : subroutine {
@@ -1856,6 +1855,9 @@ subroutines {
       : set_false "reveal_this_footnote" ;
       : if (tempint2 > 0) {
          : return ;
+      }
+      : if (tempint > max_footnote_found) {
+         : set_integer var="max_footnote_found" {( int("" + (tempint - 1)) )} ;
       }
       : set_true "ever_reveal_footnote" ;
       : set_true "reveal_this_footnote" ;
