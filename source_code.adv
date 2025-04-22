@@ -519,6 +519,7 @@ vocabulary {
    : noun / aliases = [voice, veering, choice, cheery, cheering]
    : noun / aliases = [hill, hills]
    : noun / aliases = [hunter, hunters]
+   : noun / aliases = [grunter, grunters]
    : noun / aliases = [fission, fishin]
    : noun / aliases = [surge, surging]
    : noun / aliases = [purge, purging]
@@ -1248,7 +1249,7 @@ locations {
       }
       : match "pouring rain" {
          : if (point_pouring_rain) {
-            : print "You already made the dirt home." ;
+            : print "You already found something less awful than pouring rain." ;
             }
          : else
          {
@@ -1375,6 +1376,7 @@ locations {
       on_command {
          : match "talk _;listen _" {
             : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
+            : done ;
          }
          : match "see glimmers;see glimmering" {
             : if (point_see_glimmering) {
