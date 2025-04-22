@@ -131,6 +131,8 @@ booleans {
    achieve_qwwq : boolean "false" scope="survivor" ;
    achieve_kssn : boolean "false" scope="survivor" ;
    achieve_cnnc : boolean "false" scope="survivor" ;
+   achieve_ssss : boolean "false" scope="survivor" ;
+   achieve_ssss_pre : boolean "false" scope="survivor" ;
    achieve_haih : boolean "false" scope="survivor" ;
    achieve_haih_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
@@ -462,6 +464,7 @@ strings {
    achievement_qwwq : string "<Quell-Worrying-Well Querying<#f80>>" ;
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
+   achievement_ssss : string "<So Slick! Slow? Sick!<#f80>>" ;
    achievement_haih : string "<Hi, All I Haul<#f80>>" ;
    achievement_cjjc : string "<Chump, Joke Jump? Choke<#f80>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
@@ -784,6 +787,10 @@ locations {
       on_describe {
          : if (!note_nonreciprocal && has_visited("stealing_hill")) {
             : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy directions like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.\"";
+            : if (is_carried("travel_grail")) {
+               : print {( "Thor also points to your travel grail. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them alredy" : "You'll see them" ) + " on completion of your quest." )} ;
+               : set_true "achieve_ssss_pre" ;
+            }
             :set_true "note_nonreciprocal" ;
          }
       }
@@ -2199,6 +2206,14 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      : if (achieve_ssss) {
+         : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
+      } : else_if (achieve_ssss_pre) {
+         : print "For not returning to Thor until you got the grail, you win the {achievement_ssss} achievement!" ;
+         : set_true "achieve_ssss" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_ssss} achievement yet." ;
+      }
       : if (achieve_haih) {
          : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
       }
