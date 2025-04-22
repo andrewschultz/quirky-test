@@ -886,6 +886,13 @@ locations {
 
    hub_w_n : location "{point_master_plan ? hub_w_master_plan : hub_w_plaster_man}" {
       on_command {
+      : match "talk plaster;talk -;listen -" {
+         : if (!point_master_plan) {
+            : print "The plaster man has secrets to divulge, but talking and listening isn't the way to go." ;
+         } : else {
+            : print "That won't do much good now. It wouldn't have done much good before you destroyed the plaster man and got something useful." ;
+         }
+      }
       : match "master plan" {
          : if (point_master_plan) {
             : print "You already got the master plan.";
@@ -918,6 +925,9 @@ locations {
    };
    hub_w_ne : location "{point_chalice_map ? hub_w_chalice_map : hub_w_malice_chap}" {
       on_command {
+      : match "talk _;listen _" {
+         : gosub "hub_jerk";
+      }
       : match "chalice map" {
          : if (point_chalice_map) {
             : print "You already got the chalice map from the malice chap.";
@@ -948,6 +958,16 @@ locations {
    };
    hub_w_e : location "{point_fell_short ? hub_w_fell_short : hub_w_shell_fort}" {
       on_command {
+      : if (point_fell_short) {
+         : match "listen _;talk _" {
+            : print "All quiete on the western hub front." ;
+            : done ;
+         }
+      }
+      : match "listen _;talk -;talk fort" {
+         : print "As ammunition whistles through the air, a truce parley doesn't seem likely. At least your assailants are inaccurate. But they're not giving up, as is." ;
+         : done ;
+      }
       : match "fell short" {
          : if (point_fell_short) {
             : print "You already managed to make the artillery miss you. No need to taunt.";
@@ -970,6 +990,11 @@ locations {
    };
    hub_w_s : location "{point_take_crackers ? hub_w_take_crackers : hub_w_cake_trackers}" {
       on_command {
+      : if (!point_take_crackers) {
+         : match "talk trackers;talk -;listen -" {
+            : print "The cake trackers are too busy grumbling among themselves and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
+         }
+      }
       : match "take crackers" {
          : if (point_take_crackers) {
             : print "Don't get greedy! You have enough crackers.";
@@ -996,6 +1021,10 @@ locations {
    };
    hub_w_sw : location "{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
       on_command {
+      : match "talk _;listen _" {
+         : print {( point_shift_goals ? "The quiet is more peaceful now you've put the prospect of gifts aside." : "While the gifts seem to be calling to you, it'd feel weird to talk back" )} ;
+         : done ;
+      }
       : match "shift goals" {
          : if (point_shift_goals) {
             : print "But you don't want to shift your goals back." ;
@@ -1027,6 +1056,15 @@ locations {
    };
    hub_w_w : location "{point_hunters_grill ? hub_w_hunters_grill : hub_w_grunters_hill}" {
       on_command {
+      : if (!point_hunters_grill) {
+         : match "talk -;talk grunters; listen -" {
+            : print "Your grunting skills are not up to scratch. Perhaps there are other ways to help them." ;
+         }
+      } : else {
+         : match "talk -;talk hunters; listen -" {
+            : print "With the hunters long gone and the meal finished, there's not much chance for meaningful interaction." ;
+         }
+      }
       : match "hunters grill" {
          : if (point_hunters_grill) {
             : print "But you already had enough of a feast. Any more, and you wouldn't be able to move around." ;
@@ -1064,6 +1102,9 @@ locations {
    };
    hub_w_nw : location "{point_fellow_yield ? hub_w_fellow_yield : hub_w_yellow_field}" {
       on_command {
+      : match "talk _;listen _" {
+         : gosub "hub_jerk";
+      }
       : match "fellow yield" {
          : if (point_fellow_yield) {
             : print "You feel no need to relive past victories." ;
@@ -1095,6 +1136,13 @@ locations {
 
    hub_e_n : location "{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}" {
       on_command {
+      : match "talk _" {
+         : print "Talking would disturb the poetic artsy feel here." ;
+         : done ;
+      }
+      : match "listen _" {
+         : print {( point_fly_score ? "You already have a tune inside you." : "You listen, not for words, but..." )} ;
+      }
       : match "fly score" {
          : if (point_fly_score) {
             : print "You already imagined a fly score, but you recite it again, so you don't forget it." ;
@@ -1117,6 +1165,10 @@ locations {
    };
    hub_e_ne : location "{point_bending_truth ? hub_e_bending_truth : hub_e_trending_booth}" {
       on_command {
+      : match "talk _;listen _" {
+         : print {( point_bending_truth ? "Nothing to say or hear, but the quiet sure is nice." : "Talking and listening doesn't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
+         : done ;
+      }
       : match "bending truth" {
          : if (point_bending_truth) {
             : print "You've seen through the trending booth's lies. Rehashing that sort of thing too much makes you go in circles." ;
@@ -1139,6 +1191,10 @@ locations {
    };
    hub_e_e : location "{point_boring_way ? hub_e_boring_way : hub_e_warring_bay}" {
       on_command {
+      : match "talk _;listen _" {
+         : print {( point_boring_way ? "Nothing left to say or hear now that peace has broken out." : "Everyone fights among each other, and the yelling creates a feedback loop. You sense you talking will just inflame everyone more. How to get them to cool down?" )}
+         : done ;
+      }
       : match "boring way" {
          : if (point_boring_way) {
             : print "The way is now plenty boring. You don't want to risk dying of boredom after preventing so much death from war. That'd make for an embarrassing headstone!" ;
@@ -1161,6 +1217,10 @@ locations {
    };
    hub_e_se : location "{point_dirt_home ? hub_e_dirt_home : hub_e_hurt_dome}" {
       on_command {
+      : match "talk _;listen _" {
+         : print {( point_dirt_home ? "Everything is cozy and quiet and domesticated with no point disrupting things." : "The hurt dome doesn't have anything mean to say to you, but you're sure it's THINKING that. How to neutralize its simmering rage?" )} ;
+         : done ;
+      }
       : match "dirt home" {
          : if (point_dirt_home) {
             : print "You already made the dirt home." ;
@@ -1183,6 +1243,9 @@ locations {
    };
    hub_e_s : location "{point_pouring_rain ? hub_e_pouring_rain : hub_e_roaring_pain}" {
       on_command {
+      : match "talk _;listen _" {
+         : print {( point_pouring_rain ? "The pouring rain is really poetic, and stuff. You sense talking would ruin things." : "You can't talk or listen normally with this roaring pain around. Perhaps it can become something more manageable." )} ;
+      }
       : match "pouring rain" {
          : if (point_pouring_rain) {
             : print "You already made the dirt home." ;
@@ -1205,6 +1268,10 @@ locations {
    };
    hub_e_w : location "{point_funny_mountain ? hub_e_funny_mountain : hub_e_money_fountain}" {
       on_command {
+      : match "talk _;listen _" {
+         : print {( point_funny_mountain ? "You can't really match the mountain's jokes, but you don't need to. You're happy enough." : "Denizens of the fountain don't seem to care about you. They just keep trying to fish money out of the fountain, which disappears." )} ;
+         : done ;
+      }
       : match "funny mountain" {
          : if (point_funny_mountain) {
             : print "You already changed the scenery here for the better. Making the mountain bigger might destabilize it." ;
@@ -1227,6 +1294,9 @@ locations {
    };
    hub_e_nw : location "{point_grim_tune ? hub_e_grim_tune : hub_e_trim_goon}" {
       on_command {
+      : match "talk _;listen _" {
+         : gosub "hub_jerk";
+      }
       : match "grim tune" {
          : if (point_grim_tune) {
             : print "You already thought up a grim tune. Any more, and you might be so depressed you forget what you wrote, or you wonder why even bother to share it." ;
@@ -1788,11 +1858,17 @@ subroutines {
       : gosub "footnote_reveal" ;
       : print "For some history on both West Tiles and East Branch, look at {footnote_reveal_text}." ;
    }
-   gain_confidence: subroutine {
+   gain_confidence : subroutine {
       : print {( "You gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
       : increment "confidence_meter" ;
       : pocket "confidence" ;
       : return ;
+   }
+   hub_jerk : subroutine {
+      : if ((is_at("hub_w_nw") && point_fellow_yield) || (is_at("hub_w_ne") && point_chalice_map) || (is_at("hub_e_nw") && point_grim_tune)) {
+         : print "There's no chance or need for chat, after your little nonviolent victory." ;
+      }
+      : done ;
    }
    item_based_points : subroutine {
       : if (is_carried "fast_vision") {
