@@ -41,6 +41,7 @@ booleans {
    know_hold_bub : boolean "false" ;
    hill_aware_you_stole : boolean "false" ;
    noted_diagonal_direction : boolean "false" ;
+   note_nonreciprocal: boolean "false" ;
 
    ## footnote check booleans
    footnotes_available : boolean "false" scope="survivor" ;
@@ -781,7 +782,11 @@ locations {
       }
       }
       on_describe {
+         : if (!note_nonreciprocal && has_visited("stealing_hill")) {
+            : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy directions like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.\"";
+            :set_true "note_nonreciprocal" ;
          }
+      }
       on_pre_describe {
          : set_integer var="tempint" "5" ;
          : gosub "footnote_reveal" ;
