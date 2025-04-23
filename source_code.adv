@@ -145,6 +145,7 @@ booleans {
    achieve_cddc_pre: boolean "false" scope="survivor" ;
    achieve_gssg: boolean "false" scope="survivor" ;
    achieve_srrs: boolean "false" scope="survivor" ;
+   achieve_tnnt: boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -489,6 +490,7 @@ strings {
    achievement_cddc : string "<Cousin, Draft Dozen-Craft<#f80>>" ;
    achievement_gssg : string "<Great Style, Straight Guile<#f80>>" ;
    achievement_srrs : string "<Second Revvin' Reckoned? Seven<#f80>>" ;
+   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
 
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 }
@@ -1897,6 +1899,16 @@ subroutines {
       : print "For some history on both West Tiles and East Branch, look at {footnote_reveal_text}." ;
       : set_true "history_footnote_found" ;
    }
+   footnote_endgame_check : subroutine {
+      : collection_iterate "footnote_status_list" {
+         : if (int(item()) == 0) {
+            : print "You haven't unlocked the {achievement_tnnt} achievement yet." ;
+            : return ;
+         }
+      }
+      : set_true "achieve_tnnt" ;
+      : print "For uncovering all the footnotes available, you win the {achievement_tnnt} achievement!" ;
+   }
    gain_confidence : subroutine {
       : print {( "You gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
       : increment "confidence_meter" ;
@@ -2409,6 +2421,11 @@ subroutines {
          } : else {
             : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
          }
+      }
+      : if (achieve_tnnt) {
+         : print "You already unlocked the {achievement_tnnt} achievement." ;
+      } : else {
+         : gosub "footnote_endgame_check" ;
       }
    }
    track_achievements_kssn : subroutine {
