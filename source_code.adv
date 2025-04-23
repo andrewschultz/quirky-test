@@ -1597,6 +1597,17 @@ subroutines {
    }
    : clear_screen ;
    }
+   init_check : subroutine {
+      : if (collection_count("footnote_finding_list") != collection_count("footnote_hinting_list")) {
+         : print "WARNING footnote finding list length != footnote hinting list length!" ;
+      }
+      : if (collection_count("footnote_finding_list") != collection_count("footnote_status_list")) {
+         : print "WARNING footnote finding list length != footnote status list length!" ;
+      }
+      : if (collection_count("footnote_finding_list") != collection_count("footnote_text_list")) {
+         : print "WARNING footnote finding list length != footnote hinting text length!" ;
+      }
+   }
    add_point : subroutine {
       : if (score_notify) {
          : print "<Your score just went up by a point!<#ff0>>" ;
@@ -2477,11 +2488,12 @@ themes {
       }
    }
 
-## On_debug and on_startup call the INIT subroutine, but on_debug sets a flag or flags to allow for cheat commands
+## On_debug and on_startup call the INIT subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
 
 on_debug {
    : set_true "in_debug" ;
    : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
+   : gosub "init_check" ;
    : gosub "init" ;
    : gosub "tutorial_choice" ;
 }
