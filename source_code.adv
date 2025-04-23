@@ -256,7 +256,7 @@ collections {
    };
    footnote_text_list : list {
       items = [
-      "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs adn also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this a solipsism. But I think it helps to focus on the puzzles.",
+      "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this a solipsism. But I think it helps to focus on the puzzles.",
       "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.",
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky in their own way and vice versa.",
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun.",
@@ -322,7 +322,8 @@ strings {
    sco : string "<SCORE<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
-   tx_gf : string "<Gerry Francis<#0f0>>" ;
+   tx_gf : string "<Garry Francis<#0f0>>" ;
+   tx_ll : string "<Leon Lin<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
    verbs : string "<VERBS<#f80>>" ;
 
@@ -420,7 +421,7 @@ strings {
    hub_e_money_fountain : string "A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
    hub_e_funny_mountain : string "A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
    hub_e_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
-   hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reenforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
+   hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reinforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## details for hub items
    confidence_level : dynamic_string {( confidence_meter == 2 ? "peak" : "some" )} ;
@@ -642,7 +643,7 @@ locations {
             : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_reveal_text}" )} ;
          }
          : match "first base" {
-            : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlesness lies.";
+            : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlessness lies.";
             : set_true "point_first_base" ;
             : set_true "tutorial_10_first_base" ;
             : increment "tutorial_score" ;
@@ -734,7 +735,7 @@ locations {
          : if (know_lush_shout) {
             : match "shush lout" {
                : if (!bonus_point_shush_lout) {
-                  : print "The pro boor takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgiveable! Nevertheless, they do seem to quiet down a bit. Though to get rid of them, perhaps you need to take a different sort of dig. A more direct one." ;
+                  : print "The pro boor takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Nevertheless, they do seem to quiet down a bit. Though to get rid of them, perhaps you need to take a different sort of dig. A more direct one." ;
                   : set_true "bonus_point_shush_lout" ;
                } : else {
                   : print "You're not going to quiet the pro boor any further. How to get rid of them?" ;
@@ -743,7 +744,7 @@ locations {
          }
       }
    };
-   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesxting. You notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
+   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : match "listen _" {
             : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? tlk : ask) + "." )} ;
@@ -1368,7 +1369,7 @@ locations {
                : done ;
             }
             : match "talk -;talk mouse" {
-               : print "You couldn't understand each other's speech. But you do understand it's upset, and you wantto fix that." ;
+               : print "You couldn't understand each other's speech. But you do understand it's upset, and you want to fix that." ;
                : done ;
             }
             : match "listen _" {
@@ -1682,7 +1683,7 @@ subroutines {
       : else_if (tempint == 2) {
          : cycle key = "rule_2" predictable_order = "true" skip_interval = "0" {
             : print "\"The second rule in Graham Nelson's Player's Bill of Rights is <not to be given horribly unclear hints<#ff0>>.";
-            : print "\"There's a delicate balance, of course. It's fun to be able to solve tricky hints, and it's boring if they're too easy. And it's fun for a player to laugh at themselves ralizing they missed a hint in plain sight. But sometimes even something that works well and seems simple when it's done requires a lot of fiddling from the author.\"" ;
+            : print "\"There's a delicate balance, of course. It's fun to be able to solve tricky hints, and it's boring if they're too easy. And it's fun for a player to laugh at themselves realizing they missed a hint in plain sight. But sometimes even something that works well and seems simple when it's done requires a lot of fiddling from the author.\"" ;
             : print "\"Here hopefully the pattern of spoonerisms is established. The author tried to throw out a few in descriptions. There's a worry they may be stale if they go on too long.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -1752,7 +1753,7 @@ subroutines {
       : else_if (tempint == 10) {
          : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
          : print "The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>." ;
-         : print "This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different respons for SEARCH and EXAMINE may frustrate players.\n\"One thing that helps provide a buffer is a {verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {verbs}." ;
+         : print "This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for SEARCH and EXAMINE may frustrate players.\n\"One thing that helps provide a buffer is a {verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {verbs}." ;
          : print "I used Adventuron's simplified two-word parser. I didn't need any complex actions, so it worked well." ;
          }
          : gosub "ask_thor_tally" ;
@@ -2250,7 +2251,7 @@ subroutines {
          : return;
       }
       : if (!tutorial_7_listen_done) {
-         : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, the lack of senses hopefully makes the guessing straightforward." )};
+         : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, having only five physical senses should limit the required guesswork nicely." )};
          : return;
       }
       : if (!tutorial_8_talk_voice_done) {
@@ -2288,7 +2289,7 @@ subroutines {
    meta_thanks : subroutine {
       : print "Thanks to TALP admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than usual.";
       : print "Thanks to {tx_ca} for creating Adventuron.";
-      : print "Thanks to my testers: {tx_wc}, {tx_gf}.";
+      : print "Thanks to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) and {tx_ll}.";
       : print "Thanks to you, for playing this game.";
       : gosub "check_additional_meta" ;
    }
@@ -2532,8 +2533,6 @@ on_tick {
       : set_true "hill_aware_you_stole" ;
    }
    : if ((latest_warp_number != -3) && (!achieve_cddc_pre)) {
-      : print "Evaluating warp number {latest_warp_number}." ;
-      : press_any_key ;
       : gosub "evaluate_warp" ;
    }
    : if (!ever_note_footnote && ever_reveal_footnote) {
@@ -2560,7 +2559,7 @@ on_pre_command {
       : gosub "add_point" ;
       : set_integer var="tempint" "4" ;
       : gosub "footnote_reveal" ;
-      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet somene who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
+      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet someone who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
       : set_true "point_go_west" ;
       : set_true "tutorial_9_go_west" ;
       : increment "tutorial_score" ;
@@ -2629,7 +2628,7 @@ on_command {
          : if (point_healing_still) {
             : print "{stealing_hill_mad}" ;
             : if (!achieve_cjjc_pre) {
-               : print "(However, just trying to find this sort of loophole, making it back to a room the developer shut off, shows you're an enterpriing adventurer and might be a very good tester for other games. It's an important part of the whole process, as testers often see programmers' blind spots. And it can maybe help start you on the way to making your own game! Okay, ignore this if you already have. But either way, a small silly achievement awaits at game's end for trying this.)" ;
+               : print "(However, just trying to find this sort of loophole, making it back to a room the developer shut off, shows you're an enterprising adventurer and might be a very good tester for other games. It's an important part of the whole process, as testers often see programmers' blind spots. And it can maybe help start you on the way to making your own game! Okay, ignore this if you already have. But either way, a small silly achievement awaits at game's end for trying this.)" ;
             }
             : set_true "achieve_cjjc_pre" ;
             : done ;
@@ -2783,7 +2782,7 @@ on_command {
       }
       : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
       : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
-         : print {("You've solved " + points_left_side + " parts of West Tiles and " + points_right_side + " of 7 parts of East Branch.")}
+         : print {("You've solved " + points_left_side + " of 7 parts of West Tiles and " + points_right_side + " of 7 parts of East Branch.")}
       }
       : print {( bonus_score_string )} ;
       }
