@@ -582,7 +582,7 @@ vocabulary {
 ## Locations and location-specific parser rules
 
 locations {
-   nameless_lameness : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "lameness_16" {
+   nameless_lameness : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." {
       on_command {
          : if (is_beside "cheering_voice") {
             : match "t -;t voice" {
@@ -609,6 +609,7 @@ locations {
                : set_true "tutorial_7_listen_done" ;
                : increment "tutorial_score" ;
                : create "cheering_voice" ;
+               : update_graphic ;
                : done ;
             }
          }
@@ -2879,7 +2880,9 @@ on_command {
 
 assets {
    graphics {
-      lameness_16 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVSUlKtra2fn5+YmJimpqZgYGBnZ2dubm5ZWVl1dXWRkZGDg4NLS0u0tLR8fHyKioo9s6mBAAAB6ElEQVRYw+XYIZaDMBAGYHIELrACvQ6JRdUjse0RKmvpARBcAIHEcgFEZS0KzxXovja0ZCYzJARq9r8A3yOTySSeJyN8meGVPnym+SR45SaTPXMtZBKZtJsSP1O9c5xylrmMf/HemQA/CiCCgN8J0G4NEAuAWgsoICCZvn9/AQ5rAQMBuOkBuTvA0wJCqgQAIEGAOAZrYAoYDAFKCeQIcLcHCBUAtkHNAhIEiJ0BoAgCUIO3+QrMfkAKAYfVgH4OqCEg+zIgAICWWoEUlMAHUMrvnwyLUC0CY0C3OSDSArIvAAYdQPkBmi7gABAEINQBsozog+l6gG8BaNcAKh4AjwIAqHcH+DYAOAyQZyELOP87QMkBBAmIdIB2c4C/AGi4Rjirwq4jzwJ+CXy8CwflPNadRRsCxFaAlAaU3wXcScBRB/BJQMQAPjNxYQBg54FlQL09YHQAtBCQE/eS2VD4Bpw4wGwX9jsDLmaAhgNcdwWENoACAdDFoASAcdRtQ1dAQgOqVYCo4XaBpggYQMkAyMOwsQXgIqiITrQE6HWX42VA4ggAUzn5PIEAhSNAIAD/PkIDUC+kbqcXK0C9NwBN5b0tIKeGIrQCchsAgNC9TyBAYAHoqE6o7EP+jSqC7yMmALgG6AcovfgBhBvnaozG45IAAAAASUVORK5CYII=";
+      nameless_lameness : dynamic_graphic {( tutorial_7_listen_done ? "nameless_lameness_2" : "nameless_lameness_1" )} ;
+      nameless_lameness_1 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVTU1O0tLSlpaWenp54eHhiYmJpaWlxcXFaWlqtra2WlpaHh4dLS0v/AACAgICPj49CHXltAAAB6UlEQVRYw+XYLZaDMBAHcHKEvFe9Ar0OiUXVIbhCe4TKWnoABBdAILFcANFb4LkC29eGlkxmhoRAzf59y+8lM/kKAhUhVYZX+uiZ9pPwlbtK/sytVMlU0ul/ZPJM/c5pykXlOj4SvDP97kcDxBDwOwG6rQFiAdCggBICsun7hxfguBYwEIA7Dij8AQEKiKgSAIDMACQJmANbwGAJ0EqgMAAHd4DQAaANGhaQGYDEGwCKIAQ1eJ/PwGwAUgg4rgb0c0ADAfmXASEAdNQMpKAEPoBKff9sWYR6EVgD5OaAGAXkXwAMGEAbAGQV8AAIAhBhgDwn1sF0PUA6ALo1gJoHwK0AAJrdAdIFAA8D5F7IAi7/DlBxAEECYgzQbQ6QC4CWWwhnVSgluRfwUyDNLhy0/RjbizYEiK0AKQ2ovgs4kIATBpAkIGYAnzNxaQFgzwPLgGZ7wOgB6CCgIO4ls0PhG3DmALMu7HcGXO0ALQe47QqIXAClATAuBhUAjCPWhr6AjAbUqwBxy3UBUgQMoGIA5GbYugLMIqiJlWgJ0GOX42VA5gkAp3LyecIAlJ4AYQD49xEaYKyF1O306gRo9gYYp/LeFVBQhyJjBlQbAIDA3icMQOgAkNRKqPUh/0YVw/cRGwCcA2MAtLX4D/JD09PQHmHUAAAAAElFTkSuQmCC";
+      nameless_lameness_2 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEVTU1O0tLSlpaWenp54eHhiYmJpaWlxcXFaWlqtra2WlpaHh4dLS0v/AACAgICPj49CHXltAAAB80lEQVRYw+XYLZaDMBAHcHKAFXkPvQK9DolF1SG4QnuESiw9AIILIJBYLoDoLfBcgd22oZDJzED4qNm/b/m9ZCZfjqMipEr3Sus/U4/xXrmrpM/ccpVYJRr+R4bPlO+ch1xVkv4vztcjD8Hwu28NEEDAzwBo9gaIGUCFAnIIiIfvuy/AaS2gIwB3HJBtBzgowKdKAABiAxCGYA4IwBi9CGcBWglkBsBdChhHQOgA0AYVC4gNQGg/AgAAisADNXifzsBkACIIOK0GtFNABQHphwEeADTUDESgBEZAob5/WViEehEsBsjdAQEKSD8A6DCANgDIKrABIAiAjwHSlFgHo/UAaQFo1gBKHgC3AgCoDgdIGwA8DJB7IQu4/jtAwQEECQgwQLM7QM4Aam4hnFShlORewE+BNLuw0/ZjbC/aESD2AkQ0oPgswCUBZwwgSUDAAMYzcb4AwJ4H5gHV/oB+A6CBgIy4l0wOhW/AhQNMurA9GJAsA9Qc4HYowLcB5AbAuBgUAND3WBtuBcQ0oFwFCGquC5AiYAAFAyA3w9oWYBZBSaxEc4AWuxzPA+KNAHAqJ58nDEC+ESAMAP8+QgOMtZC6nSZWgOpogHEqb20BGXUoMmZAtQEACOx9wgB4FgBJrYRaH1L3ghYAvOUAOAfGAGhr8S96lNUYSAJIWgAAAABJRU5ErkJggg==";
 
       first_base : dynamic_graphic {( point_bro_poor ? "first_base_after_bro_poor" : "first_base_before_bro_poor" )} ;
       first_base_before_bro_poor : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAADStIwAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP+lKioA//////9h8viPAAABXUlEQVRYw8WYTWrEMAyFX5ddFCUnGJgL5Cg9X1Y9z0AhJyhzBXnZRVFlx83Psn5BNjMQBjJ8fJae4sCoNa7r1v4P4ABSJegB8PO8RAEB8OWLV0BswUrAKiAAVK5QAKZ83AFdBQSAvDvAk1UAYgf8bgcgFRAA+Zv3gFMAqn+QATgFhIF5zq3IxiHa9c/zh+kbG4cEwOtsCnoiNAKgtIGCH4po70EDzkNxGAOLEOUjp+cCebnFASggh7uzgsF0jGxDk8/lpMCvGxQwUbwsRwVD/m2MBDA3oLuCcvV/BYyBxxYEWUG4AZPHfdJNQXwNmHxPk4fR1gbhXQC77wDhOfA3EEz3KAxNwgqAChA+C2oYehrqYRxaFwChBFBFiDIOhRJwAQAngEnCDSD1eSp2gBrEvc4FqI9kqdPJyP2vAL3Oht6CpQZSr9Nx3gHQAtoBtAKkXm9ISgmAFkACCC3AfgHKKpPEICpolwAAAABJRU5ErkJggg==";
