@@ -26,7 +26,7 @@ booleans {
    entered_seth_dentons : boolean "false" ;
    know_lush_shout : boolean "false" ;
    thor_explained_seth : boolean "false" ;
-   summoned_teary_chimes : boolean "false";
+   summoned_teary_chimes : boolean "false"; # same as point_see_glimmering but it's confusing code that way
    have_asked_three : boolean "false" ;
    have_asked_four : boolean "false" ;
 
@@ -534,6 +534,8 @@ objects {
 
 }
 
+# end objects
+
 vocabulary {
    : noun / aliases = [ooh, task, ask]
    : noun / aliases = [voice, veering, choice, cheery, cheering]
@@ -560,6 +562,8 @@ vocabulary {
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [verb, verbs]
 }
+
+# end vocabulary
 
 ## Locations and location-specific parser rules
 
@@ -1589,6 +1593,10 @@ barriers {
    }
 }
 
+# end locations
+
+# subroutines are generally organized alphabetically, but INIT comes first
+
 subroutines {
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
@@ -2507,7 +2515,9 @@ themes {
       }
    }
 
-## On_debug and on_startup call the INIT subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
+# end subroutines
+
+## On_debug and on_startup both call the INIT/TUTORIAL subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
 
 on_debug {
    : set_true "in_debug" ;
@@ -2814,6 +2824,8 @@ on_command {
    }
 }
 
+# end on_command
+
 ## assets are arranged by room, in approximate discovery order. QT is listed below TQ, with F
 
 assets {
@@ -2897,3 +2909,5 @@ assets {
       gravel_trail_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAz0lEQVRYw+2VsQ0EMQgEN3ZC/5njL+5FB/yy6FtYJ5zuLA+XjDAYfB8/WIEVWIEVWIEVWIEV+Dx+VuC9wD2yuDLBAwQOl4s83EbaEVWJfgtR3NhxAkWRjIqOm7G5P0Yxamb8KzAo8CNzwWS0V+lg3IjECCnIs3EjA0xC16NqovwY6oXICinZsTdsCzXHtIgZlZPqYpi/ftS2M9FYflQfTmVKyo5ITQPoYGIuayvqakIGD4YZ0e3sRSl1WfTSs8GOPQ6LoVK87AjNJ8VnTLrxB+2I7rJIpDHPAAAAAElFTkSuQmCC";
    }
 }
+
+# end assets
