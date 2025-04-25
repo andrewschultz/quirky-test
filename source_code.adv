@@ -29,6 +29,7 @@ booleans {
    summoned_teary_chimes : boolean "false"; # same as point_see_glimmering but it's confusing code that way
    have_asked_three : boolean "false" ;
    have_asked_four : boolean "false" ;
+   poke_books_yet : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -185,6 +186,7 @@ integers {
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
+   books_read : integer "0" ;
 
    ## since Adventuron doesn't allow survivor scope for lists, I need to define the status variables here.
    max_footnote_found : integer "0" scope="survivor";
@@ -438,8 +440,14 @@ strings {
       point_missing_house ? ", or you can go NORTH inside the house you made" : ""
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
+
+   book_is : dynamic_string {(
+      books_read == 16 ? "The last book is" :
+      books_read == 0 ? "The first book is" :
+      "The next book is"
+   )} ;
 
    ## color code stuff
 
@@ -531,6 +539,7 @@ objects {
    ## post-hub
    travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
    teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." ;
+   bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
 }
 
@@ -545,6 +554,7 @@ vocabulary {
    : noun / aliases = [fission, fishin]
    : noun / aliases = [surge, surging]
    : noun / aliases = [purge, purging]
+   : noun / aliases = [book, books, bookcase, shelf, bookshelf]
    : noun / aliases = [no, n]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
@@ -1406,6 +1416,9 @@ locations {
             : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
             : done ;
          }
+         : match "x bookshelf;read bookshelf" {
+            : gosub "read_book" ;
+         }
          : match "see glimmers;see glimmering" {
             : if (point_see_glimmering) {
                : print "You already found something unusual in the house. You need an assistant to look through it." ;
@@ -2055,6 +2068,37 @@ subroutines {
       : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical. And there are just hubs to the northwest and northeast.\"" ;
       : set_true "noted_diagonal_direction" ;
       : press_any_key ;
+   }
+   read_book : subroutine {
+      : if (!poke_books_yet) {
+         : print "You take the time to inspect the whole bookshelf. Perhaps the <rttr> is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed. (You have time.) Again, nothing. But hey, some of those titles look interesting!" ;
+         : set_true "poke_books_yet" ;
+         : done ;
+      }
+      : cycle key = "books_to_read" predictable_order = "false" skip_interval = "0"  {
+         : print "{book_is} <A Will Way Ill<#ff0>>." ;
+         : print "{book_is} <To Prep True Pep<#ff0>>." ;
+         : print "{book_is} <See Bunny, Be Sunny<#ff0>>." ;
+         : print "{book_is} <Chaz, Jess, Jazz, Chess<#ff0>>." ;
+         : print "{book_is} <See Pride Preside<#ff0>>." ;
+         : print "{book_is} <Thumb, Sing Something<#ff0>>." ;
+         : print "{book_is} <Nor Fight For Night<#ff0>>." ;
+         : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
+         : print "{book_is} <Tad, Who HAD To<#ff0>>." ;
+         : print "{book_is} <Kenny Muller's Many Colors<#ff0>>." ;
+         : print "{book_is} <My Son Simon<#ff0>>." ;
+         : print "{book_is} <Two Trolls' True Tolls<#ff0>>." ;
+         : print "{book_is} <Socially Show Sully<#ff0>>." ;
+         : print "{book_is} <Dang! Big Bang, Dig!<#ff0>>." ;
+         : print "{book_is} <Fusty Trite Trustee Fight<#ff0>>." ;
+         : print "{book_is} <Mirth, Waking, Worth Making<#ff0>>." ;
+         : print "{book_is} <Toil, Anchor, Oil Tanker<#ff0>>." ;
+      }
+      : increment "books_read";
+      : if (books_read == 17) {
+         : print "That's all the books. They'll cycle now." ;
+         : set_integer var = "books_read" "0" ;
+      }
    }
    say_half : subroutine {
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
