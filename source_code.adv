@@ -440,7 +440,7 @@ strings {
       point_missing_house ? ", or you can go NORTH inside the house you made" : ""
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
 
    book_is : dynamic_string {(
@@ -448,6 +448,10 @@ strings {
       books_read == 0 ? "The first book is" :
       "The next book is"
    )} ;
+
+   chimes_present : dynamic_string {(
+      (point_see_glimmering && !bonus_point_cheery_times) ? ". You hear teary chimes, too" : ""
+   )};
 
    ## color code stuff
 
@@ -1366,7 +1370,7 @@ locations {
          }
       }
    };
-   gravel_trail : location "This is a gravel trail. You can go back south to the plain base{gravel_trail_house}." {
+   gravel_trail : location "This is a gravel trail. You can go back south to the plain base{gravel_trail_house}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
             : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
