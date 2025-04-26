@@ -21,7 +21,7 @@ booleans {
    apostrophe_warn : boolean "false" ;
    credits_to_thanks_note : boolean "false" ;
 
-   ## done once in-game booleans
+   ## done once in-game booleans (non-critical, or duplicate)
    xme_twice : boolean "false" ;
    entered_seth_dentons : boolean "false" ;
    know_lush_shout : boolean "false" ;
@@ -194,7 +194,7 @@ integers {
    books_read : integer "0" ;
 
    ## since Adventuron doesn't allow survivor scope for lists, I need to define the status variables here.
-   max_footnote_found : integer "0" scope="survivor";
+   max_footnote_found : integer "-1" scope="survivor";
    footnote_1_status : integer "0" scope="survivor" ;
    footnote_2_status : integer "0" scope="survivor" ;
    footnote_3_status : integer "0" scope="survivor" ;
@@ -1891,6 +1891,10 @@ subroutines {
       }
    }
    footnote_lister : subroutine {
+      : if (max_footnote_found == -1) {
+         : print "You haven't found any footnotes, so I can't list them, yet." ;
+         : done ;
+      }
       : print "Here's a list of footnote numbers. <Green<#0f0>> descriptions are ones you've found. <Red<#f00>> have clues for ones you've not (yet) found:" ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
@@ -1909,7 +1913,7 @@ subroutines {
    }
    footnote_printer : subroutine {
       : if (!is_int(original "noun1")) {
-         : print "Footnotes require a number." ;
+         : print "Footnotes require a number. If you wish to list which footnotes you've found, type <FOOTNOTE 0<#f80>>." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
