@@ -263,7 +263,7 @@ collections {
    };
    footnote_text_list : list {
       items = [
-      "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this a solipsism. But I think it helps to focus on the puzzles.",
+      "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this as solipsism. But I think it helps to focus on the puzzles.",
       "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.",
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky in their own way and vice versa.",
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun.",
@@ -2466,7 +2466,7 @@ subroutines {
          : set_true "achieve_cnnc" ;
       }
       : else {
-         : print "You haven't unlocked the {achievement_cnnc} achievement yet. You got {bonus_score} of {max_bonus_score} bonus points this time around." ;
+         : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
       }
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
@@ -2518,10 +2518,10 @@ subroutines {
          }
       }
       : if (achieve_gssg) {
-         : print "You already unlocked the {achievement_gssg} achievement." ;
+         : print "You already unlocked the {achievement_gssg} achievement for not having to repeat the right phrase in any hub side room." ;
       } : else {
          : if (hub_think_needed == 0) {
-            : print "For not flipping any hub rooms out of order, you win the {achievement_gssg} achievement!" ;
+            : print "For not having to repeat the right phrase in any hub side room, you win the {achievement_gssg} achievement!" ;
             : set_true "achieve_gssg" ;
          } : else {
             : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
