@@ -888,8 +888,16 @@ locations {
 
    stealing_hill : location "{loc_stealing_hill}" {
       on_command {
+      : match "d _" {
+         : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific" ;
+         : done ;
+      }
       : match "talk _;listen _" {
-         : print "You're sort of glad the hill can't talk, or make any noise, really. It's sort of tense here, so any words would not be pleasant." ;
+         : if (is_carried("travel_grail")) {
+            : print "This seems unwise after you've just stolen something." ;
+         } : else {
+            : print "You're sort of glad the hill can't talk, or make any noise, really. It's sort of tense here, so any words would not be pleasant." ;
+         }
          : done ;
       }
       : match "healing still" {
