@@ -150,6 +150,8 @@ booleans {
    achieve_tnnt: boolean "false" scope="survivor" ;
    achieve_hbbh: boolean "false" scope="survivor" ;
    achieve_hbbh_pre: boolean "false" scope="survivor" ;
+   achieve_nbbn: boolean "false" scope="survivor" ;
+   achieve_nbbn_pre: boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -496,6 +498,7 @@ strings {
    fnh : string "<(must be done to win game)<#f00>>" ;
 
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
+   achievement_nbbn : string "<Neat-Book-Beat Nook<#f80>>" ;
    achievement_qwwq : string "<Quell-Worrying-Well Querying<#f80>>" ;
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
@@ -2125,6 +2128,7 @@ subroutines {
       : if (books_read == 17) {
          : print "That's all the books. They'll cycle now." ;
          : set_integer var = "books_read" "0" ;
+         : set_true "achieve_nbbn_pre" ;
       }
    }
    say_half : subroutine {
@@ -2421,6 +2425,14 @@ subroutines {
          : set_true "achieve_hbbh" ;
       } : else {
          : print "You haven't unlocked the {achievement_hbbh} achievement yet." ;
+      }
+      : if (achieve_nbbn) {
+         : print "(Already got the {achievement_nbbn} achievement for reading all the book titles on the bookshelf)" ;
+      } : else_if (achieve_nbbn_pre) {
+         : print "For reading all the book titles on the bookshelf, you win the {achievement_nbbn} achievement!" ;
+         : set_true "achieve_nbbn" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_nbbn} achievement yet." ;
       }
       : if (achieve_ssss) {
          : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
