@@ -375,7 +375,7 @@ strings {
 
    ## description strings by location
 
-   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The pro boor starts blustering away." : "The Pro Boor stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the Pro Boor gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
+   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
@@ -460,6 +460,7 @@ strings {
    cc_burst_face : dynamic_string {( use_color_coding ? "<burst face<#f88>>" : "burst face")} ;
    cc_hold_bub : dynamic_string {( use_color_coding ? "<HOLD, BUB<#f88>>" : "HOLD, BUB")} ;
 
+   cc_pro_boor : dynamic_string {( use_color_coding ? "<Pro Boor<#f88>>" : "Pro Boor" )} ;
    cc_prayer_lights : dynamic_string {( use_color_coding ? "<Prayer Lights<#f88>>" : "Prayer Lights" )} ;
 
    ## west hub
@@ -662,7 +663,7 @@ locations {
             : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_reveal_text}" )} ;
          }
          : match "first base" {
-            : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a pro boor! They warn you against going forward, because that way, pointlessness lies.";
+            : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
             : set_true "point_first_base" ;
             : set_true "tutorial_10_first_base" ;
             : increment "tutorial_score" ;
@@ -726,7 +727,7 @@ locations {
          }
          : match "bro poor" {
             : if (!point_bro_poor) {
-               : print "The Pro Boor looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up. But all the same, they shove a something into your hands, a note of what you're getting into. It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
+               : print "The {cc_pro_boor} looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up. But all the same, they shove a something into your hands, a note of what you're getting into. It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
                : set_true "point_bro_poor" ;
                : destroy "pro_boor" ;
                : pocket "prayer_lights" ;
@@ -745,7 +746,7 @@ locations {
          }
          : if (is_beside "pro_boor" ) {
             : match "talk -;talk boor" {
-               : print "The pro boor babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree." ;
+               : print "The {cc_pro_boor} babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree." ;
                : set_true "know_lush_shout" ;
                : done ;
             }
@@ -753,10 +754,10 @@ locations {
          : if (know_lush_shout) {
             : match "shush lout" {
                : if (!bonus_point_shush_lout) {
-                  : print "The pro boor takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Nevertheless, they do seem to quiet down a bit. Though to get rid of them, perhaps you need to take a different sort of dig. A more direct one." ;
+                  : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Nevertheless, they do seem to quiet down a bit. Though to get rid of them, perhaps you need to take a different sort of dig. A more direct one." ;
                   : set_true "bonus_point_shush_lout" ;
                } : else {
-                  : print "You're not going to quiet the pro boor any further. How to get rid of them?" ;
+                  : print "You're not going to quiet the {cc_pro_boor} any further. How to get rid of them?" ;
                }
             }
          }
