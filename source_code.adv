@@ -380,7 +380,7 @@ strings {
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
-   describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't" )} ;
+   describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
    sub_hub: dynamic_string {( "Here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub, you can go south back to the plain base or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
    spokes_word: dynamic_string {( tempint == 6 ? "one" :
@@ -433,7 +433,7 @@ strings {
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
-   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("west_tiles") ? "back west to West Tiles" : "west" ) + " or " + ( has_visited("east_branch") ? "back east to East Branch" : "east" ) + "." )};
+   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("west_tiles") ? "back to West Tiles" : "west" ) + " or " + ( has_visited("east_branch") ? "back to East Branch" : "east" ) + "." )};
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ; ## remove qualifier only when you used the travel grail
 
    gravel_trail_house : dynamic_string {(
@@ -763,7 +763,7 @@ locations {
          }
       }
    };
-   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths that start off east and west, though they seem to bend away{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
+   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the northeast and northwest{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : match "listen _" {
             : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? tlk : ask) + "." )} ;
