@@ -30,6 +30,7 @@ booleans {
    have_asked_three : boolean "false" ;
    have_asked_four : boolean "false" ;
    poke_books_yet : boolean "false" ;
+   noticed_beer : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -147,6 +148,8 @@ booleans {
    achieve_gssg: boolean "false" scope="survivor" ;
    achieve_srrs: boolean "false" scope="survivor" ;
    achieve_tnnt: boolean "false" scope="survivor" ;
+   achieve_hbbh: boolean "false" scope="survivor" ;
+   achieve_hbbh_pre: boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -497,6 +500,7 @@ strings {
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
    achievement_ssss : string "<So Slick! Slow? Sick!<#f80>>" ;
+   achievement_hbbh : string "<Hi! Beer By Here?<#f80>>" ;
    achievement_haih : string "<Hi, All I Haul<#f80>>" ;
    achievement_cjjc : string "<Chump, Joke Jump? Choke<#f80>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
@@ -765,6 +769,15 @@ locations {
    };
    plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the northeast and northwest{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
+         : match "_ beer" {
+            : if (!noticed_beer) {
+               : print "Thor already explained about the beer." ;
+            } : else {
+               : print "Ah yes. The beer. It's mainly a prop. Mostly colored water. It makes me seem much more chatty and vibrant than I am. Plus I don't want to set a bad example for mortals who get hangovers, or worse." ;
+               : set_true "noticed_beer" ;
+               : set_true "achieve_hbbh_pre" ;
+            }
+         }
          : match "listen _" {
             : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? tlk : ask) + "." )} ;
             : done ;
@@ -2401,6 +2414,14 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      : if (achieve_hbbh) {
+         : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
+      } : else_if (achieve_hbbh_pre) {
+         : print "For noting beer around Thor, you win the {achievement_hbbh} achievement!" ;
+         : set_true "achieve_hbbh" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_hbbh} achievement yet." ;
+      }
       : if (achieve_ssss) {
          : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
       } : else_if (achieve_ssss_pre) {
