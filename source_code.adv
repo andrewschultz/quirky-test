@@ -668,7 +668,6 @@ locations {
             : increment "tutorial_score" ;
             : gosub "add_point" ;
             : goto "first_base" ;
-            : press_any_key ;
             : gosub "tutorial_shutoff" ;
             : redescribe ;
             : done ;
@@ -842,7 +841,7 @@ locations {
       }
    };
 
-   west_tiles : location "WEST TILES\n{sub_hub}" {
+   west_tiles : location "WEST TILES\nSuch nice, orderly tiles here. {sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_left_side)} ;
       }
@@ -864,7 +863,7 @@ locations {
       }
    };
 
-   east_branch : location "EAST BRANCH\n{sub_hub}" {
+   east_branch : location "EAST BRANCH\nThe paths here are not very orderly, but they don't look dangerous. {sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_right_side)} ;
       }
@@ -1291,7 +1290,7 @@ locations {
       }
       : match "pouring rain" {
          : if (point_pouring_rain) {
-            : print "You already found something less awful than pouring rain." ;
+            : print "You already found something less awful than roaring pain." ;
             }
          : else
          {
