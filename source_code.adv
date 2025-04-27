@@ -205,6 +205,8 @@ integers {
    footnote_8_status : integer "0" scope="survivor" ;
    footnote_9_status : integer "0" scope="survivor" ;
    footnote_10_status : integer "0" scope="survivor" ;
+   footnote_11_status : integer "0" scope="survivor" ;
+   footnote_12_status : integer "0" scope="survivor" ;
 
 }
 
@@ -243,6 +245,8 @@ collections {
          "<Examine the trending booth<#0f0>>"
          "<Examine the crackers<#0f0>>"
          "<Examine the plaster man/master plan<#0f0>>"
+         "<Get to Stealing Hill<#0f0>>"
+         "<Examine the bookshelf<#0f0>>"
       ]
    }
    footnote_hinting_list : list {
@@ -254,13 +258,16 @@ collections {
          "{fnh}",
          "<Looking back, sort of<#f00>>",
          "{fnh}",
-         "<Examine something<#f00>>"
-         "<Examine something<#f00>>"
-         "<Examine something<#f00>>"
+         "<Examine something<#f00>>",
+         "<Examine something<#f00>>",
+         "<Examine something<#f00>>",
+         "{fnh}"
+         "<Examine something<#f00>>",
       ]
    }
    footnote_status_list : list {
       items = [
+         0,
          0,
          0,
          0,
@@ -285,7 +292,9 @@ collections {
       "I wanted to show the reader some non-reciprocal directions but not have them just because. The original hub maps were west and east of Thor, and the passage back was south. But this was one case where I wound up having to explain too much. Or having Thor explain too much.",
       "I was sort of inspired by a combination of Lucy's psychiatrist office and Steven Crowder's disingenuous \"Prove Me Wrong\" table when thinking of this. I have a special, uh, spot in my heart for people who will get up in your business and explain you're very lucky they dropped into your life.",
       "<TAKE CRACKERS<#f80>> is one of my favorite points and drawing in the whole game. Points, because it uses a standard verb. Drawing, because I did research on different-shaped crackers.",
-      "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan was too good to pass up, as it could fit into a vareity of plots."
+      "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan was too good to pass up, as it could fit into a vareity of plots. It does seem to be the least surreal of the lot.",
+      "Originally this was called Fate Hill, which works semantically but isn't believable as part of the story. It lampshaded that this was an important place to be, but I think the location and new name do this. The hill, of course, gets hateful anyway.",
+      "I enjoy seeing and implementing random stuff you can just sift through if you want, pushing the up-arrow to repeat a command for random text. Often when I write games I have ideas that would seem forced as part of the solution, but they are too good not to share somehow. I've used books before and probably will again.\nOne of the first things that made me say \"wow\" about Inform 7 was the (one of)(or)(in random order) construction. Adventuron has it, too, and it's as easy and intuitive, but with more formal code."
       ]
    };
    jump_list : list {
@@ -918,7 +927,7 @@ locations {
       }
    };
 
-   stealing_hill : location "{loc_stealing_hill}" {
+   stealing_hill : location "{loc_stealing_hill}{footnote_reveal_text}" {
       on_command {
       : match "d _" {
          : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific" ;
@@ -961,6 +970,10 @@ locations {
             : gosub "say_half" ;
          }
       }
+      }
+      on_pre_describe {
+         : set_integer var="tempint" "11" ;
+         : gosub "footnote_reveal" ;
       }
       on_describe {
          : gosub "list_jump_commands" ;
@@ -2139,7 +2152,9 @@ subroutines {
    }
    read_book : subroutine {
       : if (!poke_books_yet) {
-         : print "You take the time to inspect the whole bookshelf. Perhaps the <rttr> is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed. (You have time.) Again, nothing. But hey, some of those titles look interesting!" ;
+         : set_integer var="tempint" "12" ;
+         : gosub "footnote_reveal" ;
+         : print "You take the time to inspect the whole bookshelf. Perhaps the <rttr> is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed. (You have time.) Again, nothing. But hey, some of those titles look interesting!{footnote_reveal_text}" ;
          : set_true "poke_books_yet" ;
          : done ;
       }
