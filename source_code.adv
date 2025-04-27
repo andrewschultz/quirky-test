@@ -757,7 +757,8 @@ locations {
                : done ;
             }
             : match "talk -;talk boor" {
-               : print "The {cc_pro_boor} is not up for a conventional chat. Perhaps an appropriate verbal riposte would work." ;
+               : print "The {cc_pro_boor} babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree. You sense the {cc_pro_boor} has a weakness, though." ;
+               : set_true "know_lush_shout" ;
                : done ;
             }
          } : else {
@@ -781,13 +782,6 @@ locations {
          : if (!point_bro_poor) {
             : match "bro _;_ poor" {
                : gosub "say_half" ;
-               : done ;
-            }
-         }
-         : if (is_beside "pro_boor" ) {
-            : match "talk -;talk boor" {
-               : print "The {cc_pro_boor} babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree." ;
-               : set_true "know_lush_shout" ;
                : done ;
             }
          }
@@ -1038,7 +1032,10 @@ locations {
    hub_w_ne : location "{point_chalice_map ? hub_w_chalice_map : hub_w_malice_chap}" {
       on_command {
       : match "talk _;listen _" {
-         : gosub "hub_jerk";
+         : gosub "hub_jerk" ;
+         : print "\"I have something you want,\" says the {cc_malice_chap}. \"Not that you'll use it right, I bet. Still, you can try to beg it off me.\"" ;
+         : done ;
+      }
       }
       : match "chalice map" {
          : if (point_chalice_map) {
@@ -1215,7 +1212,9 @@ locations {
    hub_w_nw : location "{point_fellow_yield ? hub_w_fellow_yield : hub_w_yellow_field}" {
       on_command {
       : match "talk _;listen _" {
-         : gosub "hub_jerk";
+         : gosub "hub_jerk" ;
+         : print "The fellow just won't stop talking. Something about people not having the right to be happier, or less unhappy, than he is." ;
+         : done ;
       }
       : match "fellow yield" {
          : if (point_fellow_yield) {
@@ -1412,7 +1411,9 @@ locations {
    hub_e_nw : location "{point_grim_tune ? hub_e_grim_tune : hub_e_trim_goon}" {
       on_command {
       : match "talk _;listen _" {
-         : gosub "hub_jerk";
+         : gosub "hub_jerk" ;
+         : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
+         : done ;
       }
       : match "grim tune" {
          : if (point_grim_tune) {
@@ -2024,9 +2025,9 @@ subroutines {
    }
    hub_jerk : subroutine {
       : if ((is_at("hub_w_nw") && point_fellow_yield) || (is_at("hub_w_ne") && point_chalice_map) || (is_at("hub_e_nw") && point_grim_tune)) {
-         : print "There's no chance or need for chat, after your little nonviolent victory." ;
+         : print "There's no chance or need for chat after your little nonviolent victory." ;
+         : done ;
       }
-      : done ;
    }
    item_based_points : subroutine {
       : if (is_carried "fast_vision") {
