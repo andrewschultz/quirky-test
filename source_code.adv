@@ -202,6 +202,9 @@ integers {
    footnote_5_status : integer "0" scope="survivor" ;
    footnote_6_status : integer "0" scope="survivor" ;
    footnote_7_status : integer "0" scope="survivor" ;
+   footnote_8_status : integer "0" scope="survivor" ;
+   footnote_9_status : integer "0" scope="survivor" ;
+   footnote_10_status : integer "0" scope="survivor" ;
 
 }
 
@@ -236,7 +239,10 @@ collections {
          "<GO WEST for the first point<#0f0>>",
          "<First description for Plain Base<#0f0>>",
          "<Try going east from Plain Base<#0f0>>",
-         "<Return to Thor after visiting Stealing Hill<#0f0>>"
+         "<Return to Thor after visiting Stealing Hill<#0f0>>",
+         "<Examine the trending booth<#0f0>>"
+         "<Examine the crackers<#0f0>>"
+         "<Examine the plaster man/master plan<#0f0>>"
       ]
    }
    footnote_hinting_list : list {
@@ -247,11 +253,18 @@ collections {
          "{fnh}",
          "{fnh}",
          "<Looking back, sort of<#f00>>",
-         "{fnh}"
+         "{fnh}",
+         "<Examine something<#f00>>"
+         "<Examine something<#f00>>"
+         "<Examine something<#f00>>"
       ]
    }
    footnote_status_list : list {
       items = [
+         0,
+         0,
+         0,
+         0,
          0,
          0,
          0,
@@ -269,7 +282,10 @@ collections {
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun.",
       "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.",
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a dead end. Which can be fun for a bit, until it really, really isn't.",
-      "I wanted to show the reader some non-reciprocal directions but not have them just because. The original hub maps were west and east of Thor, and the passage back was south. But this was one case where I wound up having to explain too much. Or having Thor explain too much."
+      "I wanted to show the reader some non-reciprocal directions but not have them just because. The original hub maps were west and east of Thor, and the passage back was south. But this was one case where I wound up having to explain too much. Or having Thor explain too much.",
+      "I was sort of inspired by a combination of Lucy's psychiatrist office and Steven Crowder's disingenuous \"Prove Me Wrong\" table when thinking of this. I have a special, uh, spot in my heart for people who will get up in your business and explain you're very lucky they dropped into your life.",
+      "<TAKE CRACKERS<#f80>> is one of my favorite points and drawing in the whole game. Points, because it uses a standard verb. Drawing, because I did research on different-shaped crackers.",
+      "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan was too good to pass up, as it could fit into a vareity of plots."
       ]
    };
    jump_list : list {
@@ -953,6 +969,12 @@ locations {
 
    hub_w_n : location "{point_master_plan ? hub_w_master_plan : hub_w_plaster_man}" {
       on_command {
+      : match "x plaster;x man" {
+         : set_integer var="tempint" "10" ;
+         : gosub "footnote_reveal" ;
+         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "A plaster man sits here, thinking ... but of what?" )}
+         : done ;
+      }
       : match "talk plaster;talk -;listen -" {
          : if (!point_master_plan) {
             : print "The plaster man has secrets to divulge, but talking and listening isn't the way to go." ;
@@ -1060,6 +1082,13 @@ locations {
       : if (!point_take_crackers) {
          : match "talk trackers;talk -;listen -" {
             : print "The cake trackers are too busy grumbling among themselves and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
+         }
+      }
+      : if (point_take_crackers) {
+         : match "x crackers" {
+            : set_integer var="tempint" "9" ;
+            : gosub "footnote_reveal" ;
+            : print "All shapes and textures and colors. What a vareity! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
          }
       }
       : match "take crackers" {
@@ -1235,6 +1264,11 @@ locations {
       : match "talk _;listen _" {
          : print {( point_bending_truth ? "Nothing to say or hear, but the quiet sure is nice." : "Talking and listening doesn't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
          : done ;
+      }
+      : match "x booth" {
+         : set_integer var="tempint" "8" ;
+         : gosub "footnote_reveal" ;
+         : print {( (point_bending_truth ? "Empty now. Well, it was empty even when it wasn't empty." : "You don't want to get too close. You're not sure why the person in the booth is around. Don't they have anything better to do?") + "{footnote_reveal_text}" )}
       }
       : match "bending truth" {
          : if (point_bending_truth) {
@@ -2561,6 +2595,9 @@ subroutines {
       : set_true "achieve_qwwq" ;
    }
 
+   ## I realize how bad this code is. But we can't save collections survivor status. And it's pedantic to expect someone to see all footnotes each time through. So this is the least bad solution I could think of. Well, the only one.
+   ## It's a jerk move too to blame something someone took years to write by himself so people could have fun writing and playnig games for this awkwardness. This is the worst of it, and it's not terrible.
+
    footnote_read_from_survivors : subroutine {
       : collection_modify { collection = "footnote_status_list" index -> (0) content -> ("" + footnote_1_status) }
       : collection_modify { collection = "footnote_status_list" index -> (1) content -> ("" + footnote_2_status) }
@@ -2568,6 +2605,10 @@ subroutines {
       : collection_modify { collection = "footnote_status_list" index -> (3) content -> ("" + footnote_4_status) }
       : collection_modify { collection = "footnote_status_list" index -> (4) content -> ("" + footnote_5_status) }
       : collection_modify { collection = "footnote_status_list" index -> (5) content -> ("" + footnote_6_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (6) content -> ("" + footnote_7_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (7) content -> ("" + footnote_8_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (8) content -> ("" + footnote_9_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (9) content -> ("" + footnote_10_status) }
 
    }
    footnote_write_to_survivors : subroutine {
@@ -2577,6 +2618,10 @@ subroutines {
       : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 3 ) }) )} ;
       : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 4 ) }) )} ;
       : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 5 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 6 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 7 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 8 ) }) )} ;
+      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 9 ) }) )} ;
    }
    win_game_stub : subroutine {
       : gosub "footnote_write_to_survivors" ;
