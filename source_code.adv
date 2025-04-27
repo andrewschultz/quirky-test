@@ -286,7 +286,7 @@ collections {
       items = [
       "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this as solipsism. But I think it helps to focus on the puzzles.",
       "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.",
-      "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky in their own way and vice versa.",
+      "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Also, recycling the names as signs helped fill the whole graphic.",
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun.",
       "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.",
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a dead end. Which can be fun for a bit, until it really, really isn't.",
@@ -550,15 +550,17 @@ objects {
    prayer_lights : object "{cc_prayer_lights}" msg="It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.";
 
   ## scenery
-  cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false";
-  seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
-  west_runes : scenery "big runes" at="west_tiles" msg="Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." conspicuous="false";
-  east_runes : scenery "big runes" at="east_branch" msg="Five runes: a caret, a straight line, two geometric angle signs, a straight line." conspicuous="false";
+   cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false" ;
+   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
+   west_runes : scenery "big runes" at="west_tiles" msg="Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." conspicuous="false" ;
+   east_runes : scenery "big runes" at="east_branch" msg="Five runes: a caret, a straight line, two geometric angle signs, a straight line." conspicuous="false" ;
+   plaster_man : scenery "a plaster man" at="hub_w_n" msg="A plaster man." conspicuous="false" ;
+   trending_booth : scenery "a trending booth" at="hub_e_ne" msg="You don't want to get too close." conspicuous="false" ;
 
    ## NPC(s)
-   beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at = "plain_base" conspicuous="false";
-   pro_boor : scenery "A pro boor" msg="Seems upset about anything and everything." at = "first_base" conspicuous="false";
-   hissing_mouse: scenery "A hissing mouse" at= "gravel_trail" conspicuous="false" ;
+   beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at="plain_base" conspicuous="false" ;
+   pro_boor : scenery "A pro boor" msg="Seems upset about anything and everything." at="first_base" conspicuous="false" ;
+   hissing_mouse: scenery "A hissing mouse" at="gravel_trail" conspicuous="false" ;
 
    ## hub side items that get used
    ## start in the west, going clockwise
@@ -588,14 +590,15 @@ objects {
 vocabulary {
    : noun / aliases = [ooh, task, ask]
    : noun / aliases = [voice, veering, choice, cheery, cheering]
+   : noun / aliases = [seth, denton, dentons]
    : noun / aliases = [hill, hills]
    : noun / aliases = [box, boxes, crackers]
    : noun / aliases = [hunter, hunters]
    : noun / aliases = [grunter, grunters]
    : noun / aliases = [fission, fishin]
+   : noun / aliases = [booth, trending]
    : noun / aliases = [surge, surging]
    : noun / aliases = [purge, purging]
-   : noun / aliases = [book, books, bookcase, shelf, bookshelf]
    : noun / aliases = [no, n]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
@@ -612,6 +615,7 @@ vocabulary {
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [verb, verbs]
+   : verb / aliases = [x, read]
 }
 
 # end vocabulary
@@ -833,7 +837,7 @@ locations {
                : destroy "seth_dentons" ;
                : gosub "add_bonus" ;
             }
-            : match "x seth" {
+            : match "x dentons" {
                : print "Very seedy looking. Even its name, though common, seems ominous for some reason.";
                : gosub "thor_on_seth" ;
                : done ;
@@ -1491,7 +1495,7 @@ locations {
             : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
             : done ;
          }
-         : match "x bookshelf;read bookshelf" {
+         : match "x bookshelf;x book;x shelf" {
             : gosub "read_book" ;
          }
          : match "see glimmers;see glimmering" {
@@ -2153,7 +2157,7 @@ subroutines {
       : if (!poke_books_yet) {
          : set_integer var="tempint" "12" ;
          : gosub "footnote_reveal" ;
-         : print "You take the time to inspect the whole bookshelf. Perhaps the <rttr> is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed. (You have time.) Again, nothing. But hey, some of those titles look interesting!{footnote_reveal_text}" ;
+         : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr} is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed to reveal a secret passage, or something. Again, nothing. But hey, some of those titles look interesting!{footnote_reveal_text}" ;
          : set_true "poke_books_yet" ;
          : done ;
       }
