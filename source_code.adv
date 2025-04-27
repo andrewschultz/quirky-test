@@ -208,6 +208,11 @@ integers {
    footnote_10_status : integer "0" scope="survivor" ;
    footnote_11_status : integer "0" scope="survivor" ;
    footnote_12_status : integer "0" scope="survivor" ;
+   footnote_13_status : integer "0" scope="survivor" ;
+   footnote_14_status : integer "0" scope="survivor" ;
+   footnote_15_status : integer "0" scope="survivor" ;
+   footnote_16_status : integer "0" scope="survivor" ;
+   footnote_17_status : integer "0" scope="survivor" ;
 
 }
 
@@ -243,11 +248,16 @@ collections {
          "<First description for Plain Base<#0f0>>",
          "<Try going east from Plain Base<#0f0>>",
          "<Return to Thor after visiting Stealing Hill<#0f0>>",
-         "<Examine the trending booth<#0f0>>"
-         "<Examine the crackers<#0f0>>"
-         "<Examine the plaster man/master plan<#0f0>>"
-         "<Get to Stealing Hill<#0f0>>"
-         "<Examine the bookshelf<#0f0>>"
+         "<Examine the trending booth<#0f0>>",
+         "<Examine the crackers<#0f0>>",
+         "<Examine the plaster man/master plan<#0f0>>",
+         "<Get to Stealing Hill<#0f0>>",
+         "<Examine the bookshelf<#0f0>>",
+         "<Get to Sky Floor<#0f0>>",
+         "<Solve Warring Bay<#0f0>>",
+         "<Examine the Malic Chap<#0f0>>",
+         "<Examine the Pro Boor<#0f0>>",
+         "<Examine the Hissing Mouse<#0f0>>"
       ]
    }
    footnote_hinting_list : list {
@@ -262,12 +272,22 @@ collections {
          "<Examine something<#f00>>",
          "<Examine something<#f00>>",
          "<Examine something<#f00>>",
-         "{fnh}"
+         "{fnh}",
          "<Examine something<#f00>>",
+         "{fnh}",
+         "{fnh}",
+         "<Examine someone<#f00>>",
+         "<Examine someone<#f00>>",
+         "<Examine something<#f00>>"
       ]
    }
    footnote_status_list : list {
       items = [
+         0,
+         0,
+         0,
+         0,
+         0,
          0,
          0,
          0,
@@ -296,6 +316,11 @@ collections {
       "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan was too good to pass up, as it could fit into a vareity of plots. It does seem to be the least surreal of the lot.",
       "Originally this was called Fate Hill, which works semantically but isn't believable as part of the story. It lampshaded that this was an important place to be, but I think the location and new name do this. The hill, of course, gets hateful anyway.",
       "I enjoy seeing and implementing random stuff you can just sift through if you want, pushing the up-arrow to repeat a command for random text. Often when I write games I have ideas that would seem forced as part of the solution, but they are too good not to share somehow. I've used books before and probably will again.\nOne of the first things that made me say \"wow\" about Inform 7 was the (one of)(or)(in random order) construction. Adventuron has it, too, and it's as easy and intuitive, but with more formal code."
+      "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated..",
+      "I'm not allergic to excitement, but I don't particularly like being around people who tell my my life needs to be more exciting, and they can help with that. Taking this point to the extreme, there are people who prefer war to peace. I try to slip this sort of thing into a lot of what I write, but maybe it is too subtle. Or too obscure."
+      "Um, okay, yeah. The Malice Chap, Trim Goon and guy in Yellow Field are ... similar. I think that's what got me the idea to have the puzzles act as a pyramid, with eight needing no prerequisites, four needing stuff from the eight, two needing stuff from the four, and the final one needing the two."
+      "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps it would've made a good book name.",
+      "Sorry not sorry for the gray mouse spoonerism. I actually didn't see it until I was looking for excuses to add footnotes. I wish I had found more of this sort of thing. I think one reason I backloaded them (the key, the trunk) is because I'd gotten to the end and hadn't had the chance to fire off nonsequiturs like that. (Achievement names don't count.)\nWell, that's the sort of thing maintenance releases/post-comp releases are for."
       ]
    };
    jump_list : list {
@@ -745,6 +770,11 @@ locations {
             }
          }
          : if (is_beside("pro_boor")) {
+            : match "x boor;x pro" {
+               : set_integer var="tempint" "16" ;
+               : gosub "footnote_reveal" ;
+               : print "The {cc_pro_boor} gazes angrily back at you. You're the same height, but you feel looked down on.{footnote_reveal_text}" ;
+            }
             : match "listen -;listen boor" {
                : print "You're listening enough without trying. You just wish you could have a pithy comment, appropriate to your interlocutor, to brush them off." ;
                : done ;
@@ -1029,6 +1059,13 @@ locations {
          : print "\"I have something you want,\" says the {cc_malice_chap}. \"Not that you'll use it right, I bet. Still, you can try to beg it off me.\"" ;
          : done ;
       }
+      : if (!point_chalice_map) {
+         : match "x malice;x chap" {
+            : set_integer var="tempint" "15" ;
+            : gosub "footnote_reveal" ;
+            : print "Fortunately, he's just kind of grinning nastily at you. As if to say he'd enjoy seeing you fail, but he won't actually move to another room to do so.{footnote_reveal_text}" ;
+            : done ;
+         }
       }
       : match "chalice map" {
          : if (point_chalice_map) {
@@ -1238,7 +1275,11 @@ locations {
       }
    };
 
-   hub_e_n : location "{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}" {
+   hub_e_n : location "{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}{footnote_reveal_text}" {
+      on_pre_describe {
+			: set_integer var="tempint" "14" ;
+			: gosub "footnote_reveal" ;
+      }
       on_command {
       : match "talk _" {
          : print "Talking would disturb the poetic artsy feel here." ;
@@ -1298,7 +1339,11 @@ locations {
       }
       }
    };
-   hub_e_e : location "{point_boring_way ? hub_e_boring_way : hub_e_warring_bay}" {
+   hub_e_e : location "{point_boring_way ? hub_e_boring_way : hub_e_warring_bay}{footnote_reveal_text}" {
+      on_pre_describe {
+			: set_integer var="tempint" "13" ;
+			: gosub "footnote_reveal" ;
+      }
       on_command {
       : match "talk _;listen _" {
          : print {( point_boring_way ? "Nothing left to say or hear now that peace has broken out." : "Everyone fights among each other, and the yelling creates a feedback loop. You sense you talking will just inflame everyone more. How to get them to cool down?" )}
@@ -1447,8 +1492,10 @@ locations {
       }
       on_command {
          : if (is_beside("hissing_mouse")) {
-            : match "x mouse" {
-               : print "The mouse's hissing appears more defensive than anything." ;
+            : match "x mouse;x hissing" {
+			      : set_integer var="tempint" "17" ;
+			      : gosub "footnote_reveal" ;
+               : print "The mouse's hissing appears more defensive than anything. It makes you think \"Gray mouse may grouse.\"{footnote_reveal_text}" ;
                : done ;
             }
             : match "get mouse" {
