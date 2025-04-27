@@ -108,6 +108,7 @@ booleans {
    ## the hubs
    bonus_point_test_wiles : boolean "false" ;
    bonus_point_beast_ranch : boolean "false" ;
+   bonus_point_rig_boons : boolean "false" ;
 
    ## objects beyond the hubs
    bonus_point_racing_passions : boolean "false" ; ## w e
@@ -185,7 +186,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "14" ;
+   max_bonus_score : integer "15" ;
    confidence_meter : integer "2" ; ## yellow field, malice chap, trim goon
    tempint : integer "0" ;
    tempint2 : integer "0" ;
@@ -412,8 +413,8 @@ strings {
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
-   sub_hub: dynamic_string {( "Here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub, you can go south back to the plain base or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
-   spokes_word: dynamic_string {( tempint == 6 ? "one" :
+   sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub. You can go south back to the plain base or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
+   spokes_word : dynamic_string {( tempint == 6 ? "one" :
       tempint == 5 ? "two" :
       tempint == 4 ? "three" :
       tempint == 3 ? "four" :
@@ -421,7 +422,7 @@ strings {
       tempint == 1 ? "six" :
       "(error, bug, {tempint})"
       )};
-   spokes_left: dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here. (South" + (is_at("east_branch") ? "west" : "east") + " leads back to the hub.)" : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
+   spokes_left : dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here. (South" + (is_at("east_branch") ? "west" : "east") + " leads back to the hub.)" : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
    ## west tiles seeding for dynamic strings, starting north and going clockwise
    hub_w_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
@@ -551,6 +552,8 @@ objects {
   ## scenery
   cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false";
   seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
+  west_runes : scenery "big runes" at="west_tiles" msg="Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." conspicuous="false";
+  east_runes : scenery "big runes" at="east_branch" msg="Five runes: a caret, a straight line, two geometric angle signs, a straight line." conspicuous="false";
 
    ## NPC(s)
    beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at = "plain_base" conspicuous="false";
@@ -888,6 +891,7 @@ locations {
          : set_integer var = "tempint" {(points_left_side)} ;
       }
       on_command {
+         : gosub "rune_parsing" ;
          : match "test wiles" {
             : if (!bonus_point_test_wiles) {
                : print "Instead of worrying if this all is a task you can't complete, you see it as, well, a test of wiles. This boosts you momentarily, even if it offers no concrete benefits." ;
@@ -910,6 +914,7 @@ locations {
          : set_integer var = "tempint" {(points_right_side)} ;
       }
       on_command {
+         : gosub "rune_parsing" ;
          : match "beast ranch" {
             : if (!bonus_point_beast_ranch) {
                : print "You wonder if, with your brains, you could tackle a huge beast ranch with mind over matter or something. Then common sense kicks in. But you have fun imagining." ;
@@ -2182,6 +2187,17 @@ subroutines {
          : print "That's all the books. They'll cycle now." ;
          : set_integer var = "books_read" "0" ;
          : set_true "achieve_nbbn_pre" ;
+      }
+   }
+   rune_parsing : subroutine {
+      : match "rig boons;rig boon" {
+         : if (bonus_point_rig_boons) {
+            : print "Nothing happened the first time, and persistence isn't going to work, here." ;
+            : done ;
+         }
+         : print "You figure it's worth a try, to ask the big runes to rig boons. Alas, they don't start glowing, or anything. Still, you feel observant and in tune with your surroundings for following a reasonable lead." ;
+         : set_true "bonus_point_rig_boons" ;
+         : gosub "add_bonus" ;
       }
    }
    say_half : subroutine {
