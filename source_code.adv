@@ -589,6 +589,7 @@ vocabulary {
    : noun / aliases = [ooh, task, ask]
    : noun / aliases = [voice, veering, choice, cheery, cheering]
    : noun / aliases = [hill, hills]
+   : noun / aliases = [box, boxes, crackers]
    : noun / aliases = [hunter, hunters]
    : noun / aliases = [grunter, grunters]
    : noun / aliases = [fission, fishin]
@@ -1100,13 +1101,6 @@ locations {
       : if (!point_take_crackers) {
          : match "talk trackers;talk -;listen -" {
             : print "The cake trackers are too busy grumbling among themselves and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
-         }
-      }
-      : if (point_take_crackers) {
-         : match "x crackers" {
-            : set_integer var="tempint" "9" ;
-            : gosub "footnote_reveal" ;
-            : print "All shapes and textures and colors. What a vareity! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
          }
       }
       : match "take crackers" {
@@ -2722,6 +2716,11 @@ on_tick {
       : set_true "ever_note_footnote" ;
       : print "{otn}you can view footnotes with {footnote_cue}. Each individual footnote's notification only appears once. I won't reveal how many there are, but you can figure the precise number out by guessing and getting different error messages.";
       : print "You can also type <FOOTNOTE 0<#f80>> to get a list of footnotes." ;
+   }
+   : if_examine "crackers" {
+      : set_integer var="tempint" "9" ;
+      : gosub "footnote_reveal" ;
+      : print "All shapes and textures and colors. What a variety! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
    }
 }
 
