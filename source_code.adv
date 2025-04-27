@@ -657,17 +657,9 @@ locations {
          : match "x me" {
             : if (in_tutorial && (!tutorial_1_about_done || !tutorial_2_verbs_done || !tutorial_3_additional_metaverb_done)) {
                : print {( "While " + xme + " is a useful command, and one you'll be using in this tutorial, we're a bit on rails. There are meta-commands to acquaint yourself with first." )};
+               : done ;
             }
-            : else_if (is_carried "ooh_task") {
-               : set_integer var="tempint" "1" ;
-               : gosub "footnote_reveal" ;
-               : print "As AFGNCAAPy as ever!{footnote_reveal_text}" ;
-               : if (is_at("nameless_lameness") && !xme_twice) {
-                  : print "Also, just to make sure, you stumble about a bit to make sure nothing else interesting is lying around. It is not." ;
-                  : set_true "xme_twice" ;
-               }
-            }
-            : else {
+            : else_if (!is_carried "ooh_task") {
                : pocket "ooh_task" ;
                : print "You search yourself, wondering if you forgot something, and hoping something will turn up. You stumble around a bit as you do so, and you kick something. It's a rolled-up parchment. You unroll it. It has <Ooh, Task to Ask<#88f>> in big letters." ;
                : print "Well, that's a start! You're not sure how or why it got here, but all the same, you're glad you might have some direction, now." ;
@@ -2901,6 +2893,15 @@ on_command {
             : set_true "bonus_point_theory_bore" ;
             : gosub "add_bonus" ;
          }
+      }
+   }
+   : match "x me" {
+      : set_integer var="tempint" "1" ;
+      : gosub "footnote_reveal" ;
+      : print "As AFGNCAAPy as ever!{footnote_reveal_text}" ;
+      : if (is_at("nameless_lameness") && !xme_twice) {
+         : print "Also, just to make sure, you stumble about a bit to make sure nothing else interesting is lying around. It is not." ;
+         : set_true "xme_twice" ;
       }
    }
    : match "turkey quest" {
