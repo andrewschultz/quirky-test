@@ -507,7 +507,8 @@ strings {
    hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reinforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## details for hub items
-   confidence_level : dynamic_string {( confidence_meter == 2 ? "peak" : "some" )} ;
+   confidence_level : dynamic_string {( confidence_meter == 2 ? "serious" : "a bit of" )} ;
+   confidence_obnoxious : dynamic_string {( confidence_meter == 1 ? "someone obnoxious" : "obnoxious people" )} ;
    map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
       )} ;
 
@@ -622,7 +623,7 @@ objects {
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "fed, sated" msg="You had quite a meal, dude." ; ## from grunters' hill
-   confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting obnoxious people." ; ## from yellow field / trim goon
+   confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
    low_song : object "<a low song<#888>>" msg="They're notes to a song." ; ## fly score
    fast_vision : object "<a fast vision<#888>>" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
    peace_surging : object "<peace surging<#888>>" msg="You feel peace surging within you." ; ## warring bay
