@@ -34,6 +34,7 @@ booleans {
    poke_books_yet : boolean "false" ;
    noticed_beer : boolean "false" ;
    inventory_incorporeal : boolean "false" ;
+   thor_warn_close : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -2284,9 +2285,18 @@ subroutines {
       : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
    }
    note_diagonal_direction_from_hub : subroutine {
-      : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. There're just hubs with dead ends northeast and northwest, so hopefully you can visualize the map in your head.\"" ;
-      : set_true "noted_diagonal_direction" ;
-      : press_any_key ;
+      : if (!has_visited("east_branch") && !has_visited("west_tiles"))
+      {
+         : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. There're just hubs with dead ends northeast and northwest, so hopefully you can visualize the map in your head.\"" ;
+         : set_true "noted_diagonal_direction" ;
+         : press_any_key ;
+         : return ;
+      }
+      : if (!thor_warn_close && (is_carried("travel_grail") || point_gravel_trail))
+      {
+         : print {( "Thor coughs. \"That grail is all you need, really. " + ( bonus_point_test_wiles || bonus_point_beast_ranch || bonus_point_rig_boons ? "There aren't any bonus points left that way, either, in case you were curious." : "There's still stuff to do, but it's not critical to your quest." ) + "\"" )} ;
+         : set_true "thor_warn_close" ;
+      }
    }
    note_think_command : subroutine {
       : if (!think_noted) {
