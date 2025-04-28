@@ -1001,6 +1001,16 @@ locations {
 
    stealing_hill : location "{loc_stealing_hill}{footnote_reveal_text}" {
       on_command {
+      : mask {
+         : if (is_carried("travel_grail")) {
+            : match "w _;e _;wt _;eb _;pb _" {
+               : print "As you slip away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, since hills don't generally move around a lot, but hey, the principle's the important thing." ;
+               : set_true "hill_aware_you_stole" ;
+               : gosub "brief_hill_mad" ;
+            }
+         }
+      }
+
       : match "x hill;x stealing" {
          : print {( point_gravel_trail ? "Nope. It hasn't discovered your theft yet. Better leave before it does." : "It seems to be sleeping. Maybe you could pinch something from it, if you knew what you wanted and how to get it." )} ;
       }
@@ -1854,6 +1864,11 @@ subroutines {
       }
       : increment "bonus_score";
       }
+   brief_hill_mad : subroutine {
+      : update_graphic "stealing_hill_finds" ;
+      : press_any_key ;
+      : update_graphic ;
+   }
    thor_on_seth : subroutine {
       : if (!thor_explained_seth) {
          : print "Beery Thor casually mentions it'd be nice if it disappeared, but not critical. The ring's not there, but if it was, he would've taken care of things, already." ;
@@ -2870,11 +2885,6 @@ on_tick {
          }
       }
    }
-   : if (!hill_aware_you_stole && is_carried("travel_grail") && !is_at("stealing_hill")) {
-      : print "As you walk away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, but the principle's the important thing." ;
-      : set_true "hill_aware_you_stole" ;
-      : update_graphic "stealing_hill_finds" ;
-   }
    : if ((latest_warp_number != -3) && (!achieve_cddc_pre)) {
       : gosub "evaluate_warp" ;
    }
@@ -2991,7 +3001,6 @@ on_command {
                : print "(However, just trying to find this sort of loophole, making it back to a room the developer shut off, shows you're an enterprising adventurer and might be a very good tester for other games. It's an important part of the whole process, as testers often see programmers' blind spots. And it can maybe help start you on the way to making your own game! Okay, ignore this if you already have. But either way, a small silly achievement awaits at game's end for trying this.)" ;
             }
             : set_true "achieve_cjjc_pre" ;
-            : update_graphic "stealing_hill_finds";
             : done ;
          }
          : if (is_at "stealing_hill") {
