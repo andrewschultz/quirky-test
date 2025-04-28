@@ -619,6 +619,7 @@ vocabulary {
    : noun / aliases = [seth, denton, dentons]
    : noun / aliases = [hill, hills]
    : noun / aliases = [box, boxes, crackers]
+   : noun / aliases = [cake, trackers]
    : noun / aliases = [hunter, hunters]
    : noun / aliases = [grunter, grunters]
    : noun / aliases = [fission, fishin]
@@ -746,6 +747,10 @@ locations {
    first_base : location "Now you're getting somewhere! You think.\n{boor_or_not}" {
       on_command {
          : if (is_carried "prayer_lights") {
+            : match "x book;x lights;x prayer" {
+               : print "It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.";
+               : done ;
+            }
             : match "rare plights" {
                : if (!bonus_rare_plights) {
                   : print "You read about people's complaints. Some seem common and some seem exotic indeed. People hard done by mentally, physically, and financially. Their problems seem more interesting and exciting than yours. You know it's important to care about this sort of thing, and yet, there must be something else in {cc_prayer_lights}, something more uplifting, perhaps a justification you deserve more, even if you have a fun game like this to play." ;
@@ -811,7 +816,7 @@ locations {
          : if (know_lush_shout) {
             : match "shush lout" {
                : if (!bonus_point_shush_lout) {
-                  : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Nevertheless, they do seem to quiet down a bit. Though to get rid of them, perhaps you need to take a different sort of dig. A more direct one." ;
+                  : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nPerhaps you need to take a different sort of dig to get rid of them. More direct, more personal." ;
                   : set_true "bonus_point_shush_lout" ;
                } : else {
                   : print "You're not going to quiet the {cc_pro_boor} any further. How to get rid of them?" ;
@@ -1103,7 +1108,7 @@ locations {
             : done ;
          }
       }
-      : match "listen _;talk -;talk fort" {
+      : match "listen _;talk -;talk fort;talk shell" {
          : print "As ammunition whistles through the air, a truce parley doesn't seem likely. At least your assailants are inaccurate. But they're not giving up, as is." ;
          : done ;
       }
@@ -1130,8 +1135,9 @@ locations {
    hub_w_s : location "{point_take_crackers ? hub_w_take_crackers : hub_w_cake_trackers}" {
       on_command {
       : if (!point_take_crackers) {
-         : match "talk trackers;talk -;listen -" {
+         : match "talk trackers;listen trackers;talk -;listen -" {
             : print "The cake trackers are too busy grumbling among themselves and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
+            : done ;
          }
       }
       : match "take crackers" {
@@ -1161,10 +1167,10 @@ locations {
    hub_w_sw : location "{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
       on_command {
       : match "talk _;listen _" {
-         : print {( point_shift_goals ? "The quiet is more peaceful now you've put the prospect of gifts aside." : "While the gifts seem to be calling to you, it'd feel weird to talk back" )} ;
+         : print {( point_shift_goals ? "The quiet is more peaceful now you've put the prospect of gifts aside. You don't want to disturb it." : "While the gifts seem to be calling to you, it'd feel weird to talk back." )} ;
          : done ;
       }
-      : match "shift goals" {
+      : match "shift goals;shifting goals" {
          : if (point_shift_goals) {
             : print "But you don't want to shift your goals back." ;
             }
@@ -1196,12 +1202,14 @@ locations {
    hub_w_w : location "{point_hunters_grill ? hub_w_hunters_grill : hub_w_grunters_hill}" {
       on_command {
       : if (!point_hunters_grill) {
-         : match "talk -;talk grunters; listen -" {
-            : print "Your grunting skills are not up to scratch. Perhaps there are other ways to help them." ;
+         : match "talk -;talk grunters;talk hills;listen -" {
+            : print "Your grunting skills are not up to scratch. You try again with actual words. Still, nothing. Perhaps there are other ways to bring out more than grunting from here." ;
+            : done ;
          }
       } : else {
          : match "talk -;talk hunters; listen -" {
             : print "With the hunters long gone and the meal finished, there's not much chance for meaningful interaction." ;
+            : done ;
          }
       }
       : match "hunters grill" {
@@ -1217,7 +1225,7 @@ locations {
          }
          : else
          {
-            : print "You tell people to stop whining and start making a fire, or something. You're surprised they agree with you, especially when you show them your crackers and pacing rations." ;
+            : print "You tell people to stop whining and start making a fire, or something. Your advice is so level-headed, it levels the hills into more level terrain!\nWhat's more, the grunters agree with you, especially when you show them your crackers and pacing rations." ;
             : set_true "point_hunters_grill" ;
             : set_false "think_hunters_grill" ;
             : destroy "pacing_rations" ;
@@ -1241,6 +1249,12 @@ locations {
    };
    hub_w_nw : location "{point_fellow_yield ? hub_w_fellow_yield : hub_w_yellow_field}" {
       on_command {
+      : if (!point_fellow_yield) {
+         : match "x fellow" {
+            : print "He doesn't seem evil, but boy howdy is he complaining a lot." ;
+            : done ;
+         }
+      }
       : match "talk _;listen _" {
          : gosub "hub_jerk" ;
          : print "The fellow just won't stop talking. Something about people not having the right to be happier, or less unhappy, than he is." ;
@@ -1372,7 +1386,7 @@ locations {
    hub_e_se : location "{point_dirt_home ? hub_e_dirt_home : hub_e_hurt_dome}" {
       on_command {
       : match "talk _;listen _" {
-         : print {( point_dirt_home ? "Everything is cozy and quiet and domesticated with no point disrupting things." : "The hurt dome doesn't have anything mean to say to you, but you're sure it's THINKING that. How to neutralize its simmering rage?" )} ;
+         : print {( point_dirt_home ? "Everything is cozy and quiet and domesticated with no point disrupting things. I mean, it's a home, but it's not your homey." : "The hurt dome doesn't have anything mean to say to you, but you're sure it's THINKING that. How to neutralize its simmering rage?" )} ;
          : done ;
       }
       : match "dirt home" {
