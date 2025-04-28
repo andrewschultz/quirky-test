@@ -1601,9 +1601,11 @@ locations {
    };
    my_house : location "{my_house_description}" {
       on_command {
-         : match "talk _;listen _" {
-            : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
-            : done ;
+         : if (!point_see_glimmering || bonus_point_cheery_times) {
+            : match "talk _;listen _" {
+               : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
+               : done ;
+            }
          }
          : match "x bookshelf;x book;x shelf" {
             : gosub "read_book" ;
@@ -3110,6 +3112,10 @@ on_command {
          : create "teary_chimes" target="gravel_trail" ;
          : set_true "summoned_teary_chimes" ;
          : done ;
+      }
+      : if (is_exists("teary_chimes")) {
+         : print "The teary chimes still ring out now and then." ;
+         : return ;
       }
       : print "You don't hear anything right now." ;
       : if (!listen_no_subject_note) {
