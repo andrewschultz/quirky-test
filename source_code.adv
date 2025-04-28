@@ -981,6 +981,9 @@ locations {
 
    stealing_hill : location "{loc_stealing_hill}{footnote_reveal_text}" {
       on_command {
+      : match "x hill;x stealing" {
+         : print {( point_gravel_trail ? "Nope. It hasn't discovered your theft yet. Better leave before it does." : "It seems to be sleeping. Maybe you could pinch something from it, if you knew what you wanted and how to get it." )} ;
+      }
       : match "d _" {
          : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific" ;
          : done ;
@@ -2224,7 +2227,7 @@ subroutines {
       : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
    }
    note_diagonal_direction_from_hub : subroutine {
-      : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical. And there are just hubs to the northwest and northeast.\"" ;
+      : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. There're just hubs with dead ends northeast and northwest, so hopefully you can visualize the map in your head.\"" ;
       : set_true "noted_diagonal_direction" ;
       : press_any_key ;
    }
@@ -2801,6 +2804,9 @@ on_tick {
       : gosub "footnote_reveal" ;
       : print "All shapes and textures and colors. What a variety! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
    }
+   : match "ask _" {
+      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}" : has_visited("plain_base") ? "Thor, whom you should TALK to first" : "Someone you'll run into shortly." ) )} ;
+   }
 }
 
 ## on_describe is for moving around
@@ -2817,13 +2823,13 @@ on_pre_command {
             : print "That's the way to go, but since this is a tutorial, there's another hoop to walk through, first." ;
             : done ;
          }
-      : gosub "add_point" ;
       : set_integer var="tempint" "4" ;
       : gosub "footnote_reveal" ;
       : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet someone who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
       : set_true "point_go_west" ;
       : set_true "tutorial_9_go_west" ;
       : increment "tutorial_score" ;
+      : gosub "add_point" ;
       : press_any_key ;
       : goto "burst_face" ;
       : redescribe ;
