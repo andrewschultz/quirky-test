@@ -120,6 +120,7 @@ booleans {
    bonus_point_vast_fission : boolean "false" ; ## e ne
    bonus_point_cease_purging : boolean "false" ; ## e e
    bonus_point_pile_tricks : boolean "false" ; # e se
+   bonus_point_tile_pricks : boolean "false" ; # e se
    bonus_point_sane_role : boolean "false" ; ## e sw
 
    ## endgame bonus point
@@ -192,7 +193,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "16" ;
+   max_bonus_score : integer "17" ;
    confidence_meter : integer "0" ; ## yellow field, trim goon => malice chap
    tempint : integer "0" ;
    tempint2 : integer "0" ;
@@ -718,6 +719,7 @@ locations {
                   : set_true "tutorial_4_x_me_done";
                   : increment "tutorial_score" ;
                }
+               : done ;
             }
          }
       }
@@ -1087,8 +1089,8 @@ locations {
          : done ;
          }
       : if (!point_master_plan) {
-         : set_boolean var = "already_got_command" {( think_master_plan && !point_master_plan )} ;
          : match "master _;_ plan" {
+            : set_boolean var = "already_got_command" {( think_master_plan && !point_master_plan )} ;
             : gosub "say_half" ;
             }
          }
@@ -1133,7 +1135,6 @@ locations {
          }
       : if (!point_chalice_map) {
          : match "chalice _;_ map" {
-            : print "{think_chalice_map} {point_chalice_map}";
             : set_boolean var = "already_got_command" {( think_chalice_map && !point_chalice_map )} ;
             : gosub "say_half" ;
             }
@@ -1539,8 +1540,8 @@ locations {
          : done ;
          }
       : if (!point_grim_tune) {
-         : set_boolean var = "already_got_command" {( think_grim_tune && !point_grim_tune )} ;
          : match "grim _;_ tune" {
+            : set_boolean var = "already_got_command" {( think_grim_tune && !point_grim_tune )} ;
             : gosub "say_half" ;
             }
          }
@@ -2180,6 +2181,15 @@ subroutines {
          }
       }
       : if (is_carried "trial_pics") {
+         : match "tile pricks" {
+            : if (!bonus_point_tile_pricks) {
+               : print "A brief worrisome thought envelops you. It was a hurt dome, and you only changed the outside. Or you only saw you changed the outside. But you look at the pictures of what's indoors. No, there are no punji pits you can see. You breathe a sigh of relief.";
+               : set_true "bonus_point_tile_pricks" ;
+               : gosub "add_bonus" ;
+            } : else {
+               : print "You already inspected the trial pics for something wrong." ;
+            }
+         }
          : match "pile tricks" {
             : if (bonus_point_sane_role) {
                : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
@@ -2273,7 +2283,6 @@ subroutines {
       : if (!think_noted) {
          : set_true "think_noted" ;
          : print "{otn}you've found the right thing to say or do, but you weren't prepared yet. {thk} will record this and other point-scoring commands you might discover, for when your character is fully prepared." ;
-         : return ;
       }
    }
    read_book : subroutine {
@@ -3060,7 +3069,6 @@ on_command {
    }
    : if (in_debug) {
       : gosub "debug_commands" ;
-
    }
    : match "exits _" {
       : if (is_at "nameless_lameness") {
