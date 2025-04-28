@@ -384,7 +384,7 @@ strings {
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
       (tutorial_6_x_ask_done && is_at "nameless_lameness") ? "You don't want to wandering off without any direction, but maybe that voice could offer a clue." :
       (is_at "nameless_lameness") ? "In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first." :
-      (is_at "burst_face") ? "It's still a bit blurry here. You sense there's another puzzle to solve before moving on." :
+      (is_at "burst_face") ? "Visibility's still quite poor here. You sense there's another puzzle to solve before moving on." :
       (is_beside "pro_boor") ? "You'll have to deal with the {cc_pro_boor} before going anywhere." :
       (is_at "first_base") ? "{first_base_cantgo}" :
       (is_at "plain_base") ? "{plain_base_cantgo}" :
@@ -392,7 +392,7 @@ strings {
       (is_at "stealing_hill") ? "You can only leave east or west." :
       (is_at "gravel_trail") ? "The passage here is north-south." :
       (is_at "my_house") ? "You can only really go south, but there's no need, since you can just wrap things up here." :
-      "{back_to_hub}" )} ;
+      "This is a dead end, at least for the game's purposes, so you can really only backtrack to {back_to_hub}, with OUT or the proper compass direction." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
@@ -460,7 +460,7 @@ strings {
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
-   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to ENTER, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
+   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
    sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub. You can go south back to the plain base or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
@@ -800,9 +800,9 @@ locations {
             : match "player rights" {
                : if (!point_player_rights) {
                   : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: a game should be a game, and you should be grateful for any game at all, right? Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}!\nYou walk towards it." ;
+                  : gosub "add_point" ;
                   : press_any_key ;
                   : set_true "point_player_rights" ;
-                  : gosub "add_point" ;
                   : goto "plain_base" ;
                   : destroy "prayer_lights" ;
                   : redescribe ;
@@ -817,7 +817,7 @@ locations {
                : print "The {cc_pro_boor} gazes angrily back at you. You're the same height, but you feel looked down on.{footnote_reveal_text}" ;
             }
             : match "listen -;listen boor" {
-               : print {( "You're listening enough without trying. You just wish you could have a pithy comment, appropriate to your interlocutor, to brush them off." + (bonus_point_shush_lout ? "" : " They give off a lush shout every now and then, too, which would be nice to curb, but you feel you probably need to strike at who they are to get rid of them.") )} ;
+               : print {( "You're listening enough without trying. You just wish you could have a pithy comment, appropriate to your interlocutor, to brush them off." + (bonus_point_shush_lout ? "" : " They give off a lush shout every now and then, too, which would be nice to curb, but you feel you probably need to riff on who they are to get rid of them.") )} ;
                : set_true "know_lush_shout" ;
                : done ;
             }
@@ -863,7 +863,7 @@ locations {
          }
       }
    };
-   plain_base : location "You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the northeast and northwest{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
+   plain_base : location "PLAIN BASE\nYou are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the northeast and northwest{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : match "_ beer" {
             : if (!noticed_beer) {
@@ -1361,7 +1361,7 @@ locations {
             }
          : else
          {
-            : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to." ;
+            : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to. You now have a low song running through your head. Where to release it?" ;
             : set_true "point_fly_score" ;
             : gosub "add_point_tq" ;
             : pocket "low_song" ;
@@ -1392,7 +1392,7 @@ locations {
             }
          : else
          {
-            : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks will stay with you." ;
+            : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks coalesce into a fast vision -- it came to you so quickly, and it's going to stay!" ;
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
             : gosub "add_point_tq" ;
@@ -1448,7 +1448,7 @@ locations {
             }
          : else
          {
-            : print "Poof! The hurt dome transforms into a dirt home." ;
+            : print "Poof! The hurt dome transforms into a dirt home. It looks like it needs a resident, but you're too busy, now. However, you take a set of trial pics left at the doorstep, which show the home in the best possible light." ;
             : pocket "trial_pics" ;
             : set_true "point_dirt_home" ;
             : gosub "add_point_tq" ;
@@ -1473,7 +1473,7 @@ locations {
             }
          : else
          {
-            : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic." ;
+            : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic. You feel something rise within you ... a soul full of rain or, more succinctly, a rain soul." ;
             : set_true "point_pouring_rain" ;
             : pocket "rain_soul" ;
             : gosub "add_point_tq" ;
