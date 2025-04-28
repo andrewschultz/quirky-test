@@ -33,6 +33,7 @@ booleans {
    have_asked_four : boolean "false" ;
    poke_books_yet : boolean "false" ;
    noticed_beer : boolean "false" ;
+   inventory_incorporeal : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -609,19 +610,19 @@ objects {
 
    ## hub side items that get used
    ## start in the west, going clockwise
-   chalice_map : object "chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
-   master_plan : object "master plan" msg="It's written in clear language.\n{map_and_plan}" ; ## from plaster man
+   chalice_map : object "a chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
+   master_plan : object "a master plan" msg="It's written in clear language.\n{map_and_plan}" ; ## from plaster man
    pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
-   focus : object "focus" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
+   focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "fed, sated" msg="You had quite a meal, dude." ; ## from grunters' hill
-   confidence : object "Confidence ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting obnoxious people." ; ## from yellow field / trim goon
-   low_song : object "low song" msg="They're notes to a song." ; ## fly score
-   fast_vision : object "a fast vision" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
-   peace_surging : object "peace surging" msg="You feel peace surging within you." ; ## warring bay
+   confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting obnoxious people." ; ## from yellow field / trim goon
+   low_song : object "<a low song<#888>>" msg="They're notes to a song." ; ## fly score
+   fast_vision : object "<a fast vision<#888>>" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
+   peace_surging : object "<peace surging<#888>>" msg="You feel peace surging within you." ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
-   rain_soul : object "rain soul" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out." ;
-   no_greed : object "no greed" msg="You feel as though you have no greed." ;
+   rain_soul : object "<a rain soul<#888>>" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out." ;
+   no_greed : object "<no greed<#888>>" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
    travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
@@ -2798,6 +2799,8 @@ themes {
    ask_quit                                       = Do you wish to quit {qt}?
    invalid_choice                                 = {YN_or_12}
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
+   inventory_list_empty = Nothing (yet)
+   inventory_list_header = Stuff you've acquired:\s
    you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = Nothing comes from that. {verbs} gives a list of basic standard verbs{unknown_begin_note}.
    }
@@ -2827,6 +2830,14 @@ on_startup {
 on_tick {
    : if (in_tutorial) {
       : gosub "tutorial_progress" ;
+   }
+   : if (!inventory_incorporeal) {
+      : match "i _" {
+         : if (is_carried("low_song") || is_carried("confidence") || is_carried("focus") || is_carried("no_greed") || is_carried("fast_vision") || is_carried("rain_soul") || is_carried("peace_surging")) {
+            : print "{otn}items listed in <GREY<#888>> are abstract moods or feelings that will help you overcome obstacles when the time comes. You can manipulate some of them, if you're clever enough, but it's not necessary to win {qt}." ;
+            : set_true "inventory_incorporeal" ;
+         }
+      }
    }
    : if (!hill_aware_you_stole && is_carried("travel_grail") && !is_at("stealing_hill")) {
       : print "As you walk away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, but the principle's the important thing." ;
