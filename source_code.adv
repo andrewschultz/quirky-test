@@ -190,7 +190,7 @@ integers {
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
    max_bonus_score : integer "15" ;
-   confidence_meter : integer "2" ; ## yellow field, malice chap, trim goon
+   confidence_meter : integer "0" ; ## yellow field, trim goon => malice chap
    tempint : integer "0" ;
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
@@ -611,7 +611,7 @@ objects {
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "focus" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "fed, sated" msg="You had quite a meal, dude." ; ## from grunters' hill
-   confidence : object "Confidence" msg="You have {confidence_level} confidence from outwitting some obnoxious people." ; ## from yellow field / trim goon
+   confidence : object "Confidence ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting obnoxious people." ; ## from yellow field / trim goon
    low_song : object "low song" msg="They're notes to a song." ; ## fly score
    fast_vision : object "a fast vision" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
    peace_surging : object "peace surging" msg="You feel peace surging within you." ; ## warring bay
