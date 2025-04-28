@@ -868,10 +868,10 @@ locations {
    plain_base : location "PLAIN BASE\nYou are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the northeast and northwest{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : match "_ beer" {
-            : if (!noticed_beer) {
+            : if (noticed_beer) {
                : print "Thor already explained about the beer." ;
             } : else {
-               : print "Ah yes. The beer. It's mainly a prop. Mostly colored water. It makes me seem much more chatty and vibrant than I am. Plus I don't want to set a bad example for mortals who get hangovers, or worse." ;
+               : print "\"Ah yes. The beer. It's mainly a prop. Mostly colored water. It makes me seem much more chatty and vibrant than I am. Plus I don't want to set a bad example for mortals who get hangovers, or worse.\"" ;
                : set_true "noticed_beer" ;
                : set_true "achieve_hbbh_pre" ;
             }
@@ -2228,7 +2228,7 @@ subroutines {
             }
          }
          : match "pile tricks" {
-            : if (bonus_point_sane_role) {
+            : if (bonus_point_pile_tricks) {
                : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
             } : else {
                : print "You've found a lot of tricks so far. Why not a few more? You track what you've done and what you hope to do." ;
