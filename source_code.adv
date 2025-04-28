@@ -639,12 +639,13 @@ vocabulary {
    : noun / aliases = [booth, trending]
    : noun / aliases = [surge, surging]
    : noun / aliases = [purge, purging]
-   : noun / aliases = [no, n]
+   : noun / aliases = [glimmer, glimmers, glimmering]
+   : noun / aliases = [no, n, off]
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
    : verb / aliases = [ask, rule]
    : verb / aliases = [f, foot, footnote, footnotes]
-   : verb / aliases = [glimmer, glimmers, glimmering]
+   : verb / aliases = [enter, in]
    : verb / aliases = [ch, colorhint]
    : verb / aliases = [exit, out]
    : verb / aliases = [listen, hear]
@@ -656,6 +657,8 @@ vocabulary {
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [verb, verbs]
    : verb / aliases = [x, read]
+
+   : verb / aliases = [gt, goto, gonear] # for testing, since Inform ingrained "GONEAR X" in my head, and I put GT in my games a lot
 }
 
 # end vocabulary
