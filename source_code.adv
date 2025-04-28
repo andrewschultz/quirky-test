@@ -133,6 +133,7 @@ booleans {
    think_master_plan : boolean "false" ;
    think_shift_goals : boolean "false" ;
    think_hi_mouse : boolean "false" ; ## put endgame at end
+   already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
 
    ## achievement booleans
    achieve_tyyt : boolean "false" scope="survivor" ;
@@ -582,6 +583,8 @@ strings {
    achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
 
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
+
+   already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {thk}." : "" )} ;
 }
 
 ## Objects with vocabulary
@@ -1026,6 +1029,7 @@ locations {
          }
       : if (!point_healing_still) {
          : match "healing _;_ still" {
+            : set_boolean var = "already_got_command" {( think_healing_still && !point_healing_still )} ;
             : gosub "say_half" ;
          }
       }
@@ -1079,6 +1083,7 @@ locations {
          : done ;
          }
       : if (!point_master_plan) {
+         : set_boolean var = "already_got_command" {( think_master_plan && !point_master_plan )} ;
          : match "master _;_ plan" {
             : gosub "say_half" ;
             }
@@ -1124,6 +1129,8 @@ locations {
          }
       : if (!point_chalice_map) {
          : match "chalice _;_ map" {
+            : print "{think_chalice_map} {point_chalice_map}";
+            : set_boolean var = "already_got_command" {( think_chalice_map && !point_chalice_map )} ;
             : gosub "say_half" ;
             }
          }
@@ -1224,6 +1231,7 @@ locations {
          }
       : if (!point_shift_goals) {
          : match "shift _;_ goals" {
+            : set_boolean var = "already_got_command" {( think_shift_goals && !point_shift_goals )} ;
             : gosub "say_half" ;
             }
          }
@@ -1267,6 +1275,7 @@ locations {
          }
       : if (!point_hunters_grill) {
          : match "hunters _;_ grill" {
+            : set_boolean var = "already_got_command" {( think_hunters_grill && !point_hunters_grill )} ;
             : gosub "say_half" ;
          }
       }
@@ -1315,6 +1324,7 @@ locations {
          }
       : if (!point_fellow_yield) {
          : match "fellow _;_ yield" {
+            : set_boolean var = "already_got_command" {( think_fellow_yield && !point_fellow_yield )} ;
             : gosub "say_half" ;
             }
          }
@@ -1525,6 +1535,7 @@ locations {
          : done ;
          }
       : if (!point_grim_tune) {
+         : set_boolean var = "already_got_command" {( think_grim_tune && !point_grim_tune )} ;
          : match "grim _;_ tune" {
             : gosub "say_half" ;
             }
@@ -1624,6 +1635,7 @@ locations {
             : done ;
          }
          : match "hi _;high _;_ mouse" {
+            : set_boolean var = "already_got_command" {( think_hi_mouse && !point_hi_mouse )} ;
             : gosub "say_half" ;
          }
       }
@@ -2307,10 +2319,11 @@ subroutines {
    }
    say_half : subroutine {
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
-      : print "One of those words felt right, but the other didn't. You must be halfway there." ;
-      : print "Again, you feel like you got halfway there." ;
+      : print "One of those words felt right, but the other didn't. You must be halfway there.{already_got_check}" ;
+      : print "Again, you feel like you got halfway there.{already_got_check}" ;
       on_exhausted {
-         : print "One word right, one word wrong." ;
+         : print "One word right, one word wrong.{already_got_check}" ;
+         : set_false "already_got_command" ;
       }
    }
    }
