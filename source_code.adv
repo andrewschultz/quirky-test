@@ -672,6 +672,7 @@ vocabulary {
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [verb, verbs]
    : verb / aliases = [x, read]
+   : verb / aliases = [eat, taste]
 
    : verb / aliases = [gt, goto, gonear] # for testing, since Inform ingrained "GONEAR X" in my head, and I put GT in my games a lot
 }
@@ -2941,6 +2942,18 @@ on_pre_command {
 ## main on_command
 
 on_command {
+   : match "eat _" {
+      : if (point_hunters_grill) {
+         : print "You already ate what you needed to." ;
+         : done ;
+      }
+      : if (is_carried("crackers") || is_carried("pacing_rations")) {
+         : print "Too much for you. You need to share." ;
+         : done ;
+      }
+      : print "You never explicitly need to EAT anything in {qt}. But, minor spoiler, doing or describing the right thing will allow for a nice communal feast." ;
+      : done ;
+   }
    : match "credits _" {
       : if (!credits_to_thanks_note) {
          : mask {
