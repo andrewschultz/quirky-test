@@ -183,7 +183,12 @@ booleans {
    examine_warn: boolean "false" ;
    inventory_warn : boolean "false" ;
    long_word_warn : boolean "false" ;
+
+   can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ;
+
 }
+
+# end booleans
 
 integers {
    tutorial_score : integer "0" ;
@@ -1782,8 +1787,8 @@ barriers {
    }
    block_gravel_trail: block {
       location = gravel_trail
-      block_when_not = point_gravel_trail
-      message = Thor looks over. "Perhaps there'll be something there, but you'll need a magic object to see the way through."
+      block_when_not = can_enter_trail
+      message = Thor looks over. "Perhaps there'll be something there, but you'll need to use a magic object right to see the way through."
    }
    block_my_house: block {
       location = my_house
