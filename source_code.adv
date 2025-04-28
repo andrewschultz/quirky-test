@@ -1641,9 +1641,21 @@ locations {
          }
          : match "hi mouse" {
             : if (point_see_glimmering) {
-               : print "Yes! The mouse uncovers the {rttr}. You're glad to give it a cut of the useless but shiny trinkets. You win. (Fill in Thor's congratulations later and create a final image.)";
+               : print "You call on the mouse, who seemed friendly and grateful you made it a home. It appears. You point to the glimmering." ;
+               : press_any_key ;
+               : print "The mouse uncovers a very small chest, which you, with your experienced adventuring prowess, know must be a tiny shrunk shiny trunk. But it is locked!" ;
+               : update_graphic "tiny_shrunk_shiny_trunk" ;
+               : press_any_key ;
+               : print "There's still glimmering around, though, and the mouse dumps all sorts of things at your feet. Finally ... a key! And not just any key. You can tell it must be a costly lost key. You motion that the mouse can keep everything else. It scampers away gratefully." ;
+               : update_graphic "costly_lost_key" ;
+               : press_any_key ;
+               : print "The moment of truth! CLICK. The key unlocks the trunk, leaving, of course ... the {rttr}!" ;
+               : update_graphic "the_ring" ;
+               : press_any_key ;
+               : clear_screen ;
+               : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
                : if (!footnotes_available) {
-                  : print "Thor congratulates you, noting that footnotes will be available on replay, if you choose to have them." ;
+                  : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also accomplishments, which will be slightly harder." ;
                }
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
@@ -3295,6 +3307,10 @@ assets {
       my_house_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgAD/gAAAAICAAIBAAACAgIDAwMD/AAAA/wD//wAAAP//AP8A///////lVppUAAAB6ElEQVRYw+3WQU6EMBQG4BeTJnXVwUSjK0Z3Ll14DzYcwI1rj1BWkswR9BLuSHSjJ2JOUKFQ3itThoFpGRc+yJCZBPjmp68U7pzF87pk7qPaq5y57wTOX9d54R0gpwB4URQEEGGN3Q3a4juAgQjAHcBmQ07NCEAClgsgVFMOgDwcwDdF/omnRhSgL69vUzoBUG1CuADuCNwAO4GrZ1NP4wChSuUBYI2BSQAQZUU4GmB1weXXY7s9uADWYBDKEyA/GAAsgZ0ExHIASKuCXheUywEkqwEJP6ANwwB0ACQC3YQg/AKi4YmoCYBEUHVgvfsF7GnDNgCMQE9EsByAGUBiJeB5DNz8vN83+3cPIBHAyRgQywHSrnjALhgGAAJg9HUcAsAQkIwtSEIAJAXwcIDB9QAZAt0gCAGw2pBORNUXMxFZTz0kwL50mhpA0ARWr/yl2bM/BoA0MQCWwgkArP7nTTHah5m1jD8BIFamrk8CyLr7b/3PAz0Avo4JAAOIArdhNw3oicARwDYwAN89dGmOccWeAKu3i/OPdf1x2wcw17soVlsdQKz+AUcDmsdLAWAXHYRdrXrH+YB2fUUA2GFNIYD8GPeOfC5Amm7GUnMA5VyAUKOFue8BmAimAqTyVeU8gPAGaCNwAn4BMMLXgqxDTGkAAAAASUVORK5CYII=";
       my_house_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgAD/gAAAAICAAIBAAACAgIDAwMD/AAAA/wD//wAAAP//AP8A///////lVppUAAABzklEQVRYw+3WMVKEMBQG4DfOZCZWWZzR0YrVztLCe9BwABtrjxAquYNewt5GTwQniJAQ3gsbFhYTsPDBLLM7A3z7kxcCd97iZVuyDFHdVc78dwLvr/syPECeAuAuIMGauht0xQ8AIxHAkQDsqQUBSMDyAYQy5QHI+QDunppQgL68vk3lBUCzCeED+COYA7h6tvU0DRCqUpsCQFQNISzg8vOx2x58AGcwCLU6AFgGBwmI9QCQNwWDLqjWA0jWAjI+ow3jAHQAJALdhBC4C5LxicgEQCJoOrDdV2vDLgCMQE9EsB6AWUDmJBB4DNx8v9+b/WsAkAjgZAyI9QB5XzxiF4wDAAEw+TqOAWAIyKYWJDEAkgJ4PMDoeoAMgX4QxAA4bUgnouaLnYicpx4T4F46zy0gagK7V/5i9uKPASDPLIDlsAGAtf/cFKN9WDjL+A0AqbJ1vQmg6O9fh58HBgB8HRMABpBEbsN+GtATgSeAOjIA3z10aY5xpYEAu7eL8499+3E7BDDfuyhVtQ4gVf+AXwPM46UAcIsOwr52g+NyQLe+IgDsMFMIID+mgyNfCpC2m7HUEkC1FCDUZGHuRwA2glMBUoWqahlABAN0EXgBPxNU1ZDbzkZoAAAAAElFTkSuQmCC";
 
+      # final command stuff
+      tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
+      costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
+      the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABBUlEQVRYw+XXUQqDMAwG4EAOkKsE+ugx9+Q5fPRSvUHnAo4KRmgX/w7MZC+C/WjTv0qltTJdlDQ/jtrHT07pdqdd0Axwx092h+4HuMXGkNuXwMbhsyVgCKBkG+y0CezvdoB1gbpdAAB8BOr2IQJQ2ANsvQEBZPY2ozIhACUwCzsBfhoVyBKoG8cKAfAOWOxXNyEEkL+bYErLdIwiCCByF/YAcpVD8/w6ZjECwBVgXZfDBCAAuToKJrvqwwgAYBfAEMDFK2HCANwQVDxAeTCA6OmA4Uvw+B7Q/WPknwCCBOzp98tREJ2EMhjQPgHBABkM6JiAWIAMBvRMQChAMAD/jahAANH1BsdzMAmMVyO0AAAAAElFTkSuQmCC";
    }
 }
 
