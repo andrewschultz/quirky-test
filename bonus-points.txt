@@ -13,5 +13,6 @@ A list of all bonus points, in rough game order (hubs, clockwise in hub side roo
 11. LOW SONG (E N)
 12. FAST VISION (E NE)
 13. CEASE PURGING (E E)
-14. SANE ROLE (E SW) (requires 11/12)
-15. TEARY CHIMES (endgame)
+14. PILE TRICKS (E SE)
+15. SANE ROLE (E SW) (requires 11/12)
+16. TEARY CHIMES (endgame)

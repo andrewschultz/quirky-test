@@ -118,6 +118,7 @@ booleans {
    bonus_point_so_long : boolean "false" ; ## e n
    bonus_point_vast_fission : boolean "false" ; ## e ne
    bonus_point_cease_purging : boolean "false" ; ## e e
+   bonus_point_pile_tricks : boolean "false" ; # e se
    bonus_point_sane_role : boolean "false" ; ## e sw
 
    ## endgame bonus point
@@ -189,7 +190,7 @@ integers {
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
    bonus_score : integer "0" ;
-   max_bonus_score : integer "15" ;
+   max_bonus_score : integer "16" ;
    confidence_meter : integer "0" ; ## yellow field, trim goon => malice chap
    tempint : integer "0" ;
    tempint2 : integer "0" ;
@@ -2158,6 +2159,17 @@ subroutines {
             } : else {
                : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
                : set_true "bonus_point_cease_purging" ;
+               : gosub "add_bonus" ;
+            }
+         }
+      }
+      : if (is_carried "trial_pics") {
+         : match "pile tricks" {
+            : if (bonus_point_sane_role) {
+               : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
+            } : else {
+               : print "You've found a lot of tricks so far. Why not a few more? You track what you've done and what you hope to do." ;
+               : set_true "bonus_point_pile_tricks" ;
                : gosub "add_bonus" ;
             }
          }
