@@ -2877,9 +2877,6 @@ on_tick {
       : gosub "footnote_reveal" ;
       : print "All shapes and textures and colors. What a variety! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
    }
-   : match "ask _" {
-      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}" : has_visited("plain_base") ? "Thor, whom you should TALK to first" : "Someone you'll run into shortly." ) )} ;
-   }
 }
 
 ## on_describe is for moving around
@@ -3034,6 +3031,9 @@ on_command {
       }
       : print "I couldn't find anyone here to talk to." ;
       : done ;
+   }
+   : match "ask _" {
+      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}" : has_visited("plain_base") ? "Thor, whom you should TALK to first" : "Someone you'll run into shortly." ) )} ;
    }
    : match "take _" {
       : if (!take_note) {
