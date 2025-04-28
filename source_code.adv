@@ -657,6 +657,7 @@ vocabulary {
    : verb / aliases = [exit, out]
    : verb / aliases = [listen, hear]
    : verb / aliases = [hi, high]
+   : verb / aliases = [hunter, hunting, hunters]
    : verb / aliases = [not, noti, notif, notify]
    : verb / aliases = [t, talk]
    : verb / aliases = [tx, thx, thank, thanks, credits]
@@ -808,7 +809,8 @@ locations {
                : print "The {cc_pro_boor} gazes angrily back at you. You're the same height, but you feel looked down on.{footnote_reveal_text}" ;
             }
             : match "listen -;listen boor" {
-               : print "You're listening enough without trying. You just wish you could have a pithy comment, appropriate to your interlocutor, to brush them off." ;
+               : print {( "You're listening enough without trying. You just wish you could have a pithy comment, appropriate to your interlocutor, to brush them off." + (bonus_point_shush_lout ? "" : " They give off a lush shout every now and then, too, which would be nice to curb, but you feel you probably need to strike at who they are to get rid of them.") )} ;
+               : set_true "know_lush_shout" ;
                : done ;
             }
             : match "talk -;talk boor" {
@@ -843,8 +845,9 @@ locations {
          : if (know_lush_shout) {
             : match "shush lout" {
                : if (!bonus_point_shush_lout) {
-                  : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nPerhaps you need to take a different sort of dig to get rid of them. More direct, more personal." ;
+                  : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nPerhaps you need to take a different sort of dig to get rid of them for good. More direct, more personal. Not necessarily profane or cruel." ;
                   : set_true "bonus_point_shush_lout" ;
+                  : gosub "add_bonus" ;
                } : else {
                   : print "You're not going to quiet the {cc_pro_boor} any further. How to get rid of them?" ;
                }
@@ -886,7 +889,7 @@ locations {
                : destroy "seth_dentons" ;
                : gosub "add_bonus" ;
             }
-            : match "x dentons" {
+            : match "x seth;x dentons" {
                : print "Very seedy looking. Even its name, though common, seems ominous for some reason.";
                : gosub "thor_on_seth" ;
                : done ;
@@ -911,7 +914,7 @@ locations {
                }
          }
       }
-      : match "plain base" { # no say_half for a bonus point
+      : match "bane place" {
          : if (!bonus_point_bane_place) {
             : print "Thor chuckles a bit. \"Very observant. Yes, plain, but it does the job.\"";
             : gosub "add_bonus" ;
