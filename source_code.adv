@@ -2295,28 +2295,28 @@ subroutines {
       }
       : print "Here is what you tried to do, and you haven't gotten it to work yet:" ;
       : if (think_chalice_map) {
-         : print "-- get the CHALICE MAP (west hub, NE)";
+         : print "-- get the <CHALICE MAP<#0f0>> (West Tiles, NE)";
       }
       : if (think_fellow_yield) {
-         : print "-- make the FELLOW YIELD (west hub, NW)";
+         : print "-- make the <FELLOW YIELD<#0f0>> (West Tiles, NW)";
       }
       : if (think_grim_tune) {
-         : print "-- sing a GRIM TUNE (east hub, NE) once you have a melody and lyric inspiration";
+         : print "-- sing a <GRIM TUNE<#0f0>> (East Branch, NE) once you have a melody and lyric inspiration";
       }
       : if (think_healing_still) {
-         : print "-- feel (or discover a) HEALING STILL (Stealing Hill)";
+         : print "-- feel (or discover a) <HEALING STILL<#0f0>> (Stealing Hill)";
       }
       : if (think_hunters_grill) {
-         : print "-- start up the HUNTERS GRILL with a gift of food (west hub, W)";
+         : print "-- start up the <HUNTERS GRILL<#0f0>> with gifts of food (West Tiles, W)";
       }
       : if (think_master_plan) {
-         : print "-- have the strength and self-belief to get the MASTER PLAN (west hub, N)";
+         : print "-- have the strength and self-belief to get the <MASTER PLAN<#0f0>> (West Tiles, N)";
       }
       : if (think_shift_goals) {
-         : print "-- help others out enough to be able to SHIFT GOALS (west hub, SW)";
+         : print "-- help others out enough to be able to <SHIFT GOALS<#0f0>> (West Tiles, SW)";
       }
       : if (think_hi_mouse) {
-         : print "-- have a reason to say HI MOUSE to invite it back into your house";
+         : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back into My House";
       }
       : gosub "check_additional_meta" ;
       : return ;
