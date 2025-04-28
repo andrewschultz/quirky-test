@@ -507,7 +507,7 @@ strings {
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ; ## remove qualifier only when you used the travel grail
 
    gravel_trail_house : dynamic_string {(
-      point_missing_house ? ", or you can go NORTH inside the house you made" : ""
+      point_missing_house ? "to the house you made" : "to, well, nowhere at the moment"
    )};
 
    my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
@@ -729,13 +729,17 @@ locations {
    };
    burst_face : location "You're at a {cc_burst_face}. You feel about ready to take an initial step. Or you would, without that {cc_burst_face} in the way." graphic = "burst_face_only" {
       on_command {
+         : match "x face;x burst" {
+            : print "The burst face looks stern, yet at the same time, a bit weary, maybe just impatient for you to say the right thing. Whatever it's been guarding, well, it's been a long while. If you say the right thing, you can get by it." ;
+            : done ;
+         }
          : match "east _" {
             : set_integer var="tempint" "6" ;
             : gosub "footnote_reveal" ;
             : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_reveal_text}" )} ;
          }
          : match "first base" {
-            : print "You hear a slow rumbling as the burst face bursts for good. You think you see a way forward ... but before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
+            : print "You hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
             : set_true "point_first_base" ;
             : set_true "tutorial_10_first_base" ;
             : increment "tutorial_score" ;
@@ -1511,7 +1515,7 @@ locations {
          }
       }
    };
-   gravel_trail : location "This is a gravel trail. You can go back south to the plain base{gravel_trail_house}{chimes_present}." {
+   gravel_trail : location "This is a gravel trail south back to the plain base and north{gravel_trail_house}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
             : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
@@ -1750,7 +1754,7 @@ barriers {
    block_my_house: block {
       location = my_house
       block_when_not = point_missing_house
-      message = The hissing mouse guards the way. Besides, there's nothing there. Well, not yet.
+      message = The {cc_hissing_mouse} guards the way. Besides, there's nothing there. Well, not yet.
    }
 }
 
