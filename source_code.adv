@@ -57,6 +57,7 @@ booleans {
    ## verb notifications
    drop_referenced : boolean "false" ;
    jump_commands_notified : boolean "false" ;
+   think_noted : boolean "false" ;
    listen_no_subject_note : boolean "false" ;
    take_note : boolean "false" ;
 
@@ -386,6 +387,7 @@ strings {
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
+   thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_cm : string "<Christopher Merriner<#0f0>>" ;
@@ -1006,6 +1008,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_healing_still" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1060,6 +1063,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_master_plan" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1105,6 +1109,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_chalice_map" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1203,6 +1208,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_shift_goals" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1245,6 +1251,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_hunters_grill" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1293,6 +1300,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_fellow_yield" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1501,6 +1509,7 @@ locations {
                : increment "hub_think_needed" ;
             }
             : set_true "think_grim_tune" ;
+            : gosub "note_think_command" ;
          }
          : else
          {
@@ -1609,6 +1618,7 @@ locations {
             : else {
                : print "Hmm, it might be worth calling the mouse back to look around, but you don't have anything concrete for it to search. Maybe look around." ;
                : set_true "think_hi_mouse" ;
+               : gosub "note_think_command" ;
             }
             : done ;
          }
@@ -2231,6 +2241,13 @@ subroutines {
       : set_true "noted_diagonal_direction" ;
       : press_any_key ;
    }
+   note_think_command : subroutine {
+      : if (!think_noted) {
+         : set_true "think_noted" ;
+         : print "{otn}you've found the right thing to say or do, but you weren't prepared yet. {thk} will record this and other point-scoring commands you might discover, for when your character is fully prepared." ;
+         : return ;
+      }
+   }
    read_book : subroutine {
       : if (!poke_books_yet) {
          : set_integer var="tempint" "12" ;
@@ -2557,7 +2574,7 @@ subroutines {
    verb_meta_list : subroutine {
       : print "{abt} gives info about the game.";
       : print "{thx} or {cred} gives info about people who helped make {qt} or make it better.";
-      : print "<THINK<#f80>> reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
+      : print "{thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
       : gosub "check_additional_meta" ;
