@@ -261,8 +261,8 @@ collections {
          "<Examine the Pro Boor<#0f0>>",
          "<First description for Plain Base<#0f0>>",
          "<Visit either hub<#0f0>>",
-         "<XYZZY<#0f0>>",
          "<Get to Stealing Hill<#0f0>>",
+         "<XYZZY<#0f0>>",
          "<Return to Thor after visiting Stealing Hill<#0f0>>",
          "<Examine the plaster man/master plan<#0f0>>",
          "<Examine the Malice Chap<#0f0>>",
@@ -282,15 +282,15 @@ collections {
          "<Examine someone<#f00>>",
          "{fnh}",
          "{fnh}",
-         "<Magic word<#f00>>",
          "{fnh}",
+         "<Magic word<#f00>>",
          "{fnh}",
          "<Examine something<#f00>>",
          "<Examine someone<#f00>>",
          "<Examine something<#f00>>",
          "{fnh}",
          "<Examine something<#f00>>",
-         "<Examine something<#f00>>",
+         "{fnh}",
          "<Examine something<#f00>>"
          "<Examine something<#f00>>",
       ]
@@ -323,17 +323,17 @@ collections {
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a dead end. Which can be fun for a bit, until it really, really isn't.",
       "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps it would've made a good book name.",
       "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.",
-      "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Also, recycling the names as signs helped fill the whole graphic.",
-      "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.",
+      "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Which actually worked out okay because East Branch has more bonus points (meant to be hard) than West Tiles.\nAlso, recycling the names as signs helped fill the whole graphic for Plain Base.",
       "Originally this was called Fate Hill, which works semantically but isn't believable as part of the story. It lampshaded that this was an important place to be, but I think the location and new name do this. The hill, of course, gets hateful anyway.",
-      "I wanted to show the reader some non-reciprocal directions but not have them just because. The original hub maps were west and east of Thor, and the passage back was south. But this was one case where I wound up having to explain too much. Or having Thor explain too much.",
+      "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.\nI didn't want it just to be inside knowledge, though, so I put the runes in as a puzzle.",
+      "I wanted to show the reader some non-reciprocal directions but not have them just because. The original hub maps were west and east of Thor, and the passage back was south. I wound up .",
       "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan was too good to pass up, as it could fit into a vareity of plots. It does seem to be the least surreal of the lot.",
       "Um, okay, yeah. The Malice Chap, Trim Goon and guy in Yellow Field are ... similar. I think that's what got me the idea to have the puzzles act as a pyramid, with eight needing no prerequisites, four needing stuff from the eight, two needing stuff from the four, and the final one needing the two.",
-      "<TAKE CRACKERS<#f80>> is one of my favorite points and drawing in the whole game. Points, because it uses a standard verb. Drawing, because I did research on different-shaped crackers.",
-      "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated..",
+      "<TAKE CRACKERS<#f80>> is one of my favorite points and drawing in the whole game. Points, because it uses a standard verb. Drawing, because I performed strenuous research on different-shaped crackers. Google Images, you so cool.",
+      "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated.",
       "I was sort of inspired by a combination of Lucy's psychiatrist office and Steven Crowder's disingenuous \"Prove Me Wrong\" table when thinking of this. I have a special, uh, spot in my heart for people who will get up in your business and explain you're very lucky they dropped into your life.",
       "I'm not allergic to excitement, but I don't particularly like being around people who tell my my life needs to be more exciting, and they can help with that. Taking this point to the extreme, there are people who prefer war to peace. I try to slip this sort of thing into a lot of what I write, but maybe it is too subtle. Or too obscure.",
-      "Sorry not sorry for the gray mouse spoonerism. I actually didn't see it until I was looking for excuses to add footnotes. I wish I had found more of this sort of thing. I think one reason I backloaded them (the key, the trunk) is because I'd gotten to the end and hadn't had the chance to fire off nonsequiturs like that. (Achievement names don't count.)\nWell, that's the sort of thing maintenance releases/post-comp releases are for.",
+      "Sorry not sorry for the gray mouse spoonerism. I actually didn't see it until I was looking for excuses to add footnotes. I wish I had found more of this sort of thing. I think one reason I backloaded them (the key, the trunk) is because I'd gotten to the end and hadn't had the chance to fire off nonsequiturs like that. (Achievement names don't count.)\nMaybe I'll look through my notes to find a bit more. Maintenance releases/post-comp releases aren't just for bug fixes!",
       "I enjoy seeing and implementing random stuff you can just sift through if you want, pushing the up-arrow to repeat a command for random text. Often when I write games I have ideas that would seem forced as part of the solution, but they are too good not to share somehow. I've used books before and probably will again.\nOne of the first things that made me say \"wow\" about Inform 7 was the (one of)(or)(in random order) construction. Adventuron has it, too, and it's as easy and intuitive, but with more formal code."
       ]
    };
@@ -769,9 +769,9 @@ locations {
             : done ;
          }
          : match "east _" {
-            : set_integer var="tempint" "6" ;
+            : set_integer var="tempint" "3" ;
             : gosub "footnote_reveal" ;
-            : print {( "There's no way back. Not that you'd want to go back. Anyway, Thor would probably just yank you back from your trip back. He's bigger than you.{footnote_reveal_text}" )} ;
+            : print {( "There's no way back. Not that you'd want to go back. Anyway, whoever it was that summoned you would probably just yank you back from your trip back. Well, if they're anywhere near as powerful as their voice.{footnote_reveal_text}" )} ;
          }
          : match "first base" {
             : print "You hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
@@ -828,7 +828,7 @@ locations {
          }
          : if (is_beside("pro_boor")) {
             : match "x boor;x pro" {
-               : set_integer var="tempint" "16" ;
+               : set_integer var="tempint" "4" ;
                : gosub "footnote_reveal" ;
                : print "The {cc_pro_boor} gazes angrily back at you. You're the same height, but you feel looked down on.{footnote_reveal_text}" ;
             }
@@ -951,11 +951,11 @@ locations {
       }
       on_describe {
          : if (!note_nonreciprocal && has_visited("stealing_hill")) {
-            : set_integer var="tempint" "7" ;
+            : set_integer var="tempint" "9" ;
             : gosub "footnote_reveal" ;
             : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy directions like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
             : if (is_carried("travel_grail")) {
-               : print {( "Thor also points to your travel grail. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them alredy" : "You'll see them" ) + " on completion of your quest." )} ;
+               : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them alredy" : "You'll see them" ) + " on completion of your quest." )} ;
                : set_true "achieve_ssss_pre" ;
             }
             :set_true "note_nonreciprocal" ;
@@ -1073,7 +1073,7 @@ locations {
       }
       }
       on_pre_describe {
-         : set_integer var="tempint" "11" ;
+         : set_integer var="tempint" "7" ;
          : gosub "footnote_reveal" ;
       }
       on_describe {
@@ -1086,7 +1086,7 @@ locations {
       : match "x plaster;x man" {
          : set_integer var="tempint" "10" ;
          : gosub "footnote_reveal" ;
-         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "A plaster man sits here, thinking ... but of what?" )}
+         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "A plaster man sits here, thinking ... but of what?{footnote_reveal_text}" )}
          : done ;
       }
       : match "talk plaster;talk -;listen -" {
@@ -1137,7 +1137,7 @@ locations {
       }
       : if (!point_chalice_map) {
          : match "x malice;x chap" {
-            : set_integer var="tempint" "15" ;
+            : set_integer var="tempint" "11" ;
             : gosub "footnote_reveal" ;
             : print "Fortunately, he's just kind of grinning nastily at you. As if to say he'd enjoy seeing you fail, but he won't actually move to another room to do so.{footnote_reveal_text}" ;
             : done ;
@@ -1370,7 +1370,7 @@ locations {
 
    hub_e_n : location "{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}{footnote_reveal_text}" {
       on_pre_describe {
-			: set_integer var="tempint" "14" ;
+			: set_integer var="tempint" "13" ;
 			: gosub "footnote_reveal" ;
       }
       on_command {
@@ -1408,7 +1408,7 @@ locations {
          : done ;
       }
       : match "x booth" {
-         : set_integer var="tempint" "8" ;
+         : set_integer var="tempint" "14" ;
          : gosub "footnote_reveal" ;
          : print {( (point_bending_truth ? "Empty now. Well, it was empty even when it wasn't empty." : "You don't want to get too close. You're not sure why the person in the booth is around. Don't they have anything better to do?") + "{footnote_reveal_text}" )}
       }
@@ -1434,7 +1434,7 @@ locations {
    };
    hub_e_e : location "{point_boring_way ? hub_e_boring_way : hub_e_warring_bay}{footnote_reveal_text}" {
       on_pre_describe {
-			: set_integer var="tempint" "13" ;
+			: set_integer var="tempint" "15" ;
 			: gosub "footnote_reveal" ;
       }
       on_command {
@@ -1588,7 +1588,7 @@ locations {
       on_command {
          : if (is_beside("hissing_mouse")) {
             : match "x mouse;x hissing" {
-			      : set_integer var="tempint" "17" ;
+			      : set_integer var="tempint" "16" ;
 			      : gosub "footnote_reveal" ;
                : print "The mouse's hissing appears more defensive than anything. It makes you think \"Gray mouse may grouse.\"{footnote_reveal_text}" ;
                : done ;
@@ -2158,7 +2158,7 @@ subroutines {
       : if ((!footnotes_available) || (history_footnote_found)) {
          : return ;
       }
-      : set_integer var="tempint" "3" ;
+      : set_integer var="tempint" "6" ;
       : gosub "footnote_reveal" ;
       : print "For some history on both West Tiles and East Branch, look at {footnote_reveal_text}." ;
       : set_true "history_footnote_found" ;
@@ -2347,7 +2347,7 @@ subroutines {
    }
    read_book : subroutine {
       : if (!poke_books_yet) {
-         : set_integer var="tempint" "12" ;
+         : set_integer var="tempint" "17" ;
          : gosub "footnote_reveal" ;
          : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr} is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed to reveal a secret passage, or something. Again, nothing. But hey, some of those titles look interesting!{footnote_reveal_text}" ;
          : set_true "poke_books_yet" ;
@@ -2934,7 +2934,7 @@ on_tick {
       : print "You can also type <FOOTNOTE 0<#f80>> to get a list of footnotes." ;
    }
    : if_examine "crackers" {
-      : set_integer var="tempint" "9" ;
+      : set_integer var="tempint" "12" ;
       : gosub "footnote_reveal" ;
       : print "All shapes and textures and colors. What a variety! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
    }
@@ -2954,7 +2954,7 @@ on_pre_command {
             : print "That's the way to go, but since this is a tutorial, there's another hoop to walk through, first." ;
             : done ;
          }
-      : set_integer var="tempint" "4" ;
+      : set_integer var="tempint" "2" ;
       : gosub "footnote_reveal" ;
       : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet someone who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
       : set_true "point_go_west" ;
@@ -3177,7 +3177,7 @@ on_command {
       : set_true "drop_referenced" ;
    }
    : match "xyzzy _" {
-      : set_integer var="tempint" "2" ;
+      : set_integer var="tempint" "8" ;
       : gosub "footnote_reveal" ;
       : print "A low voice booms \"Vexing howl? Hexing?! VOWELS!\"{footnote_reveal_text}";
    }
