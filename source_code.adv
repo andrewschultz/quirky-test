@@ -666,6 +666,7 @@ vocabulary {
    : noun / aliases = [hill, hills]
    : noun / aliases = [box, boxes, crackers]
    : noun / aliases = [cake, trackers]
+   : noun / aliases = [peace, surging]
    : noun / aliases = [hunter, hunters]
    : noun / aliases = [grunter, grunters]
    : noun / aliases = [fission, fishin]
@@ -1187,7 +1188,7 @@ locations {
       on_command {
       : if (point_fell_short) {
          : match "listen _;talk _" {
-            : print "All quiete on the western hub front." ;
+            : print "All quiet on the western hub front." ;
             : done ;
          }
       }
@@ -2105,7 +2106,7 @@ subroutines {
       : else_if (tempint == 10) {
          : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
          : print "The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>." ;
-         : print "This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for SEARCH and EXAMINE may frustrate players.\n\"One thing that helps provide a buffer is a {verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {verbs}." ;
+         : print "This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for SEARCH and EXAMINE may frustrate players.\nOne thing that helps provide a buffer is a {verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {verbs}." ;
          : print "I used Adventuron's simplified two-word parser. I didn't need any complex actions, so it worked well." ;
          }
          : gosub "ask_thor_tally" ;
@@ -2114,6 +2115,7 @@ subroutines {
       : else_if (tempint == 11) {
          : cycle key = "rule_11" predictable_order = "true" skip_interval = "0" {
          : print "The eleventh rule in Graham Nelson's Player's Bill of Rights is <to have reasonable freedom of action<#f88>>." ;
+         : print "Sometimes having too much to do is confusing, but sometimes not being able to do something indicated (e.g. X SCENERY) is annoying to the player." ;
          : print "Well, there aren't a ton of verbs implemented, and the first bit was on rails, but I wanted to open it up and have something to do right away in the main area." ;
          }
          : gosub "ask_thor_tally" ;
@@ -2692,7 +2694,7 @@ subroutines {
          : return;
       }
       : if (!tutorial_8_talk_voice_done) {
-         : print {( tcue + "that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} or <TALK VOICE<#0f0>>." )};
+         : print {( tcue + "that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} or <TALK VOICE<#0f0>>. You can even abbreviate {tlk} to <T<#0f0>>." )};
          : return;
       }
       : if (!tutorial_9_go_west) {
@@ -2707,7 +2709,9 @@ subroutines {
    }
    tutorial_shutoff : subroutine {
       : if (in_tutorial) {
-         : print {( "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, you can still use " + hint + ", though <HELP<#f80>>, another often useful command, is reserved by Adventuron for general parser guidance." )};
+         : print "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, there are no in-game hints, but there should be a walkthrough provided. Hopefully it won't be too necessary." ;
+         : print "One other thing: someone ahead discusses your rights as a parser game (or any game) player and rules game designers should adhere to. You can listen to them as much or as little as you want. Similarly, there are bonus points to find, and you can work as hard at them as you want. There are also footnotes and achievements to revisit on replay. But they are only for really interested people." ;
+         : print "The number-one rule for the player like you, though vague, is: enjoy yourself. Focus on what you like if and when you can, whether it's the necessary puzzles, the optional puzzles, or the discussion of what players have a right to expect. And don't worry about the rest." ;
       }
       : set_true "tutorial_done";
       : set_false "in_tutorial";
@@ -2992,13 +2996,13 @@ themes {
 
 ## On_debug and on_startup both call the INIT/TUTORIAL subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
 
-on_debug {
-   : set_true "in_debug" ;
-   : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
-   : gosub "init_check" ;
+#on_debug {
+#   : set_true "in_debug" ;
+#   : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
+#   : gosub "init_check" ;
 #   : gosub "init" ;
 #   : gosub "tutorial_choice" ;
-}
+#}
 
 on_startup {
    : gosub "init" ;
@@ -3295,8 +3299,12 @@ on_command {
          : return ;
       }
       : print "You don't hear anything right now." ;
-      : if (!listen_no_subject_note) {
-         : print "{otn} listening is a general command. It will ignore any subject." ;
+      : match "listen *" {
+         : if (!listen_no_subject_note) {
+            : print "{otn} listening is a general command. It will ignore any subject." ;
+            : set_true "listen_no_subject_note" ;
+            : done ;
+         }
       }
       : done ;
    }
