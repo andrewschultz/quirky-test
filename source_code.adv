@@ -29,7 +29,7 @@ booleans {
    entered_seth_dentons : boolean "false" ;
    know_lush_shout : boolean "false" ;
    thor_explained_seth : boolean "false" ;
-   summoned_teary_chimes : boolean "false"; # same as point_see_glimmering but it's confusing code that way
+   summoned_teary_chimes : boolean "false"; # this is equivalent to point_see_glimmering, but this also makes code where we manipulate the chimes more readable.
    have_asked_three : boolean "false" ;
    have_asked_four : boolean "false" ;
    poke_books_yet : boolean "false" ;
@@ -2664,7 +2664,7 @@ subroutines {
       }
    }
 
-   verb_list : subroutine {
+   meta_verbs : subroutine {
       : if (!tutorial_2_verbs_done) {
          : set_true "tutorial_2_verbs_done" ;
          : increment "tutorial_score" ;
@@ -3163,7 +3163,7 @@ on_command {
       : gosub "think_thoughts" ;
    }
    : match "verbs _" {
-      : gosub "verb_list" ;
+      : gosub "meta_verbs" ;
    }
    : match "about _" {
       : gosub "meta_about" ;
