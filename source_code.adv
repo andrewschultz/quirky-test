@@ -1531,15 +1531,39 @@ locations {
          }
          : done ;
          }
-      : if (!point_pouring_rain) {
-         : match "pouring _;_ rain" {
-            : gosub "say_half" ;
+         : if (!point_pouring_rain) {
+            : match "pouring _;_ rain" {
+               : gosub "say_half" ;
+            }
+            : match "x roaring;x pain" {
+               : print "Paying attention to the pain will just make it worse. Maybe it could be something less oppressive." ;
+               : done ;
+            }
+         } : else {
+            : match "x pouring;x rain" {
+               : print "You look to/at the rain for more poetic inspiration, but poetic inspiration doesn't quite work that way." ;
+               : done ;
             }
          }
       }
    };
    hub_e_w : location "{point_funny_mountain ? hub_e_funny_mountain : hub_e_money_fountain}" {
       on_command {
+      : if (point_funny_mountain) {
+         : match "x funny;x mountain" {
+            : print "You feel happier just looking at the mountain, but you do need to get on with things." ;
+            : done ;
+         }
+      } : else {
+         : match "x money;x fountain" {
+            : print "You look in the fountain, totally not thinking about fishing loose change out. Nope, no {rttr}." ;
+            : done ;
+         }
+         : match "take money;take fountain" {
+            : print "Money won't do you good. You haven't found anyone to transact with that way." ;
+            : done ;
+         }
+      }
       : match "talk _;listen _" {
          : print {( point_funny_mountain ? "You can't really match the mountain's jokes, but you don't need to. You're happy enough." : "Denizens of the fountain don't seem to care about you. They just keep trying to fish money out of the fountain, which disappears." )} ;
          : done ;
