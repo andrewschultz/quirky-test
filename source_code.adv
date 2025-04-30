@@ -414,6 +414,7 @@ strings {
    v_pts : string "<POINTS<#f80>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_cm : string "<Christopher Merriner<#0f0>>" ;
+   tx_ds : string "<Deborah Sherwood<#0f0>>" ;
    tx_gf : string "<Garry Francis<#0f0>>" ;
    tx_ll : string "<Leon Lin<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
@@ -2522,10 +2523,10 @@ subroutines {
       }
       : print "{ch} is used to toggle colored text hints." ;
       : print "{notif} is used to toggle score notification." ;
-      : print {( "Note that {qt} uses " + yn + " to toggle options instead of " + on + " and " + off + ", since " + on + " is a preposition, which is rejected by the simplified version of Adventuron's parser  used here." )};
-      : print {( "Also note that an option alone will not be recognized. At least, not in the initial version of " + qt + "." )} ;
+      : print "Note that {qt} uses {yn} to toggle options instead of {on} and {off}, since {on} is a preposition, which is rejected by the simplified version of Adventuron's parser used here." ;
+      : print "Also note that typing an option will not set it. At least, not in the initial version of {qt}." ;
       : if (in_debug) {
-         : print "DEBUG OPTION: CHEAT turns off/on dependencies in hub puzzles so you can complete them in any order." ;
+         : print "<DEBUG OPTION<#ff0>>: <CHEAT<#88f>> turns off/on dependencies in hub puzzles so you can complete them in any order." ;
       }
       : gosub "check_additional_meta" ;
    }
@@ -2645,9 +2646,9 @@ subroutines {
       : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you if you have one word right." ;
    }
    meta_thanks : subroutine {
-      : print "Thanks to TALP admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than usual.";
+      : print "Thanks to TALP/TALJ admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts.";
       : print "Thanks to {tx_ca} for creating Adventuron.";
-      : print "Thanks to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll} and {tx_cm}.";
+      : print "Thanks (in alphabetical order) to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}.";
       : print "Thanks to you, for playing this game.";
       : gosub "check_additional_meta" ;
    }
@@ -2668,8 +2669,8 @@ subroutines {
          : set_true "tutorial_2_verbs_done" ;
          : increment "tutorial_score" ;
       }
-      : print {( "While " + qt + " requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." )} ;
-      : print {( qt + " uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, <OUT<#0f0>> leaves if there is only one exit." )} ;
+      : print "While {qt} requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." ;
+      : print "{qt} uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, <OUT<#0f0>> leaves if there is only one exit." ;
       : print "You can {tak} an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
       : print "You can {tlk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
@@ -2687,6 +2688,7 @@ subroutines {
       : print "{abt} gives info about the game.";
       : print "{thx} or {cred} gives info about people who helped make {qt} or make it better.";
       : print "{thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
+      : print "{v_pts} is a spoiler for point-scoring commands, with examples of fun ones that missed the cut for {qt}." ;
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
       : gosub "check_additional_meta" ;
