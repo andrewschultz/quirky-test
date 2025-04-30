@@ -337,6 +337,17 @@ collections {
       "I enjoy seeing and implementing random stuff you can just sift through if you want, pushing the up-arrow to repeat a command for random text. Often when I write games I have ideas that would seem forced as part of the solution, but they are too good not to share somehow. I've used books before and probably will again.\nOne of the first things that made me say \"wow\" about Inform 7 was the (one of)(or)(in random order) construction. Adventuron has it, too, and it's as easy and intuitive, but with more formal code."
       ]
    };
+   spoonerism_examples : list {
+      items = [
+         "<cattle bruisers/battle cruisers<#f80>> (simple)",
+         "<crushing blow/blushing crow<#f80>> (flipping first two letters)",
+         "<kissing malls/missing calls<#f80>> (flipping sound, slightly different spelling) ",
+         "<warm fish/form wish<#f80>> (flipping first letters, slightly different spelling --note half-formed wish may work better for humor value)",
+         "<cat flap/flat cap<#f80>> (flipping the sound, 1 letter/2 letters)",
+         "<sold treats/old streets<#f80>> (moving the first letter over)",
+         "<queer old dean/dear old queen<#f80>> (neutral word inside)"
+      ]
+   };
    jump_list : list {
       items = [
          1,
@@ -673,6 +684,7 @@ vocabulary {
    : verb / aliases = [tx, thx, thank, thanks, credits]
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
+   : verb / aliases = [points, point, pt, pts]
    : verb / aliases = [verb, verbs]
    : verb / aliases = [x, read]
    : verb / aliases = [eat, taste]
@@ -2623,6 +2635,15 @@ subroutines {
          : increment "tutorial_score" ;
       }
    }
+   meta_points : subroutine {
+      : print "{qt} gives points for finding a spoonerism for objects or ideas in-game. So what is a spoonerism?" ;
+      : print "Spoonerisms are when the starting sounds of two words are switched. Sometimes that just means  switching the first letters of two word, but other times, it may be about switching the initial sound, and maybe about tinkering with the spelling." ;
+      : print "Examples of spoonerisms not included in {qt} include:" ;
+      : collection_iterate "spoonerism_examples" {
+         : print {( "* " + item() )} ;
+      }
+      : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you if you have one word right." ;
+   }
    meta_thanks : subroutine {
       : print "Thanks to TALP admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than usual.";
       : print "Thanks to {tx_ca} for creating Adventuron.";
@@ -3144,6 +3165,9 @@ on_command {
    }
    : match "about _" {
       : gosub "meta_about" ;
+   }
+   : match "points _" {
+      : gosub "meta_points" ;
    }
    : match "thanks _" {
       : gosub "meta_thanks" ;
