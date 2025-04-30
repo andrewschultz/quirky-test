@@ -789,11 +789,9 @@ locations {
             : gosub "say_half" ;
             : done ;
          }
-         : match "talk -; talk face" {
-            : print "The {burstface} reveals no clues." ;
-         }
-         : match "listen _" {
-            : print "The {burstface} reveals no clues." ;
+         : match "talk -; talk face;listen_" {
+            : print "The {cc_burst_face} reveals no clues." ;
+            : done ;
          }
       }
    };
@@ -907,6 +905,7 @@ locations {
          : if (is_beside "seth_dentons") {
             : match "talk seth" {
                : print "Thor's conversation would be much more interesting and sane." ;
+               : done ;
             }
             : match "death sentence" {
                : print "\"Yes, that's it. This is one of those traps where you're given adequate warning that going somewhere might kill you.\"";
@@ -922,6 +921,7 @@ locations {
             : match "enter _" {
                : if (entered_seth_dentons) {
                   : print "Nope, not again. Maybe you can figure the secret Beery Thor said it had." ;
+                  : done ;
                } : else {
                : print "It's a seedy place, it is. You are captured and put on trial. It looks bad for you, but before the verdict is rendered, Beery Thor clatters in and makes an argument that befuddles the courtroom.\n\"You're not the first person to try that,\" says Beery Thor., \"And I don't blame you." ;
                : gosub "thor_on_seth" ;
@@ -1096,6 +1096,7 @@ locations {
          } : else {
             : print "That won't do much good now. It wouldn't have done much good before you destroyed the plaster man and got something useful." ;
          }
+         : done ;
       }
       : match "master plan" {
          : if (point_master_plan) {
@@ -1493,6 +1494,7 @@ locations {
       on_command {
       : match "talk _;listen _" {
          : print {( point_pouring_rain ? "The pouring rain is really poetic, and stuff. You sense talking would ruin things." : "You can't talk or listen normally with this roaring pain around. Perhaps it can become something more manageable." )} ;
+         : done ;
       }
       : match "pouring rain" {
          : if (point_pouring_rain) {
