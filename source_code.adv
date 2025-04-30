@@ -37,6 +37,7 @@ booleans {
    noticed_beer : boolean "false" ;
    inventory_incorporeal : boolean "false" ;
    thor_warn_close : boolean "false" ;
+   ask_thor_misfire : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -106,7 +107,7 @@ booleans {
 
    ## first base
    bonus_point_shush_lout : boolean "false" ;
-   bonus_rare_plights : boolean "false" ;
+   bonus_point_rare_plights : boolean "false" ;
 
    ## bane place
    bonus_point_bane_place : boolean "false" ;
@@ -804,9 +805,9 @@ locations {
                : done ;
             }
             : match "rare plights" {
-               : if (!bonus_rare_plights) {
+               : if (!bonus_point_rare_plights) {
                   : print "You read about people's complaints. Some seem common and some seem exotic indeed. People hard done by mentally, physically, and financially. Their problems seem more interesting and exciting than yours. You know it's important to care about this sort of thing, and yet, there must be something else in {cc_prayer_lights}, something more uplifting, perhaps a justification you deserve more, even if you have a fun game like this to play." ;
-                  : set_true "bonus_rare_plights" ;
+                  : set_true "bonus_point_rare_plights" ;
                   : gosub "add_bonus" ;
                } : else {
                   : print "Not again. You want to search for something more positive now." ;
