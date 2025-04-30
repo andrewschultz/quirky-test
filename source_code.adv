@@ -25,6 +25,7 @@ booleans {
 
    ## done once in-game booleans (non-critical, or duplicate)
    xme_twice : boolean "false" ;
+   ever_about : boolean "false" ; # this is equivalent tutorial_1_about_done, but it's a bit clearer for certain parts of the code.
    entered_seth_dentons : boolean "false" ;
    know_lush_shout : boolean "false" ;
    thor_explained_seth : boolean "false" ;
@@ -399,6 +400,7 @@ strings {
    sco : string "<SCORE<#f80>>" ;
    thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
+   v_pts : string "<POINTS<#f80>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_cm : string "<Christopher Merriner<#0f0>>" ;
    tx_gf : string "<Garry Francis<#0f0>>" ;
@@ -2608,9 +2610,14 @@ subroutines {
    }
 
    meta_about : subroutine {
-      : print "{qt} was made for the TALP 2025 jam after years of judging it. I always wanted to write an Adventuron game." ;
-      : print "You can see what sort of commands {qt} uses with {verbs}." ;
+      : print "{qt} was made for the 2025 Text Adventure Literacy Jam (TALJ) after years of judging it. I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#0f0>>, a 2023 entry by <Cobwebbed Dragon<#0f0>>, as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
+      : print {( "You can see what sort of commands {qt} uses with {verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
       : print "You can find specific thanks in the {thx} command." ;
+      : if (!ever_about) {
+         : print "{otn}if you want the mechanic for point-scoring commands spoiled or explained, {v_pts} will do so." ;
+         : print {( "{otn}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and " + (has_visited("plain_base") ? "Thor" : "an NPC you'll find") + ", it's my hope {qt} can be enjoyed just as a game." )} ;
+         : set_true "ever_about" ;
+      }
       : if (!tutorial_1_about_done) {
          : set_true "tutorial_1_about_done" ;
          : increment "tutorial_score" ;
