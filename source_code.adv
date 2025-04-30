@@ -711,6 +711,10 @@ locations {
                : print "You get no response from the voice, which is not surprising. It seems powerful, and it probably comes from afar. But it was worth a try. Perhaps you will get a better response from people or things closer by." ;
                : done ;
             }
+            : match "_ voice" {
+               : print "It's probably more what the voice is saying." ;
+               : done ;
+            }
          }
          : if (verb_is "i" && is_carried "ooh_task" ) {
             : mask {
@@ -1215,7 +1219,7 @@ locations {
       on_command {
       : if (!point_take_crackers) {
          : match "talk trackers;listen trackers;talk -;listen -" {
-            : print "The cake trackers are too busy grumbling among themselves and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
+            : print "The cake trackers are too busy grumbling among themselves with \"Lack of pies? Pack of lies!\" and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
             : done ;
          }
       }
@@ -2215,7 +2219,7 @@ subroutines {
             : if (bonus_point_vast_fission) {
                : print "You've already broken things down enough." ;
             } : else {
-               : print "You extrapolate on the fast vision you have and re-interpret events from your past life in many new ways. The mental fission of previous complaints is fast. You make plans for, uh, fishin' for more, once this quest is over." ;
+               : print "You extrapolate on the fast vision you have and re-interpret events from your past life in many new ways. The mental fission of previous complaints is fast. You make plans for, uh, fishin' for more, once this quest is over. More what? Lighting fires, fighting liars." ;
                : set_true "bonus_point_vast_fission" ;
                : gosub "add_bonus" ;
             }
