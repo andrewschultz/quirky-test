@@ -1505,9 +1505,18 @@ locations {
          }
          : done ;
          }
-      : if (!point_dirt_home) {
-         : match "dirt _;_ home" {
-            : gosub "say_half" ;
+         : if (!point_dirt_home) {
+            : match "dirt _;_ home" {
+               : gosub "say_half" ;
+               }
+            : match "x hurt;x dome" {
+               : print "It's rather shiny, but the glare hurts a bit. You're not sure what it's upset about, but it could be more inviting, even if it were duller." ;
+               : done ;
+            }
+         } : else {
+            : match "x dirt; x home" {
+               : print "Looks very cozy, but not quite for you." ;
+               : done ;
             }
          }
       }
