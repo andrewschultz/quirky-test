@@ -512,7 +512,7 @@ strings {
    hub_e_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
    hub_e_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
    hub_e_boring_way : string "Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
-   hub_e_hurt_dome : string "A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to actively hurt anyone or anything. But it'd still be nice to make sure." ;
+   hub_e_hurt_dome : string "A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to hurt anyone or anything actively by launching missiles. But perhaps you could remove the hurt?" ;
    hub_e_dirt_home : string "The dirt home you summoned stands here, infinitely less menacing than its previous form." ;
    hub_e_roaring_pain : string "You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
    hub_e_pouring_rain : string "The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
@@ -647,7 +647,7 @@ objects {
    no_greed : object "<no greed<#888>>" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
-   travel_grail : object "Travel Grail" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
+   travel_grail : object "{cc_travel_grail}" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
    teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
@@ -731,7 +731,7 @@ locations {
          }
          : match "x me" {
             : if (in_tutorial && (!tutorial_1_about_done || !tutorial_2_verbs_done || !tutorial_3_additional_metaverb_done)) {
-               : print {( "While " + xme + " is a useful command, and one you'll be using in this tutorial, we're a bit on rails. There are meta-commands to acquaint yourself with first." )};
+               : print "While {xme} is a useful starting command, and one you'll soon be using in this tutorial, I put this tutorial on rails. There are meta-commands to acquaint yourself with first." ;
                : done ;
             }
             : else_if (!is_carried "ooh_task") {
