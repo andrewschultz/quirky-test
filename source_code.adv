@@ -1245,6 +1245,16 @@ locations {
    };
    hub_w_sw : location "{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
       on_command {
+      : if (!point_shift_goals) {
+         : match "take gifts" {
+            : print "You try, but they are too heavy to pick up." ;
+            : done ;
+         }
+         : match "x gifts" {
+            : print "There are so many! You don't know which you'd choose first. Their dazzling variety almost make you forget about your quest." ;
+            : done ;
+         }
+      }
       : match "talk _;listen _" {
          : print {( point_shift_goals ? "The quiet is more peaceful now you've put the prospect of gifts aside. You don't want to disturb it." : "While the gifts seem to be calling to you, it'd feel weird to talk back." )} ;
          : done ;
@@ -1283,6 +1293,10 @@ locations {
    hub_w_w : location "{point_hunters_grill ? hub_w_hunters_grill : hub_w_grunters_hill}" {
       on_command {
       : if (!point_hunters_grill) {
+         : match "x hill;x grunter" {
+            : print "The hill looks pretty normal, but boy, it sounds upset. Perhaps a happier or more social scenario can arise from all this." ;
+            : done ;
+         }
          : match "talk -;talk grunters;talk hills;listen -" {
             : print "Your grunting skills are not up to scratch. You try again with actual words. Still, nothing. Perhaps there are other ways to bring out more than grunting from here." ;
             : done ;
