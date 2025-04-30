@@ -21,6 +21,7 @@ booleans {
 
    ## meta-command/parser-warning booleans
    apostrophe_warn : boolean "false" ;
+   say_warn : boolean "false" ;
    credits_to_thanks_note : boolean "false" ;
 
    ## done once in-game booleans (non-critical, or duplicate)
@@ -3007,6 +3008,13 @@ on_pre_command {
 ## main on_command
 
 on_command {
+   : if (!say_warn) {
+      : match "say _" {
+         : print "{otn}if you figure a phrase, you don't need to <SAY#0f0> it explicitly, though it shouldn't hurt to include it." ;
+         : print "Just use the two words needed. The parser will understand." ;
+         : set_true "say_warn" ;
+      }
+   }
    : match "eat _" {
       : if (point_hunters_grill) {
          : print "You already ate what you needed to." ;
