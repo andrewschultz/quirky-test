@@ -328,8 +328,8 @@ collections {
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Which actually worked out okay because East Branch has more bonus points (meant to be hard) than West Tiles.\nAlso, recycling the names as signs helped fill the whole graphic for Plain Base.",
       "Originally this was called Fate Hill, which works semantically but isn't believable as part of the story. It lampshaded that this was an important place to be, but I think the location and new name do this. The hill, of course, gets hateful anyway.",
       "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.\nI didn't want it just to be inside knowledge, though, so I put the runes in as a puzzle.",
-      "I wanted to show the reader some non-reciprocal directions but not have them just because. The original hub maps were west and east of Thor, and the passage back was south. I wound up .",
-      "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan was too good to pass up, as it could fit into a vareity of plots. It does seem to be the least surreal of the lot.",
+      "I wanted to show the reader some non-reciprocal directions but not have them there just because. The original hub maps were west and east of Thor, and the passage back was south. The hill always had non-reciprocal directions, and it was simpler just to have the side-hubs' exits mirror each other instead of being identical.",
+      "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan and roaring pain/pouring rain seemed to fit in nicely.",
       "Um, okay, yeah. The Malice Chap, Trim Goon and guy in Yellow Field are ... similar. I think that's what got me the idea to have the puzzles act as a pyramid, with eight needing no prerequisites, four needing stuff from the eight, two needing stuff from the four, and the final one needing the two.",
       "<TAKE CRACKERS<#f80>> is one of my favorite points and drawing in the whole game. Points, because it uses a standard verb. Drawing, because I performed strenuous research on different-shaped crackers. Google Images, you so cool.",
       "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated.",
@@ -496,7 +496,7 @@ strings {
    ## west tiles seeding for dynamic strings, starting north and going clockwise
    hub_w_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
    hub_w_master_plan : string "With the plaster man destroyed, there's not much left here." ;
-   hub_w_malice_chap : string "You feel the malice here from the {cc_malice_chap}." ;
+   hub_w_malice_chap : string "A {cc_malice_chap} stands here, radiating malice intensely." ;
    hub_w_chalice_map : string "You got the chalice map here. There can't really be anything left to do." ;
    hub_w_shell_fort : string "A {cc_shell_fort} sits here. It occasionally fires rounds that get close to you. While there's no danger of you getting hit, it's still annoying and gets in the way of trying to find anything." ;
    hub_w_fell_short : string "The shell fort lies barren now. You even ransacked it for rations." ;
@@ -651,7 +651,7 @@ objects {
    no_greed : object "<no greed<#888>>" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
-   travel_grail : object "{cc_travel_grail}" msg="It doesn't look that valuable, but perhaps it can find somewhere new." ;
+   travel_grail : object "{cc_travel_grail}" msg="It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here." ;
    teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
@@ -660,7 +660,7 @@ objects {
 # end objects
 
 vocabulary {
-   : noun / aliases = [ooh, task, ask]
+   : noun / aliases = [ooh, task, ask, parchment]
    : noun / aliases = [voice, veering, choice, cheery, cheering]
    : noun / aliases = [seth, denton, dentons]
    : noun / aliases = [hill, hills]
@@ -779,7 +779,7 @@ locations {
             : print {( "There's no way back. Not that you'd want to go back. Anyway, whoever it was that summoned you would probably just yank you back from your trip back. Well, if they're anywhere near as powerful as their voice.{footnote_reveal_text}" )} ;
          }
          : match "first base" {
-            : print "You hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
+            : print "You're not sure whether to think or say \"first base,\" so you say it, cautiously.\nYou hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
             : set_true "point_first_base" ;
             : set_true "tutorial_10_first_base" ;
             : increment "tutorial_score" ;
@@ -958,7 +958,7 @@ locations {
          : if (!note_nonreciprocal && has_visited("stealing_hill")) {
             : set_integer var="tempint" "9" ;
             : gosub "footnote_reveal" ;
-            : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy directions like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
+            : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy passages like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
             : if (is_carried("travel_grail")) {
                : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them alredy" : "You'll see them" ) + " on completion of your quest." )} ;
                : set_true "achieve_ssss_pre" ;
@@ -1935,7 +1935,8 @@ subroutines {
       }
       : gosub "int_from_noun1" ;
       : if (tempint < 1 || tempint > 17) {
-         : print "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either.\"" ;
+         : print {( "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either." + (ask_thor_misfire ? "" : " Unfortunately, there are too many numbers for zero to be an index, or whatever. But that sort of thing is always worth a try.") + "\"" )} ;
+         : set_true "ask_thor_misfire" ;
          : done ;
       }
       : else_if (tempint == 1) {
@@ -2002,7 +2003,8 @@ subroutines {
       : else_if (tempint == 8) {
          : cycle key = "rule_8" predictable_order = "true" skip_interval = "0" {
             : print "The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>.\"" ;
-            : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. It's a paradox of parsers that understand a lot of words may actually force the reader to work through their vocabulary. Since parsers are no longer shiny and new and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also note if there are two words and suggest the player try a different verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution.\"" ;
+            : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. That's a problem with parsers that accept a lot of words. They may expect exact ones, or they may allow synonyms, and it's tough for the player to decipher." ;
+            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution, though it's not terribly evocative.\"" ;
             : print "\"Uh, oh! Taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -2290,7 +2292,7 @@ subroutines {
                : gosub "add_point" ;
                : update_graphic ;
             } : else {
-               : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere." ;
+               : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere. Like somewhere that might have passages you haven't explored." ;
             }
             : done ;
          }
