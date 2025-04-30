@@ -1398,12 +1398,24 @@ locations {
 			: gosub "footnote_reveal" ;
       }
       on_command {
+      : if (point_fly_score) {
+         : match "x score;x fly" {
+            : print "It's the tune inside you, too. You'll be able to carry it along." ;
+            : done ;
+         }
+      } : else {
+         : match "x sky;x floor" {
+            : print "The sky floor makes you feel artsy." ;
+            : done ;
+         }
+      }
       : match "talk _" {
          : print "Talking would disturb the poetic artsy feel here." ;
          : done ;
       }
       : match "listen _" {
          : print {( point_fly_score ? "You already have a tune inside you." : "You listen, not for words, but..." )} ;
+         : done ;
       }
       : match "fly score" {
          : if (point_fly_score) {
@@ -1462,6 +1474,15 @@ locations {
 			: gosub "footnote_reveal" ;
       }
       on_command {
+      : if (!point_boring_way) {
+         : match "x warring;x bay" {
+            : print "They seem quite involved and focused, bonded by the excitement." ;
+         }
+      } : else {
+         : match "x boring; x way" {
+            : print "Pleasantly uninteresting, compared to what was here." ;
+         }
+      }
       : match "talk _;listen _" {
          : print {( point_boring_way ? "Nothing left to say or hear now that peace has broken out." : "Everyone fights among each other, and the yelling creates a feedback loop. You sense you talking will just inflame everyone more. How to get them to cool down?" )}
          : done ;
@@ -1599,10 +1620,21 @@ locations {
    };
    hub_e_nw : location "{point_grim_tune ? hub_e_grim_tune : hub_e_trim_goon}" {
       on_command {
-      : match "talk _;listen _" {
-         : gosub "hub_jerk" ;
-         : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
-         : done ;
+      : if (point_grim_tune) {
+         : match "x tune;x grim" {
+            : print "It's yours. You're proud of it. You will remember it fondly through the rest of your quest." ;
+            : done ;
+         }
+      } : else {
+         : match "x goon;x trim" {
+            : print "Not gonna beat the {cc_trim_goon} physically. Or with fear. Maybe some other emotion?" ;
+            : done ;
+         }
+         : match "talk _;listen _" {
+            : gosub "hub_jerk" ;
+            : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
+            : done ;
+         }
       }
       : match "grim tune" {
          : if (point_grim_tune) {
