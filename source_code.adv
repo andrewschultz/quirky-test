@@ -414,6 +414,7 @@ strings {
    thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    v_pts : string "<POINTS<#f80>>" ;
+   talj : string "<TALJ<#0f0>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_cm : string "<Christopher Merriner<#0f0>>" ;
    tx_ds : string "<Deborah Sherwood<#0f0>>" ;
@@ -458,7 +459,8 @@ strings {
 
    ## dynamic strings
 
-   YN_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
+   yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
+   ask_5_notes : dynamic_string {( bonus_point_rare_plights && bonus_point_shush_lout ? "You got both of them" : bonus_point_rare_plights || bonus_point_shush_lout ? "You got one of them" : "You missed them, but you can go back if you want" )}
 
    my_score : dynamic_string {( score + "/" + max_score )}
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
@@ -1850,7 +1852,7 @@ barriers {
 subroutines {
    init : subroutine {
    : print "QUIRKY TEST: a tutorial of sorts by Andrew Schultz!" ;
-   : print "Submitted for the 2025 TALP competition." ;
+   : print "Submitted for the 2025 {TALJ} (Text Adventure Literacy Jam)." ;
    : press_any_key ;
    : if (footnotes_available) {
       : gosub "footnote_read_from_survivors" ;
@@ -1972,7 +1974,8 @@ subroutines {
          : cycle key = "rule_5" predictable_order = "true" skip_interval = "0" {
             : print "The fifth rule in Graham Nelson's Bill of Rights is <not to have the game closed off without warning<#f88>>." ;
             : print "This means more than just not having the game shut down. It means you shouldn't have something arbitrary put it in a non-winnable state. But if, say, you are wearing a watch and need to do something by 10:30 PM, that is permissible. Whether or not these constraints are fair goes beyond the basic bill of rights.";
-            : print "Of course, certain fun minor things may be closed off. Here, there were two bonus points in First Base. {ask_5_notes}! While there's a special accomplishment for getting all bonus points, missing either doesn't impact your main quest, finding the {rttr}.\"" ;
+            : print "Of course, certain fun minor things may be closed off. Here, there were two bonus points in First Base. {ask_5_notes}.";
+            : print "While there's a special accomplishment for getting all bonus points, missing either doesn't impact your main quest, finding the {rttr}." ;
          }
          : set_integer var="tempint" "5" ;
          : gosub "ask_thor_tally" ;
@@ -2627,7 +2630,7 @@ subroutines {
    }
 
    meta_about : subroutine {
-      : print "{qt} was made for the 2025 Text Adventure Literacy Jam (TALJ) after years of judging it. I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#0f0>>, a 2023 entry by <Cobwebbed Dragon<#0f0>>, as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
+      : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#0f0>>, a 2023 entry by <Cobwebbed Dragon<#0f0>>, as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
       : print {( "You can see what sort of commands {qt} uses with {verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
       : print "You can find specific thanks in the {thx} command." ;
       : if (!ever_about) {
@@ -2650,7 +2653,7 @@ subroutines {
       : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you when you've guessed one right word for core puzzles." ;
    }
    meta_thanks : subroutine {
-      : print "Thanks to TALP/TALJ admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts.";
+      : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts.";
       : print "Thanks to {tx_ca} for creating Adventuron.";
       : print "Thanks (in alphabetical order) to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}.";
       : print "Thanks to you, for playing this game.";
@@ -2890,7 +2893,7 @@ themes {
    i_cant_do_that = That's a valid command, but not here.
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
-   invalid_choice                                 = {YN_or_12}
+   invalid_choice                                 = {yn_or_12}
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
    inventory_list_empty = Nothing (yet)
    inventory_list_header = Stuff you've acquired:\s
