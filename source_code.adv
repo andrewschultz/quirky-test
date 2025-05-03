@@ -466,7 +466,6 @@ strings {
    notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
 
    unknown_begin_note : dynamic_string {( point_first_base ? "" : ", though special commands are cued in puzzles throughout {qt}" )}
-   bonus_score_string : dynamic_string {( "Your <bonus score<#f80>> is " + bonus_score + " out of <" + max_bonus_score + "<#f00>>." )}
 
    # "can't go that way" dynamic sub-strings
    back_to_hub : dynamic_string {( is_at "hub_w_n" || is_at "hub_w_ne" || is_at "hub_w_e" || is_at "hub_w_s" || is_at "hub_w_sw" || is_at "hub_w_w" || is_at "hub_w_nw" ? "West Tiles" : "East Branch" )}
@@ -3248,7 +3247,10 @@ on_command {
          : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke might make things a bit stale." ;
          }
       : else {
-         : print "Ah! Yes, you are in the spirit of things, here. Have a bonus point." ;
+         : print "Ah! Yes, you are in the spirit of things, here. Have a bonus point!" ;
+         : if (in_tutorial) {
+            : print "Figuring this out in the tutorial is extra impressive. There are still basic commands to figure out, but congratulations on looking ahead to what the main game will be about." ;
+         }
          : set_true "bonus_point_turkey_quest" ;
          : gosub "add_bonus";
       }
@@ -3316,13 +3318,13 @@ on_command {
    }
    : match "score _"  {
       : if (in_tutorial) {
-         : print {( "Your <tutorial score<3>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#ff0>>." )} ;
+         : print {( "Your <tutorial score<#f0f>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#f0f>>." )} ;
       }
-      : print {( "Your <core score<4>> is " + score + " out of <" + max_score + "<#f00>>." )} ;
+      : print {( "Your <core score<#0f0>> is " + score + " out of <" + max_score + "<#0f0>>." )} ;
       : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
-         : print {("You've solved " + points_left_side + " of 7 parts of West Tiles and " + points_right_side + " of 7 parts of East Branch.")}
+         : print {("You've solved {points_left_side} of 7 parts of West Tiles and {points_right_side} of 7 parts of East Branch.")}
       }
-      : print {( bonus_score_string )} ;
+      : print {( "Your <bonus score<#f80>> is {bonus_score} out of <" + max_bonus_score + "<#f80>>." )} ;
       }
    : match "option _;options _;opts _;opt _" {
       : gosub "options_list";
