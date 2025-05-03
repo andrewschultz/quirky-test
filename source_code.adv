@@ -1827,6 +1827,7 @@ locations {
          }
          : match "hi mouse" {
             : if (point_see_glimmering) {
+               : clear_screen ;
                : print "You call on the mouse, who seemed friendly and grateful you made it a home. It appears. You point to the glimmering." ;
                : press_any_key ;
                : print "The mouse uncovers a very small chest, which you, with your experienced adventuring prowess, know must be a tiny shrunk shiny trunk. But it is locked!" ;
@@ -2463,8 +2464,8 @@ subroutines {
                : print "Fighting too hard for perfect sanity undoes the point." ;
             } : else {
                : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
-               : set_true "bonus_point_cease_purging" ;
                : set_integer var="tempint" "16" ;
+               : set_true "bonus_point_sane_role" ;
                : gosub "add_bonus" ;
             }
          }
@@ -3342,7 +3343,7 @@ on_command {
             : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
          }
          : else {
-            : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, but then figure you better not do so to Thor's face." )} ;
+            : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, a bit worried what Thor might say if you found it around him. Hopefully mind reading is not among his powers." )} ;
             : if (!is_at("plain_base")) {
                : set_true "said_bore_outside_base" ;
             }
