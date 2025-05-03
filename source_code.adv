@@ -38,6 +38,8 @@ booleans {
    inventory_incorporeal : boolean "false" ;
    thor_warn_close : boolean "false" ;
    ask_thor_misfire : boolean "false" ;
+   said_bore_outside_base : boolean "false" ;
+   thor_knows_bore : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -973,6 +975,13 @@ locations {
       on_pre_describe {
          : set_integer var="tempint" "5" ;
          : gosub "footnote_reveal" ;
+      }
+      on_tick {
+         : if (said_bore_outside_base && !thor_knows_bore) {
+            : set_true "thor_knows_bore" ;
+            : print "You must have looked a bit sheepish or something, or maybe Thor is kinda omniscient, because he laughs and says \"Ah, you figured out my name. No worries. I'm pleased you figured it out. Wouldn't a' hurt my feelings to say it here." ;
+            : print "Well, hooray for small relief.";
+         }
       }
    };
 
