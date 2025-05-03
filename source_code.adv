@@ -38,6 +38,7 @@ booleans {
    inventory_incorporeal : boolean "false" ;
    thor_warn_close : boolean "false" ;
    ask_thor_misfire : boolean "false" ;
+   score_bonus_nag : boolean "false" ;
    said_bore_outside_base : boolean "false" ;
    thor_knows_bore : boolean "false" ;
 
@@ -352,6 +353,69 @@ collections {
          "<queer old dean/dear old queen<#f80>> (buffer word inside)"
       ]
    };
+   bonus_found_text : list {
+      items = [
+         "TURKEY QUEST (any time)",
+         "<SHUSH LOUT<#f00>> (on LISTENing to Pro Boor)",
+         "<RARE PLIGHTS<#f00>> once you have {cc_prayer_lights}",
+         "<BANE PLACE<#f80>> in Plain Base",
+         "<THEORY BORE<#f80>> once you've met Thor",
+         "<DEATH SENTENCE<#f80>> in Plain Base, around Seth Denton's",
+         "<TEST WILES<#ff0>> in West Tiles",
+         "<BEAST RANCH<#ff0>> in East Branch",
+         "<RIG BOONS<#ff0>> in either hub",
+         "<RACING PASSIONS<#0f0>> when you have the pacing rations",
+         "<SO LONG<#0f0>> when you have the low song",
+         "<VAST FISSION<#0f0>> (or fishin) when you have the fast vision",
+         "<CEASE PURGING<#0f0>> when you feel peace surging",
+         "<PILE TRICKS<#0f0>> when you have the trial pics",
+         "<TILE PRICKS<#0f0>> when you have the trial pics",
+         "<SANE ROLE<#00f>> when you have a rain soul",
+         "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
+      ]
+   };
+   bonus_not_found_text : list {
+      items = [
+         "(unfound yet)",
+         "<(unfound yet)<#f00>>",
+         "<(unfound yet)<#f00>>",
+         "<(unfound yet)<#f80>>",
+         "<(unfound yet)<#f80>>",
+         "<(unfound yet)<#f80>>",
+         "<(unfound yet)<#ff0>>",
+         "<(unfound yet)<#ff0>>",
+         "<(unfound yet)<#ff0>>",
+         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#00f>>",
+         "<(unfound yet)<#f0f>>"
+      ]
+   };
+   bonus_status : list {
+      items = [
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+   };
    jump_list : list {
       items = [
          1,
@@ -413,6 +477,7 @@ strings {
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
+   bon : string "<BONUS<#f80>>" ;
    thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    v_pts : string "<POINTS<#f80>>" ;
@@ -679,6 +744,8 @@ vocabulary {
    : noun / aliases = [yes, y]
    : verb / aliases = [ab, about]
    : verb / aliases = [ask, rule]
+   : verb / aliases = [bonus, bon, bo, b]
+   : verb / aliases = [score, sco]
    : verb / aliases = [f, foot, footnote, footnotes]
    : verb / aliases = [enter, in]
    : verb / aliases = [ch, colorhint]
@@ -816,6 +883,7 @@ locations {
                : if (!bonus_point_rare_plights) {
                   : print "You read about people's complaints. Some seem common and some seem exotic indeed. People hard done by mentally, physically, and financially. Their problems seem more interesting and exciting than yours. You know it's important to care about this sort of thing, and yet, there must be something else in {cc_prayer_lights}, something more uplifting, perhaps a justification you deserve more, even if you have a fun game like this to play." ;
                   : set_true "bonus_point_rare_plights" ;
+                  : set_integer var="tempint" "3" ;
                   : gosub "add_bonus" ;
                } : else {
                   : print "Not again. You want to search for something more positive now." ;
@@ -880,6 +948,7 @@ locations {
                : if (!bonus_point_shush_lout) {
                   : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nPerhaps you need to take a different sort of dig to get rid of them for good. More direct, more personal. Not necessarily profane or cruel." ;
                   : set_true "bonus_point_shush_lout" ;
+                  : set_integer var="tempint" "2" ;
                   : gosub "add_bonus" ;
                } : else {
                   : print "You're not going to quiet the {cc_pro_boor} any further. How to get rid of them?" ;
@@ -921,6 +990,7 @@ locations {
                : print "\"Yes, that's it. This is one of those traps where you're given adequate warning that going somewhere might kill you.\"";
                : set_true "bonus_point_death_sentence" ;
                : destroy "seth_dentons" ;
+               : set_integer var="tempint" "6" ;
                : gosub "add_bonus" ;
             }
             : match "x seth;x dentons" {
@@ -952,6 +1022,7 @@ locations {
       : match "bane place" {
          : if (!bonus_point_bane_place) {
             : print "Thor chuckles a bit. \"Very observant. Yes, plain, but it does the job.\"";
+            : set_integer var="tempint" "4" ;
             : gosub "add_bonus" ;
             : set_true "bonus_point_bane_place" ;
          } : else {
@@ -995,6 +1066,7 @@ locations {
             : if (!bonus_point_test_wiles) {
                : print "Instead of worrying if this all is a task you can't complete, you see it as, well, a test of wiles. This boosts you momentarily, even if it offers no concrete benefits." ;
                : set_true "bonus_point_test_wiles" ;
+               : set_integer var="tempint" "7" ;
                : gosub "add_bonus" ;
             } : else {
                : print "But you already framed this as a test of your wiles." ;
@@ -1018,6 +1090,7 @@ locations {
             : if (!bonus_point_beast_ranch) {
                : print "You wonder if, with your brains, you could tackle a huge beast ranch with mind over matter or something. Then common sense kicks in. But you have fun imagining." ;
                : set_true "bonus_point_beast_ranch" ;
+               : set_integer var="tempint" "8" ;
                : gosub "add_bonus" ;
             } : else {
                : print "You don't want to tempt something like that into existence too often." ;
@@ -1982,13 +2055,37 @@ subroutines {
       }
    add_bonus : subroutine {
       : if (score_notify) {
+         : set_true "score_bonus_nag" ;
          : print "<You just found a bonus point!<6>>" ;
          : if (bonus_score == 0) {
-             : print {( otn + "There are a few of these in " + qt + ", and " + sco + " will let you know your progress there." )};
+             : print "{otn}{qt} contains several bonus points that are uncued. {sco} will let you know how many you've found, and {bon} will list where you found them." ;
          }
       }
+      : decrement "tempint" ; # this is because I use 1-based numbers in my personal table, but Adventuron is 0-based.
+      : collection_modify { collection = "bonus_status" index -> (tempint) content -> ("1") }
       : increment "bonus_score";
       }
+   bonus_display : subroutine {
+      : if (bonus_score == max_bonus_score) {
+         : print "You got all the bonus points." ;
+         : return ;
+      }
+      : if (bonus_score == 0) {
+         : print "You haven't got any bonus points yet." ;
+         : return ;
+      }
+      : clear_screen ;
+      : set_integer var="tempint" "0" ;
+      : collection_iterate "bonus_found_text" {
+         : set_integer var="tempint2" {( int(collection_get{ collection -> ("bonus_status") index -> ( tempint ) }) )} ;
+         : if (tempint2 > 0) {
+            : print {("" + (tempint + 1) + ". " + item())}
+         } : else {
+            : print {( "" + (tempint + 1) + ". " + (collection_get{ collection -> ("bonus_not_found_text") index -> ( tempint ) }) )} ;
+         }
+         : increment "tempint" ;
+      }
+   }
    brief_hill_mad : subroutine {
       : update_graphic "stealing_hill_finds" ;
       : press_any_key ;
@@ -2296,6 +2393,7 @@ subroutines {
             } : else {
                : print "You extrapolate on the fast vision you have and re-interpret events from your past life in many new ways. The mental fission of previous complaints is fast. You make plans for, uh, fishin' for more, once this quest is over. More what? Lighting fires, fighting liars." ;
                : set_true "bonus_point_vast_fission" ;
+               : set_integer var="tempint" "12" ;
                : gosub "add_bonus" ;
             }
          }
@@ -2307,6 +2405,7 @@ subroutines {
             } : else {
                : print "You use the low song in your head to compose a kiss-off to people whom you don't want to stick in your memory, but they do. It helps lighten a few burdens." ;
                : set_true "bonus_point_so_long" ;
+               : set_integer var="tempint" "11" ;
                : gosub "add_bonus" ;
             }
          }
@@ -2317,6 +2416,7 @@ subroutines {
                : print "No. Best not get carried away." ;
             } : else {
                : print "You permit yourself to imagine being on a much higher-powered quest. Boy, you showed those boring old pacing rations! And the people who manufactured them! Or, well, you would have, if they were around.\nYour Walter Mitty moment over, you get back to focusing on your main quest." ;
+               : set_integer var="tempint" "10" ;
                : gosub "add_bonus" ;
                : set_true "bonus_point_racing_passions" ;
             }
@@ -2330,6 +2430,7 @@ subroutines {
             } : else {
                : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
                : set_true "bonus_point_cease_purging" ;
+               : set_integer var="tempint" "13" ;
                : gosub "add_bonus" ;
             }
          }
@@ -2339,6 +2440,7 @@ subroutines {
             : if (!bonus_point_tile_pricks) {
                : print "A brief worrisome thought envelops you. It was a hurt dome, and you only changed the outside. Or you only saw you changed the outside. But you look at the pictures of what's indoors. No, there are no punji pits you can see. You breathe a sigh of relief.";
                : set_true "bonus_point_tile_pricks" ;
+               : set_integer var="tempint" "15" ;
                : gosub "add_bonus" ;
             } : else {
                : print "You already inspected the trial pics for something wrong." ;
@@ -2350,6 +2452,7 @@ subroutines {
             } : else {
                : print "You've found a lot of tricks so far. Why not a few more? You track what you've done and what you hope to do." ;
                : set_true "bonus_point_pile_tricks" ;
+               : set_integer var="tempint" "14" ;
                : gosub "add_bonus" ;
             }
          }
@@ -2361,6 +2464,7 @@ subroutines {
             } : else {
                : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
                : set_true "bonus_point_cease_purging" ;
+               : set_integer var="tempint" "16" ;
                : gosub "add_bonus" ;
             }
          }
@@ -2370,6 +2474,7 @@ subroutines {
             : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
             : destroy "teary_chimes" ;
             : gosub "add_bonus" ;
+            : set_integer var="tempint" "17" ;
             : set_true "bonus_point_cheery_times" ;
             : done ;
          }
@@ -2490,6 +2595,7 @@ subroutines {
          }
          : print "You figure it's worth a try, to ask the big runes to rig boons. Alas, they don't start glowing, or anything. Still, you feel observant and in tune with your surroundings for following a reasonable lead." ;
          : set_true "bonus_point_rig_boons" ;
+         : set_integer var="tempint" "9" ;
          : gosub "add_bonus" ;
       }
    }
@@ -3237,7 +3343,11 @@ on_command {
          }
          : else {
             : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, but then figure you better not do so to Thor's face." )} ;
+            : if (!is_at("plain_base")) {
+               : set_true "said_bore_outside_base" ;
+            }
             : set_true "bonus_point_theory_bore" ;
+            : set_integer var="tempint" "5" ;
             : gosub "add_bonus" ;
          }
       }
@@ -3261,6 +3371,7 @@ on_command {
             : print "Figuring this out in the tutorial is extra impressive. There are still basic commands to figure out, but congratulations on looking ahead to what the main game will be about." ;
          }
          : set_true "bonus_point_turkey_quest" ;
+         : set_integer var="tempint" "1" ;
          : gosub "add_bonus";
       }
    }
@@ -3334,7 +3445,11 @@ on_command {
          : print {("You've solved {points_left_side} of 7 parts of West Tiles and {points_right_side} of 7 parts of East Branch.")}
       }
       : print {( "Your <bonus score<#f80>> is {bonus_score} out of <" + max_bonus_score + "<#f80>>." )} ;
+      : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
+         : set_true "score_bonus_nag" ;
+         : print "You can track which bonus points you've found with <BONUS<#f80>>." ;
       }
+   }
    : match "option _;options _;opts _;opt _" {
       : gosub "options_list";
    }
@@ -3347,6 +3462,9 @@ on_command {
       : if (carried() == 9) {
          : set_true "achieve_haih_pre" ;
       }
+   }
+   : match "bonus _" {
+      : gosub "bonus_display" ;
    }
    : match "notify _" {
       : gosub "options_notify" ;
