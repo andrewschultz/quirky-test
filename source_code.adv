@@ -738,7 +738,7 @@ locations {
                : done ;
             }
          }
-         : match "x me" {
+         : match "x me;x myself;x self" {
             : if (in_tutorial && (!tutorial_1_about_done || !tutorial_2_verbs_done || !tutorial_3_additional_metaverb_done)) {
                : print "While {xme} is a useful starting command, and one you'll soon be using in this tutorial, I put this tutorial on rails. There are meta-commands to acquaint yourself with first." ;
                : done ;
@@ -2677,7 +2677,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_4_x_me_done) {
-         : print {( tcue + (tutorial_x_me_cued ? xme + " is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " makes sense as your first in-world command.")  )} ;
+         : print {( tcue + (tutorial_x_me_cued ? xme + " is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial. It may not be as grammatically correct as X MYSELF or X SELF, but it's easier to type, and parser games try to provide that convenience when sensible." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " makes sense as your first in-world command.")  )} ;
          : set_true "tutorial_x_me_cued" ;
          : return ;
       }
@@ -2828,7 +2828,7 @@ subroutines {
       : gosub "track_achievements_qwwq" ;
       : gosub "track_achievements_kssn" ;
       : if (achieve_cnnc) {
-         : print "(Already got the {achievement_qwwq} achievement for finding all bonus points)" ;
+         : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
       }
       : else_if (bonus_score == max_bonus_score) {
          : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
@@ -3234,7 +3234,7 @@ on_command {
          }
       }
    }
-   : match "x me" {
+   : match "x me;x self;x myself" {
       : set_integer var="tempint" "1" ;
       : gosub "footnote_reveal" ;
       : print "As AFGNCAAPy as ever!{footnote_reveal_text}" ;
