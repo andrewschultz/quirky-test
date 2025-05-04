@@ -458,7 +458,7 @@ collections {
    };
    bad_jump : list {
       items = [
-         0,
+         1,
          1
       ]
    };
@@ -940,6 +940,7 @@ locations {
          } : else {
             : match "listen _;talk _" {
                : print "It's mercifully silent, now, with nobody to talk to, and you like that. Time to figure out what {cc_prayer_lights} is REALLY all about." ;
+               : done ;
             }
          }
          : match "bro poor" {
@@ -3027,10 +3028,10 @@ subroutines {
       } : else {
          : collection_subtract {
             collection_1 = jump_list
-            collection_2 = jump_list
-            result       = jump_set
+            collection_2 = bad_jump
+            result       = temp_list
          }
-         : if (collection_count("jump_set") == 1) {
+         : if (collection_count("temp_list") == 1) {
             : print "For performing all twelve jumps between jumpable rooms, you win the {achievement_dbbd} achievement!" ;
             : set_true "achieve_dbbd" ;
          } : else {
