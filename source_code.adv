@@ -236,6 +236,22 @@ integers {
 }
 
 collections {
+   talk_done : set {} ;
+   talk_need : set {
+      items = [
+         "first_base",
+         "plain_base",
+         "hub_w_n",
+         "hub_w_ne",
+         "hub_w_s",
+         "hub_w_w",
+         "hub_w_nw",
+         "hub_e_ne",
+         "hub_e_e",
+         "hub_e_w",
+         "hub_e_nw"
+      ]
+   };
    ask_list : list {
       items = [
          0,
@@ -448,6 +464,7 @@ collections {
    };
    jump_set : set {
    };
+   temp_list : list;
 }
 
 ## strings
@@ -917,6 +934,7 @@ locations {
             : match "talk -;talk boor" {
                : print "The {cc_pro_boor} babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree. You sense the {cc_pro_boor} has a weakness, though." ;
                : set_true "know_lush_shout" ;
+               : gosub "talk_flag" ;
                : done ;
             }
          } : else {
@@ -973,6 +991,7 @@ locations {
             : done ;
          }
          : match "talk -;talk thor" {
+            : gosub "talk_flag" ;
             : if (talked_to_thor) {
                : print "Now you've broken the ice, probably better to {ask} him about one of the rules, 1-17." ;
             } : else {
@@ -1183,6 +1202,7 @@ locations {
       : match "talk plaster;talk -;listen -" {
          : if (!point_master_plan) {
             : print "The plaster man has secrets to divulge, but talking and listening isn't the way to go." ;
+            : gosub "talk_flag" ;
          } : else {
             : print "That won't do much good now. It wouldn't have done much good before you destroyed the plaster man and got something useful." ;
          }
@@ -1301,6 +1321,7 @@ locations {
       on_command {
       : if (!point_take_crackers) {
          : match "talk trackers;listen trackers;talk -;listen -" {
+            : gosub "talk_flag" ;
             : print "The cake trackers are too busy grumbling among themselves with \"Lack of pies? Pack of lies!\" and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
             : done ;
          }
@@ -1384,6 +1405,7 @@ locations {
             : done ;
          }
          : match "talk -;talk grunters;talk hills;listen -" {
+            : gosub "talk_flag" ;
             : print "Your grunting skills are not up to scratch. You try again with actual words. Still, nothing. Perhaps there are other ways to bring out more than grunting from here." ;
             : done ;
          }
@@ -1522,6 +1544,7 @@ locations {
    hub_e_ne : location "{point_bending_truth ? hub_e_bending_truth : hub_e_trending_booth}" {
       on_command {
       : match "talk _;listen _" {
+         : gosub "talk_flag" ;
          : print {( point_bending_truth ? "Nothing to say or hear, but the quiet sure is nice." : "Talking and listening doesn't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
          : done ;
       }
@@ -1566,6 +1589,7 @@ locations {
          }
       }
       : match "talk _;listen _" {
+         : gosub "talk_flag" ;
          : print {( point_boring_way ? "Nothing left to say or hear now that peace has broken out." : "Everyone fights among each other, and the yelling creates a feedback loop. You sense you talking will just inflame everyone more. How to get them to cool down?" )}
          : done ;
       }
@@ -1677,6 +1701,7 @@ locations {
          }
       }
       : match "talk _;listen _" {
+         : gosub "talk_flag" ;
          : print {( point_funny_mountain ? "You can't really match the mountain's jokes, but you don't need to. You're happy enough." : "Denizens of the fountain don't seem to care about you. They just keep trying to fish money out of the fountain, which disappears." )} ;
          : done ;
       }
@@ -1713,6 +1738,7 @@ locations {
             : done ;
          }
          : match "talk _;listen _" {
+            : gosub "talk_flag" ;
             : gosub "hub_jerk" ;
             : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
             : done ;
@@ -2385,6 +2411,7 @@ subroutines {
          : print "There's no chance or need for chat after your little nonviolent victory." ;
          : done ;
       }
+      : gosub "talk_flag" ;
    }
    item_based_points : subroutine {
       : if (is_carried "fast_vision") {
@@ -2614,6 +2641,18 @@ subroutines {
       : print "You're already here!";
       : set_integer var = "latest_warp_number" "-1" ;
       : done ;
+   }
+   talk_flag : subroutine {
+      : set_integer var="tempint" "0" ;
+      : collection_push { collection = "talk_done" content -> (current_location()) } ;
+      : collection_subtract {
+            collection_1 = talk_need
+            collection_2 = talk_done
+            result       = temp_list
+      }
+      : collection_iterate "temp_list" {
+         : print {( "* " + item() )} ;
+      }
    }
    think_thoughts : subroutine {
       : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
@@ -2906,6 +2945,21 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      : if (achieve_tyyt) {
+         : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
+      } : else {
+         : collection_subtract {
+               collection_1 = talk_need
+               collection_2 = talk_done
+               result       = temp_list
+         }
+         : if (collection_count("temp_list") == 0) {
+            : print "For trying to talk to everyone who can speak, you win the {achievement_tyyt} achievement!" ;
+            : set_true "achieve_tyyt" ;
+         } : else {
+            : print "You haven't unlocked the {achievement_tyyt} achievement yet." ;
+         }
+      }
       : if (achieve_hbbh) {
          : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
       } : else_if (achieve_hbbh_pre) {
