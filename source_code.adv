@@ -495,6 +495,7 @@ strings {
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
    bon : string "<BONUS<#f80>>" ;
+   links : string "<LINKS<#f80>>" ;
    thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    v_pts : string "<POINTS<#f80>>" ;
@@ -2877,6 +2878,7 @@ subroutines {
       : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#0f0>>, a 2023 entry by <Cobwebbed Dragon<#0f0>>, as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
       : print {( "You can see what sort of commands {qt} uses with {verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
       : print "You can find specific thanks in the {thx} command." ;
+      : print "Relevant links are in the {links} command." ;
       : if (!ever_about) {
          : print "{otn}if you want the mechanic for point-scoring commands spoiled or explained, {v_pts} will do so." ;
          : print {( "{otn}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and " + (has_visited("plain_base") ? "Thor" : "an NPC you'll find") + ", it's my hope {qt} can be enjoyed just as a game." )} ;
@@ -2886,6 +2888,14 @@ subroutines {
          : set_true "tutorial_1_about_done" ;
          : increment "tutorial_score" ;
       }
+   }
+   meta_links : subroutine {
+      : print "Clicking on the hyperlinks below will open a new tab." ;
+      : print "Here is a link to <TALJ 2025<#8f8>>[https://itch.io/jam/talp2025], where {qt} was entered on release. {qt} would not have been a thing without it, or without <Adventuron<#8f8>>[http://adventuron.io]." ;
+      : print "Here is a link to <Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]." ;
+      : print "If you find a bug, big or small, and want to report an issue, here is a link to <Quirky Test's GitHub repository<#8f8>>[https://andrewschultz.itch.io/quirky-test]." ;
+      : print "If you would like to share a transcript with me, send it to <blurglecruncheon@gmail.com<#88f>>." ;
+      : gosub "check_additional_meta" ;
    }
    meta_points : subroutine {
       : print "{qt} gives points for finding a spoonerism for objects or ideas in-game. So what is a spoonerism?" ;
@@ -3449,6 +3459,9 @@ on_command {
    }
    : match "about _" {
       : gosub "meta_about" ;
+   }
+   : match "link _;links _" {
+      : gosub "meta_links" ;
    }
    : match "points _" {
       : gosub "meta_points" ;
