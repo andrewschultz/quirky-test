@@ -2407,7 +2407,7 @@ subroutines {
          : print {( "Footnotes must be between 1 and " + collection_count("footnote_status_list") + ", though 0 gives a list of what you've found." )} ;
          : done ;
       }
-      : if (int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint - 1)}) == 0 ) {
+      : if (!cheat_dont_require && int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint - 1)}) == 0 ) {
          : print "You haven't revealed footnote {tempint} yet." ;
          : done ;
       }
@@ -3381,7 +3381,7 @@ on_command {
       }
    }
    : match "footnote _" {
-      : if (footnotes_available) {
+      : if (footnotes_available || cheat_dont_require) {
          : gosub "footnote_printer" ;
          : done ;
       }
