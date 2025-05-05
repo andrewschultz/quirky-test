@@ -1919,6 +1919,14 @@ locations {
          }
       }
    }
+
+   cht : location "This sets in_debug and cheat_dont_require. You need to L to go back where you were." {
+      on_tick {
+         : set_true "in_debug" ;
+         : set_true "cheat_dont_require" ;
+         : goto {( "" + previous_location() )} ;
+      }
+   }
 };
 
 # end locations
@@ -3255,14 +3263,15 @@ themes {
 # end subroutines
 
 ## On_debug and on_startup both call the INIT/TUTORIAL subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
+## I now use GT CHT to toggle my in_debug variable
 
-#on_debug {
-#   : set_true "in_debug" ;
+on_debug {
 #   : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
+#   : set_true "in_debug" ;
 #   : gosub "init_check" ;
 #   : gosub "init" ;
 #   : gosub "tutorial_choice" ;
-#}
+}
 
 on_startup {
    : gosub "init" ;
