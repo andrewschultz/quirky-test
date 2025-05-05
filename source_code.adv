@@ -2202,7 +2202,7 @@ subroutines {
          : gosub "ask_thor_debug" ;
       }
       : if (tempint < 1 || tempint > 17) {
-         : print {( "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either." + (ask_thor_misfire ? "" : " Unfortunately, there are too many numbers for zero to be an index, or whatever. But that sort of thing is always worth a try.") + "\"" )} ;
+         : print {( "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either." + (ask_thor_misfire ? "" : " Unfortunately, the rules are too long to let zero to be an index. But that sort of thing is always worth a try for the clever adventurer.") + "\"" )} ;
          : set_true "ask_thor_misfire" ;
          : done ;
       }
@@ -2242,8 +2242,7 @@ subroutines {
          : cycle key = "rule_5" predictable_order = "true" skip_interval = "0" {
             : print "The fifth rule in Graham Nelson's Bill of Rights is <not to have the game closed off without warning<#f88>>." ;
             : print "This means more than just not having the game shut down. It means you shouldn't have something arbitrary put it in a non-winnable state. But if, say, you are wearing a watch and need to do something by 10:30 PM, that is permissible. Whether or not these constraints are fair goes beyond the basic bill of rights.";
-            : print "Of course, certain fun minor things may be closed off. Here, there were two bonus points in First Base. {ask_5_notes}.";
-            : print "While there's a special accomplishment for getting all bonus points, missing either doesn't impact your main quest, finding the {rttr}." ;
+            : print "Of course, certain fun minor things may be closed off. Here, there were two bonus points in First Base. {ask_5_notes}.\nAnd while there's a special accomplishment for getting all bonus points, missing either doesn't impact your main quest, finding the {rttr}." ;
          }
          : set_integer var="tempint" "5" ;
          : gosub "ask_thor_tally" ;
@@ -2271,8 +2270,7 @@ subroutines {
          : cycle key = "rule_8" predictable_order = "true" skip_interval = "0" {
             : print "The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>.\"" ;
             : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. That's a problem with parsers that accept a lot of words. They may expect exact ones, or they may allow synonyms, and it's tough for the player to decipher." ;
-            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution, though it's not terribly evocative.\"" ;
-            : print "\"Uh, oh! Taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
+            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution, though it's not terribly evocative.\n\"So taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2307,8 +2305,8 @@ subroutines {
       : else_if (tempint == 12) {
          : cycle key = "rule_12" predictable_order = "true" skip_interval = "0" {
          : print "The twelfth rule in Graham Nelson's Player's Bill of Rights is <not to depend too much on luck<#f88>>." ;
-         : print "It's difficult, of course. If there is no luck, a game may not be replayable." ;
-         : print "Here, there's no luck whatsoever. Perhaps this is outdated, although some parser games encourage the player to strategize for a maximum score based on random events." ;
+         : print "It's difficult, of course. If there is no luck, a game may not be replayable. And it can be fun to strategize to lessen bad luck." ;
+         : print "In {qt}, there's no luck whatsoever. Which means that one time through may be enough, though {qt} does have bonus points and achievements to hunt down. But only if you're interested." ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2316,7 +2314,8 @@ subroutines {
       : else_if (tempint == 13) {
          : cycle key = "rule_13" predictable_order = "true" skip_interval = "0" {
          : print "The thirteenth rule in Graham Nelson's Player's Bill of Rights is <to be able to understand a problem once it is solved<#f88>>." ;
-         : print "\"Well, in a one-trick pony adventure like this, 'understand it once it's solved' is not really a problem. Of course, a problem from the other side is that the player says yeah, yeah, I get it, already.\"" ;
+         : print "Of course, problems you've seen before aren't fun to solve. And being pushed to make that leap of logic without a spoiler is very gratifying. The player has a right to feel accomplished." ;
+         : print "\"Well, in a one-trick pony adventure like this, \"understand it once it's solved\" is not really a problem. Of course, a problem from the other side is that the player says yeah, yeah, I get it, already, before tuning out.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2324,15 +2323,16 @@ subroutines {
       : else_if (tempint == 14) {
          : cycle key = "rule_14" predictable_order = "true" skip_interval = "0" {
          : print "The fourteenth rule in Graham Nelson's Player's Bill of Rights is <not to be given too many red herrings<#f88>>." ;
-         : print "A too on-rails game is boring, It's fun to have those side ventures." ;
-         : print "Here, well, there are a few bonus points I hope you enjoy, but I kept the maze compact and hopefully the funny side locations just add flavor." ;
+         : print "A too on-rails game is boring. It's fun to have those side ventures. But they can be inane, or they can make the player worry they missed something." ;
+         : print "Here, well, there are a few bonus points I hope you enjoy, and for those who enjoy hunting down footnotes and achievements, I have them too. Do as much or as little as you want." ;
          }
          : gosub "ask_thor_tally" ;
       }
       : else_if (tempint == 15) {
          : cycle key = "rule_15" predictable_order = "true" skip_interval = "0" {
          : print "The fifteenth rule in Graham Nelson's Player's Bill of Rights is <to have a good reason why something is impossible<#f88>>." ;
-         : print "This isn't a terribly ambitious game, and it doesn't have a ton to interact with. So this doesn't apply. But hopefully if you run into a puzzle where you have the right phrase, the reject makes some sense." ;
+         : print "Parsers, since you can type anything in, give you the feeling anything should be possible. But one doesn't have the time to implement everything. So there are some barriers required to say: this standard verb isn't really relevant here." ;
+         : print "{qt} isn't a terribly ambitious game interactivity-wise. But of course we still need to tell you why you can't eat something right now, or whatever. And hopefully if you run into a puzzle where you have the right phrase, the reject makes some sense." ;
          }
          : gosub "ask_thor_tally" ;
       }
@@ -2340,7 +2340,7 @@ subroutines {
          : cycle key = "rule_16" predictable_order = "true" skip_interval = "0" {
          : print "The sixteenth rule in Graham Nelson's Player's Bill of Rights is <not to need to be American<#f88>>." ;
          : print "\"This was one of the more controversial rules, as the definition is not very exact. But of course, it's not just about being American. Needing to know obscure stuff specific to any culture or trivia might make it hard for people to enjoy things fully, even if along the way you learn interesting things about a culture or hobby.\"" ;
-         : print "Oh dear. There's a slang word or two here that originate in the US, but I tried to keep them common." ;
+         : print "For {qt}, there's a slang word or two here that originate in the US, but the hope is, it is logical with only so many possible misspellings." ;
          }
          : gosub "ask_thor_tally" ;
       }
