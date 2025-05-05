@@ -685,9 +685,8 @@ strings {
    cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "Glee simmers")} ;
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
 
-   ## footnote notifications and other dynamic strings
+   ## footnote notification with, maybe, other dynamic strings
    footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
-   fnh : string "<(must be done to win game)<#f00>>" ;
 
    ## achievement strings
    ## reds = certain verb (presence or absence)
@@ -2137,6 +2136,7 @@ subroutines {
          : return ;
       }
       : clear_screen ;
+      : print "Here is a list of all the bonus points. The color-coding roughly lumps them together by when you can achieve them." ;
       : set_integer var="tempint" "0" ;
       : collection_iterate "bonus_found_text" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("bonus_status") index -> ( tempint ) }) )} ;
@@ -2380,17 +2380,14 @@ subroutines {
          : print "You haven't found any footnotes, so I can't list them, yet." ;
          : done ;
       }
-      : print "Here's a list of footnote numbers. <Green<#0f0>> descriptions are ones you've found. <Red<#f00>> have clues for ones you've not (yet) found:" ;
+      : print "Here's a list of footnotes. They are numbered by likely order found in-game (ROYGBV,) with the same color indicating a block of events." ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
          : if (tempint2 > 0) {
-            : print {("" + (tempint + 1) + ". " + item())}
+            : print {("" + (tempint + 1) + ". " + item() + (tempint2 == 1 ? " (unread)" : "") )}
          } : else {
             : print {( "" + (tempint + 1) + ". " + (collection_get{ collection -> ("footnote_hinting_list") index -> ( tempint ) }) )} ;
-         }
-         : if (tempint == max_footnote_found) {
-            : done ;
          }
          : increment "tempint" ;
       }
