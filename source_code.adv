@@ -1500,8 +1500,8 @@ locations {
 
    hub_e_n : location "{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}{footnote_reveal_text}" {
       on_pre_describe {
-			: set_integer var="tempint" "13" ;
-			: gosub "footnote_reveal" ;
+         : set_integer var="tempint" "13" ;
+         : gosub "footnote_reveal" ;
       }
       on_command {
       : if (point_fly_score) {
@@ -1577,8 +1577,10 @@ locations {
    };
    hub_e_e : location "{point_boring_way ? hub_e_boring_way : hub_e_warring_bay}{footnote_reveal_text}" {
       on_pre_describe {
-			: set_integer var="tempint" "15" ;
-			: gosub "footnote_reveal" ;
+         : if (point_boring_way) {
+            : set_integer var="tempint" "15" ;
+            : gosub "footnote_reveal" ;
+         }
       }
       on_command {
       : if (!point_boring_way) {
@@ -1674,12 +1676,16 @@ locations {
                : gosub "say_half" ;
             }
             : match "x roaring;x pain" {
-               : print "Paying attention to the pain will just make it worse. Maybe it could be something less oppressive." ;
+            : set_integer var="tempint" "10" ;
+            : gosub "footnote_reveal" ;
+               : print "Paying attention to the pain will just make it worse. Maybe it could be something less oppressive.{footnote_reveal_text}" ;
                : done ;
             }
          } : else {
+            : set_integer var="tempint" "10" ;
+            : gosub "footnote_reveal" ;
             : match "x pouring;x rain" {
-               : print "You look to/at the rain for more poetic inspiration, but poetic inspiration doesn't quite work that way." ;
+               : print "You look to/at the rain for more poetic inspiration, but poetic inspiration doesn't quite work that way.{footnote_reveal_text}" ;
                : done ;
             }
          }
@@ -1788,8 +1794,8 @@ locations {
       on_command {
          : if (is_beside("hissing_mouse")) {
             : match "x mouse;x hissing" {
-			      : set_integer var="tempint" "16" ;
-			      : gosub "footnote_reveal" ;
+               : set_integer var="tempint" "16" ;
+               : gosub "footnote_reveal" ;
                : print "The mouse's hissing appears more defensive than anything. It makes you think \"Gray mouse may grouse.\"{footnote_reveal_text}" ;
                : done ;
             }
@@ -2401,6 +2407,9 @@ subroutines {
    }
    footnote_hub_history : subroutine {
       : if ((!footnotes_available) || (history_footnote_found)) {
+         : return ;
+      }
+      : if ((!has_visited "west_tiles") || (!has_visited "east_branch")) {
          : return ;
       }
       : set_integer var="tempint" "6" ;
