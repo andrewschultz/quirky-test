@@ -41,6 +41,7 @@ booleans {
    score_bonus_nag : boolean "false" ;
    said_bore_outside_base : boolean "false" ;
    thor_knows_bore : boolean "false" ;
+   footnote_color_note : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -2381,16 +2382,20 @@ subroutines {
          : print "You haven't found any footnotes, so I can't list them, yet." ;
          : done ;
       }
-      : print "Here's a list of footnotes. They are numbered by likely order found in-game (ROYGBV,) with the same color indicating a block of events." ;
+      : print "Here is a list of all the footnotes, in approximate order you might find them." ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
          : if (tempint2 > 0) {
             : print {("" + (tempint + 1) + ". " + item() + (tempint2 == 1 ? " (found, unread)" : "") )}
          } : else {
-            : print {( "" + (tempint + 1) + ". " + (collection_get{ collection -> ("footnote_hinting_list") index -> ( tempint ) }) )} ;
+            : print {( "" + (tempint + 1) + ". (not found) " + (collection_get{ collection -> ("footnote_hinting_list") index -> ( tempint ) }) )} ;
          }
          : increment "tempint" ;
+      }
+      : if (!footnote_color_note) {
+         : print "{otn}the footnotes follow the same order as {bon}, though nothing corresponds to blue." ;
+         : set_true "footnote_color_note" ;
       }
       : done ;
    }
