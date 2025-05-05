@@ -468,12 +468,6 @@ collections {
       items = [
       ]
    };
-   bad_jump : list {
-      items = [
-         1,
-         1
-      ]
-   };
    jump_set : set {
    };
    temp_list : list;
@@ -1441,7 +1435,7 @@ locations {
          }
       } : else {
          : match "talk -;talk hunters; listen -" {
-            : print "With the hunters long gone and the meal finished, there's not much chance for meaningful interaction." ;
+            : print "With the hunters long gone, the meal finished, and the hills no longer grunting, there's not much chance for meaningful interaction." ;
             : done ;
          }
       }
@@ -1774,7 +1768,6 @@ locations {
             : done ;
          }
          : match "talk _;listen _" {
-            : gosub "talk_flag" ;
             : gosub "hub_jerk" ;
             : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
             : done ;
@@ -1928,6 +1921,8 @@ locations {
    }
 };
 
+# end locations
+
 # connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
 
 connections {
@@ -2073,7 +2068,7 @@ barriers {
    }
 }
 
-# end locations
+# end connections
 
 # subroutines are generally organized alphabetically, but INIT comes first
 
