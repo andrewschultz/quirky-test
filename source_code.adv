@@ -287,16 +287,16 @@ collections {
    };
    footnote_finding_list : list {
       items = [
-         "<X ME two times<#0f0>>",
-         "<GO WEST for the first point<#0f0>>",
-         "<Try going east from Burst Face<#0f0>>",
-         "<Examine the Pro Boor<#0f0>>",
-         "<First description for Plain Base<#0f0>>",
-         "<Visit either hub<#0f0>>",
-         "<Get to Stealing Hill<#0f0>>",
-         "<XYZZY<#0f0>>",
-         "<Return to Thor after visiting Stealing Hill<#0f0>>",
-         "<Examine the plaster man/master plan<#0f0>>",
+         "<X ME two times<#f00>>",
+         "<GO WEST for the first point<#f00>>",
+         "<Try going east from Burst Face<#f00>>",
+         "<Examine the Pro Boor<#f00>>",
+         "<First description for Plain Base<#f80>>",
+         "<Visit either hub<#ff0>>",
+         "<Get to Stealing Hill<#ff0>>",
+         "<XYZZY<#ff0>>",
+         "<Return to Thor after visiting Stealing Hill<#ff0>>",
+         "<Examine the plaster man/master plan or pouring rain/roaring pain<#0f0>>",
          "<Examine the Malice Chap<#0f0>>",
          "<Examine the crackers<#0f0>>",
          "<Get to Sky Floor<#0f0>>",
@@ -309,22 +309,22 @@ collections {
    footnote_hinting_list : list {
       items = [
          "<Try something again<#f00>>",
-         "{fnh}",
+         "<Found during core walkthrough<#f00>>",
          "<Looking back, sort of<#f00>>",
          "<Examine someone<#f00>>",
-         "{fnh}",
-         "{fnh}",
-         "{fnh}",
-         "<Magic word<#f00>>",
-         "{fnh}",
-         "<Examine something<#f00>>",
-         "<Examine someone<#f00>>",
-         "<Examine something<#f00>>",
-         "{fnh}",
-         "<Examine something<#f00>>",
-         "{fnh}",
-         "<Examine something<#f00>>"
-         "<Examine something<#f00>>",
+         "<Found during core walkthrough<#f80>>",
+         "<Found during core walkthrough<#ff0>>",
+         "<Found during core walkthrough<#ff0>>",
+         "<Magic word<#ff0>>",
+         "<Found during core walkthrough<#ff0>>",
+         "<Examine something<#0f0>>",
+         "<Examine someone<#0f0>>",
+         "<Examine something<#0f0>>",
+         "<Found during core walkthrough<#0f0>>",
+         "<Examine something<#0f0>>",
+         "<Found during core walkthrough<#0f0>>",
+         "<Examine something<#f0f>>"
+         "<Examine something<#f0f>>",
       ]
    }
    footnote_status_list : list {
