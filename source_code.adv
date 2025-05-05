@@ -145,24 +145,36 @@ booleans {
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
 
    ## achievement booleans
-   achieve_tyyt : boolean "false" scope="survivor" ;
-   achieve_qwwq : boolean "false" scope="survivor" ;
-   achieve_kssn : boolean "false" scope="survivor" ;
-   achieve_cnnc : boolean "false" scope="survivor" ;
-   achieve_ssss : boolean "false" scope="survivor" ;
-   achieve_ssss_pre : boolean "false" scope="survivor" ;
+   ## reds
    achieve_haih : boolean "false" scope="survivor" ;
    achieve_haih_pre : boolean "false" scope="survivor" ;
-   achieve_tmmt : boolean "false" scope="survivor" ;
-   achieve_tmmt_pre : boolean "false" scope="survivor" ;
+   ## later: MTTM
+   achieve_tnnt: boolean "false" scope="survivor" ;
+   achieve_tyyt : boolean "false" scope="survivor" ;
+
+   ## oranges
+   achieve_cnnc : boolean "false" scope="survivor" ;
+
+   ## yellows
+   achieve_qwwq : boolean "false" scope="survivor" ;
+   achieve_kssn : boolean "false" scope="survivor" ;
+
+   ## greens
+   achieve_ssss : boolean "false" scope="survivor" ;
+   achieve_ssss_pre : boolean "false" scope="survivor" ;
+   achieve_gssg: boolean "false" scope="survivor" ;
+   achieve_srrs: boolean "false" scope="survivor" ;
+
+   ## blues
    achieve_cjjc: boolean "false" scope="survivor" ;
    achieve_cjjc_pre: boolean "false" scope="survivor" ;
+   achieve_tmmt : boolean "false" scope="survivor" ;
+   achieve_tmmt_pre : boolean "false" scope="survivor" ;
    achieve_dbbd: boolean "false" scope="survivor" ;
    achieve_cddc: boolean "false" scope="survivor" ;
    achieve_cddc_pre: boolean "false" scope="survivor" ;
-   achieve_gssg: boolean "false" scope="survivor" ;
-   achieve_srrs: boolean "false" scope="survivor" ;
-   achieve_tnnt: boolean "false" scope="survivor" ;
+
+   ## purples
    achieve_hbbh: boolean "false" scope="survivor" ;
    achieve_hbbh_pre: boolean "false" scope="survivor" ;
    achieve_nbbn: boolean "false" scope="survivor" ;
@@ -677,21 +689,36 @@ strings {
    footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
    fnh : string "<(must be done to win game)<#f00>>" ;
 
-   achievement_tyyt : string "<Too Yacky: You, Tacky<#f80>>" ;
-   achievement_nbbn : string "<Neat-Book-Beat Nook<#f80>>" ;
-   achievement_qwwq : string "<Quell-Worrying-Well Querying<#f80>>" ;
-   achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#f80>>" ;
+   ## achievement strings
+   ## reds = certain verb (presence or absence)
+   achievement_haih : string "<Hi, All I Haul<#f00>>" ;
+   ## MTTM post-release
+   achievement_tnnt : string "<Totes Need Notes Teed<#f00>>" ;
+   achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
+
+   ## orange = bonus points / game-specific commands
+   ##PCPCCP post-release
+   ##ROER post-release
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
-   achievement_ssss : string "<So Slick! Slow? Sick!<#f80>>" ;
-   achievement_hbbh : string "<Hi! Beer By Here?<#f80>>" ;
-   achievement_haih : string "<Hi, All I Haul<#f80>>" ;
-   achievement_cjjc : string "<Chump, Joke Jump? Choke<#f80>>" ;
-   achievement_tmmt : string "<Throw Me Mo': Three<#f80>>" ;
-   achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#f80>>" ;
-   achievement_cddc : string "<Cousin, Draft Dozen-Craft<#f80>>" ;
-   achievement_gssg : string "<Great Style, Straight Guile<#f80>>" ;
-   achievement_srrs : string "<Second Revvin' Reckoned? Seven<#f80>>" ;
-   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
+
+   ## yellow = asking Thor
+   achievement_qwwq : string "<Quell-Worrying-Well Querying<#ff0>>" ;
+   achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#ff0>>" ;
+
+   ## green = how you get them all
+   achievement_ssss : string "<So Slick! Slow? Sick!<#8f8>>" ;
+   achievement_gssg : string "<Great Style, Straight Guile<#8f8>>" ;
+   achievement_srrs : string "<Second Revvin' Reckoned? Seven<#8f8>>" ;
+
+   ## blue = abusing the warp command
+   achievement_tmmt : string "<Throw Me Mo': Three<#00f>>" ;
+   achievement_cjjc : string "<Chump, Joke Jump? Choke<#00f>>" ;
+   achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#00f>>" ;
+   achievement_cddc : string "<Cousin, Draft Dozen-Craft<#00f>>" ;
+
+   ## purple = examine
+   achievement_hbbh : string "<Hi! Beer By Here?<#f0f>>" ;
+   achievement_nbbn : string "<Neat-Book-Beat Nook<#f0f>>" ;
 
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 
@@ -2982,6 +3009,22 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      # red achievements
+      : if (achieve_haih) {
+         : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
+      }
+      : else_if (achieve_haih_pre) {
+         : print "For taking inventory when carrying around the maximum number of items possible, you win the {achievement_haih} achievement!" ;
+         : set_true "achieve_haih" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_haih} achievement yet." ;
+      }
+      : if (achieve_tnnt) {
+         : print "You already unlocked the {achievement_tnnt} achievement." ;
+      } : else {
+         : gosub "footnote_endgame_check" ;
+      }
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
       } : else {
@@ -2997,42 +3040,8 @@ subroutines {
             : print "You haven't unlocked the {achievement_tyyt} achievement yet." ;
          }
       }
-      : if (achieve_hbbh) {
-         : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
-      } : else_if (achieve_hbbh_pre) {
-         : print "For noting beer around Thor, you win the {achievement_hbbh} achievement!" ;
-         : set_true "achieve_hbbh" ;
-      } : else {
-         : print "You haven't unlocked the {achievement_hbbh} achievement yet." ;
-      }
-      : if (achieve_nbbn) {
-         : print "(Already got the {achievement_nbbn} achievement for reading all the book titles on the bookshelf)" ;
-      } : else_if (achieve_nbbn_pre) {
-         : print "For reading all the book titles on the bookshelf, you win the {achievement_nbbn} achievement!" ;
-         : set_true "achieve_nbbn" ;
-      } : else {
-         : print "You haven't unlocked the {achievement_nbbn} achievement yet." ;
-      }
-      : if (achieve_ssss) {
-         : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
-      } : else_if (achieve_ssss_pre) {
-         : print "For not returning to Thor until you got the grail, you win the {achievement_ssss} achievement!" ;
-         : set_true "achieve_ssss" ;
-      } : else {
-         : print "You haven't unlocked the {achievement_ssss} achievement yet." ;
-      }
-      : if (achieve_haih) {
-         : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
-      }
-      : else_if (achieve_haih_pre) {
-         : print "For taking inventory when carrying around the maximum number of items possible, you win the {achievement_haih} achievement!" ;
-         : set_true "achieve_haih" ;
-      }
-      : else {
-         : print "You haven't unlocked the {achievement_haih} achievement yet." ;
-      }
-      : gosub "track_achievements_qwwq" ;
-      : gosub "track_achievements_kssn" ;
+
+      ## orange achievements
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
       }
@@ -3043,6 +3052,42 @@ subroutines {
       : else {
          : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
       }
+
+      ## yellow achievements
+      : gosub "track_achievements_qwwq" ;
+      : gosub "track_achievements_kssn" ;
+
+      ## green achievements
+      : if (achieve_ssss) {
+         : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
+      } : else_if (achieve_ssss_pre) {
+         : print "For not returning to Thor until you got the grail, you win the {achievement_ssss} achievement!" ;
+         : set_true "achieve_ssss" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_ssss} achievement yet." ;
+      }
+      : if (achieve_gssg) {
+         : print "You already unlocked the {achievement_gssg} achievement for not having to repeat the right phrase in any hub side room." ;
+      } : else {
+         : if (hub_think_needed == 0) {
+            : print "For not having to repeat the right phrase in any hub side room, you win the {achievement_gssg} achievement!" ;
+            : set_true "achieve_gssg" ;
+         } : else {
+            : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
+         }
+      }
+      : if (achieve_srrs) {
+         : print "You already unlocked the {achievement_srrs} achievement." ;
+      } : else {
+         : if (hub_think_needed == 7) {
+            : print "For trying to flip all seven hub rooms, including the hill, before you were ready, you win the {achievement_srrs} achievement!" ;
+            : set_true "achieve_srrs" ;
+         } : else {
+            : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
+         }
+      }
+
+      ## blue achievements
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
       } : else_if (achieve_tmmt_pre) {
@@ -3059,21 +3104,7 @@ subroutines {
       } : else {
          : print "You haven't unlocked the {achievement_cjjc} achievement yet." ;
       }
-      : if (achieve_dbbd) {
-         : print "You already unlocked the {achievement_dbbd} achievement." ;
-      } : else {
-         : collection_subtract {
-            collection_1 = jump_list
-            collection_2 = bad_jump
-            result       = temp_list
-         }
-         : if (collection_count("temp_list") == 1) {
-            : print "For performing all twelve jumps between jumpable rooms, you win the {achievement_dbbd} achievement!" ;
-            : set_true "achieve_dbbd" ;
-         } : else {
-            : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
-         }
-      }
+      : gosub "track_achievements_dbbd" ;
       : if (achieve_cddc) {
          : print "You already unlocked the {achievement_cddc} achievement." ;
       } : else_if (achieve_cddc_pre) {
@@ -3082,32 +3113,45 @@ subroutines {
       } : else {
             : print "You haven't unlocked the {achievement_cddc} achievement yet." ;
       }
-      : if (achieve_srrs) {
-         : print "You already unlocked the {achievement_srrs} achievement." ;
+
+      ## purple achievements
+      : if (achieve_hbbh) {
+         : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
+      } : else_if (achieve_hbbh_pre) {
+         : print "For noting beer around Thor, you win the {achievement_hbbh} achievement!" ;
+         : set_true "achieve_hbbh" ;
       } : else {
-         : if (hub_think_needed == 7) {
-            : print "For trying to flip all seven hub rooms, including the hill, before you were ready, you win the {achievement_srrs} achievement!" ;
-            : set_true "achieve_srrs" ;
-         } : else {
-            : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
-         }
+         : print "You haven't unlocked the {achievement_hbbh} achievement yet." ;
       }
-      : if (achieve_gssg) {
-         : print "You already unlocked the {achievement_gssg} achievement for not having to repeat the right phrase in any hub side room." ;
+      : if (achieve_nbbn) {
+         : print "(Already got the {achievement_nbbn} achievement for reading all the book titles on the bookshelf)" ;
+      } : else_if (achieve_nbbn_pre) {
+         : print "For reading all the book titles on the bookshelf, you win the {achievement_nbbn} achievement!" ;
+         : set_true "achieve_nbbn" ;
       } : else {
-         : if (hub_think_needed == 0) {
-            : print "For not having to repeat the right phrase in any hub side room, you win the {achievement_gssg} achievement!" ;
-            : set_true "achieve_gssg" ;
-         } : else {
-            : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
-         }
+         : print "You haven't unlocked the {achievement_nbbn} achievement yet." ;
       }
-      : if (achieve_tnnt) {
-         : print "You already unlocked the {achievement_tnnt} achievement." ;
-      } : else {
-         : gosub "footnote_endgame_check" ;
-      }
+
+      ## grey achievement (post-comp)
    }
+
+   # track_achievement subroutines are in alphabetical order
+
+   track_achievements_dbbd : subroutine {
+      : if (achieve_dbbd) {
+         : print "You already unlocked the {achievement_dbbd} achievement for performing all twelve jumps between jumpable locations." ;
+         : return;
+      }
+      : collection_iterate "jump_list" {
+         : if (int(item()) == 0) {
+            : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
+            : return ;
+         }
+      }
+      : print "For performing all twelve jumps between jumpable locations, you win the {achievement_dbbd} achievement!" ;
+      : set_true "achieve_dbbd" ;
+   }
+
    track_achievements_kssn : subroutine {
       : if (achieve_kssn) {
          : print "(Already got the {achievement_kssn} achievement for ASKing Thor three times about everything)";
@@ -3118,21 +3162,20 @@ subroutines {
             : return ;
          }
       }
-      : print "For asking Thor three times about all the rules in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
+      : print "For asking Thor three times about all the rules in the Player's Bill of Rights, you win the {achievement_kssn} achievement!" ;
       : set_true "achieve_kssn" ;
    }
    track_achievements_qwwq : subroutine {
       : if (achieve_qwwq) {
-         : print "(Already got the {achievement_qwwq} achievement for ASKing Thor about everything)";
+         : print "(Already got the {achievement_qwwq} achievement for ASKing Thor about each rule in the Player's Bill of Rights)";
          : return ;
       }
       : collection_iterate "ask_list" {
          : if (int(item()) == 0) {
             : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
-            : return ;
          }
       }
-      : print "For asking Thor about all the rules in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
+      : print "For asking Thor about each rule in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
       : set_true "achieve_qwwq" ;
    }
 
