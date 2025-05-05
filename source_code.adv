@@ -2002,7 +2002,7 @@ barriers {
    block_hub_w_s : block {
       location = hub_w_s
       block_when = point_take_crackers
-      message = You already got some crackers from the cake trackers. There can't be anything more back southeast.
+      message = You already got some crackers from the cake trackers. There can't be anything more back south.
    }
    block_hub_w_sw : block {
       location = hub_w_sw
@@ -2043,7 +2043,7 @@ barriers {
    block_hub_e_s : block {
       location = hub_e_s
       block_when = point_pouring_rain
-      message = You changed the roaring pain to pouring rain. You really can't see any reason to go get soaked more do to the southwest.
+      message = You changed the roaring pain to pouring rain. You really can't see any reason to go get soaked more do to the south.
    }
    block_hub_e_w : block {
       location = hub_e_w
