@@ -3190,19 +3190,33 @@ subroutines {
       : collection_modify { collection = "footnote_status_list" index -> (7) content -> ("" + footnote_8_status) }
       : collection_modify { collection = "footnote_status_list" index -> (8) content -> ("" + footnote_9_status) }
       : collection_modify { collection = "footnote_status_list" index -> (9) content -> ("" + footnote_10_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (10) content -> ("" + footnote_11_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (11) content -> ("" + footnote_12_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (12) content -> ("" + footnote_13_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (13) content -> ("" + footnote_14_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (14) content -> ("" + footnote_15_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (15) content -> ("" + footnote_16_status) }
+      : collection_modify { collection = "footnote_status_list" index -> (16) content -> ("" + footnote_17_status) }
 
    }
    footnote_write_to_survivors : subroutine {
       : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
       : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 1 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 2 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 3 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 4 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 5 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 6 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 7 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 8 ) }) )} ;
-      : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 9 ) }) )} ;
+      : set_integer var="footnote_3_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 2 ) }) )} ;
+      : set_integer var="footnote_4_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 3 ) }) )} ;
+      : set_integer var="footnote_5_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 4 ) }) )} ;
+      : set_integer var="footnote_6_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 5 ) }) )} ;
+      : set_integer var="footnote_7_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 6 ) }) )} ;
+      : set_integer var="footnote_8_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 7 ) }) )} ;
+      : set_integer var="footnote_9_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 8 ) }) )} ;
+      : set_integer var="footnote_10_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 9 ) }) )} ;
+      : set_integer var="footnote_11_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 10 ) }) )} ;
+      : set_integer var="footnote_12_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 11 ) }) )} ;
+      : set_integer var="footnote_13_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 12 ) }) )} ;
+      : set_integer var="footnote_14_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 13 ) }) )} ;
+      : set_integer var="footnote_15_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 14 ) }) )} ;
+      : set_integer var="footnote_16_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 15 ) }) )} ;
+      : set_integer var="footnote_17_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 16 ) }) )} ;
    }
    win_game_stub : subroutine {
       : gosub "footnote_write_to_survivors" ;
