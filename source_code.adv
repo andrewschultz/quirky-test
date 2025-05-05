@@ -3590,6 +3590,13 @@ on_command {
          }
       }
    }
+   : if (is_carried("pacing_rations")) {
+      : match "x pacing;x rations" {
+         : print "Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff.";
+         : print "The printing on its packaging avoids sensationalism most admirably: <YUM? NO. NUMB, YO!<#888>>" ;
+         : update_graphic "pacing_rations_picture" ;
+      }
+   }
    : match "score _"  {
       : if (in_tutorial) {
          : print {( "Your <tutorial score<#f0f>> is " + tutorial_score + " out of <" + max_tutorial_score + "<#f0f>>." )} ;
@@ -3735,6 +3742,9 @@ assets {
       tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
       costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
       the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABBUlEQVRYw+XXUQqDMAwG4EAOkKsE+ugx9+Q5fPRSvUHnAo4KRmgX/w7MZC+C/WjTv0qltTJdlDQ/jtrHT07pdqdd0Axwx092h+4HuMXGkNuXwMbhsyVgCKBkG+y0CezvdoB1gbpdAAB8BOr2IQJQ2ANsvQEBZPY2ozIhACUwCzsBfhoVyBKoG8cKAfAOWOxXNyEEkL+bYErLdIwiCCByF/YAcpVD8/w6ZjECwBVgXZfDBCAAuToKJrvqwwgAYBfAEMDFK2HCANwQVDxAeTCA6OmA4Uvw+B7Q/WPknwCCBOzp98tREJ2EMhjQPgHBABkM6JiAWIAMBvRMQChAMAD/jahAANH1BsdzMAmMVyO0AAAAAElFTkSuQmCC";
+
+   # item pictures below here
+      pacing_rations_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
    }
 }
 
