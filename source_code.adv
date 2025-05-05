@@ -642,8 +642,8 @@ strings {
 
    book_is : dynamic_string {(
       books_read == 16 ? "The last book is" :
-      books_read == 0 ? "The first book is" :
-      "The next book is"
+      books_read == 0 ? "One book is" :
+      "Another book is"
    )} ;
 
    chimes_present : dynamic_string {(
@@ -2661,7 +2661,7 @@ subroutines {
       }
       : increment "books_read";
       : if (books_read == 17) {
-         : print "That's all the books. They'll cycle now." ;
+         : print "That's all the books. If you continue examining, they'll cycle again, but in a different random order." ;
          : set_integer var = "books_read" "0" ;
          : set_true "achieve_nbbn_pre" ;
       }
@@ -3261,7 +3261,7 @@ on_startup {
 on_tick {
    : match "tstart _;tstop _" {
       : mask {
-         : print "N.B.: my mail address to send the transcript to is <blurglecrunchon@gmail.com<#8f8>>." ;
+         : print "N.B.: my mail address to send the transcript to is {email}." ;
       }
    }
    : if (in_tutorial) {
@@ -3462,7 +3462,7 @@ on_command {
       : done ;
    }
    : match "ask _" {
-      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}" : has_visited("plain_base") ? "Thor, whom you should TALK to first" : "Someone you'll run into shortly." ) )} ;
+      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should TALK to first" : "Someone you'll run into shortly." ) )} ;
    }
    : match "take _" {
       : if (!take_note) {
