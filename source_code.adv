@@ -270,7 +270,6 @@ collections {
          0,
          0,
          0,
-         0,
          0
       ]
    };
@@ -2127,7 +2126,15 @@ subroutines {
          : set_true "thor_explained_seth" ;
          }
       }
+   ask_thor_debug : subroutine {
+      : print "Results of debug command checking how many times the player asked:" ;
+      : collection_iterate "ask_list" {
+            : print {( "" + item() )} ;
+      }
+      : done;
+   }
    ask_thor_tally : subroutine {
+      : decrement "tempint" ;
       : set_integer var="tempint2" {( int(collection_get{ collection -> ("ask_list") index -> ( tempint ) }) + 1 )} ;
       : if (tempint2 > 4) {
          : set_integer var="tempint2" value="4";
@@ -2149,10 +2156,18 @@ subroutines {
          : done ;
       }
       : if (!is_int(original "noun1")) {
+         : if (in_debug) {
+            : match "ask -" {
+               : gosub "ask_thor_debug" ;
+            }
+         }
          : print "You need a number (1-17) for the rule to ask Thor about." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
+      : if (tempint == 0 && in_debug) {
+         : gosub "ask_thor_debug" ;
+      }
       : if (tempint < 1 || tempint > 17) {
          : print {( "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either." + (ask_thor_misfire ? "" : " Unfortunately, there are too many numbers for zero to be an index, or whatever. But that sort of thing is always worth a try.") + "\"" )} ;
          : set_true "ask_thor_misfire" ;
