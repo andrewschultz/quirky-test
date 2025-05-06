@@ -3645,8 +3645,10 @@ on_command {
       }
    }
    : match "i _" {
-      : if (carried() == 9) {
-         : set_true "achieve_haih_pre" ;
+      : mask {
+         : if (carried() == 9) {
+            : set_true "achieve_haih_pre" ;
+         }
       }
    }
    : match "bonus _" {
