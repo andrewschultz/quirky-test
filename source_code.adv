@@ -1305,6 +1305,7 @@ locations {
             : set_false "think_chalice_map" ;
             : gosub "add_point_qt" ;
             : pocket "chalice_map" ;
+            : destroy "confidence" ;
          }
          : done ;
          }
@@ -1517,6 +1518,8 @@ locations {
             : print "You take a balanced tone of friendship and defiance. You're surprised how well it works." ;
             : set_true "point_fellow_yield" ;
             : set_false "think_fellow_yield" ;
+            : destroy "fast_vision" ;
+            : destroy "trial_pics" ;
             : gosub "add_point_qt" ;
             : gosub "gain_confidence" ;
          }
