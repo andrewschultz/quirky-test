@@ -1687,37 +1687,37 @@ locations {
    };
    hub_e_s : location "{point_pouring_rain ? hub_e_pouring_rain : hub_e_roaring_pain}" {
       on_command {
-      : match "talk _;listen _" {
-         : print {( point_pouring_rain ? "The pouring rain is really poetic, and stuff. You sense talking would ruin things." : "You can't talk or listen normally with this roaring pain around. Perhaps it can become something more manageable." )} ;
-         : done ;
-      }
-      : match "pouring rain" {
-         : if (point_pouring_rain) {
-            : print "You already found something less awful than roaring pain." ;
-            }
-         : else
-         {
-            : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic. You feel something rise within you ... a soul full of rain or, more succinctly, a rain soul." ;
-            : set_true "point_pouring_rain" ;
-            : pocket "rain_soul" ;
-            : gosub "add_point_tq" ;
+         : match "talk _;listen _" {
+            : print {( point_pouring_rain ? "The pouring rain is really poetic, and stuff. You sense talking would ruin things." : "You can't talk or listen normally with this roaring pain around. Perhaps it can become something more manageable." )} ;
+            : done ;
          }
-         : done ;
+         : match "pouring rain" {
+            : if (point_pouring_rain) {
+               : print "You already found something less awful than roaring pain." ;
+               }
+            : else
+            {
+               : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic. You feel something rise within you ... a soul full of rain or, more succinctly, a rain soul." ;
+               : set_true "point_pouring_rain" ;
+               : pocket "rain_soul" ;
+               : gosub "add_point_tq" ;
+            }
+            : done ;
          }
          : if (!point_pouring_rain) {
             : match "pouring _;_ rain" {
                : gosub "say_half" ;
             }
             : match "x roaring;x pain" {
-            : set_integer var="tempint" "10" ;
-            : gosub "footnote_reveal" ;
+               : set_integer var="tempint" "10" ;
+               : gosub "footnote_reveal" ;
                : print "Paying attention to the pain will just make it worse. Maybe it could be something less oppressive.{footnote_reveal_text}" ;
                : done ;
             }
          } : else {
-            : set_integer var="tempint" "10" ;
-            : gosub "footnote_reveal" ;
             : match "x pouring;x rain" {
+               : set_integer var="tempint" "10" ;
+               : gosub "footnote_reveal" ;
                : print "You look to/at the rain for more poetic inspiration, but poetic inspiration doesn't quite work that way.{footnote_reveal_text}" ;
                : done ;
             }
