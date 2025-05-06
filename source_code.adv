@@ -353,7 +353,7 @@ collections {
    footnote_text_list : list {
       items = [
       "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this as solipsism. But I think it helps to focus on the puzzles.",
-      "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>, if you haven't, yet. It's very funny and fun. Here are two links to the Z-Machine binary: <IFDB<#f80>>[https://ifdb.org/viewgame?id=og03iq6afol27gez] and <Itch.io<#f80>>[https://hulkhandsome.itch.io/in-a-manor-of-speaking].",
+      "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>. The link is <here<#f80>>[http://hulkhandsome.itch.io/in-a-manor-of-speaking].",
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a dead end. Which can be fun for a bit, until it really, really isn't.",
       "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps this spoonerism pair would've made a good book name in the bookshelf at the end.",
       "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.",
@@ -379,13 +379,14 @@ collections {
          "<warm fish/form wish<#f80>> (flipping first letters, slightly different spelling --note half-formed wish may work better for humor value)",
          "<cat flap/flat cap<#f80>> (flipping the sound, 1 letter/2 letters)",
          "<sold treats/old streets<#f80>> (moving the first letter over)",
+         "<keen flow/clean foe<#f80>> (switching the second letter, also with slightly different spelling)",
          "<queer old dean/dear old queen<#f80>> (buffer word inside)"
       ]
    };
    bonus_found_text : list {
       items = [
          "TURKEY QUEST (any time)",
-         "<SHUSH LOUT<#f00>> (on <LISTEN<#0f0>>ing to the {cc_pro_boor}",
+         "<SHUSH LOUT<#f00>> (on <LISTEN<#0f0>>ing to the {cc_pro_boor})",
          "<RARE PLIGHTS<#f00>> once you have {cc_prayer_lights}",
          "<BANE PLACE<#f80>> in Plain Base",
          "<THEORY BORE<#f80>> once you've met Thor",
@@ -574,7 +575,7 @@ strings {
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
-   sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub. You can go south back to the plain base or " + (has_visited("stealing_hill") ? "back to the stealing hill" : "up to a hill") + ".\n{spokes_left}" )};
+   sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub. You can go south back to the plain base" + (point_healing_still ? ", which is your only choice, given the stealing hill's mood" : " or " + (has_visited("stealing_hill") ? "back up to the stealing hill" : "up to a hill") + ".\n{spokes_left}" ) )};
    spokes_word : dynamic_string {( tempint == 6 ? "one" :
       tempint == 5 ? "two" :
       tempint == 4 ? "three" :
@@ -676,7 +677,7 @@ strings {
 
    ## endgame
    cc_stealing_hill : dynamic_string {( use_color_coding ? "<stealing hill<#f88>>" : "stealing hill")} ;
-   cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "travel grail")} ## may not be used
+   cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "a travel grail")} ## may not be used
    cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
    cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "Glee simmers")} ;
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
@@ -725,7 +726,7 @@ strings {
 
 objects {
   ## pedagogical stuff
-   ooh_task : object "Ooh Task to Ask ('Ooh Task')" msg="It is a request to find the {rttr}.";
+   ooh_task : object "Ooh, Task to Ask ('Ooh Task')" msg="It is a request to find the {rttr}.";
    prayer_lights : object "{cc_prayer_lights}" msg="It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.";
 
   ## scenery
@@ -758,7 +759,7 @@ objects {
    no_greed : object "<no greed<#888>>" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
-   travel_grail : object "{cc_travel_grail}" msg="It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here." ;
+   travel_grail : object "{cc_travel_grail}" msg="(should be covered in on_command)" ;
    teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
@@ -918,7 +919,7 @@ locations {
       on_command {
          : if (is_carried "prayer_lights") {
             : match "x book;x lights;x prayer" {
-               : print "It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.";
+               : print "It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.\nIt's almost a call for help, to claim something intangible you believe you deserve as an adventurer, even if it feels like too much of an ask.";
                : done ;
             }
             : match "rare plights" {
@@ -934,7 +935,7 @@ locations {
             }
             : match "player rights" {
                : if (!point_player_rights) {
-                  : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: a game should be a game, and you should be grateful for any game at all, right? Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}!\nYou walk towards it." ;
+                  : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}!\nYou walk towards it." ;
                   : gosub "add_point" ;
                   : press_any_key ;
                   : set_true "point_player_rights" ;
@@ -1299,7 +1300,7 @@ locations {
          }
          : else
          {
-            : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts." ;
+            : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts--he mentions something about how it'll be funnier if you're close to whatever your goal is, and you still fail.\nThis doesn't faze you. You've internalized your confidence without realizing it." ;
             : set_true "point_chalice_map" ;
             : set_false "think_chalice_map" ;
             : gosub "add_point_qt" ;
@@ -1848,7 +1849,7 @@ locations {
                : print "You already brought the house back." ;
             }
             : else {
-               : print "BOOM! A missing house appears. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter." ;
+               : print "BOOM! A missing house appears. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter, grateful not to be alone in the open." ;
                : set_true "point_missing_house" ;
                : destroy "hissing_mouse" ;
                : gosub "add_point" ;
@@ -3506,10 +3507,15 @@ on_command {
       : print {( "This " + (point_take_crackers ? "wasn't" : "isn't" ) + " where you need to {tak}." )} ;
       : done ;
    }
+   : if (is_carried("travel_grail")) {
+      : match "x travel;x grail" {
+         : print "It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here." ;
+      }
+   }
    : if (has_visited "plain_base") {
       : match "theory bore" {
-         : if (is_beside "beery_thor" && bonus_point_theory_bore) {
-            : print {( "Thor is " + (point_first_base ? "" : "likely ") + "bigger than you. Best not to overplay this." )} ;
+         : if (bonus_point_theory_bore) {
+            : print {( is_beside("beery_thor") ? "Thor is bigger than you. Best not to overplay this, even if he's in on the joke." : "You snicker some more at what you realized." )} ;
          }
          : else {
             : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, a bit worried what Thor might say if you found it around him. Hopefully mind reading is not among his powers." )} ;
