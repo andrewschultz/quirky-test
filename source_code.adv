@@ -944,6 +944,10 @@ locations {
                }
                : done ;
             }
+            : if (is_carried("prayer_lights")) {
+               : match "_ rights;player _" {
+               }
+            }
          }
          : if (is_beside("pro_boor")) {
             : match "x boor;x pro" {
@@ -1355,7 +1359,7 @@ locations {
       : match "take crackers" {
          : if (point_take_crackers) {
             : print "Don't get greedy! You have enough crackers.";
-            }
+         }
          : else
          {
             : print "While the cake trackers aren't looking, you pinch a box of crackers. They don't notice at first, but when they fail to find any cake, they start getting mad and accusing each other." ;
@@ -1364,9 +1368,13 @@ locations {
             : pocket "crackers" ;
          }
          : done ;
-         }
+      }
       : match "take _" {
          : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {tak} here." )} ;
+         : done ;
+      }
+      : match "_ crackers" {
+         : print "That's what you want, but what to do with it?" ;
          : done ;
       }
       : if (!point_take_crackers) {
