@@ -153,7 +153,7 @@ booleans {
    ## reds
    achieve_haih : boolean "false" scope="survivor" ;
    achieve_haih_pre : boolean "false" scope="survivor" ;
-   ## later: MTTM
+   achieve_mttm : boolean "false" scope="survivor" ;
    achieve_tyyt : boolean "false" scope="survivor" ;
 
    ## oranges
@@ -703,9 +703,10 @@ strings {
    ## reds = certain verb (presence or absence)
    achievement_haih : string "<Hi, All I Haul<#f00>>" ;
    ## MTTM post-release
+   achievement_mttm : string "<More than Thor, Man<#f00>>" ;
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
 
-   ## orange = bonus points / game-specific commands
+   ## orange = bonus points / footnotes
    ##ROER post-release
    achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
    achievement_roer : string "<Reach Out Each Route<#f80>>" ;
@@ -3105,8 +3106,8 @@ subroutines {
    }
 
    track_achievements_1_red : subroutine {
-      : if (achieve_haih && achieve_tyyt) {
-         : print "You got all the achievements for maxing inventory chatting: {achievement_haih} and {achievement_tyyt}." ;
+      : if (achieve_haih && achieve_mttm && achieve_tyyt) {
+         : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, and {achievement_tyyt}." ;
       }
       : if (achieve_haih) {
          : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
@@ -3117,6 +3118,16 @@ subroutines {
       }
       : else {
          : print "You haven't unlocked the {achievement_haih} achievement yet." ;
+      }
+      : if (achieve_mttm) {
+         : print "(Already got the {achievement_mttm} achievement for not talking to Thor)";
+      }
+      : else_if (point_hi_mouse && !talked_to_thor) {
+         : print "For not talking to Thor, you win the {achievement_mttm} achievement!" ;
+         : set_true "achieve_mttm" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_mttm} achievement yet." ;
       }
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
