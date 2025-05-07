@@ -530,6 +530,7 @@ strings {
    tx_ds : string "<Deborah Sherwood<#0f0>>" ;
    tx_gf : string "<Garry Francis<#0f0>>" ;
    tx_ll : string "<Leon Lin<#0f0>>" ;
+   tx_on : string "<Olaf Nowacki<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
    verbs : string "<VERBS<#f80>>" ;
 
@@ -3017,7 +3018,7 @@ subroutines {
    meta_thanks : subroutine {
       : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts.";
       : print "Thanks to {tx_ca} for creating Adventuron.";
-      : print "Thanks (in alphabetical order) to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}.";
+      : print "Thanks (in alphabetical order) to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, {tx_on}, and {tx_ds}.";
       : print "Thanks to you, for playing this game.";
       : gosub "check_additional_meta" ;
    }
@@ -3783,7 +3784,7 @@ assets {
 
       first_base : dynamic_graphic {( point_bro_poor ? "first_base_after_bro_poor" : "first_base_before_bro_poor" )} ;
       first_base_before_bro_poor : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAADStIwAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP+lKioA//////9h8viPAAABXUlEQVRYw8WYTWrEMAyFX5ddFCUnGJgL5Cg9X1Y9z0AhJyhzBXnZRVFlx83Psn5BNjMQBjJ8fJae4sCoNa7r1v4P4ABSJegB8PO8RAEB8OWLV0BswUrAKiAAVK5QAKZ83AFdBQSAvDvAk1UAYgf8bgcgFRAA+Zv3gFMAqn+QATgFhIF5zq3IxiHa9c/zh+kbG4cEwOtsCnoiNAKgtIGCH4po70EDzkNxGAOLEOUjp+cCebnFASggh7uzgsF0jGxDk8/lpMCvGxQwUbwsRwVD/m2MBDA3oLuCcvV/BYyBxxYEWUG4AZPHfdJNQXwNmHxPk4fR1gbhXQC77wDhOfA3EEz3KAxNwgqAChA+C2oYehrqYRxaFwChBFBFiDIOhRJwAQAngEnCDSD1eSp2gBrEvc4FqI9kqdPJyP2vAL3Oht6CpQZSr9Nx3gHQAtoBtAKkXm9ISgmAFkACCC3AfgHKKpPEICpolwAAAABJRU5ErkJggg==";
-      first_base_after_bro_poor: base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAADStIylKiqAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////8EusaTAAABiklEQVRYw8WXwXHDIBBFN7l4ckJEBTBxBxoV4JZ0cy05pZU0oHRgdxBAKcCbZcFOruZ7YGc0nEBvHrsLENeGzeEYC6qeuRWCbgAPUgAAqIJxtt0AVME8Tq4bQM6CyXYDUAXjhGUBBJAUzGAhQACsO4AVAgbwgF6AAXA2gCgAAXAFIADeDlEAUbCXsN0A2L4qgOsGsBELwJvtBsCGfxAFMEA0nBRUFwIOwAemBOC6AAQBEIgEYFsDXNIXdAE1UKkAAPDMPmgOsALY1gBnfxEAfnn/KACuOcB6CnmFDGDbA3wHrUN63lefCLgBJjLAoQgAnM6rN5EoQoci0Ae8XwPRcdmRAe4FSCPyXzL/KGEABVAn/CSzKwBZwWBbAkSZS1eArMA8uZYAUoAxAZApt8OBo20IQKIgahaacjuU8W4FAICUoJHfEy0m3w6HpMU2BSC6bYEo0OFeBfUA8QpAZY2tsYGYkkAF3J4IbXOA0h4IwPL3QmhaBbIDUoX0X0DTPhBTEaahZGBuhRWd8BffnJc/jN0UowAAAABJRU5ErkJggg==";
+      first_base_after_bro_poor: base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAADStIylKiqAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////8EusaTAAABoklEQVRYw8WXvXECMRBG104YR0KmgBvTAUMBVOHQ5xbIqMWRW3EDXAe+zCE64RyvdyWBnaKPWe0Mo0jizdsf6Yhrw+foGAuq3nksBM0AbqQAAEgKFmvfDCApWC9WXTOAXAUr3wwgKVissCqAAFTBGmwECIBTBrBGwABuMAswAM4GEAUgAK4ABMDHIQogCpYSvhkA+8cE0DUDOBILwJNvBsCOvxEFIMDE0bEqqG6EeoCT/gSAN0wK0JkDjMyfCsAcFcCbAxzC6TClA5KBSgUAQBj3h1wDnAC8eQrG/TgxP7y9F4DOGOAl7Pspn5ABvDFALwCvrDmg+2X1jVAP8NOH4XnSI8gBlyIA8BWG3kWiCF2KwCQM/TAR7bYzcsC7ABnFYZD9OwkHKIDugg9yswKQFcy9JUCUvXQGyArcXWcJIA0YFYBceR3OOXpDABIFMVWhK69DWa9WAABICzr5e6Kty6/DuWrxpgBElxSIgrRcq6AeIJ4BqJxxNDYQtQiSgMsngm0NkOZAALZ/XwimXSAZkC6k/wJM50DUJtSlVGAehRWT8Bcu5JFKowtkJAAAAABJRU5ErkJggg==";
 
       plain_base : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAC8klEQVRYw82XvZLcIAyAeQPG1ZWZ2RdI4eLKfaabFJR+Dlf7irqkYLZSLEAS2IDti3cu7JyHM1j6LPRnYzoDq+PPHY8v9MTbsMFic0BDz9jYP1YAOuLxvwEA+iN1NA23Ach09hIAWCQBmTsqWqRbk96NAUh9Aoi/5amweJEFwuuZINmoMgWAwBkA2A64A3A/fp8BVHq4Y5sAcbULgON4/HYJEDWhAewBhHnHB/gMHI0xXJsnkB9BlE6xDaYLYHDHAiHgvcsA3NRKDxGAUkqUHpOL7QGY3SMgEzhXACxGGDsAJEoPeAMA9pQTkrXdBsCN2AEgxSJ9BSAbjoYhmeB9A/Dr3gXIwtCuAZb8wCmomogcC5OJdxULkB90osBKIjJrgJ1U7FmyTNBVAVwz3VZEU6n7TgA8ASCSZQInatcBC0As/Fo0wpVCVwAmPvivAGitE8GxTcgA2CeKYEyB65N/efUzkvB8FHpmArBVAK11McXSPjBbC3QB3Mdb5uj04HOeVUv6pwoQImAlOPZJOYCtAWAGMAwKEN90nhlhUT8/2DI1gKLY8nEbyAHMBgBMG4DNLgCPthNsAMglUkOYA9jkL+KE9D6gIZcAXOtFERtOUAAkwXzqDMAmKIoGP7sBoLQZxu8bK5GZ3Qb1ptZh9AGbZ0KxiBQNVCdcAYAoud1+4mpmLFvHT+lCtQ7Kfiel/AwA1AL7AGLoqBYKAHaDSQFCCQIrgk1iKGqB+ICCSiJaAUglSWptDmATHRXHcRzfJ3Es7UhAv3cUAEw7ta0ApJbGk4fSB+KiLwAOfZjYLwBUUn1aXKJVAP7906wLAFgFWIzAALtxavY+Tps+wEW1rDznAfZ2bKKgc6yx4SPnvxBglYq/H8B2vCYmotcCcLajEliMBzLcKwCmYfBlNawCaPN8IUBsBYdBe0KwDYAky39cC+BJLQEgd8WmDsAP++HHpQCoAHn6WQNoVvocrrVAGAGg2PVsnUDY+1qAek/Ez34Ob2cA/gImzfDTCE2eZAAAAABJRU5ErkJggg==";
 
