@@ -305,7 +305,7 @@ collections {
          "<Examine the crackers<#0f0>>",
          "<Get to Sky Floor<#0f0>>",
          "<Examine the trending booth<#0f0>>",
-         "<Solve Warring Bay<#0f0>>",
+         "<Get to Warring Bay<#0f0>>",
          "<Examine the Hissing Mouse<#f0f>>",
          "<Examine the bookshelf<#f0f>>"
       ]
@@ -402,7 +402,7 @@ collections {
          "<CEASE PURGING<#0f0>> when you feel peace surging",
          "<PILE TRICKS<#0f0>> when you have the trial pics",
          "<TILE PRICKS<#0f0>> when you have the trial pics",
-         "<SANE ROLE<#00f>> when you have a rain soul",
+         "<SANE ROLE<#0f0>> when you have a rain soul",
          "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
       ]
    };
@@ -1830,7 +1830,7 @@ locations {
          }
       }
    };
-   gravel_trail : location "This is a gravel trail south back to the plain base and north{gravel_trail_house}{chimes_present}." {
+   gravel_trail : location "This is a gravel trail south back to the plain base and north {gravel_trail_house}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
             : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
@@ -2583,8 +2583,8 @@ subroutines {
          : match "cheery times" {
             : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
             : destroy "teary_chimes" ;
-            : gosub "add_bonus" ;
             : set_integer var="tempint" "17" ;
+            : gosub "add_bonus" ;
             : set_true "bonus_point_cheery_times" ;
             : done ;
          }
@@ -2631,7 +2631,6 @@ subroutines {
       : print "{v_wt} = West Tiles" ;
    }
    mark_jump : subroutine {
-      : set_true "jump_buzzing" ;
       : if (is_at("plain_base")) {
       } : else_if (is_at("west_tiles")) {
          : set_integer var="latest_warp_number" {( latest_warp_number + 1 )} ;
@@ -2642,6 +2641,7 @@ subroutines {
       } : else {
          : return ;
       }
+      : set_true "jump_buzzing" ;
       : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
       : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
       : if (collection_get {collection -> ("jump_list") index -> (int("" + latest_warp_number))} == "1") {
