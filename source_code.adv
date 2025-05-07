@@ -136,7 +136,9 @@ booleans {
    bonus_point_eye_stay : boolean "false" ;
    bonus_point_cheery_times : boolean "false" ;
 
+   ## jump/walk achievement booleans
    jump_buzzing : boolean "false" ;
+   ever_jump : boolean "false" ;
 
    ## "think" booleans: hub goals are alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
@@ -176,6 +178,7 @@ booleans {
    achieve_ssss : boolean "false" scope="survivor" ;
    achieve_ssss_pre : boolean "false" scope="survivor" ;
    achieve_gssg: boolean "false" scope="survivor" ;
+   achieve_rssr: boolean "false" scope="survivor" ;
    achieve_srrs: boolean "false" scope="survivor" ;
 
    ## blues
@@ -237,6 +240,12 @@ integers {
    hub_think_needed : integer "0" ;
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
    books_read : integer "0" ;
+
+   # achievements
+   rssr_west : integer "0" ;
+   rssr_east : integer "0" ;
+   rssr_base : integer "0" ;
+   rssr_hill : integer "0" ;
 
    ## since Adventuron doesn't allow survivor scope for lists, I need to define the status variables here.
    footnote_1_status : integer "0" scope="survivor" ;
@@ -720,6 +729,7 @@ strings {
    ## green = how you get them all
    achievement_ssss : string "<So Slick! Slow? Sick!<#8f8>>" ;
    achievement_gssg : string "<Great Style, Straight Guile<#8f8>>" ;
+   achievement_rssr : string "<Re-Sight-See? Riiight<#8f8>>" ;
    achievement_srrs : string "<Second Revvin' Reckoned? Seven<#8f8>>" ;
 
    ## blue = abusing the warp command
@@ -2681,7 +2691,6 @@ subroutines {
       : print "{v_wt} = West Tiles" ;
    }
    mark_jump : subroutine {
-      : set_true "jump_buzzing" ;
       : if (is_at("plain_base")) {
       } : else_if (is_at("west_tiles")) {
          : set_integer var="latest_warp_number" {( latest_warp_number + 1 )} ;
@@ -2692,6 +2701,8 @@ subroutines {
       } : else {
          : return ;
       }
+      : set_true "jump_buzzing" ;
+      : set_true "ever_jump" ;
       : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
       : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
       : if (collection_get {collection -> ("jump_list") index -> (int("" + latest_warp_number))} == "1") {
@@ -3193,8 +3204,8 @@ subroutines {
    }
 
    track_achievements_4_green : subroutine {
-      : if (achieve_ssss && achieve_gssg && achieve_srrs) {
-         : print "You got all three achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, and {achievement_srrs}." ;
+      : if (achieve_ssss && achieve_gssg && achieve_rssr && achieve_srrs) {
+         : print "You got all three achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, {achievement_rssr}, and {achievement_srrs}." ;
          : return ;
       }
       : if (achieve_ssss) {
@@ -3213,6 +3224,20 @@ subroutines {
             : set_true "achieve_gssg" ;
          } : else {
             : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
+         }
+      }
+      : if (achieve_rssr) {
+         : print "You already unlocked the {achievement_rssr} achievement for taking the minimum number of moves between locations." ;
+      } : else {
+         : if (rssr_east <= 8 && rssr_west <= 8 && (rssr_base + rssr_hill <= 3)) {
+            : if (ever_jump) {
+               : print "You're close to the {achievement_rssr} achievement, but next time, don't use warps." ;
+            } : else {
+               : print "For taking the minimum number of moves between locations, you win the {achievement_rssr} achievement!" ;
+               : set_true "achieve_rssr" ;
+            }
+         } : else {
+            : print "You haven't unlocked the {achievement_rssr} achievement yet." ;
          }
       }
       : if (achieve_srrs) {
@@ -3465,6 +3490,17 @@ on_tick {
 ## on_describe is for moving around
 
 on_describe {
+   : if (!point_healing_still && linger() == 0) {
+      : if (is_at("west_tiles")) {
+         : increment "rssr_west" ;
+      } : else_if (is_at("east_branch")) {
+         : increment "rssr_east" ;
+      } : else_if (is_at("plain_base")) {
+         : increment "rssr_base" ;
+      } : else_if (is_at("stealing_hill")) {
+         : increment "rssr_hill" ;
+      }
+   }
 }
 
 ## Test VERB NOUN that the player types and executes conditional actions
