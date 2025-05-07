@@ -1332,6 +1332,10 @@ locations {
             : done ;
          }
       }
+      : match "x shell;x fort" {
+         : print {( point_fell_short ? "Silent now." : "Tough to approach with that artillerly landing too close to you." )} ;
+         : done ;
+      }
       : match "listen _;talk -;talk fort;talk shell" {
          : print "As ammunition whistles through the air, a truce parley doesn't seem likely. At least your assailants are inaccurate. But they're not giving up, as is." ;
          : done ;
@@ -1620,10 +1624,8 @@ locations {
    };
    hub_e_e : location "{point_boring_way ? hub_e_boring_way : hub_e_warring_bay}{footnote_reveal_text}" {
       on_pre_describe {
-         : if (point_boring_way) {
-            : set_integer var="tempint" "15" ;
-            : gosub "footnote_reveal" ;
-         }
+         : set_integer var="tempint" "15" ;
+         : gosub "footnote_reveal" ;
       }
       on_command {
       : if (!point_boring_way) {
