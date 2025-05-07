@@ -533,6 +533,7 @@ strings {
    tx_on : string "<Olaf Nowacki<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
    verbs : string "<VERBS<#f80>>" ;
+   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by area." )} ;
 
    # yes-or-no
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
@@ -2186,7 +2187,7 @@ subroutines {
          : return ;
       }
       : clear_screen ;
-      : print "Here is a list of all the bonus points. The color-coding roughly lumps them together by when you can achieve them." ;
+      : print "{bflist}" ;
       : set_integer var="tempint" "0" ;
       : collection_iterate "bonus_found_text" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("bonus_status") index -> ( tempint ) }) )} ;
@@ -2426,7 +2427,7 @@ subroutines {
       }
    }
    footnote_lister : subroutine {
-      : print "Here is a list of all the footnotes, in approximate order you might find them." ;
+      : print "{bflist}" ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
          : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
