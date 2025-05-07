@@ -3019,9 +3019,6 @@ subroutines {
       : if (jump_commands_notified) {
          : print {( "To save keystrokes, you can jump around hub locations with " + v_eb + " (east branch.)" + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " )} ;
       }
-      : if (footnotes_available) {
-         : print "By winning the game, you've opened up footnotes. {footnote_cue}.";
-      }
       : if (in_debug && !footnotes_available) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
@@ -3029,9 +3026,12 @@ subroutines {
    verb_meta_list : subroutine {
       : print "{abt} gives info about the game.";
       : print "{thx} or {cred} gives info about people who helped make {qt} or make it better.";
-      : print "{sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." ;
       : print "{thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
+      : print {( "{sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> shows bonus points you've found and clues where to get others." : "" ) )} ;
       : print "{v_pts} is a spoiler for point-scoring commands, with examples of fun ones that missed the cut for {qt}." ;
+      : if (footnotes_available) {
+         : print "By winning the game, you've opened up footnotes. {footnote_cue}.";
+      }
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
       : if (!meta_abbrev_noted) {
