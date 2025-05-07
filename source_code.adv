@@ -43,6 +43,7 @@ booleans {
    thor_knows_bore : boolean "false" ;
    footnote_color_note : boolean "false" ;
    wait_note : boolean "false" ;
+   meta_abbrev_noted : boolean "false" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -230,7 +231,6 @@ integers {
    books_read : integer "0" ;
 
    ## since Adventuron doesn't allow survivor scope for lists, I need to define the status variables here.
-   max_footnote_found : integer "-1" scope="survivor";
    footnote_1_status : integer "0" scope="survivor" ;
    footnote_2_status : integer "0" scope="survivor" ;
    footnote_3_status : integer "0" scope="survivor" ;
@@ -788,7 +788,8 @@ vocabulary {
    : noun / aliases = [glimmer, glimmers, glimmering]
    : noun / aliases = [no, n, off]
    : noun / aliases = [yes, y]
-   : verb / aliases = [ab, about]
+   : verb / aliases = [ab, abt, about]
+   : verb / aliases = [achievements, achievement, achieve, ach, ac]
    : verb / aliases = [ask, rule]
    : verb / aliases = [bonus, bon, bo, b]
    : verb / aliases = [score, sco]
@@ -801,7 +802,8 @@ vocabulary {
    : verb / aliases = [hunter, hunting, hunters]
    : verb / aliases = [not, noti, notif, notify]
    : verb / aliases = [t, talk]
-   : verb / aliases = [tx, thx, thank, thanks, credits]
+   : verb / aliases = [th, think]
+   : verb / aliases = [tx, thx, thank, thanks, credits, credit, creds, cred, crs, cr]
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [points, point, pt, pts, poi, po]
@@ -2399,10 +2401,6 @@ subroutines {
       }
    }
    footnote_lister : subroutine {
-      : if (max_footnote_found == -1) {
-         : print "You haven't found any footnotes, so I can't list them, yet." ;
-         : done ;
-      }
       : print "Here is a list of all the footnotes, in approximate order you might find them." ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
@@ -2449,9 +2447,6 @@ subroutines {
       : set_false "reveal_this_footnote" ;
       : if (tempint2 > 0) {
          : return ;
-      }
-      : if (tempint > max_footnote_found) {
-         : set_integer var="max_footnote_found" {( int("" + (tempint - 1)) )} ;
       }
       : set_true "ever_reveal_footnote" ;
       : set_true "reveal_this_footnote" ;
@@ -3035,6 +3030,10 @@ subroutines {
       : print "{v_pts} is a spoiler for point-scoring commands, with examples of fun ones that missed the cut for {qt}." ;
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
+      : if (!meta_abbrev_noted) {
+         : print "{otn}many of the non-native Adventuron commands can be abbreviated in {qt}, too. Listing them all would make this readout too long." ;
+         : set_true "meta_abbrev_noted" ;
+      }
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
