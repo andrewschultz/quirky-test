@@ -3101,20 +3101,20 @@ subroutines {
          : print "You haven't unlocked the {achievement_ssss} achievement yet." ;
       }
       : if (achieve_gssg) {
-         : print "You already unlocked the {achievement_gssg} achievement for not having to repeat the right phrase in any hub side room." ;
+         : print "You already unlocked the {achievement_gssg} achievement for not having to repeat the right phrase beyond Thor." ;
       } : else {
          : if (hub_think_needed == 0) {
-            : print "For not having to repeat the right phrase in any hub side room, you win the {achievement_gssg} achievement!" ;
+            : print "For not having to repeat the right phrase beyond Thor, you win the {achievement_gssg} achievement!" ;
             : set_true "achieve_gssg" ;
          } : else {
             : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
          }
       }
       : if (achieve_srrs) {
-         : print "You already unlocked the {achievement_srrs} achievement." ;
+         : print "You already unlocked the {achievement_srrs} achievement for trying to solve all seven dependent before you were ready." ;
       } : else {
          : if (hub_think_needed == 7) {
-            : print "For trying to flip all seven hub rooms, including the hill, before you were ready, you win the {achievement_srrs} achievement!" ;
+            : print "For trying to flip all seven dependent puzzles before you were ready, you win the {achievement_srrs} achievement!" ;
             : set_true "achieve_srrs" ;
          } : else {
             : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
@@ -3140,7 +3140,7 @@ subroutines {
       }
       : gosub "track_achievements_dbbd" ;
       : if (achieve_cddc) {
-         : print "You already unlocked the {achievement_cddc} achievement." ;
+         : print "You already unlocked the {achievement_cddc} achievement for performing all twelve possible warp jumps without duplication." ;
       } : else_if (achieve_cddc_pre) {
          : print "For performing all twelve possible warp jumps without duplicating one path, you win the {achievement_cddc} achievement!" ;
             : set_true "achieve_cddc" ;
@@ -3190,6 +3190,7 @@ subroutines {
    track_achievements_kssn : subroutine {
       : if (achieve_kssn) {
          : print "(Already got the {achievement_kssn} achievement for ASKing Thor three times about everything)";
+         : return ;
       }
       : collection_iterate "ask_list" {
          : if (int(item()) < 3) {
@@ -3436,6 +3437,11 @@ on_command {
             : press_any_key ;
             : set_true "credits_to_thanks_note" ;
          }
+      }
+   }
+   : match "achievements _" {
+      : if (footnotes_available || cheat_dont_require) {
+         : gosub "track_achievements" ;
       }
    }
    : match "footnote _" {
