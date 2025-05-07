@@ -162,6 +162,10 @@ booleans {
    achieve_pcpccp_pre : boolean "false" scope="survivor" ;
    pcpc_tile : boolean "false" scope="survivor" ;
    pcpc_pile : boolean "false" scope="survivor" ;
+   achieve_roer : boolean "false" scope="survivor" ;
+   ach_roer_west : boolean "false" scope="survivor" ;
+   ach_roer_east : boolean "false" scope="survivor" ;
+   ach_roer_base : boolean "false" scope="survivor" ;
    achieve_cnnc : boolean "false" scope="survivor" ;
 
    ## yellows
@@ -704,6 +708,7 @@ strings {
    ## orange = bonus points / game-specific commands
    ##ROER post-release
    achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
+   achievement_roer : string "<Reach Out Each Route<#f80>>" ;
    achievement_pcpccp : string "<Player-Can-Pair-Clan Care Plan<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
 
@@ -2175,7 +2180,14 @@ subroutines {
       : decrement "tempint" ; # this is because I use 1-based numbers in my personal table, but Adventuron is 0-based.
       : collection_modify { collection = "bonus_status" index -> (tempint) content -> ("1") }
       : increment "bonus_score";
+      : if (current_location() == "west_tiles") {
+         : set_true "ach_roer_west" ;
+      } : else_if (current_location() == "east_branch") {
+         : set_true "ach_roer_east" ;
+      } : else_if (current_location() == "plain_base") {
+         : set_true "ach_roer_base" ;
       }
+   }
    bonus_display : subroutine {
       : if (bonus_score == max_bonus_score) {
          : print "You got all the bonus points." ;
@@ -3124,8 +3136,8 @@ subroutines {
    }
 
    track_achievements_2_orange : subroutine {
-      : if (achieve_tnnt && achieve_pcpccp && achieve_cnnc) {
-         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_pcpccp}, and {achievement_cnnc}." ;
+      : if (achieve_tnnt && achieve_pcpccp && achieve_cnnc && achieve_roer) {
+         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
          : return ;
       }
       : if (achieve_tnnt) {
@@ -3140,6 +3152,13 @@ subroutines {
          : set_true "achieve_pcpccp" ;
       } : else {
          : print "You haven't unlocked the {achievement_pcpccp} achievement yet." ;
+      }
+      : if (achieve_roer) {
+         : print "You already unlocked the {achievement_roer} achievement." ;
+      } : else_if (ach_roer_west && ach_roer_east && ach_roer_base) {
+         : print "For scoring points in every location, you win the {achievement_roer} achievement!" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_roer} achievement yet." ;
       }
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
