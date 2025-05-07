@@ -3117,7 +3117,7 @@ subroutines {
       }
       : if (achieve_cjjc) {
          : print "(Already got the {achievement_cjjc} achievement for trying to jump to a blocked-off room)" ;
-      } : else_if (achieve_tmmt_pre) {
+      } : else_if (achieve_cjjc_pre) {
          : print "For trying to jump to a blocked-off room, you win the {achievement_cjjc} achievement!" ;
          : set_true "achieve_cjjc" ;
       } : else {
@@ -3165,6 +3165,7 @@ subroutines {
          : if (int(item()) == 0) {
             : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
             : return ;
+         } : else { # without this else clause, for whatever reason, Adventuron doesn't "see" the above haven't-unlocked-yet.
          }
       }
       : print "For performing all twelve jumps between jumpable locations, you win the {achievement_dbbd} achievement!" ;
@@ -3192,6 +3193,7 @@ subroutines {
       : collection_iterate "ask_list" {
          : if (int(item()) == 0) {
             : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
+            : return ;
          }
       }
       : print "For asking Thor about each rule in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
