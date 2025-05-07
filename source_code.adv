@@ -358,7 +358,7 @@ collections {
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>. The link is <here<#f80>>[http://hulkhandsome.itch.io/in-a-manor-of-speaking].",
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a long dead end. That sort of thing is fun for a bit, until it really, really isn't.",
       "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps this spoonerism pair would've made a good book name in the bookshelf at the end.",
-      "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.",
+      "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need a plural include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.\nI also had ideas for hostile NPCs including Tad Beecher, Quinn Wick and Trav Hubble, but there was enough to program.",
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Which actually worked out okay because East Branch has more bonus points (meant to be hard) than West Tiles.\nAlso, recycling the names as signs helped fill the whole graphic for Plain Base.",
       "Originally this was called Fate Hill, which works semantically but isn't believable as part of the story. It lampshaded that this was an important place to be, but I think the location and new name do this. The hill, of course, gets hateful anyway.",
       "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.\nI didn't want it just to be inside knowledge, though, so I put the runes in as a puzzle.",
@@ -743,7 +743,7 @@ objects {
    trending_booth : scenery "a trending booth" at="hub_e_ne" msg="You don't want to get too close." conspicuous="false" ;
 
    ## NPC(s)
-   beery_thor : scenery "Beery Thor" msg="Big and strong and friendly." at="plain_base" conspicuous="false" ;
+   beery_thor : scenery "Beery Thor" msg="Big and strong but not in the \"Boo, tough, too buff\" way." at="plain_base" conspicuous="false" ;
    pro_boor : scenery "A pro boor" msg="Seems upset about anything and everything." at="first_base" conspicuous="false" ;
    hissing_mouse: scenery "A hissing mouse" at="gravel_trail" conspicuous="false" ;
 
@@ -1202,7 +1202,8 @@ locations {
          }
          : else
          {
-            : print "With the chalice map handy as well as the master plan, you know what to look for and where. Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
+            : print "With the chalice map handy as well as the master plan, you know what to look for and where. Plan keys can please, you think, as your trusty map exposes many a musty trap." ;
+            : print "Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
             : gosub "add_point" ;
             : set_true "point_healing_still" ;
             : set_false "think_healing_still" ;
@@ -2672,7 +2673,7 @@ subroutines {
       : if (!poke_books_yet) {
          : set_integer var="tempint" "17" ;
          : gosub "footnote_reveal" ;
-         : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr} is hidden behind one of the books. You find nothing. You attempt to remove the books, to see if the bookshelf can be pushed to reveal a secret passage, or something. Again, nothing. But hey, some of those titles look interesting!{footnote_reveal_text}" ;
+         : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr}, or a passage to it, is hidden behind one of the books. However, you find nothing, even after removing the books to see if the bookshelf can be pushed to reveal a secret passage, or something. Even a \"Books, hidden hooks biddin'?\" goes unanswered.\nBut hey, some of those titles look interesting!{footnote_reveal_text}" ;
          : set_true "poke_books_yet" ;
          : done ;
       }
