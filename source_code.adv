@@ -531,6 +531,7 @@ strings {
 
    # game title
    qt : string "<Quirky Test<#ff0>>" ;
+   qtg : string "<Quirky Test's GitHub repository<#8f8>>[https://andrewschultz.itch.io/quirky-test]" ;
 
    # regular commands in green
    ask : string "<ASK<#0f0>>" ;
@@ -1917,7 +1918,8 @@ locations {
                : clear_screen ;
                : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
                : if (!footnotes_available) {
-                  : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also accomplishments, which will be slightly harder." ;
+                  : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
+                  : print "You can see how achievements are going with <ACHIEVEMENTS<#f80>>. But don't feel obliged to complete any of them. They're meant to be tough. Of course, you can just look at the source code on {qtg}." ;
                }
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
@@ -2969,7 +2971,7 @@ subroutines {
       : print "Clicking on the hyperlinks below will open a new tab." ;
       : print "Here is a link to <TALJ 2025<#8f8>>[https://itch.io/jam/talp2025], where {qt} was entered on release. {qt} would not have been a thing without it, or without <Adventuron<#8f8>>[http://adventuron.io]." ;
       : print "Here is a link to <Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]." ;
-      : print "If you find a bug, big or small, and want to report an issue, here is a link to <Quirky Test's GitHub repository<#8f8>>[https://andrewschultz.itch.io/quirky-test]." ;
+      : print "If you find a bug, big or small, and want to report an issue, here is a link to {qtg}." ;
       : print "If you would like to share a transcript with me, send it to {email}." ;
       : gosub "check_additional_meta" ;
    }
