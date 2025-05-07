@@ -178,24 +178,27 @@ booleans {
    ## greens
    achieve_ssss : boolean "false" scope="survivor" ;
    achieve_ssss_pre : boolean "false" scope="survivor" ;
-   achieve_gssg: boolean "false" scope="survivor" ;
-   achieve_rssr: boolean "false" scope="survivor" ;
-   achieve_srrs: boolean "false" scope="survivor" ;
+   achieve_gssg : boolean "false" scope="survivor" ;
+   achieve_rssr : boolean "false" scope="survivor" ;
+   achieve_srrs : boolean "false" scope="survivor" ;
 
    ## blues
-   achieve_cjjc: boolean "false" scope="survivor" ;
-   achieve_cjjc_pre: boolean "false" scope="survivor" ;
+   achieve_cjjc : boolean "false" scope="survivor" ;
+   achieve_cjjc_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
    achieve_tmmt_pre : boolean "false" scope="survivor" ;
-   achieve_dbbd: boolean "false" scope="survivor" ;
-   achieve_cddc: boolean "false" scope="survivor" ;
-   achieve_cddc_pre: boolean "false" scope="survivor" ;
+   achieve_dbbd : boolean "false" scope="survivor" ;
+   achieve_cddc : boolean "false" scope="survivor" ;
+   achieve_cddc_pre : boolean "false" scope="survivor" ;
 
    ## purples
-   achieve_hbbh: boolean "false" scope="survivor" ;
-   achieve_hbbh_pre: boolean "false" scope="survivor" ;
-   achieve_nbbn: boolean "false" scope="survivor" ;
-   achieve_nbbn_pre: boolean "false" scope="survivor" ;
+   achieve_hbbh : boolean "false" scope="survivor" ;
+   achieve_hbbh_pre : boolean "false" scope="survivor" ;
+   achieve_nbbn : boolean "false" scope="survivor" ;
+   achieve_nbbn_pre : boolean "false" scope="survivor" ;
+
+   ## final one
+   achieve_taat : boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -743,6 +746,9 @@ strings {
    ## purple = examine
    achievement_hbbh : string "<Hi! Beer By Here?<#f0f>>" ;
    achievement_nbbn : string "<Neat-Book-Beat Nook<#f0f>>" ;
+
+   ## last one
+   achievement_taat: string "<Try All: Aye, Trawl<#888>>" ;
 
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 
@@ -3108,12 +3114,20 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      : if (achieve_taat) {
+         : print "You achieved all the achievements already, including {achievement_taat}. I'm glad you're still here, but ... time to move on?" ;
+         : return ;
+      }
+      : set_true "achieve_taat" ;
       : gosub "track_achievements_1_red" ;
       : gosub "track_achievements_2_orange" ;
       : gosub "track_achievements_3_yellow" ;
       : gosub "track_achievements_4_green" ;
       : gosub "track_achievements_5_blue" ;
       : gosub "track_achievements_6_purple" ;
+      : if (achieve_taat) {
+         : print "For winning all the other achievements, you win the {achievement_taat} achievement! Very impressive, indeed! Thank you for your diligence. Now go play something else. Or, heck, design or write your own game. You're no slouch at thinking up possibilities." ;
+      }
 
       ## grey achievement (post-comp)
    }
@@ -3122,6 +3136,7 @@ subroutines {
       : if (achieve_haih && achieve_mttm && achieve_tyyt) {
          : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, and {achievement_tyyt}." ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_haih) {
          : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
       }
@@ -3164,6 +3179,7 @@ subroutines {
          : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_tnnt) {
          : print "You already unlocked the {achievement_tnnt} achievement for uncovering all the footnotes available." ;
       } : else {
@@ -3209,6 +3225,7 @@ subroutines {
          : print "You already got both achievements for<ask>ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : gosub "track_achievements_qwwq" ;
       : gosub "track_achievements_kssn" ;
    }
@@ -3218,6 +3235,7 @@ subroutines {
          : print "You got all three achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, {achievement_rssr}, and {achievement_srrs}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_ssss) {
          : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
       } : else_if (achieve_ssss_pre) {
@@ -3267,6 +3285,7 @@ subroutines {
          : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
       } : else_if (achieve_tmmt_pre) {
@@ -3299,6 +3318,7 @@ subroutines {
          : print "You already got both examining achievements: {achievement_hbbh} for beer and {achievement_nbbn} for books." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_hbbh) {
          : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
       } : else_if (achieve_hbbh_pre) {
