@@ -531,7 +531,7 @@ strings {
 
    # game title
    qt : string "<Quirky Test<#ff0>>" ;
-   qtg : string "<Quirky Test's GitHub repository<#8f8>>[https://andrewschultz.itch.io/quirky-test]" ;
+   qtg : string "<Quirky Test's GitHub repository<#8f8>>[https://github.com/andrewschultz/quirky-test]" ;
 
    # regular commands in green
    ask : string "<ASK<#0f0>>" ;
@@ -695,7 +695,7 @@ strings {
    ## reds = certain verb (presence or absence)
    achievement_haih : string "<Hi, All I Haul<#f00>>" ;
    ## MTTM post-release
-   achievement_tnnt : string "<Totes Need Notes Teed<#f00>>" ;
+   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
 
    ## orange = bonus points / game-specific commands
@@ -1926,6 +1926,7 @@ locations {
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
                : set_false "think_hi_mouse" ;
+               : set_true "point_hi_mouse" ;
                : gosub "track_achievements" ;
                : gosub "win_game_stub" ;
                : done ;
