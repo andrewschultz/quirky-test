@@ -654,7 +654,7 @@ strings {
       point_missing_house ? "to the house you made" : "to, well, nowhere at the moment"
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering all around, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, {cc_my_house} being this big is a problem{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
 
    book_is : dynamic_string {(
@@ -664,7 +664,7 @@ strings {
    )} ;
 
    chimes_present : dynamic_string {(
-      (point_see_glimmering && !bonus_point_cheery_times) ? ". You hear teary chimes, too" : ""
+      (summoned_teary_chimes && !bonus_point_cheery_times) ? ". You hear teary chimes, too" : ""
    )};
 
    ## color code stuff
@@ -700,7 +700,7 @@ strings {
    cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "a travel grail")} ## may not be used
    cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
    cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "Glee simmers")} ;
-   cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "MY HOUSE")} ;
+   cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "my house")} ;
 
    ## footnote notifications and other dynamic strings
    footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
@@ -1892,7 +1892,7 @@ locations {
          }
       }
    };
-   my_house : location "{my_house_description}" {
+   my_house : location "MY HOUSE\n{my_house_description}" {
       on_command {
          : match "eye stay;i stay" {
             : print "{postcomp}" ;
