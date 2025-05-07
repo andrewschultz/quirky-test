@@ -135,6 +135,8 @@ booleans {
    ## endgame bonus point
    bonus_point_cheery_times : boolean "false" ;
 
+   jump_buzzing : boolean "false" ;
+
    ## "think" booleans: hub goals are alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
    think_fellow_yield : boolean "false" ;
@@ -2624,6 +2626,7 @@ subroutines {
       : print "{v_wt} = West Tiles" ;
    }
    mark_jump : subroutine {
+      : set_true "jump_buzzing" ;
       : if (is_at("plain_base")) {
       } : else_if (is_at("west_tiles")) {
          : set_integer var="latest_warp_number" {( latest_warp_number + 1 )} ;
@@ -2634,7 +2637,12 @@ subroutines {
       } : else {
          : return ;
       }
+      : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
       : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
+      : if (collection_get {collection -> ("jump_list") index -> (int("" + latest_warp_number))} == "1") {
+         : set_false "jump_buzzing" ;
+      }
+
    }
    note_diagonal_direction_from_hub : subroutine {
       : if (!has_visited("east_branch") && !has_visited("west_tiles"))
@@ -3298,6 +3306,10 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (jump_buzzing) {
+      : print "You shake off the temporary buzzin' in your ears from the jump." ;
+      : set_false "jump_buzzing" ;
+   }
    : match "tstart _;tstop _" {
       : mask {
          : print "N.B.: my mail address to send the transcript to is {email}." ;
