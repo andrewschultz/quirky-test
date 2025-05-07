@@ -109,7 +109,6 @@ booleans {
    ## bonus point tally booleans
    ## any time points first
    bonus_point_turkey_quest : boolean "false" ;
-   bonus_point_theory_bore : boolean "false" ;
 
    ## first base
    bonus_point_shush_lout : boolean "false" ;
@@ -117,6 +116,7 @@ booleans {
 
    ## bane place
    bonus_point_bane_place : boolean "false" ;
+   bonus_point_theory_bore : boolean "false" ;
    bonus_point_death_sentence : boolean "false" ;
 
    ## the hubs
@@ -2445,6 +2445,7 @@ subroutines {
       : if (!footnotes_available) {
          : return ;
       }
+      : if (tempint == 0) { : return ; }
       : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> (tempint - 1) }) )} ;
       : set_false "reveal_this_footnote" ;
       : if (tempint2 > 0) {
@@ -2471,6 +2472,7 @@ subroutines {
          : if (int(item()) == 0) {
             : print "You haven't unlocked the {achievement_tnnt} achievement yet." ;
             : return ;
+         } : else {
          }
       }
       : set_true "achieve_tnnt" ;
@@ -3232,8 +3234,8 @@ subroutines {
       : collection_modify { collection = "footnote_status_list" index -> (14) content -> ("" + footnote_15_status) }
       : collection_modify { collection = "footnote_status_list" index -> (15) content -> ("" + footnote_16_status) }
       : collection_modify { collection = "footnote_status_list" index -> (16) content -> ("" + footnote_17_status) }
-
    }
+
    footnote_write_to_survivors : subroutine {
       : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
       : set_integer var="footnote_2_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 1 ) }) )} ;
@@ -3292,13 +3294,13 @@ themes {
 ## On_debug and on_startup both call the INIT/TUTORIAL subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
 ## I now use GT CHT to toggle my in_debug variable
 
-on_debug {
+#on_debug {
 #   : print "Note to self and testers: remind me to comment out first two lines of on_debug if this appears." ;
 #   : set_true "in_debug" ;
 #   : gosub "init_check" ;
 #   : gosub "init" ;
 #   : gosub "tutorial_choice" ;
-}
+#}
 
 on_startup {
    : gosub "init" ;
