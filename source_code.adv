@@ -129,11 +129,11 @@ booleans {
    bonus_point_so_long : boolean "false" ; ## e n
    bonus_point_vast_fission : boolean "false" ; ## e ne
    bonus_point_cease_purging : boolean "false" ; ## e e
-   bonus_point_pile_tricks : boolean "false" ; # e se
-   bonus_point_tile_pricks : boolean "false" ; # e se
    bonus_point_sane_role : boolean "false" ; ## e sw
+   bonus_point_grow_need : boolean "false" ; # e w
 
-   ## endgame bonus point
+   ## endgame bonus points
+   bonus_point_eye_stay : boolean "false" ;
    bonus_point_cheery_times : boolean "false" ;
 
    jump_buzzing : boolean "false" ;
@@ -158,6 +158,10 @@ booleans {
 
    ## oranges
    achieve_tnnt: boolean "false" scope="survivor" ;
+   achieve_pcpccp : boolean "false" scope="survivor" ;
+   achieve_pcpccp_pre : boolean "false" scope="survivor" ;
+   pcpc_tile : boolean "false" scope="survivor" ;
+   pcpc_pile : boolean "false" scope="survivor" ;
    achieve_cnnc : boolean "false" scope="survivor" ;
 
    ## yellows
@@ -400,9 +404,9 @@ collections {
          "<SO LONG<#0f0>> when you have the low song",
          "<VAST FISSION<#0f0>> (or fishin) when you have the fast vision",
          "<CEASE PURGING<#0f0>> when you feel peace surging",
-         "<PILE TRICKS<#0f0>> when you have the trial pics",
-         "<TILE PRICKS<#0f0>> when you have the trial pics",
          "<SANE ROLE<#00f>> when you have a rain soul",
+         "<GROW NEED<#0f0>> when you have no greed",
+         "<EYE STAY<#f0f>> on noticing the poster",
          "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
       ]
    };
@@ -423,7 +427,7 @@ collections {
          "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#0f0>>",
-         "<(unfound yet)<#0f0>>",
+         "<(unfound yet)<#f0f>>",
          "<(unfound yet)<#f0f>>"
       ]
    };
@@ -695,12 +699,12 @@ strings {
    ## reds = certain verb (presence or absence)
    achievement_haih : string "<Hi, All I Haul<#f00>>" ;
    ## MTTM post-release
-   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
 
    ## orange = bonus points / game-specific commands
-   ##PCPCCP post-release
    ##ROER post-release
+   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
+   achievement_pcpccp : string "<Player-Can-Pair-Clan Care Plan<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
 
    ## yellow = asking Thor
@@ -1878,6 +1882,21 @@ locations {
    };
    my_house : location "{my_house_description}" {
       on_command {
+         : match "eye stay;i stay" {
+            : if (!bonus_point_eye_stay) {
+               : print "You think about staying, but ... no. There's still that quest. Still, you responded to that poster.";
+               : set_true "bonus_point_eye_stay" ;
+               : set_integer var="tempint" "16" ;
+               : gosub "add_bonus" ;
+            } : else {
+               : print "You already eyed a stay." ;
+            }
+         }
+         : if (!bonus_point_eye_stay) {
+            : match "eye _;i *;_ stay" {
+               : gosub "say_half" ;
+            }
+         }
          : if (!point_see_glimmering || bonus_point_cheery_times) {
             : match "talk _;listen _" {
                : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
@@ -2385,6 +2404,14 @@ subroutines {
       }
       : print "I missed a case for asking Thor. This should never happen. It's a bug." ;
    }
+   check_pcpc_achievement : subroutine {
+      : if (pcpc_tile && pcpc_pile) {
+         : print "You look towards the fourth wall again. No bonus points? Sadly, no. But an achievement, for thoroughly and observantly inspecting the trial pics. A care plan awaits, on solving this quest!" ;
+         : set_true "achieve_pcpccp_pre" ;
+      } : else {
+         : print "You look towards the fourth wall. It's a good spoonerism, right? Isn't a bonus point in order? Apparently, you need to do a little more, if you're into that sort of thing." ;
+      }
+   }
    evaluate_warp : subroutine {
       : if (latest_warp_number == -2) {
          : set_integer var = "latest_warp_number" "-1";
@@ -2496,6 +2523,18 @@ subroutines {
       : gosub "talk_flag" ;
    }
    item_based_points : subroutine {
+      : if (is_carried "no_greed") {
+         : match "grow need" {
+            : if (bonus_point_grow_need) {
+               : print "A different sort of need has already grown." ;
+            } : else {
+               : print "You reflect on a total lack of greed -- admirable, yes, but you still need to fight FOR stuff. That's worth being, or seeming, greedy for." ;
+               : set_true "bonus_point_grow_need" ;
+               : set_integer var="tempint" "15" ;
+               : gosub "add_bonus" ;
+            }
+         }
+      }
       : if (is_carried "fast_vision") {
          : match "vast fission" {
             : if (bonus_point_vast_fission) {
@@ -2547,23 +2586,21 @@ subroutines {
       }
       : if (is_carried "trial_pics") {
          : match "tile pricks" {
-            : if (!bonus_point_tile_pricks) {
-               : print "A brief worrisome thought envelops you. It was a hurt dome, and you only changed the outside. Or you only saw you changed the outside. But you look at the pictures of what's indoors. No, there are no punji pits you can see. You breathe a sigh of relief.";
-               : set_true "bonus_point_tile_pricks" ;
-               : set_integer var="tempint" "15" ;
-               : gosub "add_bonus" ;
+            : if (!pcpc_tile) {
+               : print "You wonder if it is worth advertising any sort of home security like this, especially since it might backfire on the inhabitant. But a spoonerism's a spoonerism!" ;
+               : set_true "pcpc_tile" ;
+               : gosub "check_pcpc_achievement" ;
             } : else {
-               : print "You already inspected the trial pics for something wrong." ;
+               : print "You already inspected the trial pics that way." ;
             }
          }
          : match "pile tricks" {
-            : if (bonus_point_pile_tricks) {
-               : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
+            : if (!pcpc_pile) {
+               : print "You've found a lot of wordplay tricks so far, and you wonder if you should branch off into salesmanship tricks. There are ethical boundaries, of course, but a spoonerism's a spoonerism!" ;
+               : set_true "pcpc_pile" ;
+               : gosub "check_pcpc_achievement" ;
             } : else {
-               : print "You've found a lot of tricks so far. Why not a few more? You track what you've done and what you hope to do." ;
-               : set_true "bonus_point_pile_tricks" ;
-               : set_integer var="tempint" "14" ;
-               : gosub "add_bonus" ;
+               : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
             }
          }
       }
@@ -2573,7 +2610,7 @@ subroutines {
                : print "Fighting too hard for perfect sanity undoes the point." ;
             } : else {
                : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
-               : set_integer var="tempint" "16" ;
+               : set_integer var="tempint" "14" ;
                : set_true "bonus_point_sane_role" ;
                : gosub "add_bonus" ;
             }
@@ -2583,8 +2620,8 @@ subroutines {
          : match "cheery times" {
             : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
             : destroy "teary_chimes" ;
-            : gosub "add_bonus" ;
             : set_integer var="tempint" "17" ;
+            : gosub "add_bonus" ;
             : set_true "bonus_point_cheery_times" ;
             : done ;
          }
@@ -3087,14 +3124,22 @@ subroutines {
    }
 
    track_achievements_2_orange : subroutine {
-      : if (achieve_tnnt && achieve_cnnc) {
-         : print "You already found all the footnotes and bonus points with {achievement_tnnt} and {achievement_cnnc}." ;
+      : if (achieve_tnnt && achieve_pcpccp && achieve_cnnc) {
+         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_pcpccp}, and {achievement_cnnc}." ;
          : return ;
       }
       : if (achieve_tnnt) {
          : print "You already unlocked the {achievement_tnnt} achievement." ;
       } : else {
          : gosub "footnote_endgame_check" ;
+      }
+      : if (achieve_pcpccp) {
+         : print "You already unlocked the {achievement_pcpccp} achievement." ;
+      } : else_if (achieve_pcpccp_pre) {
+         : print "For finding two ways to look at the trial pics, you win the {achievement_pcpccp} achievement!" ;
+         : set_true "achieve_pcpccp" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_pcpccp} achievement yet." ;
       }
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
