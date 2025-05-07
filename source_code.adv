@@ -481,8 +481,11 @@ collections {
 
 strings {
 
-   tempstr: string "" ;
-   tempstr2: string "" ;
+   ## delete post-comp
+   postcomp : string "This was intended to be a bonus point for the comp version, but ... things got crossed up. It'll be there post-comp. Sorry." ;
+
+   tempstr : string "" ;
+   tempstr2 : string "" ;
 
    ## short stubs
    # meta verbs in orange
@@ -1878,6 +1881,9 @@ locations {
    };
    my_house : location "{my_house_description}" {
       on_command {
+         : match "eye stay;i stay" {
+            : print "{postcomp}" ;
+         }
          : if (!point_see_glimmering || bonus_point_cheery_times) {
             : match "talk _;listen _" {
                : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
@@ -2496,6 +2502,11 @@ subroutines {
       : gosub "talk_flag" ;
    }
    item_based_points : subroutine {
+      : if (is_carried "no_greed") {
+         : match "grow need" {
+            : print "{postcomp}" ;
+         }
+      }
       : if (is_carried "fast_vision") {
          : match "vast fission" {
             : if (bonus_point_vast_fission) {
