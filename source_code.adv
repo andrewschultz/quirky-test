@@ -514,7 +514,7 @@ strings {
       (is_at "stealing_hill") ? "You can only leave east or west." :
       (is_at "gravel_trail") ? "The passage here is north-south." :
       (is_at "my_house") ? "You can only really go south, but there's no need, since you can just wrap things up here." :
-      "This is a dead end, at least for the game's purposes, so you can really only backtrack to {back_to_hub}, with OUT or the proper compass direction." )} ;
+      "This is a dead end, at least for the game's purposes, so you can really only backtrack to {back_to_hub}, with <OUT<#0f0>> (<O<#0f0>>) or the proper compass direction." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
@@ -816,6 +816,7 @@ vocabulary {
    : verb / aliases = [hi, high]
    : verb / aliases = [hunter, hunting, hunters]
    : verb / aliases = [not, noti, notif, notify]
+   : verb / aliases = [o, out]
    : verb / aliases = [t, talk]
    : verb / aliases = [th, think]
    : verb / aliases = [tx, thx, thank, thanks, credits, credit, creds, cred, crs, cr]
