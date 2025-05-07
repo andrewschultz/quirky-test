@@ -3492,6 +3492,10 @@ on_command {
          : goto "plain_base" ;
          : redescribe ;
       }
+      : match "sh *;pb *;wt *;eb *" {
+         : print "Just the first two letters for the warp command." ;
+         : done ;
+      }
    }
    : gosub "item_based_points" ;
    : match "salesmen _"  {
