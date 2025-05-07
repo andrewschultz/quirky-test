@@ -577,7 +577,9 @@ strings {
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
-   sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the " + (is_at "west_tiles" ? "west" : "east" ) + " mini-hub. You can go south back to the plain base" + (point_healing_still ? ", which is your only choice, given the stealing hill's mood" : " or " + (has_visited("stealing_hill") ? "back up to the stealing hill" : "up to a hill") + ".\n{spokes_left}" ) )};
+   hubdir : dynamic_string {( is_at("west_tiles") ? "west" : "east" )} ;
+   hubrevdir : dynamic_string {( is_at("west_tiles") ? "east" : "west" )} ;
+   sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the {hubdir} mini-hub. You can go south{hubrevdir} back to the plain base" + (point_healing_still ? ", which is your only choice, given the stealing hill's mood." : " or " + (has_visited("stealing_hill") ? "back up to the stealing hill" : "up to a hill") + ".\n{spokes_left}" ) )};
    spokes_word : dynamic_string {( tempint == 6 ? "one" :
       tempint == 5 ? "two" :
       tempint == 4 ? "three" :
@@ -586,7 +588,7 @@ strings {
       tempint == 1 ? "six" :
       "(error, bug, {tempint})"
       )};
-   spokes_left : dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here. (South" + (is_at("east_branch") ? "west" : "east") + " leads back to the hub.)" : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
+   spokes_left : dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
    ## west tiles seeding for dynamic strings, starting north and going clockwise
    hub_w_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
@@ -802,7 +804,7 @@ vocabulary {
    : verb / aliases = [tx, thx, thank, thanks, credits]
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
-   : verb / aliases = [points, point, pt, pts]
+   : verb / aliases = [points, point, pt, pts, poi, po]
    : verb / aliases = [verb, verbs]
    : verb / aliases = [x, read]
    : verb / aliases = [eat, taste]
@@ -937,7 +939,7 @@ locations {
             }
             : match "player rights" {
                : if (!point_player_rights) {
-                  : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}!\nYou walk towards it." ;
+                  : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}\nYou walk towards it." ;
                   : gosub "add_point" ;
                   : press_any_key ;
                   : set_true "point_player_rights" ;
@@ -1008,7 +1010,7 @@ locations {
          }
       }
    };
-   plain_base : location "PLAIN BASE\nYou are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the northeast and northwest{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
+   plain_base : location "PLAIN BASE\nYou are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the <northeast<#00f>> and <northwest<#00f>>{describe_gravel_trail}. You don't see any way back to the burst face.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : match "_ beer" {
             : if (noticed_beer) {
@@ -1055,7 +1057,7 @@ locations {
                   : print "Nope, not again. Maybe you can figure the secret Beery Thor said it had." ;
                   : done ;
                } : else {
-               : print "It's a seedy place, it is. You are captured and put on trial. It looks bad for you, but before the verdict is rendered, Beery Thor clatters in and makes an argument that befuddles the courtroom.\n\"You're not the first person to try that,\" says Beery Thor., \"And I don't blame you." ;
+               : print "It's a seedy place, it is. You are captured and put on trial. It looks bad for you, but before the verdict is rendered, Beery Thor clatters in and makes an argument that befuddles the courtroom.\n\"You're not the first person to try that,\" says Beery Thor. \"And I don't blame you. But there's another way to deal with it.\"" ;
                : gosub "thor_on_seth" ;
                : set_true "entered_seth_dentons" ;
                }
@@ -1073,12 +1075,12 @@ locations {
       }
       : match "bane place" {
          : if (!bonus_point_bane_place) {
-            : print "Thor chuckles a bit. \"Very observant. Yes, plain, but it does the job.\"";
+            : print "Thor chuckles a bit. \"Very observant. But there's no antagonist around here.\"";
             : set_integer var="tempint" "4" ;
             : gosub "add_bonus" ;
             : set_true "bonus_point_bane_place" ;
          } : else {
-            : print "You already pointed out the, uh, functionality of this location. Don't be a rude guest.";
+            : print "You already pointed out the, uh, potential alternate functionality of this location.";
          }
          : done ;
       }
