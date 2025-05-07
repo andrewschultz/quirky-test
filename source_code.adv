@@ -12,6 +12,17 @@ game_settings {
    rollback_enabled = true
 }
 
+game_information {
+   game_name                    = Quirky Test
+   game_version                 = 1.2.1
+   game_shortname               = QT
+   written_by                   = Andrew Schultz
+   uuid                         = b58b6418-313b-465a-a17b-75782c893568
+   year_of_release              = 2025
+   copyright_message            = Free for distribution but donations welcome
+   short_synopsis               = Wordplay tutorial for TALP/TALJ 2025.
+}
+
 ## we start with simplest defined then move to more complex
 
 booleans {
