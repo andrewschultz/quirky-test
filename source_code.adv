@@ -407,13 +407,13 @@ collections {
          "<TEST WILES<#ff0>> in West Tiles",
          "<BEAST RANCH<#ff0>> in East Branch",
          "<RIG BOONS<#ff0>> in either hub",
-         "<SO LONG<#00f>> when you have the low song",
-         "<VAST FISSION<#00f>> (or fishin) when you have the fast vision",
-         "<CEASE PURGING<#00f>> when you feel peace surging",
-         "<PILE TRICKS<#00f>> when you have the trial pics",
-         "<TILE PRICKS<#00f>> when you have the trial pics",
+         "<SO LONG<#0f0>> when you have the low song",
+         "<VAST FISSION<#0f0>> (or fishin) when you have the fast vision",
+         "<CEASE PURGING<#0f0>> when you feel peace surging",
+         "<PILE TRICKS<#0f0>> when you have the trial pics",
+         "<TILE PRICKS<#0f0>> when you have the trial pics",
          "<SANE ROLE<#0f0>> when you have a rain soul",
-         "<RACING PASSIONS<#0f0>> when you have the pacing rations",
+         "<RACING PASSIONS<#00f>> when you have the pacing rations",
          "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
       ]
    };
