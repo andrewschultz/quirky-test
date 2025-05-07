@@ -154,10 +154,10 @@ booleans {
    achieve_haih : boolean "false" scope="survivor" ;
    achieve_haih_pre : boolean "false" scope="survivor" ;
    ## later: MTTM
-   achieve_tnnt: boolean "false" scope="survivor" ;
    achieve_tyyt : boolean "false" scope="survivor" ;
 
    ## oranges
+   achieve_tnnt: boolean "false" scope="survivor" ;
    achieve_cnnc : boolean "false" scope="survivor" ;
 
    ## yellows
@@ -3043,7 +3043,20 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
-      # red achievements
+      : gosub "track_achievements_1_red" ;
+      : gosub "track_achievements_2_orange" ;
+      : gosub "track_achievements_3_yellow" ;
+      : gosub "track_achievements_4_green" ;
+      : gosub "track_achievements_5_blue" ;
+      : gosub "track_achievements_6_purple" ;
+
+      ## grey achievement (post-comp)
+   }
+
+   track_achievements_1_red : subroutine {
+      : if (achieve_haih && achieve_tyyt) {
+         : print "You got all the achievements for maxing inventory chatting: {achievement_haih} and {achievement_tyyt}." ;
+      }
       : if (achieve_haih) {
          : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
       }
@@ -3053,11 +3066,6 @@ subroutines {
       }
       : else {
          : print "You haven't unlocked the {achievement_haih} achievement yet." ;
-      }
-      : if (achieve_tnnt) {
-         : print "You already unlocked the {achievement_tnnt} achievement." ;
-      } : else {
-         : gosub "footnote_endgame_check" ;
       }
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
@@ -3074,8 +3082,18 @@ subroutines {
             : print "You haven't unlocked the {achievement_tyyt} achievement yet." ;
          }
       }
+   }
 
-      ## orange achievements
+   track_achievements_2_orange : subroutine {
+      : if (achieve_tnnt && achieve_cnnc) {
+         : print "You already found all the footnotes and bonus points with {achievement_tnnt} and {achievement_cnnc}." ;
+         : return ;
+      }
+      : if (achieve_tnnt) {
+         : print "You already unlocked the {achievement_tnnt} achievement." ;
+      } : else {
+         : gosub "footnote_endgame_check" ;
+      }
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
       }
@@ -3086,12 +3104,22 @@ subroutines {
       : else {
          : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
       }
+   }
 
-      ## yellow achievements
+   track_achievements_3_yellow : subroutine {
+      : if (achieve_qwwq && achieve_kssn) {
+         : print "You already got both achievements for<ask>ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
+         : return ;
+      }
       : gosub "track_achievements_qwwq" ;
       : gosub "track_achievements_kssn" ;
+   }
 
-      ## green achievements
+   track_achievements_4_green : subroutine {
+      : if (achieve_ssss && achieve_gssg && achieve_srrs) {
+         : print "You got all three achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, and {achievement_srrs}." ;
+         : return ;
+      }
       : if (achieve_ssss) {
          : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
       } : else_if (achieve_ssss_pre) {
@@ -3103,7 +3131,7 @@ subroutines {
       : if (achieve_gssg) {
          : print "You already unlocked the {achievement_gssg} achievement for not having to repeat the right phrase beyond Thor." ;
       } : else {
-         : if (hub_think_needed == 0) {
+         : if ((hub_think_needed == 0) && (point_healing_still)) {
             : print "For not having to repeat the right phrase beyond Thor, you win the {achievement_gssg} achievement!" ;
             : set_true "achieve_gssg" ;
          } : else {
@@ -3111,7 +3139,7 @@ subroutines {
          }
       }
       : if (achieve_srrs) {
-         : print "You already unlocked the {achievement_srrs} achievement for trying to solve all seven dependent before you were ready." ;
+         : print "You already unlocked the {achievement_srrs} achievement for trying to solve all seven dependent puzzles before you were ready." ;
       } : else {
          : if (hub_think_needed == 7) {
             : print "For trying to flip all seven dependent puzzles before you were ready, you win the {achievement_srrs} achievement!" ;
@@ -3120,8 +3148,13 @@ subroutines {
             : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
          }
       }
+   }
 
-      ## blue achievements
+   track_achievements_5_blue : subroutine {
+      : if (achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc) {
+         : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc}." ;
+         : return ;
+      }
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
       } : else_if (achieve_tmmt_pre) {
@@ -3147,8 +3180,13 @@ subroutines {
       } : else {
             : print "You haven't unlocked the {achievement_cddc} achievement yet." ;
       }
+   }
 
-      ## purple achievements
+   track_achievements_6_purple : subroutine {
+      : if (achieve_hbbh && achieve_nbbn) {
+         : print "You already got both examining achievements: {achievement_hbbh} for beer and {achievement_nbbn} for books." ;
+         : return ;
+      }
       : if (achieve_hbbh) {
          : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
       } : else_if (achieve_hbbh_pre) {
@@ -3165,8 +3203,6 @@ subroutines {
       } : else {
          : print "You haven't unlocked the {achievement_nbbn} achievement yet." ;
       }
-
-      ## grey achievement (post-comp)
    }
 
    # track_achievement subroutines are in alphabetical order
