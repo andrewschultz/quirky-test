@@ -306,8 +306,8 @@ collections {
          "<Get to Sky Floor<#0f0>>",
          "<Examine the trending booth<#0f0>>",
          "<Solve Warring Bay<#0f0>>",
-         "<Examine the Hissing Mouse<#0f0>>",
-         "<Examine the bookshelf<#0f0>>"
+         "<Examine the Hissing Mouse<#f0f>>",
+         "<Examine the bookshelf<#f0f>>"
       ]
    }
    footnote_hinting_list : list {
@@ -423,7 +423,7 @@ collections {
          "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#0f0>>",
-         "<(unfound yet)<#00f>>",
+         "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#f0f>>"
       ]
    };
