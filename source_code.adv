@@ -539,7 +539,7 @@ strings {
    tx_on : string "<Olaf Nowacki<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
    verbs : string "<VERBS<#f80>>" ;
-   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by area." )} ;
+   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
 
    # yes-or-no
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
@@ -1117,7 +1117,7 @@ locations {
             : gosub "footnote_reveal" ;
             : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy passages like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
             : if (is_carried("travel_grail")) {
-               : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them alredy" : "You'll see them" ) + " on completion of your quest.\"" )} ;
+               : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
                : set_true "achieve_ssss_pre" ;
             }
             :set_true "note_nonreciprocal" ;
@@ -1200,7 +1200,7 @@ locations {
          : print {( point_gravel_trail ? "Nope. It hasn't discovered your theft yet. Better leave before it does." : "It seems to be sleeping. Maybe you could pinch something from it, if you knew what you wanted and how to get it." )} ;
       }
       : match "d _" {
-         : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific" ;
+         : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific." ;
          : done ;
       }
       : match "talk _;listen _" {
@@ -1948,7 +1948,7 @@ locations {
                : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
                : if (!footnotes_available) {
                   : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
-                  : print "You can see how achievements are going with <ACHIEVEMENTS<#f80>>. But don't feel obliged to complete any of them. They're meant to be tough. Of course, you can just look at the source code on {qtg}." ;
+                  : print "These can be tracked with <ACHIEVEMENTS<#f80>> or <ACH<#f80>> on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qtg} to spoil them." ;
                }
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
@@ -2189,7 +2189,7 @@ subroutines {
          : return ;
       }
       : if (bonus_score == 0) {
-         : print "You haven't got any bonus points yet." ;
+         : print "You haven't got any bonus points yet. Once you find one, you will get a numbered list." ;
          : return ;
       }
       : clear_screen ;
@@ -3086,9 +3086,9 @@ subroutines {
       : print "{thx} or {cred} gives info about people who helped make {qt} or make it better.";
       : print "{thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
       : print {( "{sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> shows bonus points you've found and clues where to get others." : "" ) )} ;
-      : print "{v_pts} is a spoiler for point-scoring commands, with examples of fun ones that missed the cut for {qt}." ;
+      : print "{v_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
       : if (footnotes_available) {
-         : print "By winning the game, you've opened up footnotes. {footnote_cue}.";
+         : print "By winning the game, you've opened up footnotes ({footnote_cue}) and achievements tracking (<ACHIEVEMENTS<#f80>>).";
       }
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
