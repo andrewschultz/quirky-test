@@ -52,9 +52,15 @@ booleans {
    score_bonus_nag : boolean "false" ;
    said_bore_outside_base : boolean "false" ;
    thor_knows_bore : boolean "false" ;
-   footnote_color_note : boolean "false" ;
    wait_note : boolean "false" ;
    meta_abbrev_noted : boolean "false" ;
+
+   ## text coloring notes
+   ever_bonus : boolean "false" scope="survivor" ;
+   ever_footnote : boolean "false" scope="survivor" ;
+   ever_achievement : boolean "false" scope="survivor" ;
+   bf_color_note : boolean "false" scope="survivor" ;
+   bfa_color_note : boolean "false" scope="survivor" ;
 
    ## game option booleans
    score_notify : boolean "true" ;
@@ -2198,6 +2204,9 @@ subroutines {
          }
          : increment "tempint" ;
       }
+      : set_true "ever_bonus" ;
+      : gosub "color_check_bf" ;
+      : gosub "color_check_bfa" ;
    }
    brief_hill_mad : subroutine {
       : update_graphic "stealing_hill_finds" ;
@@ -2405,6 +2414,27 @@ subroutines {
       }
       : print "I missed a case for asking Thor. This should never happen. It's a bug." ;
    }
+   color_check_bf : subroutine {
+      : if (bf_color_note) {
+         : return ;
+      }
+      : if (ever_bonus && ever_footnote) {
+         : print "{otn}{bon} and <FOOTNOTE<#f80>> both follow the same color-coding scheme." ;
+         : set_true "bf_color_note" ;
+      }
+   }
+   color_check_bfa : subroutine {
+      : if (bfa_color_note) {
+         : return ;
+      }
+      : if (!ever_achievement) {
+         : return ;
+      }
+      : if (ever_bonus || ever_footnote) {
+         : print "{otn}<ACHIEVEMENTS<#f80>> follows different color-coding from {bon} and <FOOTNOTE<#f80>>, since it requires more wide-ranging actions." ;
+         : set_true "bfa_color_note" ;
+      }
+   }
    evaluate_warp : subroutine {
       : if (latest_warp_number == -2) {
          : set_integer var = "latest_warp_number" "-1";
@@ -2438,10 +2468,9 @@ subroutines {
          }
          : increment "tempint" ;
       }
-      : if (!footnote_color_note) {
-         : print "{otn}the footnotes follow the same color order/scheme as {bon}." ;
-         : set_true "footnote_color_note" ;
-      }
+      : set_true "ever_footnote" ;
+      : gosub "color_check_bf" ;
+      : gosub "color_check_bfa" ;
       : done ;
    }
    footnote_printer : subroutine {
@@ -3076,6 +3105,11 @@ subroutines {
       : gosub "track_achievements_4_green" ;
       : gosub "track_achievements_5_blue" ;
       : gosub "track_achievements_6_purple" ;
+
+      : if (!point_hi_mouse) { # not included in endgame text since that is long enough already, and only those who really want to track achievements will see the color-coding note
+         : set_true "ever_achievement" ;
+         : gosub "color_check_bfa" ;
+      }
 
       ## grey achievement (post-comp)
    }
