@@ -1957,7 +1957,7 @@ locations {
                : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
                : if (!footnotes_available) {
                   : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
-                  : print "These can be tracked with <ACHIEVEMENTS<#f80>> or <ACH<#f80>> on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qtg} to spoil them." ;
+                  : print "These can be tracked with {v_ach} or {v_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qtg} to spoil them." ;
                }
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
@@ -2428,7 +2428,7 @@ subroutines {
          : return ;
       }
       : if (ever_bonus && ever_footnote) {
-         : print "{otn}{bon} and <FOOTNOTE<#f80>> both follow the same color-coding scheme." ;
+         : print "{otn}{bon} and {v_fn} both follow the same color-coding scheme." ;
          : set_true "bf_color_note" ;
       }
    }
@@ -2440,7 +2440,7 @@ subroutines {
          : return ;
       }
       : if (ever_bonus || ever_footnote) {
-         : print "{otn}<ACHIEVEMENTS<#f80>> follows different color-coding from {bon} and <FOOTNOTE<#f80>>, since it requires more wide-ranging actions." ;
+         : print "{otn}{v_ach} follows different color-coding from {bon} and {v_fn}, since it requires more wide-ranging actions." ;
          : set_true "bfa_color_note" ;
       }
    }
@@ -2484,7 +2484,7 @@ subroutines {
    }
    footnote_printer : subroutine {
       : if (!is_int(original "noun1")) {
-         : print "Footnotes require a number. If you wish to list which footnotes you've found, type <FOOTNOTE 0<#f80>>." ;
+         : print "Footnotes require a number. If you wish to list which footnotes you've found, type {v_f0}." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
@@ -3100,7 +3100,7 @@ subroutines {
       : print {( "{sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> shows bonus points you've found and clues where to get others." : "" ) )} ;
       : print "{v_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
       : if (footnotes_available) {
-         : print "By winning the game, you've opened up footnotes ({footnote_cue}) and achievements tracking (<ACHIEVEMENTS<#f80>>).";
+         : print "By winning the game, you've opened up footnotes ({footnote_cue}) and achievements tracking ({v_ach}).";
       }
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
@@ -3449,7 +3449,7 @@ on_tick {
    : if (!ever_note_footnote && ever_reveal_footnote) {
       : set_true "ever_note_footnote" ;
       : print "{otn}you can view footnotes with {footnote_cue}. Each individual footnote's notification only appears once. I won't reveal how many there are, but you can figure the precise number out by guessing and getting different error messages.";
-      : print "You can also type <FOOTNOTE 0<#f80>> to get a list of footnotes." ;
+      : print "You can also type {v_f0} to get a list of footnotes." ;
    }
    : if_examine "crackers" {
       : set_integer var="tempint" "15" ;
