@@ -520,7 +520,7 @@ strings {
       (is_at "stealing_hill") ? "You can only leave east or west." :
       (is_at "gravel_trail") ? "The passage here is north-south." :
       (is_at "my_house") ? "You can only really go south, but there's no need, since you can just wrap things up here." :
-      "This is a dead end, at least for the game's purposes, so you can really only backtrack to {back_to_hub}, with <OUT<#0f0>> (<O<#0f0>>) or the proper compass direction." )} ;
+      "This is a dead end, at least for the game's purposes, so you can really only backtrack to {back_to_hub}, with {v_out} or the proper compass direction." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
@@ -558,9 +558,10 @@ strings {
    # regular commands in green
    ask : string "<ASK<#0f0>>" ;
    lishea : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
-   xme : string "<X ME<#0f0>>" ;
+   v_out : string "<OUT<#0f0>> (<O<#0f0>>)" ;
    tak : string "<TAKE<#0f0>>" ;
    tlk : string "<TALK<#0f0>>" ; # tlk2 = tlk + or <T<#0f0>> (?)
+   xme : string "<X ME<#0f0>>" ;
 
    # warp commands in orange
    v_pb : string "<PB<#f80>>" ;
@@ -3070,7 +3071,7 @@ subroutines {
          : increment "tutorial_score" ;
       }
       : print "While {qt} requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." ;
-      : print "{qt} uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, <OUT<#0f0>> leaves if there is only one exit." ;
+      : print "{qt} uses all eight planar directions, N S E W NW NE SE SW (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out} leaves if there is only one exit." ;
       : print "You can {tak} an item, but there is no need to <DROP<#0f0>> it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
       : print "You can {tlk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
