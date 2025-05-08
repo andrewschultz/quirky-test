@@ -530,6 +530,9 @@ strings {
    thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    v_pts : string "<POINTS<#f80>>" ;
+   verbs : string "<VERBS<#f80>>" ;
+
+   ## credits
    talj : string "<TALJ<#0f0>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_cm : string "<Christopher Merriner<#0f0>>" ;
@@ -537,8 +540,6 @@ strings {
    tx_gf : string "<Garry Francis<#0f0>>" ;
    tx_ll : string "<Leon Lin<#0f0>>" ;
    tx_wc : string "<Wade Clarke<#0f0>>" ;
-   verbs : string "<VERBS<#f80>>" ;
-   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
    tx_da : string "<DemonApologist<#0f0>>" ;
    tx_on : string "<Olaf Nowacki<#0f0>>" ;
 
@@ -575,8 +576,14 @@ strings {
    tcue : string "<TUTORIAL CUE:<#f0f>> " ;
    otn : string "<ONE-TIME NOTE:<#f0f>> " ;
 
-   ## honorary tutorial variable
-   footnote_cue : string "<FOOTNOTE<#f80>> # or, for brevity, <F<#f80>> #" ;
+   ## footnotes, achievements, etc.
+   v_ach : string "<ACHIEVEMENTS<#f80>>" ;
+   v_ac : string "<ACH<#f80>>" ;
+   v_fn : string "<FOOTNOTE #<#f80>>" ;
+   v_f0 : string "<FOOTNOTE 0<#f80>>" ;
+   v_f : string "<F #<#f80>>" ;
+   footnote_cue : string "{v_fn} or, for brevity, {v_f}" ;
+   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
 
    ## dynamic strings
 
@@ -1502,7 +1509,7 @@ locations {
          }
          : else
          {
-            : print "You tell people to stop whining and start making a fire, or something. Your advice is so level-headed, it levels the hills into more level terrain!\nWhat's more, the grunters agree with you, especially when you show them your crackers and pacing rations." ;
+            : print "You tell people to stop whining and start making a fire, or something. Your advice is so level-headed, it levels the hills into more level terrain!\nWhat's more, the grunters agree with you, especially when you show them your crackers and pacing rations. There's enough for everyone, with nothing left over." ;
             : set_true "point_hunters_grill" ;
             : set_false "think_hunters_grill" ;
             : destroy "pacing_rations" ;
@@ -3063,7 +3070,7 @@ subroutines {
          : return ;
       }
       : if (tutorial_1_about_done && tutorial_2_verbs_done &&  !tutorial_3_additional_metaverb_done) {
-         : print {( tnote + "You found one specific meta-command. There are others, but I didn't want to force you to see them all. You can if you want. You just need to know that a robust text adventure takes steps to help the player not feel lost. This wasn't always the case back in the '80s, when disk space was much scarcer." )} ;
+         : print "{tnote}You found one specific meta-command. There are others, but I didn't want to force you to see them all. You can if you want. You just need to know that a robust text adventure takes steps to help the player not feel lost. This wasn't always the case back in the '80s, when disk space was much scarcer." ;
          : set_true "tutorial_3_additional_metaverb_done";
          : increment "tutorial_score" ;
       }
