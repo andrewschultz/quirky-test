@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.2.1
+   game_version                 = 1.3.1
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -1897,7 +1897,7 @@ locations {
          }
       }
    };
-   gravel_trail : location "This is a gravel trail south back to the plain base and north {gravel_trail_house}{chimes_present}." {
+   gravel_trail : location "This is a gravel trail running south back to the plain base and north {gravel_trail_house}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
             : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
@@ -3963,8 +3963,7 @@ assets {
 
       gravel_trail : dynamic_graphic {( point_missing_house ? "gravel_trail_after" : "gravel_trail_before" )} ;
       gravel_trail_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABx0lEQVRYw+2V22rDMAyG/94WYie3g62vnt0W9i7uA4ikL1D8AkGT5Ba24kG1bA6DiR78q1T+rEOMy8aGf4C/D/BVhNAIAAibAsxBd6pBoA0A9KgI2AxAjh4kC3OopKYVAOZKxR/d/ycA5hoAWo2h9gAqBw6/DzDbyXUKNAtX56DmqcBqAN0y3MIMV/OEXQ/Q74aS8fNt/+Hl8QSsBjjL/mK74ZPh0gxgqFpwABxX2ev92UsC9o9H+D7AOI4KULVjCwAzotOmAG9EtBZg3BvFaCRwyq6egSdPKGAvHyPyXpYx++Su3gKeUGDO0Bcjsiy8srb/wROqOFhAcuSofpcctAR3ZehdoVTrW7woaC5JaekpdR+2f6beFeqGIE4TTjll6ifYJPSQVOSO+OQLJbmQZCgXW2GckpIwTKmsp+XQxeXkCoWMAmROqY1bJpHJZAL16KhzhRKHJEH70XqC3ZK0E66SUpKvxRcq2izEzNGQVkoB6JLrv7qQsbDhKCOyRpL/v5YT1mYov7aXttRMqOT20uawdKZBNZfIdhvAChPLw7qptEcTcpTCSEbs6dxWGpK2hX7o3dBc6nXI4mLzc3MJu5/MX67J1vIdXMI7pO04lggAAAAASUVORK5CYII=";
-
-      gravel_trail_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAz0lEQVRYw+2VsQ0EMQgEN3ZC/5njL+5FB/yy6FtYJ5zuLA+XjDAYfB8/WIEVWIEVWIEVWIEV+Dx+VuC9wD2yuDLBAwQOl4s83EbaEVWJfgtR3NhxAkWRjIqOm7G5P0Yxamb8KzAo8CNzwWS0V+lg3IjECCnIs3EjA0xC16NqovwY6oXICinZsTdsCzXHtIgZlZPqYpi/ftS2M9FYflQfTmVKyo5ITQPoYGIuayvqakIGD4YZ0e3sRSl1WfTSs8GOPQ6LoVK87AjNJ8VnTLrxB+2I7rJIpDHPAAAAAElFTkSuQmCC";
+      gravel_trail_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABhklEQVRYw+2XsWrDMBCGbzM4g/CbejOkUD9GyFK8BdylnTr4gToUEm0aAr38d6eWQpRR50BzxEGfZMPH3UlO6OgaX8sbIwKuzYLoOlpVoFtZ4N1NYL+/T4FufQEiH4GX4w2BEP+7gE8JeNgNw/gjQDn8MnCitPtYhm8T+BueAk9lAZcSQGC4JeByDpw4DYj1BBCfz7+74CFwJTB7xGGbB68PgTsUmNp5hsWkJlQJD9uMBQGidsIqxRZDHM1VsOkzbq4FmCPJhykwBnUw9RnPJQHczoRbA17TsQ6mMWNJIAa58AyZeA1sxoznUg/oCh6RMlXC1Gcs9ABSg9yIJmudqiB6wLAkQKarj6ByVTD1GQsCyFGUApF2DNfBNGYsCIiaZIqDCtfBps9YFsCm0a1jG6gGNn1xVX4oaYoYrUK26opZwNojyCr7ogrIPrS+VSlXVIGobwPSwgQ7u93QSoA5igGFQXb07PZDK0FgbQv5YvJFE5DKyN9VnWdXtB6Q01rn7SXqiSJwAQXnhjD2IT6rAAAAAElFTkSuQmCC";
 
       ## my house
       my_house : dynamic_graphic {( point_see_glimmering ? "my_house_after" : "my_house_before" )} ;
@@ -3978,6 +3977,7 @@ assets {
 
    # item pictures below here
       pacing_rations_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
+
    }
 }
 
