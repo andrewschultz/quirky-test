@@ -507,13 +507,13 @@ strings {
    tempstr : string "" ;
    tempstr2 : string "" ;
 
-   ## short stubs
+   ## short stubs (ok, exitserr got a bit long)
    # meta verbs in orange
    abt : string "<ABOUT<#f80>>" ;
    cred : string "<CREDITS<#f80>>" ;
    exits : string "<EXITS<#f80>>" ;
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
-      (tutorial_6_x_ask_done && is_at "nameless_lameness") ? "You don't want to wandering off without any direction, but maybe that voice could offer a clue." :
+      (tutorial_6_x_ask_done && is_at "nameless_lameness") ? "You don't want to wander off without any direction, but maybe that voice could offer a clue." :
       (is_at "nameless_lameness") ? "In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first." :
       (is_at "burst_face") ? "Visibility's still quite poor here. You sense there's another puzzle to solve before moving on." :
       (is_beside "pro_boor") ? "You'll have to deal with the {cc_pro_boor} before going anywhere." :
@@ -634,8 +634,8 @@ strings {
    hub_w_fell_short : string "The shell fort lies barren now. You even ransacked it for rations." ;
    hub_w_cake_trackers : string "{cc_cake_trackers} mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
    hub_w_take_crackers : string "Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
-   hub_w_gift_shoals : string "{cc_gift_shoals} are here. Yet no matter how many gifts they wash up, you don't see anything you like." ;
-   hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset." ;
+   hub_w_gift_shoals : string "{cc_gift_shoals} are here. They sure have washed up a lot of gifts! Nothing you particularly like or can use, but you're drawn to them anyway, in your current mental state." ;
+   hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset. You don't miss the now-vanished gifts." ;
    hub_w_grunters_hill : string "Grunts from a big hill, here. That must make it a {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
    hub_w_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
    hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure." ;
@@ -1113,7 +1113,7 @@ locations {
       }
       : match "bane place" {
          : if (!bonus_point_bane_place) {
-            : print "Thor chuckles a bit. \"Very observant. But there's no antagonist around here.\"";
+            : print "Thor chuckles a bit. \"Well observed. 'Lurk, jokey jerk Loki!'\" he calls out.\n\"Well, I tried my best to bring in an antagonist, but I guess he's busy. Maybe that works for the best. Well, except for whomever he's busy with.\"";
             : set_integer var="tempint" "4" ;
             : gosub "add_bonus" ;
             : set_true "bonus_point_bane_place" ;
@@ -1172,7 +1172,7 @@ locations {
       }
    };
 
-   east_branch : location "EAST BRANCH\nThe paths here are not very orderly, but they don't look dangerous. {sub_hub}" {
+   east_branch : location "EAST BRANCH\nThe paths here are not super tidy or straight, but they don't look dangerous. {sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_right_side)} ;
       }
@@ -1572,7 +1572,7 @@ locations {
          }
          : else
          {
-            : print "You take a balanced tone of friendship and defiance. You're surprised how well it works." ;
+            : print "You take a balanced tone of friendship and defiance, explaining you saw this neat home just waiting for someone more worthy than you to occupy it. You're surprised how well it works, and you feel clever for having dealt with negativity." ;
             : set_true "point_fellow_yield" ;
             : set_false "think_fellow_yield" ;
             : destroy "fast_vision" ;
@@ -3440,9 +3440,9 @@ themes {
    inventory_list_header = Stuff you've acquired:\s
    you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = Nothing comes from that. {verbs} gives a list of basic standard verbs{unknown_begin_note}.
-   }
       }
    }
+}
 
 # end subroutines
 
@@ -3828,7 +3828,7 @@ on_command {
       : print {( "Your <bonus score<#f80>> is {bonus_score} out of <" + max_bonus_score + "<#f80>>." )} ;
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
-         : print "You can track which bonus points you've found with <BONUS<#f80>>." ;
+         : print "{otn}You can track which bonus points you've found with <BONUS<#f80>>. Also, while {qt} will always let you know when you're half-right on a core point, it will not do so for bonus points. This isn't to be mean or stingy, but rather to make sure you don't get sidelined guessing a non-quest item." ;
       }
    }
    : match "option _;options _;opts _;opt _" {
