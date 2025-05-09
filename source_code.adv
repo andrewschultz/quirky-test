@@ -1296,7 +1296,7 @@ locations {
             : print "You have reason to find a master plan, and your feast with the hunters has left you stronger. Without much trouble, you bust open the master plan and find it." ;
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
             : destroy "meal_dude" ;
             : destroy "focus" ;
             : pocket "master_plan" ;
@@ -1343,7 +1343,7 @@ locations {
             : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts--he mentions something about how it'll be funnier if you're close to whatever your goal is, and you still fail.\nThis doesn't faze you. You've internalized your confidence without realizing it. It's so internalized, it even disappears from your inventory." ;
             : set_true "point_chalice_map" ;
             : set_false "think_chalice_map" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
             : pocket "chalice_map" ;
             : destroy "confidence" ;
          }
@@ -1382,7 +1382,7 @@ locations {
             : print "You believe in yourself and use the power of words to make the artillery fall short. The people inside give up on you. They have much easier targets.\nOh! And what did they leave behind? Some very, very sensible pacing rations. They taste bleah enough so you pace yourself eating them, but not so bleah they're inedible. You take them." ;
             : set_true "point_fell_short" ;
             : pocket "pacing_rations" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
          }
          : done ;
          }
@@ -1410,7 +1410,7 @@ locations {
          {
             : print "While the cake trackers aren't looking, you pinch a box of crackers. They don't notice at first, but when they fail to find any cake, they start getting mad and accusing each other." ;
             : set_true "point_take_crackers" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
             : pocket "crackers" ;
          }
          : done ;
@@ -1465,7 +1465,7 @@ locations {
             : set_false "think_shift_goals" ;
             : destroy "peace_surging" ;
             : destroy "no_greed" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
          }
          : done ;
          }
@@ -1514,7 +1514,7 @@ locations {
             : set_false "think_hunters_grill" ;
             : destroy "pacing_rations" ;
             : destroy "crackers" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
          }
          : done ;
          }
@@ -1564,7 +1564,7 @@ locations {
             : set_false "think_fellow_yield" ;
             : destroy "fast_vision" ;
             : destroy "trial_pics" ;
-            : gosub "add_point_qt" ;
+            : gosub "add_point_west" ;
             : gosub "gain_confidence" ;
          }
          : done ;
@@ -1611,7 +1611,7 @@ locations {
          {
             : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to. You now have a low song running through your head. Where to release it?" ;
             : set_true "point_fly_score" ;
-            : gosub "add_point_tq" ;
+            : gosub "add_point_east" ;
             : pocket "low_song" ;
          }
          : done ;
@@ -1644,7 +1644,7 @@ locations {
             : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks coalesce into a fast vision -- it came to you so quickly, and it's going to stay!" ;
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
-            : gosub "add_point_tq" ;
+            : gosub "add_point_east" ;
          }
          : done ;
          }
@@ -1684,7 +1684,7 @@ locations {
             : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best.\nYou feel peace surging within you. Peace may be boring, but then again, the excitement of war is draining." ;
             : set_true "point_boring_way" ;
             : pocket "peace_surging" ;
-            : gosub "add_point_tq" ;
+            : gosub "add_point_east" ;
          }
          : done ;
          }
@@ -1710,7 +1710,7 @@ locations {
             : print "Poof! The hurt dome transforms into a dirt home. It looks like it needs a resident, but you're too busy, now. However, you take a set of trial pics left at the doorstep, which show the home in the best possible light." ;
             : pocket "trial_pics" ;
             : set_true "point_dirt_home" ;
-            : gosub "add_point_tq" ;
+            : gosub "add_point_east" ;
          }
          : done ;
          }
@@ -1745,7 +1745,7 @@ locations {
                : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic. You feel something rise within you ... a soul full of rain or, more succinctly, a rain soul." ;
                : set_true "point_pouring_rain" ;
                : pocket "rain_soul" ;
-               : gosub "add_point_tq" ;
+               : gosub "add_point_east" ;
             }
             : done ;
          }
@@ -1800,7 +1800,7 @@ locations {
             : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so." ;
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
-            : gosub "add_point_tq" ;
+            : gosub "add_point_east" ;
          }
          : done ;
          }
@@ -1849,7 +1849,7 @@ locations {
             : set_false "think_grim_tune" ;
             : destroy "rain_soul";
             : destroy "low_song" ;
-            : gosub "add_point_tq" ;
+            : gosub "add_point_east" ;
             : gosub "gain_confidence" ;
          }
          : done ;
@@ -2170,12 +2170,12 @@ subroutines {
       }
       : increment "score" ;
       }
-   add_point_qt : subroutine {
+   add_point_west : subroutine {
       : increment "points_left_side" ;
       : gosub "add_point" ;
       : update_graphic ;
       }
-   add_point_tq : subroutine {
+   add_point_east : subroutine {
       : increment "points_right_side" ;
       : gosub "add_point" ;
       : update_graphic ;
