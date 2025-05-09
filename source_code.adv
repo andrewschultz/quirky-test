@@ -1227,7 +1227,7 @@ locations {
          : print "You already found the healing still that contained the travel grail." ;
          }
          : else_if ((!point_chalice_map || !point_master_plan) && (!cheat_dont_require)) {
-            : print "With the stealing hill watching you, it'll be tough to nab anything. You'll need to know what you want and how to get there." ;
+            : print {( "With the stealing hill watching you, it'll be tough to nab anything. " + ( !point_master_plan && !point_chalice_map ? "You'll need to know what you want and how to get there." : !point_master_plan ? "You know where to poke around, but not how or why, yet." : "You know how to sneak around, thanks to the master plan, but not where." ) )} ;
             : if (!think_healing_still) {
                : increment "hub_think_needed" ;
             }
@@ -1286,7 +1286,7 @@ locations {
             : print "You already got the master plan.";
             }
          : else_if ((!point_shift_goals || !point_hunters_grill) && (!cheat_dont_require)) {
-            : print "You sort of hope there's a master plan inside the plaster man, but you're not sure. You sense either you're not focused on what really matters, or you're not nourished enough to break him down." ;
+            : print {( "You sort of hope there's a master plan inside the plaster man, but you're not sure. You sense " + (point_shift_goals ? "" : "you're not focused enough on being able to carry out a big plan" ) + (point_shift_goals || point_hunters_grill ? "" : ", and " ) + (point_hunters_grill ? "" : "you're not nourished enough to break him down" ) + "." )} ;
             : if (!think_master_plan) {
                : increment "hub_think_needed" ;
             }
@@ -1332,25 +1332,29 @@ locations {
       : match "chalice map" {
          : if (point_chalice_map) {
             : print "You already got the chalice map from the malice chap.";
-            }
-         : else_if ((!point_fellow_yield || !point_grim_tune) && (!cheat_dont_require)) {
-            : print {( "This guy's tough. Maybe if you've built experience and confidence blowing off other belligerent fellows, you could outsmart him." + (point_grim_tune || point_fellow_yield ? " You've picked off one so far." : "") )} ;
+            : done ;
+         }
+         : print {( (think_chalice_map ? "The malice chap wags his finger again, sneering." : "To your surprise, the malice chap actually does pull out a chalice map, claiming he would use it, but he obviously has much better opportunities lined up, and if he can't figure out how to use it, you sure can't." ) )} ;
+         : if ((!point_fellow_yield || !point_grim_tune) && (!cheat_dont_require)) {
+            : print {( "You step back, " + (think_chalice_map ? "still " : "") + (confidence_meter == 1 ? "disoriented just enough" : "overwhelmed" ) + " by this display of arrogance." )} ;
+            : print {( "Man, this guy's tough. But with " + (confidence_meter == 1 ? "a bit more" : "some serious" ) + " experience and confidence blowing off other belligerent types, perhaps you could outmaneuver him mentally." )} ;
             : if (!think_chalice_map) {
                : increment "hub_think_needed" ;
             }
             : set_true "think_chalice_map" ;
             : gosub "note_think_command" ;
+            : done ;
          }
-         : else
-         {
-            : print "You offer to relieve the malice chap of his chalice map. You're surprised he accepts--he mentions something about how it'll be funnier if you're close to whatever your goal is, and you still fail.\nThis doesn't faze you. You've internalized your confidence without realizing it. It's so internalized, it even disappears from your inventory." ;
-            : set_true "point_chalice_map" ;
-            : set_false "think_chalice_map" ;
-            : gosub "add_point_west" ;
-            : gosub "hub_check_dependent" ;
-            : pocket "chalice_map" ;
-            : destroy "confidence" ;
-         }
+         : print "You offer to relieve the malice chap of his chalice map. He looks at you like you're crazy. You mention he's probably had it a while and hasn't figured what to do with it. He mentions he's just had more valuable things to search for. But he might sell it. You, of course, don't have money." ;
+         : print "But what you do have is confidence. And as annoying as he is, you realize you may be annoying him more. Especially when you start asking what he's searching for, and what he did to try to search for the map. You ask how he could have missed looking around the general area. You guilt-trip him by saying, why, there's a whole world to the northeast he can explore but you can't.";
+         : print "He gets sick of you pretty quickly. \"Look, if it's really THAT important to you, have it. It'll be funny, thinking of how close you might be to your goal, but you'll still miss out. Because he's heard there are traps the map doesn't tell you how to get by.\"";
+         : print "This doesn't faze you. You've internalized your confidence without realizing it. It's so internalized, it even, well, disappears from your inventory to make way for the chalice map." ;
+         : set_true "point_chalice_map" ;
+         : set_false "think_chalice_map" ;
+         : gosub "add_point_west" ;
+         : gosub "hub_check_dependent" ;
+         : pocket "chalice_map" ;
+         : destroy "confidence" ;
          : done ;
          }
       : if (!point_chalice_map) {
@@ -1457,7 +1461,7 @@ locations {
             : print "But you don't want to shift your goals back." ;
             }
          : else_if ((!point_funny_mountain || !point_boring_way) && (!cheat_dont_require)) {
-            : print "You want to shift your goals, but you don't know if you can. You haven't helped others shift theirs away from Needing More enough yet.";
+            : print {( "You'd like to shift your goals, but it's not as easy as just wanting to. Perhaps helping " + (point_funny_mountain || point_boring_way ? "more" : "some" ) + " other folks shift their goals to something better would give you enough resililence." )} ;
             : if (!think_shift_goals) {
                : increment "hub_think_needed" ;
             }
@@ -1507,7 +1511,7 @@ locations {
             : print "But you already had enough of a feast. Any more, and you wouldn't be able to move around." ;
             }
          : else_if ((!point_take_crackers || !point_fell_short) && (!cheat_dont_require)) {
-            : print {( "You try to start up a feast, but alas, you don't have " + ( (!point_take_crackers && !point_fell_short) ? "any food" : "enough food to do so. You need something besides the " + (point_take_crackers ? "crackers" : "pacing rations") + ".") )} ;
+            : print {( "You try to start up a feast, but alas, you don't have " + ( (!point_take_crackers && !point_fell_short) ? "any food" : "enough food to do so. You need something besides the " + (point_take_crackers ? "crackers" : "pacing rations")) + "." )} ;
             : if (!think_hunters_grill) {
                : increment "hub_think_needed" ;
             }
@@ -1558,7 +1562,7 @@ locations {
             : print "You feel no need to relive past victories." ;
             }
          : else_if ((!point_dirt_home || !point_bending_truth) && (!cheat_dont_require)) {
-            : print "You'd like to convince the fellow to yield, but you either aren't sneaky enough, or you can't give him a safe place to go once he's yielded." ;
+            : print {( "You'd like to convince the fellow to yield, but you " + (point_bending_truth ? "" : "don't feel slick enough") + ( point_bending_truth || point_dirt_home ? "" : ", and you ") + (point_dirt_home ? "" : "can't offer anything worth leaving this field for") + "." )} ;
             : if (!think_fellow_yield) {
                : increment "hub_think_needed" ;
             }
@@ -1850,7 +1854,7 @@ locations {
             }
          : else_if ((!point_fly_score || !point_pouring_rain) && (!cheat_dont_require))
          {
-            : print "You'd like to think of a grim tune, but you don't have a combination of music and lyrics, yet." ;
+            : print {( "A grim tune might be just the thing to repel the trim goon, but you can't build one. You'd need a combination of catchy music and lyrics. You have " + ( point_pouring_rain ? "lyrics" : point_fly_score ? "music" : "neither" ) + ", so far." )} ;
             : if (!think_grim_tune) {
                : increment "hub_think_needed" ;
             }
