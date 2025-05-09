@@ -587,15 +587,15 @@ strings {
    footnote_cue : string "{v_fn} or, for brevity, {v_f}" ;
    bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
 
-   ## dynamic strings
+   ## dynamic general strings
 
    yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
    ask_5_notes : dynamic_string {( bonus_point_rare_plights && bonus_point_shush_lout ? "You got both of them" : bonus_point_rare_plights || bonus_point_shush_lout ? "You got one of them" : "You missed them, but you can go back if you want" )}
 
-   my_score : dynamic_string {( score + "/" + max_score )}
-   notify_string : string {( "You need to specify " + notif + " " + yn + " for score notification changes." )}
+   my_score : string "{score}/{max_score}" ;
+   notify_string : string "You need to specify {notif} {yn} for score notification changes." ;
 
-   unknown_begin_note : dynamic_string {( point_first_base ? "" : ", though special commands are cued in puzzles throughout {qt}" )}
+   unknown_begin_note : dynamic_string {( footnotes_available || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )}
 
    # "can't go that way" dynamic sub-strings
    back_to_hub : dynamic_string {( is_at "hub_w_n" || is_at "hub_w_ne" || is_at "hub_w_e" || is_at "hub_w_s" || is_at "hub_w_sw" || is_at "hub_w_w" || is_at "hub_w_nw" ? "West Tiles" : "East Branch" )}
