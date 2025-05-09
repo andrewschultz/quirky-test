@@ -31,9 +31,9 @@ booleans {
    cheat_dont_require : boolean "false" ;
 
    ## meta-command/parser-warning booleans
-   apostrophe_warn : boolean "false" ;
-   say_warn : boolean "false" ;
-   credits_to_thanks_note : boolean "false" ;
+   apostrophe_warn : boolean "false" scope="survivor" ;
+   say_warn : boolean "false" scope="survivor" ;
+   credits_to_thanks_note : boolean "false" scope="survivor" ;
 
    ## done once in-game booleans (non-critical, or duplicate)
    xme_twice : boolean "false" ;
@@ -42,8 +42,8 @@ booleans {
    know_lush_shout : boolean "false" ;
    thor_explained_seth : boolean "false" ;
    summoned_teary_chimes : boolean "false"; # this is equivalent to point_see_glimmering, but this also makes code where we manipulate the chimes more readable.
-   have_asked_three : boolean "false" ;
-   have_asked_four : boolean "false" ;
+   have_asked_three : boolean "false" scope="survivor" ;
+   have_asked_four : boolean "false" scope="survivor" ;
    poke_books_yet : boolean "false" ;
    noticed_beer : boolean "false" ;
    inventory_incorporeal : boolean "false" ;
@@ -64,33 +64,32 @@ booleans {
    bfa_color_note : boolean "false" scope="survivor" ;
 
    ## game option booleans
-   score_notify : boolean "true" ;
-   tutorial_in_options : boolean "true" ;
-   use_color_coding : boolean "true" ;
+   score_notify : boolean "true" scope="survivor" ;
+   tutorial_in_options : boolean "true" scope="survivor" ;
+   use_color_coding : boolean "true" scope="survivor" ;
 
    ## game progress booleans
    tutorial_done : boolean "false" ;
    talked_to_thor : boolean "false" ;
-   know_hold_bub : boolean "false" ;
    hill_aware_you_stole : boolean "false" ;
    noted_diagonal_direction : boolean "false" ;
-   note_nonreciprocal : boolean "false" ;
-   note_dependent_point : boolean "false" ;
-   note_independent_point : boolean "false" ;
+   note_nonreciprocal : boolean "false" ; # these last 2 could be survivor, technically, but it has thor chatting with you
+   note_dependent_point : boolean "false" scope="survivor";
+   note_independent_point : boolean "false" scope="survivor" ;
 
    ## footnote check booleans
    footnotes_available : boolean "false" scope="survivor" ;
    ever_reveal_footnote : boolean "false" scope="survivor" ;
    ever_note_footnote : boolean "false" scope="survivor" ;
-   reveal_this_footnote : boolean "false" ;
-   history_footnote_found : boolean "false" scope="survivor" ; # I could look up footnote # (whichever its final # would be) but this is simpler
+   history_footnote_found : boolean "false" scope="survivor" ; # I could look up footnote #8 (which will probably remain static)
+   reveal_this_footnote : boolean "false" ; # this is the only footnote variable that might change
 
-   ## verb notifications
-   drop_referenced : boolean "false" ;
-   jump_commands_notified : boolean "false" ;
-   think_noted : boolean "false" ;
-   listen_no_subject_note : boolean "false" ;
-   take_note : boolean "false" ;
+   ## verb usage notifications (only need noting once if you replay)
+   drop_referenced : boolean "false" scope="survivor" ;
+   jump_commands_notified : boolean "false" scope="survivor" ;
+   think_noted : boolean "false" scope="survivor" ;
+   listen_no_subject_note : boolean "false" scope="survivor" ;
+   take_note : boolean "false" scope="survivor" ;
 
    ## regular point tally booleans
    ## some of these are never referred to, or they are fundamentally the same as other game states, but I put them here to make sure the point totals add up
@@ -223,10 +222,10 @@ booleans {
    tutorial_item_taken: boolean "false" ;
 
    ## parser shortcut booleans
-   look_warn: boolean "false" ;
-   examine_warn: boolean "false" ;
-   inventory_warn : boolean "false" ;
-   long_word_warn : boolean "false" ;
+   look_warn: boolean "false" scope="survivor" ;
+   examine_warn: boolean "false" scope="survivor" ;
+   inventory_warn : boolean "false" scope="survivor" ;
+   long_word_warn : boolean "false" scope="survivor" ;
 
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ;
 
