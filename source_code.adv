@@ -954,7 +954,7 @@ locations {
             : done ;
          }
          : match "talk -; talk face;listen_" {
-            : print "The {cc_burst_face} reveals no clues." ;
+            : print "The {cc_burst_face} is, sadly, not bursting with conversation." ;
             : done ;
          }
       }
@@ -1078,7 +1078,7 @@ locations {
             : done ;
          }
          : if (is_beside "seth_dentons") {
-            : match "talk seth" {
+            : match "talk seth;talk dentons" {
                : print "Thor's conversation would be much more interesting and sane." ;
                : done ;
             }
@@ -1283,7 +1283,7 @@ locations {
          : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "A plaster man sits here, thinking ... but of what?{footnote_reveal_text}" )}
          : done ;
       }
-      : match "talk plaster;talk man;talk -;listen -" {
+      : match "talk plaster;talk man;talk -;listen -;listen plaster;listen man" {
          : if (!point_master_plan) {
             : print "The plaster man has secrets to divulge, but since he's inanimate, talking and listening isn't the way to go." ;
             : gosub "talk_flag" ;
@@ -1651,7 +1651,9 @@ locations {
    hub_e_ne : location "{point_bending_truth ? hub_e_bending_truth : hub_e_trending_booth}" {
       on_command {
       : match "talk _;listen _" {
-         : gosub "talk_flag" ;
+         : if (!point_bending_truth) {
+            : gosub "talk_flag" ;
+         }
          : print {( point_bending_truth ? "Nothing to say or hear, but the quiet sure is nice." : "Talking and listening doesn't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
          : done ;
       }
@@ -1697,7 +1699,9 @@ locations {
          }
       }
       : match "talk _;listen _" {
-         : gosub "talk_flag" ;
+         : if (!point_boring_way) {
+            : gosub "talk_flag" ;
+         }
          : print {( point_boring_way ? "Nothing left to say or hear now that peace has broken out." : "Everyone fights among each other, and the yelling creates a feedback loop. You sense you talking will just inflame everyone more. How to get them to cool down?" )}
          : done ;
       }
