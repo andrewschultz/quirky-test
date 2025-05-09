@@ -1213,6 +1213,12 @@ locations {
       : match "x hill;x stealing" {
          : print {( point_gravel_trail ? "Nope. It hasn't discovered your theft yet. Better leave before it does." : "It seems to be sleeping. Maybe you could pinch something from it, if you knew what you wanted and how to get it." )} ;
       }
+      : match "d w" {
+         : set_sentence "w" ;
+      }
+      : match "d e" {
+         : set_sentence "e" ;
+      }
       : match "d _" {
          : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific." ;
          : done ;
@@ -1275,12 +1281,12 @@ locations {
          : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "A plaster man sits here, thinking ... but of what?{footnote_reveal_text}" )}
          : done ;
       }
-      : match "talk plaster;talk -;listen -" {
+      : match "talk plaster;talk man;talk -;listen -" {
          : if (!point_master_plan) {
-            : print "The plaster man has secrets to divulge, but talking and listening isn't the way to go." ;
+            : print "The plaster man has secrets to divulge, but since he's inanimate, talking and listening isn't the way to go." ;
             : gosub "talk_flag" ;
          } : else {
-            : print "That won't do much good now. It wouldn't have done much good before you destroyed the plaster man and got something useful." ;
+            : print "That won't do much good now. Well, it wouldn't have done much good before you destroyed the plaster man and got something useful, either." ;
          }
          : done ;
       }
