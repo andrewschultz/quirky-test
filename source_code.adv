@@ -73,7 +73,9 @@ booleans {
    know_hold_bub : boolean "false" ;
    hill_aware_you_stole : boolean "false" ;
    noted_diagonal_direction : boolean "false" ;
-   note_nonreciprocal: boolean "false" ;
+   note_nonreciprocal : boolean "false" ;
+   note_dependent_point : boolean "false" ;
+   note_independent_point : boolean "false" ;
 
    ## footnote check booleans
    footnotes_available : boolean "false" scope="survivor" ;
@@ -1297,6 +1299,7 @@ locations {
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
             : gosub "add_point_west" ;
+            : gosub "hub_check_dependent" ;
             : destroy "meal_dude" ;
             : destroy "focus" ;
             : pocket "master_plan" ;
@@ -1344,6 +1347,7 @@ locations {
             : set_true "point_chalice_map" ;
             : set_false "think_chalice_map" ;
             : gosub "add_point_west" ;
+            : gosub "hub_check_dependent" ;
             : pocket "chalice_map" ;
             : destroy "confidence" ;
          }
@@ -1383,6 +1387,7 @@ locations {
             : set_true "point_fell_short" ;
             : pocket "pacing_rations" ;
             : gosub "add_point_west" ;
+            : gosub "hub_check_independent" ;
          }
          : done ;
          }
@@ -1411,6 +1416,7 @@ locations {
             : print "While the cake trackers aren't looking, you pinch a box of crackers. They don't notice at first, but when they fail to find any cake, they start getting mad and accusing each other." ;
             : set_true "point_take_crackers" ;
             : gosub "add_point_west" ;
+            : gosub "hub_check_independent" ;
             : pocket "crackers" ;
          }
          : done ;
@@ -1466,6 +1472,7 @@ locations {
             : destroy "peace_surging" ;
             : destroy "no_greed" ;
             : gosub "add_point_west" ;
+            : gosub "hub_check_dependent" ;
          }
          : done ;
          }
@@ -1515,6 +1522,7 @@ locations {
             : destroy "pacing_rations" ;
             : destroy "crackers" ;
             : gosub "add_point_west" ;
+            : gosub "hub_check_dependent" ;
          }
          : done ;
          }
@@ -1566,6 +1574,7 @@ locations {
             : destroy "trial_pics" ;
             : gosub "add_point_west" ;
             : gosub "gain_confidence" ;
+            : gosub "hub_check_dependent" ;
          }
          : done ;
          }
@@ -1612,6 +1621,7 @@ locations {
             : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to. You now have a low song running through your head. Where to release it?" ;
             : set_true "point_fly_score" ;
             : gosub "add_point_east" ;
+            : gosub "hub_check_independent" ;
             : pocket "low_song" ;
          }
          : done ;
@@ -1645,6 +1655,7 @@ locations {
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
             : gosub "add_point_east" ;
+            : gosub "hub_check_independent" ;
          }
          : done ;
          }
@@ -1685,6 +1696,7 @@ locations {
             : set_true "point_boring_way" ;
             : pocket "peace_surging" ;
             : gosub "add_point_east" ;
+            : gosub "hub_check_independent" ;
          }
          : done ;
          }
@@ -1711,6 +1723,7 @@ locations {
             : pocket "trial_pics" ;
             : set_true "point_dirt_home" ;
             : gosub "add_point_east" ;
+            : gosub "hub_check_independent" ;
          }
          : done ;
          }
@@ -1746,6 +1759,7 @@ locations {
                : set_true "point_pouring_rain" ;
                : pocket "rain_soul" ;
                : gosub "add_point_east" ;
+               : gosub "hub_check_independent" ;
             }
             : done ;
          }
@@ -1801,6 +1815,7 @@ locations {
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
             : gosub "add_point_east" ;
+            : gosub "hub_check_independent" ;
          }
          : done ;
          }
@@ -1851,6 +1866,7 @@ locations {
             : destroy "low_song" ;
             : gosub "add_point_east" ;
             : gosub "gain_confidence" ;
+            : gosub "hub_check_dependent" ;
          }
          : done ;
          }
@@ -2547,6 +2563,18 @@ subroutines {
       : increment "confidence_meter" ;
       : pocket "confidence" ;
       : return ;
+   }
+   hub_check_dependent : subroutine {
+      : if (!note_dependent_point) {
+         : set_true "note_dependent_point" ;
+         : print "{otn}solving puzzles that depend on others, like this one, will cause an inventory shuffle. You will lose an item or two but gain one." ;
+      }
+   }
+   hub_check_independent : subroutine {
+      : if (!note_independent_point) {
+         : set_true "note_independent_point" ;
+         : print "{otn}every critical puzzle you solve here will add an item to your inventory, which will be used implicitly when solving another puzzle. It's not critical to see what they are, but <I<#f80>> may offer clues where to go next." ;
+      }
    }
    hub_jerk : subroutine {
       : if ((is_at("hub_w_nw") && point_fellow_yield) || (is_at("hub_w_ne") && point_chalice_map) || (is_at("hub_e_nw") && point_grim_tune)) {
