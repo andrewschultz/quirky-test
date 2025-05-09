@@ -54,6 +54,7 @@ booleans {
    thor_knows_bore : boolean "false" ;
    wait_note : boolean "false" ;
    meta_abbrev_noted : boolean "false" ;
+   note_homonym : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -1848,6 +1849,10 @@ locations {
             : done ;
          }
       }
+      : match "grim toon" {
+         : print "A cartoon duck pops up to call you despicable. Not quite the result you hoped for, but you must be close." ;
+         : gosub "homonym_close" ;
+      }
       : match "grim tune" {
          : if (point_grim_tune) {
             : print "You already thought up a grim tune. Any more, and you might be so depressed you forget what you wrote, or you wonder why even bother to share it." ;
@@ -2567,6 +2572,12 @@ subroutines {
       : increment "confidence_meter" ;
       : pocket "confidence" ;
       : return ;
+   }
+   homonym_close : subroutine {
+      : if (!note_homonym) {
+         : print "{otn}you're really close to a point you need. When this happens, you should always get a hopefully amusing response that indicates such. There's no reward for finding them all, though, other than your own amusement." ;
+         : set_true "note_homonym" ;
+      }
    }
    hub_check_dependent : subroutine {
       : if (!note_dependent_point) {
@@ -3688,6 +3699,9 @@ on_command {
       }
    }
    : if (has_visited "plain_base") {
+      : match "theory boar" {
+         : print {( "The goat is my animal, actually. But " + (bonus_point_theory_bore ? "you already found my little secret you're really close to right now." : "you're close to finding something kind of clever. Not critical, but clever." ) )} ;
+      }
       : match "theory bore" {
          : if (bonus_point_theory_bore) {
             : print {( is_beside("beery_thor") ? "Thor is bigger than you. Best not to overplay this, even if he's in on the joke." : "You snicker some more at what you realized." )} ;
