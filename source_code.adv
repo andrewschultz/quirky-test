@@ -1068,7 +1068,9 @@ locations {
             : if (talked_to_thor) {
                : print "Now you've broken the ice, probably better to {ask} him about one of the rules, 1-17." ;
             } : else {
-               : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. There were seventeen total rules. Some apply here more than other. You can {ask} me about them by number, or <RULE<#0f0>> works, too. I have three things to say about each rule: the original idea, what it means and why it's there, and how it applies here.\"" ;
+               : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. There were seventeen total rules. Some apply here more than others." ;
+               : print "\"You can {ask} me about them by number, or <RULE<#0f0>> works, too. Just the numbers, to keep things simple. I have three things to say about each rule: its original form, what it means and why it's there, and how it applies here in {qt}." ;
+               : print "\"Oh, ask as much or little as you want. It won't affect your final score.\"" ;
             }
             : set_true "talked_to_thor" ;
             : done ;
@@ -2288,7 +2290,7 @@ subroutines {
                : gosub "ask_thor_debug" ;
             }
          }
-         : print "You need a number (1-17) for the rule to ask Thor about." ;
+         : print "{ask}ing Thor requires a number from 1-17, with no extra text." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
