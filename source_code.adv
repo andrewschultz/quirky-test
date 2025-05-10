@@ -522,7 +522,7 @@ strings {
       (is_at "stealing_hill") ? "You can only leave east or west." :
       (is_at "gravel_trail") ? "The passage here is north-south." :
       (is_at "my_house") ? "You can only really go south, but there's no need, since you can just wrap things up here." :
-      "This is a dead end, at least for the game's purposes, so you can really only backtrack to {back_to_hub}, with {v_out} or the proper compass direction." )} ;
+      "This is a dead end, at least for {qt}'s purposes, so you can really only backtrack {spoke_out_dir} to {back_to_hub}, though {v_out} always works, too." )} ;
    hint : string "<HINT<#f80>> or <HINTS<#f80>>" ;
    meta : string "<META<#f80>>" ;
    sco : string "<SCORE<#f80>>" ;
@@ -598,10 +598,11 @@ strings {
    my_score : string "{score}/{max_score}" ;
    notify_string : string "You need to specify {notif} {yn} for score notification changes." ;
 
-   unknown_begin_note : dynamic_string {( footnotes_available || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )}
+   unknown_begin_note : dynamic_string {( footnotes_available || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
 
    # "can't go that way" dynamic sub-strings
    back_to_hub : dynamic_string {( is_at "hub_w_n" || is_at "hub_w_ne" || is_at "hub_w_e" || is_at "hub_w_s" || is_at "hub_w_sw" || is_at "hub_w_w" || is_at "hub_w_nw" ? "West Tiles" : "East Branch" )}
+   spoke_out_dir : dynamic_string {( is_at "hub_w_n" || is_at "hub_e_n" ? "south" : is_at "hub_w_ne" || is_at "hub_e_ne" ? "southwest" : is_at "hub_w_e" || is_at "hub_e_e" ? "west" : is_at "hub_e_se" ? "northwest" : is_at "hub_w_s" || is_at "hub_e_s" ? "north" : is_at "hub_w_sw" ? "northeast" : is_at "hub_w_w" || is_at "hub_e_w" ? "east" : is_at "hub_w_nw" || is_at "hub_e_nw" ? "southeast" : "(unknown, bug)" )}
    first_base_cantgo : dynamic_string {( point_bro_poor ? "You need to figure what to do with {cc_prayer_lights} before moving on." : "You'll have to deal with the {cc_pro_boor} before going anywhere." )}
    plain_base_cantgo : dynamic_string {( point_gravel_trail ? "The only passages are northeast and northwest, where you think you've done everything, and north." : "The only viable passages (for now) are northeast and northwest." )}
 
