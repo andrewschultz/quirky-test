@@ -3431,6 +3431,8 @@ subroutines {
    }
 }
 
+# end subroutines
+
 themes {
    my_theme : theme {
       status_bar {
@@ -3459,7 +3461,58 @@ themes {
    }
 }
 
-# end subroutines
+# end themes
+
+on_render {
+   : if (is_at("west_tiles")) {
+      : if (point_master_plan) {
+         : overlay "check_mark" x="124" y="0" ;
+      }
+      : if (point_chalice_map) {
+         : overlay "check_mark" x="164" y="0" ;
+      }
+      : if (point_fell_short) {
+         : overlay "check_mark" x="192" y="14" ;
+      }
+      : if (point_take_crackers) {
+         : overlay "check_mark" x="124" y="28" ;
+      }
+      : if (point_shift_goals) {
+         : overlay "check_mark" x="80" y="28" ;
+      }
+      : if (point_hunters_grill) {
+         : overlay "check_mark" x="64" y="14" ;
+      }
+      : if (point_fellow_yield) {
+         : overlay "check_mark" x="84" y="0" ;
+      }
+   }
+   : if (is_at("east_branch")) {
+      : if (point_fly_score) {
+         : overlay "check_mark" x="124" y="0" ;
+      }
+      : if (point_bending_truth) {
+         : overlay "check_mark" x="164" y="0" ;
+      }
+      : if (point_boring_way) {
+         : overlay "check_mark" x="192" y="14" ;
+      }
+      : if (point_dirt_home) {
+         : overlay "check_mark" x="164" y="28" ;
+      }
+      : if (point_pouring_rain) {
+         : overlay "check_mark" x="124" y="28" ;
+      }
+      : if (point_funny_mountain) {
+         : overlay "check_mark" x="64" y="14" ;
+      }
+      : if (point_grim_tune) {
+         : overlay "check_mark" x="84" y="0" ;
+      }
+   }
+}
+
+# end on_render
 
 ## On_debug and on_startup both call the INIT/TUTORIAL subroutine, but on_debug sets a flag or flags to allow for cheat commands and also checks to make sure the footnote collections all have the same length, since we can't define objects or classes
 ## I now use GT CHT to toggle my in_debug variable
@@ -3896,9 +3949,9 @@ assets {
 
       plain_base : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAC8klEQVRYw82XvZLcIAyAeQPG1ZWZ2RdI4eLKfaabFJR+Dlf7irqkYLZSLEAS2IDti3cu7JyHM1j6LPRnYzoDq+PPHY8v9MTbsMFic0BDz9jYP1YAOuLxvwEA+iN1NA23Ach09hIAWCQBmTsqWqRbk96NAUh9Aoi/5amweJEFwuuZINmoMgWAwBkA2A64A3A/fp8BVHq4Y5sAcbULgON4/HYJEDWhAewBhHnHB/gMHI0xXJsnkB9BlE6xDaYLYHDHAiHgvcsA3NRKDxGAUkqUHpOL7QGY3SMgEzhXACxGGDsAJEoPeAMA9pQTkrXdBsCN2AEgxSJ9BSAbjoYhmeB9A/Dr3gXIwtCuAZb8wCmomogcC5OJdxULkB90osBKIjJrgJ1U7FmyTNBVAVwz3VZEU6n7TgA8ASCSZQInatcBC0As/Fo0wpVCVwAmPvivAGitE8GxTcgA2CeKYEyB65N/efUzkvB8FHpmArBVAK11McXSPjBbC3QB3Mdb5uj04HOeVUv6pwoQImAlOPZJOYCtAWAGMAwKEN90nhlhUT8/2DI1gKLY8nEbyAHMBgBMG4DNLgCPthNsAMglUkOYA9jkL+KE9D6gIZcAXOtFERtOUAAkwXzqDMAmKIoGP7sBoLQZxu8bK5GZ3Qb1ptZh9AGbZ0KxiBQNVCdcAYAoud1+4mpmLFvHT+lCtQ7Kfiel/AwA1AL7AGLoqBYKAHaDSQFCCQIrgk1iKGqB+ICCSiJaAUglSWptDmATHRXHcRzfJ3Es7UhAv3cUAEw7ta0ApJbGk4fSB+KiLwAOfZjYLwBUUn1aXKJVAP7906wLAFgFWIzAALtxavY+Tps+wEW1rDznAfZ2bKKgc6yx4SPnvxBglYq/H8B2vCYmotcCcLajEliMBzLcKwCmYfBlNawCaPN8IUBsBYdBe0KwDYAky39cC+BJLQEgd8WmDsAP++HHpQCoAHn6WQNoVvocrrVAGAGg2PVsnUDY+1qAek/Ez34Ob2cA/gImzfDTCE2eZAAAAABJRU5ErkJggg==";
 
-      west_tiles : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABV0lEQVRYw+2YYQ6DIAyFG09C4ABb6v0vtQtsuo1YsXS8BnU/JDGGxrBvr/AoUPzd0ninqY3j9B5y8NvPccrxIOLcMDg1fBPH+zzo59FitXjsBZDEoGwDJBHjbgBR/pgNIGOxH0AQ+eYMsOR/fmcBlvjQESDKf2spsP2uE0ASA3MdIIgYdwXY5lYFUOZKL4Ag8s01H0iiP3QG2KxvTQHUAyCA0gsUANgDIIAyvwoA7AEYQBDrftB8IIg+7wGwXuNbBXAPeAOUAx39nA9QrufD31cK/gCATp0HVwouH/DtBaztBbfn0uLOm5G+HQuAR9y1HqgUJC4JgIpoXf9p5wKPBJ6akGs1oUeCVoDUVJY7JHCcC4yDiUMCai8Ic76t+wFcAvxsyNbZEJeAPB5gHM9hCcjjAQYALAG1zYDyHqB2P4BLQB4PsO6IUAnI4wEWACoBeTzABAAleAHtppYvY8LFsgAAAABJRU5ErkJggg==";
+      west_tiles : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABeklEQVRYw+2Yf87DIAiGSU9i8ABb6AF2/+vsAq4/5ldm0YKh2/dHmzRG0ujTF0UQ8PiJ4x2mZxyndsjGdz/bIdsDs5NicFB8g+N9HnR9JVvNjl4AkQ1KbYDIbOQGgHyyNgC3oR9AYP6mDLD5f26zAJt9cARA/rctBfbfOQFENjDVAQKzkSvA3rcigLBWvAAC8zfV4kBk/cEZYLe/JQWsMcAEUMYCAcAcA0wApX8FAHMMsAEEtu8HKQ4E1qczAD73+F4BewxYAMqBvv3+HqDcz19vLxf8AwD46Tq4XHDFgb6zgKSzIPadBV0Ah8fxE0/NBw4TkkfCEzKiz/xPqgtWgKmb0hNPzAmplhPmtO2RUvIGiJa0fJpfLUFHXXBYmMwCqCUAfUKY/d26H1j6y/xaCey1IbVqwzkWrAJoJYCeGNAuz9/zKyWAnhjQvKDIAiglAN0KKO8BavcDk/1vfp0E0BMDWndEtw0geQFEqeSqAWCySQA9MaAJYJTgBXdLVyyeX4HuAAAAAElFTkSuQmCC";
 
-      east_branch : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABjElEQVRYw+2Y27mDMAiAmQU2gAHcfx4HyOmpGnMjQj5j+1Ce2ljDzyUECmgQOYX3JZJCuP6tiGFvwDGC7wNo6Gd8HoCc9t8O4HaAEYAuYn0AyIcBZBoA9rNtV0cTAagb7V3diH4rQIagAJCI+ww4AAoCugJAF4D2AqWeJN3d77Uh/RuA+koeTNK0iWiF+dimD5BDUx3n+uhdAxy0xwcuLaJNCRThZNTONcuQcCdx+LUA6puIcqtwe0OQx6Rt0IMA8gP4AdgB6ko/dOyGAVqX3cixx0EAvi67Bheh0QwQpb+OOmIFW1ZHleR2M5Pb8/8QKMetGoC4k4QQ+lVVvY/PgNR3LGDSaXOjBYlflhfAqvV/28Vi7QjSx3DRi2b6dwK2dERdhMRWa0smIQKwNhs6fODvijcHvAk6k9FEgHDI2c80sp6mAUgEWNtjQcsvN07HuBQA9DkAJQVaqclTQsBKjeXB8dg6HRcAigcGshBchzDmIGrFn7wuAJ/9QVAfz2f9SZXqX1m545JLy+eCPz6Juz5NGYxIAAAAAElFTkSuQmCC";
+      east_branch : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABiElEQVRYw+2YUZLDIAiGOQscYGfgAHv/6zQHcLuNSTSCihPTPtSn1FT/T1DAAHY0ORrHLpJT4/K/Ih1zA44RfB6Aos94PwA51385gNsAnQDU8PUGIG8GkGkAWN9tUY4mAlDV21FuRL8XIEMwAEjEfQYcACcCagGgC8AaQKklyTb3q29IfwUwh+TOJEtNxArM2zR1gByaSj+XR68NsNFuD3xeEa0icHIno3WuWYYaVzYOPzvAHIkolzbWJwS5rekLuhFAvgBfgH6AMtIPHbthAC3ZjRx7HATgdtjtMBF2LgPEqK93jT2C/S6OKMl6MZOv5/8lUI5bFAD7TBJCqEdVMx8fDilzLGBSabNSgmw/fp76YbHqvzWx9FYE6Wto1KKZfiTgnoqoipCstbckCwcAW3dDhw3cNWE0wIugcjO6ASAc9Yyy62kawK4fFv1aoNmFpwAE3QPvB+C7AB5GjOXB6zE492AEMCwwsAvBqR+My7H64YIvAkj1A9rX81kfqTL9h5HjkqTlM8EfRkPI4jGIFp8AAAAASUVORK5CYII=";
 
       hub_w_n : dynamic_graphic {( point_master_plan ? "hub_w_n_after_master_plan" : "hub_w_n_before_plaster_man" )} ;
       hub_w_n_before_plaster_man : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAhElEQVRYw+3UywkAIQyE4RRg/0XkYgtbgLCteA7CrGwJIvz7yNwlH0OiNTiWgAQkIAHLL88BAyQWcErj3w3MHShwA8PoHThQgKSOAwoK6FYK3IDRgNES8AmAL2YCwjfkvYC6SWCr46PKa4CAKXBHAeIBAQOcBsQDAGIB9yliH9GuJCABF2/W9E17T7/QAAAAAElFTkSuQmCC";
@@ -3978,6 +4031,9 @@ assets {
       tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
       costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
       the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABBUlEQVRYw+XXUQqDMAwG4EAOkKsE+ugx9+Q5fPRSvUHnAo4KRmgX/w7MZC+C/WjTv0qltTJdlDQ/jtrHT07pdqdd0Axwx092h+4HuMXGkNuXwMbhsyVgCKBkG+y0CezvdoB1gbpdAAB8BOr2IQJQ2ANsvQEBZPY2ozIhACUwCzsBfhoVyBKoG8cKAfAOWOxXNyEEkL+bYErLdIwiCCByF/YAcpVD8/w6ZjECwBVgXZfDBCAAuToKJrvqwwgAYBfAEMDFK2HCANwQVDxAeTCA6OmA4Uvw+B7Q/WPknwCCBOzp98tREJ2EMhjQPgHBABkM6JiAWIAMBvRMQChAMAD/jahAANH1BsdzMAmMVyO0AAAAAElFTkSuQmCC";
+
+   # overlay graphic (s)
+      check_mark : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAEFJREFUKFNjZCAE/jP8Z2BkYAQpAxN4AdGKkRQSNploxWgK8ZtMtGIsChEmo0viVQzSBlOAQyGqm0lSjGw6jlgCAPhyHAy7s/zYAAAAAElFTkSuQmCC";
 
    # item pictures below here
       pacing_rations_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
