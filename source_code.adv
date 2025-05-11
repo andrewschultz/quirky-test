@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.3.1
+   game_version                 = 1.3.2
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -865,7 +865,7 @@ locations {
             : match "t -;t voice" {
                : set_true "tutorial_8_talk_voice_done" ;
                : increment "tutorial_score" ;
-               : print "You get no response from the voice, which is not surprising. It seems powerful, and it probably comes from afar. But it was worth a try. Perhaps you will get a better response from people or things closer by." ;
+               : print "You get no response from the voice, which is not surprising. It seems powerful, and it probably comes from afar. But it was worth a try. Perhaps you will get a better response when you find its source, or when other people or things are close by." ;
                : done ;
             }
             : match "_ voice" {
@@ -3164,7 +3164,7 @@ subroutines {
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
       : if (!meta_abbrev_noted) {
-         : print "{otn}many of the non-native Adventuron commands can be abbreviated in {qt}, too. Listing them all would make this readout too long." ;
+         : print "{otn}you can abbreviate many of the non-native Adventuron commands above. Listing them all would make this readout too long, but experiment, if you like." ;
          : set_true "meta_abbrev_noted" ;
       }
       : gosub "check_additional_meta" ;
