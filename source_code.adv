@@ -921,7 +921,7 @@ locations {
          }
       }
       on_tick {
-         : if (is_carried "ooh_task" && !tutorial_6_x_ask_done && noun1_is "task" ) {
+         : if (is_carried "ooh_task" && !tutorial_6_x_ask_done && noun1_is "task" && verb_is "examine" ) {
             : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can use one of your senses and pick up a clue." ;
             : set_true "tutorial_6_x_ask_done" ;
             : increment "tutorial_score" ;
@@ -3534,6 +3534,9 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (verb_is "examine" && subject1_is "ooh_task") {
+      : update_graphic "ooh_task_picture" ;
+   }
    : if (jump_buzzing) {
       : print "You shake off the temporary buzzin' in your ears from the jump." ;
       : set_false "jump_buzzing" ;
@@ -4036,6 +4039,8 @@ assets {
       check_mark : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAEFJREFUKFNjZCAE/jP8Z2BkYAQpAxN4AdGKkRQSNploxWgK8ZtMtGIsChEmo0viVQzSBlOAQyGqm0lSjGw6jlgCAPhyHAy7s/zYAAAAAElFTkSuQmCC";
 
    # item pictures below here
+      ooh_task_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYw+VYQQ6EMAj0B/7/TyR8pQ9owjLQTTbxYIIN1C0aazzohIGZ4iGxaMclYi86ogAuT85cAGcnPbrYInrTJBsAgkTYIHA2gCYjAwoACehRBuIAJpVAFAA+hxzIqIAwA08AePa9AtIBNAdAMipAtqsB6ACST8R2Sr4O3Ofkz6W4Wfb1oj1AoCAdQLkZVdeAdgEYcBYoH0C5DixgRiZELkMQonwzggN948F+5MU1YPpjLQAp4nwzGitxlQ6Um1H3/EOL0An7ecECk5HaQHczZtqwCFcQIjMCaBA6oWQymsLAawG4F/RxFFCwwGRUvin92Y4YBftNRrN+030AINCJ5XQCrPMAAAAASUVORK5CYII=";
+
       pacing_rations_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
 
    }
