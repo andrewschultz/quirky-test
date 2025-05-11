@@ -873,16 +873,17 @@ locations {
                : done ;
             }
          }
-         : if (verb_is "i" && is_carried "ooh_task" ) {
-            : mask {
-               : if (!tutorial_5_inventory_done) {
+         : if ((verb_is "inventory")) {
+            : if (in_tutorial && !tutorial_4_x_me_done) {
+               : print "Taking inventory is a good thing to do early in a text adventure, but we're not there yet in the tutorial. Once you've found an item, the tutorial will nudge you to do take inventory.";
+               : done ;
+            }
+            : if (!tutorial_5_inventory_done) {
+               : mask {
                   : set_true "tutorial_5_inventory_done" ;
                   : increment "tutorial_score" ;
                }
             }
-         }
-         : if ((verb_is "inventory") && in_tutorial && !tutorial_4_x_me_done) {
-            : print "Taking inventory is a good thing to do early in a text adventure, but we're not there yet in the tutorial. Once you've found an item, the tutorial will nudge you to do take inventory.";
          }
          : match "listen _" {
             : if (tutorial_6_x_ask_done) {
@@ -3874,12 +3875,6 @@ on_command {
          }
       }
       : done ;
-   }
-   : match "x ooh" {
-      : if (is_carried "ooh_task" && !tutorial_6_x_ask_done) {
-         : mask {
-         }
-      }
    }
    : if (is_carried("pacing_rations")) {
       : match "x pacing;x rations" {
