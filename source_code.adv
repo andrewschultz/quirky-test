@@ -132,33 +132,33 @@ booleans {
 
    ## bonus point tally booleans
    ## any time points first
-   bonus_point_turkey_quest : boolean "false" ;
+   bonus_point_turkey_quest : boolean "false" scope="survivor" ;
 
    ## first base
-   bonus_point_shush_lout : boolean "false" ;
-   bonus_point_rare_plights : boolean "false" ;
+   bonus_point_shush_lout : boolean "false" scope="survivor" ;
+   bonus_point_rare_plights : boolean "false" scope="survivor" ;
 
    ## bane place
-   bonus_point_bane_place : boolean "false" ;
-   bonus_point_theory_bore : boolean "false" ;
-   bonus_point_death_sentence : boolean "false" ;
+   bonus_point_bane_place : boolean "false" scope="survivor" ;
+   bonus_point_theory_bore : boolean "false" scope="survivor" ;
+   bonus_point_death_sentence : boolean "false" scope="survivor" ;
 
    ## the hubs
-   bonus_point_test_wiles : boolean "false" ;
-   bonus_point_beast_ranch : boolean "false" ;
-   bonus_point_rig_boons : boolean "false" ;
+   bonus_point_test_wiles : boolean "false" scope="survivor" ;
+   bonus_point_beast_ranch : boolean "false" scope="survivor" ;
+   bonus_point_rig_boons : boolean "false" scope="survivor" ;
 
    ## objects beyond the hubs
-   bonus_point_racing_passions : boolean "false" ; ## w e
-   bonus_point_so_long : boolean "false" ; ## e n
-   bonus_point_vast_fission : boolean "false" ; ## e ne
-   bonus_point_cease_purging : boolean "false" ; ## e e
-   bonus_point_pile_tricks : boolean "false" ; # e se
-   bonus_point_tile_pricks : boolean "false" ; # e se
-   bonus_point_sane_role : boolean "false" ; ## e sw
+   bonus_point_racing_passions : boolean "false" scope="survivor" ; ## w e
+   bonus_point_so_long : boolean "false" scope="survivor" ; ## e n
+   bonus_point_vast_fission : boolean "false" scope="survivor" ; ## e ne
+   bonus_point_cease_purging : boolean "false" scope="survivor" ; ## e e
+   bonus_point_pile_tricks : boolean "false" scope="survivor" ; # e se
+   bonus_point_tile_pricks : boolean "false" scope="survivor" ; # e se
+   bonus_point_sane_role : boolean "false" scope="survivor" ; ## e sw
 
    ## endgame bonus point
-   bonus_point_cheery_times : boolean "false" ;
+   bonus_point_cheery_times : boolean "false" scope="survivor" ;
 
    jump_buzzing : boolean "false" ;
 
@@ -239,6 +239,9 @@ booleans {
 
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ;
 
+   bonus_point_grow_need : boolean "false" scope="survivor" ;
+   bonus_point_eye_stay : boolean "false" scope="survivor" ;
+
 }
 
 # end booleans
@@ -250,7 +253,8 @@ integers {
    max_score : integer "23" ;
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
-   bonus_score : integer "0" ;
+   bonus_score : integer "0" scope="survivor" ;
+   bonus_score_start : integer "0" scope="survivor" ;
    max_bonus_score : integer "17" ;
    confidence_meter : integer "0" ; ## yellow field, trim goon => malice chap
    tempint : integer "0" ;
@@ -2292,6 +2296,9 @@ subroutines {
    : print "Submitted for the 2025 {TALJ} (Text Adventure Literacy Jam)." ;
    : press_any_key ;
    : if (footnotes_available) {
+      : gosub "bonus_read_from_survivors" ;
+      : print {( "!" + bonus_point_turkey_quest )} ;
+      : print {( "!" + collection_get {collection -> ("bonus_status") index -> (int("" + 0))} )} ;
       : gosub "footnote_read_from_survivors" ;
       : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}. Also, tutorial mode is shut off by default, and no footnotes or achievements or bonus points are related to it.";
       : press_any_key ;
@@ -3569,6 +3576,34 @@ subroutines {
       : set_integer var="footnote_16_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 15 ) }) )} ;
       : set_integer var="footnote_17_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 16 ) }) )} ;
    }
+
+   bonus_read_from_survivors : subroutine {
+      : collection_modify { collection = "bonus_status" index -> (0) content -> (bonus_point_turkey_quest ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (1) content -> (bonus_point_shush_lout ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (2) content -> (bonus_point_rare_plights ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (3) content -> (bonus_point_bane_place ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (4) content -> (bonus_point_theory_bore ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (5) content -> (bonus_point_death_sentence ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (6) content -> (bonus_point_test_wiles ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (7) content -> (bonus_point_beast_ranch ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (8) content -> (bonus_point_rig_boons ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (9) content -> (bonus_point_so_long ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (10) content -> (bonus_point_vast_fission ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (11) content -> (bonus_point_cease_purging ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (12) content -> (bonus_point_sane_role ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (13) content -> (bonus_point_grow_need ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (14) content -> (bonus_point_racing_passions ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (15) content -> (bonus_point_eye_stay ? "1" : "0") }
+      : collection_modify { collection = "bonus_status" index -> (16) content -> (bonus_point_cheery_times ? "1" : "0") }
+	  : if (bonus_score_start == bonus_score && !achievement_cnnc) {
+         : print "Check if footnote_write_to_survivors really necessary" ;
+         : print "You get the achievement for no bonus points in one go-through." ;
+         : set_true "bonus_score_max" ;
+	  }
+	  : if (bonus_score == bonus_score_max && !achievement_cnnc)
+	  : set_integer var="bonus_score_start" {( int("" + bonus_score) )} ;
+   }
+
    win_game_stub : subroutine {
       : gosub "footnote_write_to_survivors" ;
       : win_game ;
