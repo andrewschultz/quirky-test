@@ -565,6 +565,7 @@ strings {
    v_out : string "<OUT<#0f0>> (<O<#0f0>>)" ;
    tak : string "<TAKE<#0f0>>" ;
    tlk : string "<TALK<#0f0>>" ; # tlk2 = tlk + or <T<#0f0>> (?)
+   t0 : string "<T<#0f0>>" ;
    xme : string "<X ME<#0f0>>" ;
 
    # regular meta-command in orange
@@ -3029,19 +3030,19 @@ subroutines {
    }
    tutorial_progress : subroutine {
       : if (!tutorial_1_about_done) {
-         : print {( tcue + "An author frequently implements an " + abt + " commands page for the player to access. This contains details that might disrupt the cover-screen narrative. You can try it now." )} ;
+         : print "{tcue}An author frequently implements an {abt} commands page for big-picture introductory information that might disrupt the starting narrative. So try {abt} to get started." ;
          : return ;
       }
       : if (!tutorial_2_verbs_done) {
-         : print "{tcue}The {verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass.\nWhile there are other meta-commands to try, {verbs} will give you the most useful information now, so let's try that next." ;
+         : print "{tcue}The {verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass in-game.\nSince {verbs} will show you other meta-commands, too, let's try that next." ;
          : return ;
       }
       : if (!tutorial_3_additional_metaverb_done) {
-         : print {( tcue + "The " + abt + " and " + verbs + " meta-commands tipped off additional other meta-commands, listed in <orange<#f80>>, that may help you get your bearings. You should try one now." )};
+         : print "{tcue}The {abt} and {verbs} meta-commands tipped off additional other meta-commands, listed in <orange<#f80>>, to help navigate the parser. The next step is to try any one now." ;
          : return ;
       }
       : if (!tutorial_4_x_me_done) {
-         : print {( tcue + (tutorial_x_me_cued ? xme + " is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial. It may not be as grammatically correct as X MYSELF or X SELF, but it's easier to type, and parser games try to provide that convenience when sensible." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that " + xme + " provides clues of who you are and what you're doing with relatively few keystrokes. So " + xme + " makes sense as your first in-world command.")  )} ;
+         : print {( tcue + (tutorial_x_me_cued ? "{xme} is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial. It may not be as grammatically correct as <X MYSELF<#f80>> or <X SELF<#f80>>, but it's easier to type, and modern parser games try to provide that convenience when sensible." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that {xme} provides clues of who you are and what you're doing with relatively few keystrokes. So try {xme} as your first in-world command.")  )} ;
          : set_true "tutorial_x_me_cued" ;
          : return ;
       }
@@ -3050,19 +3051,19 @@ subroutines {
          : return;
       }
       : if (!tutorial_6_x_ask_done) {
-         : print {( tcue + "Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as Adventuron ignores prepositions." )} ;
+         : print "{tcue}Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as Adventuron ignores prepositions." ;
          : return;
       }
       : if (!tutorial_7_listen_done) {
-         : print {( tcue + "sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, having only five physical senses should limit the required guesswork nicely." )};
+         : print "{tcue}sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, having only five physical senses should limit the required guesswork nicely." ;
          : return;
       }
       : if (!tutorial_8_talk_voice_done) {
-         : print {( tcue + "that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} or <TALK VOICE<#0f0>>. You can even abbreviate {tlk} to <T<#0f0>>." )};
+         : print "{tcue}that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} or <TALK VOICE<#0f0>>. You can even abbreviate {tlk} to {t0}.";
          : return;
       }
       : if (!tutorial_9_go_west) {
-         : print {( tcue + "the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." )} ;
+         : print "{tcue}the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." ;
          : return ;
       }
       : if (!tutorial_10_first_base) {
