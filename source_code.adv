@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.3.2
+   game_version                 = 1.3.3
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -50,6 +50,7 @@ booleans {
    thor_warn_close : boolean "false" ;
    ask_thor_misfire : boolean "false" ;
    score_bonus_nag : boolean "false" ;
+   bonus_max_warn : boolean "false" scope="survivor" ;
    said_bore_outside_base : boolean "false" ;
    thor_knows_bore : boolean "false" ;
    wait_note : boolean "false" ;
@@ -322,7 +323,7 @@ collections {
          "<Get to Sky Floor<#0f0>>",
          "<Examine the trending booth<#0f0>>",
          "<Get to Warring Bay<#0f0>>",
-         "<Examine the plaster man/master plan or pouring rain/roaring pain<#00f>>",
+         "Examine the <pouring rain/roaring pain<#0f0>> or <plaster man/master plan<#00f>>",
          "<Examine the Malice Chap<#00f>>",
          "<Examine the crackers<#00f>>",
          "<Examine the Hissing Mouse<#f0f>>",
@@ -343,7 +344,7 @@ collections {
          "<Found during core walkthrough<#0f0>>",
          "<Examine something<#0f0>>",
          "<Found during core walkthrough<#0f0>>",
-         "<Examine something<#00f>>",
+         "Examine <either of<#0f0>> <two things<#00f>>",
          "<Examine someone<#00f>>",
          "<Examine something<#00f>>",
          "<Examine something<#f0f>>"
@@ -832,7 +833,7 @@ vocabulary {
    : verb / aliases = [ask, rule]
    : verb / aliases = [bonus, bon, bo, b]
    : verb / aliases = [score, sco]
-   : verb / aliases = [f, foot, footnote, footnotes]
+   : verb / aliases = [f, fo, foot, footnote, footnotes]
    : verb / aliases = [enter, in]
    : verb / aliases = [ch, colorhint]
    : verb / aliases = [exit, out]
@@ -2235,8 +2236,9 @@ subroutines {
       : increment "bonus_score";
       }
    bonus_display : subroutine {
-      : if (bonus_score == max_bonus_score) {
-         : print "You got all the bonus points." ;
+      : if (bonus_score == max_bonus_score && !bonus_max_warn) {
+         : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though after this, you can see everything you've found. (Enjoy it. You've earned it!)" ;
+         : set_true "bonus_max_warn" ;
          : return ;
       }
       : if (bonus_score == 0) {
