@@ -642,7 +642,7 @@ strings {
    hub_w_take_crackers : string "Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
    hub_w_gift_shoals : string "{cc_gift_shoals} are here. They sure have washed up a lot of gifts! Nothing you particularly like or can use, but you're drawn to them anyway, in your current mental state." ;
    hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset. You don't miss the now-vanished gifts." ;
-   hub_w_grunters_hill : string "Grunts from a big hill, here. That must make it a {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
+   hub_w_grunters_hill : string "Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
    hub_w_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
    hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure." ;
    hub_w_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
@@ -708,7 +708,7 @@ strings {
    cc_shell_fort : dynamic_string {( use_color_coding ? "<shell fort<#f88>>" : "shell fort")} ;
    cc_cake_trackers : dynamic_string {( use_color_coding ? "<Cake trackers<#f88>>" : "Cake trackers")} ;
    cc_gift_shoals : dynamic_string {( use_color_coding ? "<Gift shoals<#f88>>" : "Gift shoals")} ;
-   cc_grunters_hill : dynamic_string {( use_color_coding ? "<grunters' hill<#f88>>" : "grunters' hill")} ;
+   cc_grunters_hill : dynamic_string {( use_color_coding ? "<grunters' hills<#f88>>" : "grunters' hills")} ;
    cc_yellow_field : dynamic_string {( use_color_coding ? "<yellow field<#f88>>" : "yellow field")} ;
 
    ## east hub
@@ -1843,7 +1843,7 @@ locations {
             }
          : else
          {
-            : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so." ;
+            : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so. They leave in disgust. As they do, two smaller but approximately as funny mountains poke up and out, creating an even more pleasing landscape." ;
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
             : gosub "add_point_east" ;
@@ -3990,7 +3990,8 @@ assets {
 
       hub_w_w : dynamic_graphic {( point_hunters_grill ? "hub_w_w_after_hunters_grill" : "hub_w_w_before_grunters_hill" )} ;
       hub_w_w_before_grunters_hill : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/0lEQVRYhe2UQRKDMAhFOQs7Nh6WXa7XA3iGQlRM0mg3/nFDxnbSeV/mCaa0vrwoBVIgBVIgBVIgBfqf7Gu5jj/P6QfflEBwmvGLChBOU858f/+DnOZ8UgHEQ+AzBMYuongIjHx8CBS/E+A/BR7hFFy4FGVV24iqFE8szf0gTjEhEf+U4pdazpNRAccpGmSBImZYg4ZtI9FFHKcYkPiKgH2b6lEAyClekD5gimwj23qI5LQeR9Tw1iITU95jtQCUU5wJ95P6lu4TqgFG81aA92NyBLxFjOadgK0zUHvVF0BwahLnOZXaIRl6COFNB5p/KrFNGWeI4cQvrxRIgdcFvqhcaqJm8QFwAAAAAElFTkSuQmCC";
-      hub_w_w_after_hunters_grill : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAnUlEQVRYhe3SQQqAIBAF0LEDBO5aRjdt58ozumzVGRKtIJUWJn8I5y9yCpLnL9qZQwIQgAA+vW0LU1+ArTD1BbCFqS8A+ydgBzSIAH4NcPQMHKB0yGTiCgekBcAB6j57WOGArAA0QF1njz0QOSwgK2AEA3wBZtXnJfwBWEBeQC1gqcucAvyjqo1aAQZuQOU2HwCvtwIQgAAAgGZhBxx22kRKCATdGwAAAABJRU5ErkJggg==";
+      hub_w_w_after_hunters_grill : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAxElEQVRYw+2UsQ6DMBBDHT4Aia1jlT9lY+IbM3bqNxSFUqkoBLuHBFLPAwkgn56PI3ieLDiAAzhA9e1Y2Cki/BcHeBR2igj/xQF8BnwG/CT8d4CEb6m1KX+tauiybsO8ygCUH3wAGBsgA4QPe15lAM4PPgCMDVABwsI+5wDSDxOw7wcdoE22BrQiwBRg6Lv3JX/BpDaA8oMOoAHQfsSy7usC06MoiPazAI0RoLECRFG0fxOgeksAsH4HcAAHkH/wo3U6wAuG9bfB/3KTYgAAAABJRU5ErkJggg==";
+
 
       hub_w_nw : dynamic_graphic {( point_fellow_yield ? "hub_w_nw_after_fellow_yield" : "hub_w_nw_before_yellow_field" )} ;
       hub_w_nw_before_yellow_field : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAkUlEQVRYhe3USwrAIAwEUO9/g8FcRHqCQKAXKtiPbroNgak0g5+V8FSSYuSUBKwJEJ0jASxAYPIFvABcYQJUxiQB1HQ3O8QCCF7AvREBotL7vZIA4+7zHSgAmAJiEXXgAyieRJSBuxEFtYF1ARrzAQn4AmDzpQHVefSdZQGoDVzAMxLAA7Q65n8BcUlAAhJAB5yoo1vNe3aQ+AAAAABJRU5ErkJggg==";
