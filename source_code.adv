@@ -56,6 +56,7 @@ booleans {
    wait_note : boolean "false" ;
    meta_abbrev_noted : boolean "false" ;
    note_homonym : boolean "false" scope="survivor" ;
+   anagram_nag : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -912,6 +913,14 @@ locations {
                }
                : done ;
             }
+         }
+         : match "salesmen _"  {
+            : print "But you already have this wonderful free game! Why would you want to bring in salesmen with an anagram?" ;
+            : gosub "nl_anagram_check" ;
+         }
+         : match "maleness _"  {
+            : print "You'll be dealing with bringing out abstract concepts from things, but not with anagrams." ;
+            : gosub "nl_anagram_check" ;
          }
       }
       on_describe {
@@ -3155,6 +3164,15 @@ subroutines {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
    }
+
+   nl_anagram_check : subroutine {
+      : if (!anagram_nag) {
+         : print "{otn}however, the author did write such an anagram game. Three, in fact. You can find <Shuffling Around<#f80>>, <A Roiling Original<#f80>> and <Tours Roust Torus<#f80>>. If you enjoy {qt}, you may enjoy them, too." ;
+         : set_true "anagram_nag" ;
+      }
+      : done ;
+   }
+
    verb_meta_list : subroutine {
       : print "{abt} gives info about the game.";
       : print "{thx} or {cred} gives info about people who helped make {qt} or make it better.";
@@ -3738,12 +3756,6 @@ on_command {
       }
    }
    : gosub "item_based_points" ;
-   : match "salesmen _"  {
-      : if (is_at "nameless_lameness") {
-         : print "Good guess, if this were an anagram game." ;
-         : done ;
-         }
-      }
    : match "talk _" {
       : match "talk me" {
          : print "\"Me so see-mo'!\", you mumble to yourself in encouragement." ;

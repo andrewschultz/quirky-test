@@ -1,19 +1,23 @@
 A list of all bonus points, in rough game order (hubs, clockwise in hub side rooms, west then east):
 
+Where you get each is in parentheses, though for 10-16, it can only occur when holding a certain item.
+
 1. TURKEY QUEST (at any time)
 2. SHUSH LOUT (only with Pro Boor present)
 3. RARE PLIGHTS (only with Player Rights carried)
 4-6. BANE PLACE (around Thor)
 4-6. THEORY BORE (if you've seen Thor, different reactions if he's around)
-4-6. DEATH SENTENCE (around Thor)
+4-6. DEATH SENTENCE (anywhere)
 7-9. TEST WILES (west tiles)
-7-9. EAST BRANCH (beast ranch)
+7-9. BEAST RANCH (east branch)
 7-9. RIG BOONS (either hub)
-10. RACING PASSIONS (W E)
-11. LOW SONG (E N)
-12. FAST VISION (E NE)
-13. CEASE PURGING (E E)
-14. PILE TRICKS (E SE)
-15. TILE PRICKS (E SE)
-16. SANE ROLE (E SW) (requires 11/12)
-17. TEARY CHIMES (endgame)
+10. SO LONG (low song, E N)
+11. VAST FISSION/FISHIN (fast vision, E NE)
+12. CEASE PURGING (peace surging, E E)
+13. PILE TRICKS (trial pics, E SE)
+14. TILE PRICKS (trial pics, E SE)
+15. SANE ROLE (rain soul, E SW)
+16. RACING PASSIONS (pacing rations, W E)
+17. TEARY CHIMES (must LISTEN before final bonus point)
+
+13 and 14 will change post-release.
