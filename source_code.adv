@@ -64,6 +64,7 @@ booleans {
    asterisk_help_note : boolean "false" scope="survivor" ;
    half_bonus : boolean "false" scope="survivor" ;
    bonus_half_note : boolean "false" scope="survivor" ;
+   warn_must_redo : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -179,6 +180,15 @@ booleans {
    think_hi_mouse : boolean "false" ; ## put endgame at end
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
 
+   ## "retry" booleans for THINK: if you got something after losing it
+   retry_rare_plights : boolean "false" scope="survivor" ;
+   retry_so_long : boolean "false" scope="survivor" ;
+   retry_vast_fishin : boolean "false" scope="survivor" ;
+   retry_cease_purging : boolean "false" scope="survivor" ;
+   retry_sane_role : boolean "false" scope="survivor" ;
+   retry_grow_need : boolean "false" scope="survivor" ;
+   retry_racing_passions : boolean "false" scope="survivor" ;
+
    ## achievement booleans
    ## reds
    achieve_haih : boolean "false" scope="survivor" ;
@@ -257,6 +267,9 @@ booleans {
    long_word_warn : boolean "false" scope="survivor" ;
 
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ;
+
+   think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_hi_mouse )} ;
+   retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fishin || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
 
 }
 
@@ -2940,6 +2953,7 @@ subroutines {
                : set_integer var="tempint" "16" ;
                : gosub "add_bonus" ;
                : set_true "bonus_point_racing_passions" ;
+               : set_false "retry_racing_passions" ;
             }
             : done ;
          }
@@ -2948,6 +2962,12 @@ subroutines {
                : gosub "say_half_b" ;
                : done ;
             }
+         }
+      }
+      : if (point_hunters_grill && !bonus_point_racing_passions) {
+         : match "racing passions" {
+            : set_true "retry_racing_passions" ;
+            : gosub "warning_bonus_after" ;
          }
       }
       : if (is_carried "peace_surging") {
@@ -3195,12 +3215,13 @@ subroutines {
       }
    }
    think_thoughts : subroutine {
-      : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
-   && !think_shift_goals && !think_hi_mouse) {
+      : if (!think_available && !retry_available) {
          : print "There's nothing on your mind that you tried to do but weren't able to." ;
          : return ;
       }
-      : print "Here is what you tried to do, and you haven't gotten it to work yet:" ;
+      : if (think_available) {
+         : print "Here is what you tried to do, and you haven't gotten it to work yet:" ;
+      }
       : if (think_chalice_map) {
          : print "-- get the <CHALICE MAP<#0f0>> (West Tiles, NE)";
       }
@@ -3224,6 +3245,30 @@ subroutines {
       }
       : if (think_hi_mouse) {
          : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back into My House";
+      }
+      : if (retry_available) {
+         : print "Here is what you tried, but it was a bit too late:" ;
+      }
+      : if (retry_rare_plights) {
+         : print "-- say <RARE PLIGHTS<#0f0>> when you have Player Rights" ;
+      }
+      : if (retry_so_long) {
+         : print "-- say <SO LONG<#0f0>> when the low song is in your mind" ;
+      }
+      : if (retry_vast_fishin) {
+         : print "-- try <VAST FISSION/FISHIN<#0f0>> when you have a fast vision" ;
+      }
+      : if (retry_cease_purging) {
+         : print "-- think <CEASE PURGING<#0f0>> when you feel peace surging" ;
+      }
+      : if (retry_sane_role) {
+         : print "-- hope for a <SANE ROLE<#0f0>> when you have a rain soul,." ;
+      }
+      : if (retry_grow_need) {
+         : print "-- <GROW NEED<#0f0>> when you feel no greed" ;
+      }
+      : if (retry_racing_passions) {
+         : print "-- have <RACING PASSIONS<#0f0>> when you possess the pacing rations" ;
       }
       : gosub "check_additional_meta" ;
       : return ;
@@ -3799,6 +3844,14 @@ subroutines {
       }
       : print "For asking Thor about each rule in the Player's Bill of Rights, you win the {achievement_qwwq} achievement!" ;
       : set_true "achieve_qwwq" ;
+   }
+
+   warning_bonus_after : subroutine {
+      : print "That would have worked earlier, but you used up the item solving a core puzzle. Maybe next go-round?" ;
+      : if (!warn_must_redo) {
+         : print "{otn}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {thk} will keep track of what you saw." ;
+         : set_true "warn_must_redo" ;
+      }
    }
 
    ## I realize how bad this code is. But we can't save collections survivor status. And it's pedantic to expect someone to see all footnotes each time through. So this is the least bad solution I could think of. Well, the only one.
