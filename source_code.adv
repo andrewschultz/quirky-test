@@ -90,6 +90,7 @@ booleans {
    note_nonreciprocal : boolean "false" scope="survivor" ;
    note_dependent_point : boolean "false" scope="survivor" ;
    note_independent_point : boolean "false" scope="survivor" ;
+   footnote_nag : boolean "false" scope="survivor" ;
 
    ## footnote check booleans
    footnotes_available : boolean "false" scope="survivor" ;
@@ -698,7 +699,7 @@ strings {
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over." : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? (footnotes_available ? "\"Oh, hey. Great to see you back. You know the drill. {tlk} if you want, or look around for extra content.\n" : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
@@ -1071,7 +1072,7 @@ locations {
          }
       }
    };
-   burst_face : location "You're at a {cc_burst_face}. You feel about ready to take an initial step. Or you would, without that {cc_burst_face} in the way." graphic = "burst_face_only" {
+   burst_face : location "Having come west from the nameless lameness, you find yourself stuck at this {cc_burst_face}. It's time to take another initial step. Or it would be, without that {cc_burst_face} in the way." graphic = "burst_face_only" {
       on_command {
          : match "x face;x burst" {
             : print "The burst face looks stern, yet at the same time, a bit weary, maybe just impatient for you to say the right thing. Whatever it's been guarding, well, it's been a long while. If you say the right thing, you can get by it." ;
@@ -2231,10 +2232,10 @@ locations {
                   : print "These can be tracked with {v_ach} or {v_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt in {qtg} to spoil them." ;
                }
                : gosub "add_point" ;
-               : set_true "footnotes_available" ;
                : set_false "think_hi_mouse" ;
                : set_true "point_hi_mouse" ;
                : gosub "track_achievements" ;
+               : gosub "win_notes" ;
                : gosub "win_game_stub" ;
                : done ;
             }
@@ -2448,8 +2449,11 @@ subroutines {
    : if (footnotes_available) {
       : gosub "bonus_read_from_survivors" ;
       : gosub "footnote_read_from_survivors" ;
-      : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}. Also, tutorial mode is shut off by default, and no footnotes or achievements or bonus points are related to it.";
-      : press_any_key ;
+      : if (!footnote_nag) {
+         : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}.";
+         : set_true "footnote_nag" ;
+         : press_any_key ;
+      }
    }
    : clear_screen ;
    : gosub "init_stats" ;
@@ -4013,6 +4017,17 @@ subroutines {
    win_game_stub : subroutine {
       : gosub "footnote_write_to_survivors" ;
       : win_game ;
+   }
+   win_notes : subroutine {
+      : if (!footnotes_available) {
+         : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
+         : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
+         : print "These can be tracked with {v_ach} or {v_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qtg} to spoil them." ;
+         : print "Finally, there is a {vo_cllc} command that lets you skip ahead of beginning rooms with no bonus points, footnotes or achievements to discover." ;
+         : set_true "footnotes_available" ;
+         : return ;
+      }
+      : print "Thor nods and smiles. \"Won't give you the long spiel again, but yeah, thanks for your continued patronage and interest. Ugh. That sounded corprorate.\"" ;
    }
 }
 
