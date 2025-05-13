@@ -1214,24 +1214,24 @@ locations {
          : match "ask _" {
             : gosub "ask_thor" ;
          }
-      : if (!noted_diagonal_direction) {
-         : match "nw _;ne _" {
-            : mask {
-               : gosub "note_diagonal_direction_from_hub" ;
-               }
+         : if (!noted_diagonal_direction) {
+            : match "nw _;ne _" {
+               : mask {
+                  : gosub "note_diagonal_direction_from_hub" ;
+                  }
+            }
          }
-      }
-      : match "bane place" {
-         : if (!bonus_point_bane_place) {
-            : print "Thor chuckles a bit. \"Well observed. 'Lurk, jokey jerk Loki!'\" he calls out.\n\"Well, I tried my best to bring in an antagonist, but I guess he's busy. Maybe that works for the best. Well, except for whomever he's busy with.\"";
-            : set_integer var="tempint" "4" ;
-            : gosub "add_bonus" ;
-            : set_true "bonus_point_bane_place" ;
-         } : else {
-            : print "You already pointed out the, uh, potential alternate functionality of this location.";
+         : match "bane place" {
+            : if (!bonus_point_bane_place) {
+               : print "Thor chuckles a bit. \"Well observed. 'Lurk, jokey jerk Loki!'\" he calls out.\n\"Well, I tried my best to bring in an antagonist, but I guess he's busy. Maybe that works for the best. Well, except for whomever he's busy with.\"";
+               : set_integer var="tempint" "4" ;
+               : gosub "add_bonus" ;
+               : set_true "bonus_point_bane_place" ;
+            } : else {
+               : print "You already pointed out the, uh, potential alternate functionality of this location.";
+            }
+            : done ;
          }
-         : done ;
-      }
       }
       on_describe {
          : if (!note_nonreciprocal && has_visited("stealing_hill")) {
@@ -3082,8 +3082,8 @@ subroutines {
       : print "Again, you feel like you got halfway there.{already_got_check}" ;
       on_exhausted {
          : print "One word right, one word wrong.{already_got_check}" ;
-         : set_false "already_got_command" ;
       }
+      : set_false "already_got_command" ;
    }
    }
    reflexive_warp_reject : subroutine {
