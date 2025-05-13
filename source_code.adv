@@ -80,6 +80,7 @@ booleans {
    ## game option booleans
    score_notify : boolean "true" scope="survivor" ;
    use_color_coding : boolean "true" scope="survivor" ;
+   option_start_warp : boolean "false" scope="survivor" ;
 
    ## game progress booleans
    tutorial_done : boolean "false" ;
@@ -313,6 +314,10 @@ integers {
    rssr_east : integer "0" ;
    rssr_base : integer "0" ;
    rssr_hill : integer "0" ;
+
+   #cheat leap / leet cheap flags
+   cheat_leap_level : integer "1" scope="survivor" ;
+   last_cheat_leap_level : integer "1" scope="survivor" ;
 
    ## since Adventuron doesn't allow survivor scope for lists, I need to define the status variables here.
    footnote_1_status : integer "0" scope="survivor" ;
@@ -631,6 +636,7 @@ strings {
    ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
    notif : string "<NOTIFY<#88f>>" ;
    tut : string "<TUTORIAL<#88f>>" ;
+   vo_cllc : string "<LEETCHEAP<#f80>> or <CHEATLEEP<#f80>>" ;
 
    # game title
    qt : string "<Quirky Test<#ff0>>" ;
@@ -952,6 +958,7 @@ vocabulary {
    : verb / aliases = [achievements, achievement, achieve, ach, ac]
    : verb / aliases = [ask, rule]
    : verb / aliases = [bonus, bon, bo, b]
+   : verb / aliases = [cheatleap, cheetleap, cheatleep, cheetleep, cl, lc, leetcheap] # account for player typos since I made a lot during programmer testing
    : verb / aliases = [score, sco]
    : verb / aliases = [f, fo, foot, footnote, footnotes]
    : verb / aliases = [enter, in]
@@ -3427,6 +3434,9 @@ subroutines {
       : print {( "{tut} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." )} ;
       : print "{ch} is used to toggle colored text hints." ;
       : print "{notif} is used to toggle score notification." ;
+      : if (footnotes_available) {
+         : print "{vo_cllc} now lets you restart at the first room needed to find a footnote, bonus point or achievement, up to Plain Base." ;
+      }
       : print "Note that {qt} uses {yn} to toggle options instead of {on} and {off}, since {on} is a preposition, which is rejected by the simplified version of Adventuron's parser used here." ;
       : print "Also note that typing an option will not set it. At least, not in the initial version of {qt}." ;
       : if (in_debug) {
@@ -3454,7 +3464,26 @@ subroutines {
          : print {( "The argument after <NOTIFY<#0f0>> wasn't recognized. " + notify_string )};
       }
    }
-   options_tutorial : subroutine {
+
+   options_startwarp : subroutine {
+      : match "* yes" {
+         : print "Start-of-game warp is now on.";
+         : set_true "option_start_warp";
+         : done ;
+      }
+      : match "* no" {
+         : print "Start-of-game warp is now off.";
+         : set_false "option_start_warp";
+         : done ;
+      }
+      : match "* -" {
+         : print "Toggling {vo_cllc} without an argument is not supported.{notify_string}" ;
+         : done ;
+      }
+      : print "The argument after {vo_cllc} wasn't recognized. {notify_string}" ;
+   }
+
+   options_tutorial: subroutine {
       : match "tutorial yes;tutorial y" {
          : print "Tutorial mode is now on.";
          : set_true "in_tutorial";
@@ -4028,6 +4057,36 @@ subroutines {
          : return ;
       }
       : print "Thor nods and smiles. \"Won't give you the long spiel again, but yeah, thanks for your continued patronage and interest. Ugh. That sounded corprorate.\"" ;
+      : print {( "" + collection_get{ collection -> ("footnote_status_list") index -> (2) } )} ;
+      : if (option_start_warp && cheat_leap_level < 3) {
+         : if (int(collection_get{ collection -> ("footnote_status_list") index -> (2) }) == 0) {
+            : set_integer var="last_cheat_leap_level" "1" ;
+         } : else_if (!bonus_point_shush_lout || !bonus_point_rare_plights ||!know_lush_shout) {
+            : set_integer var="last_cheat_leap_level" "2" ;
+         } : else {
+            : set_integer var="last_cheat_leap_level" "3" ;
+         }
+      }
+      : print "{option_start_warp} {last_cheat_leap_level} vs {cheat_leap_level}." ;
+      : if (last_cheat_leap_level > cheat_leap_level) {
+         : set_integer var="cheat_leap_level" {( int("" + last_cheat_leap_level) )} ;
+         : print {( "Thor gives you a thumbs-up and says that, due to you finding a bit more bonus content this time, you'll start " + ( cheat_leap_level == 3 ? "at the plain base, the fartheset ahead you can start" : "a bit farther this time" ) + "." )} ;
+      }
+   }
+   win_warp_start : subroutine {
+      : if (!option_start_warp) {
+         : return ;
+      }
+      : if (cheat_leap_level == 1) {
+         : set_integer var="score" "1" ;
+         : goto "burst_face" ;
+      } : else_if (cheat_leap_level == 2) {
+         : set_integer var="score" "2" ;
+         : goto "first_base" ;
+      } : else_if (cheat_leap_level == 3) {
+         : set_integer var="score" "4" ;
+         : goto "plain_base" ;
+      }
    }
 }
 
@@ -4128,6 +4187,7 @@ on_render {
 on_startup {
    : gosub "init" ;
    : gosub "tutorial_choice" ;
+   : gosub "win_warp_start" ;
 }
 
 ## on_tick is primarily used for the tutorial
@@ -4502,17 +4562,14 @@ on_command {
    : if (in_debug) {
       : gosub "debug_commands" ;
    }
-   : match "think _" {
-      : gosub "think_thoughts" ;
-   }
-   : match "verbs _" {
-      : gosub "meta_verbs" ;
-   }
    : match "about _" {
       : gosub "meta_about" ;
    }
    : match "link _;links _" {
       : gosub "meta_links" ;
+   }
+   : match "meta _" {
+      : gosub "verb_meta_list" ;
    }
    : match "points _" {
       : gosub "meta_points" ;
@@ -4520,9 +4577,17 @@ on_command {
    : match "thanks _" {
       : gosub "meta_thanks" ;
    }
+   : match "think _" {
+      : gosub "think_thoughts" ;
+   }
+   : match "verbs _" {
+      : gosub "meta_verbs" ;
+   }
    : match "versions _" {
       : gosub "meta_versions" ;
    }
+
+   # hint/help do nothing in QT
    : match "hint _" {
       : print "There are no in-game hints for {qt}. This webpage should be packaged with a walkthrough.txt, {ch} can tell you what to work on, and you should be notified when you have one word right in a puzzle." ;
       : done ;
@@ -4534,6 +4599,8 @@ on_command {
          : set_true "asterisk_help_note" ;
       }
    }
+
+   ## standard verbs that do nothing in QT
    : match "z _" {
       : if (!wait_note) {
          : print "While waiting is a standard parser command, there are no timed puzzles in {qt}." ;
@@ -4594,11 +4661,6 @@ on_command {
    : match "option _;options _;opts _;opt _" {
       : gosub "options_list";
    }
-   : if (in_debug) {
-      : match "cheat _" {
-         : gosub "options_cheat" ;
-      }
-   }
    : match "i _" {
       : mask {
          : if (carried() == 9) {
@@ -4608,6 +4670,22 @@ on_command {
    }
    : match "bonus _" {
       : gosub "bonus_display" ;
+   }
+   : if (footnotes_available) {
+      : match "cheat leap;leet cheap" {
+         : print "You need to mash this to word to toggle the start-game warm with {yn}." ;
+      }
+      : match "cheatleap _" {
+         : gosub "options_startwarp" ;
+      }
+   }
+   : if (in_debug) {
+      : match "cheat _" {
+         : gosub "options_cheat" ;
+      }
+   }
+   : match "ch _;colorhint _" {
+      : gosub "options_colorhint" ;
    }
    : match "notify _" {
       : gosub "options_notify" ;
@@ -4626,12 +4704,6 @@ on_command {
       } : else {
          : gosub "options_tutorial" ;
       }
-   }
-   : match "meta _" {
-      : gosub "verb_meta_list" ;
-   }
-   : match "ch _;colorhint _" {
-      : gosub "options_colorhint" ;
    }
 }
 
