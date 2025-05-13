@@ -273,6 +273,7 @@ integers {
    tempint : integer "0" ;
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
+   rule_chosen : integer "0" ;
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
    books_read : integer "0" ;
 
@@ -576,6 +577,7 @@ strings {
    thx : string "<THANKS<#f80>>" ;
    v_pts : string "<POINTS<#f80>>" ;
    verbs : string "<VERBS<#f80>>" ;
+   y17 : string "<seventeen<#ff0>>" ;
 
    ## credits
    talj : string "<TALJ<#0f0>>" ;
@@ -604,6 +606,7 @@ strings {
 
    # regular commands in green
    ask : string "<ASK<#0f0>>" ;
+   rule : string "<RULE<#0f0>>" ;
    lishea : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    v_drop : string "<DROP<#0f0>>" ;
    v_o : string "<O<#0f0>>" ;
@@ -1170,9 +1173,10 @@ locations {
             : if (talked_to_thor) {
                : print "Now you've broken the ice, probably better to {ask} him about one of the rules, 1-17." ;
             } : else {
-               : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. There were seventeen total rules. Some apply here more than others." ;
-               : print "\"You can {ask} me about them by number, or <RULE<#0f0>> works, too. Just the numbers, to keep things simple. I have three things to say about each rule: its original form, what it means and why it's there, and how it applies here in {qt}." ;
+               : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. It's got {y17} total rules. Some apply more than others in {qt}." ;
+               : print "\"You can {ask} me about them by number, or {rule} works, too. Just the numbers, to keep things simple. I have three things to say about each rule: its original form, what it means and why it's there, and how it applies here in {qt}." ;
                : print "\"Oh, ask as much or little as you want. It won't affect your final score.\"" ;
+               : print "{otn}{ask} <1-17<#0f0>> is the main command, but {ask} <0<#0f0>> notes one thing you haven't asked about yet. Or one thing you haven't asked fully about yet." ;
             }
             : set_true "talked_to_thor" ;
             : done ;
@@ -2458,6 +2462,28 @@ subroutines {
       }
       : done;
    }
+   ask_thor_next_guess : subroutine {
+      : set_integer var="tempint" "0";
+      : set_integer var="tempint2" "3";
+      : collection_iterate "ask_list" {
+         : increment "tempint" ;
+         : if (int(item()) == 0) {
+            : print "You haven't asked Thor at all about rule {tempint} yet." ;
+            : done ;
+         }
+         : print {( "{tempint}." + item() + " vs. {tempint2}." )} ;
+         : if (int(item()) < int(tempint2)) {
+            : set_integer var="rule_chosen" {( int("" + tempint) )} ;
+            : set_integer var="tempint2" {( int("" + item()) )} ;
+         }
+      }
+      : if (tempint2 == 3) {
+         : print "You have asked three times about everything!" ;
+      } : else {
+         : print "You haven't looked fully at rule {rule_chosen} yet." ;
+      }
+      : done ;
+   }
    ask_thor_tally : subroutine {
       : decrement "tempint" ;
       : set_integer var="tempint2" {( int(collection_get{ collection -> ("ask_list") index -> ( tempint ) }) + 1 )} ;
@@ -2481,20 +2507,21 @@ subroutines {
          : done ;
       }
       : if (!is_int(original "noun1")) {
-         : if (in_debug) {
-            : match "ask -" {
-               : gosub "ask_thor_debug" ;
-            }
+         : match "ask -" {
+               : gosub "ask_thor_next_guess" ;
          }
-         : print "{ask}ing Thor requires a number from 1-17, with no extra text." ;
+         : print "{ask}ing Thor requires a number from 1-17, with no extra text. Zero checks what you've asked so far." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
-      : if (tempint == 0 && in_debug) {
+      : if (tempint == 18 && in_debug) {
          : gosub "ask_thor_debug" ;
       }
+      : if (tempint == 0) {
+         : gosub "ask_thor_next_guess" ;
+      }
       : if (tempint < 1 || tempint > 17) {
-         : print {( "\"There are only seventeen total rules, so just pick any one from one to seventeen. There are no secret numbers, either." + (ask_thor_misfire ? "" : " Unfortunately, the rules are too long to let zero to be an index. But that sort of thing is always worth a try for the clever adventurer.") + "\"" )} ;
+         : print {( "\"There are only {y17} total {rule}s, so just {ask} about any one from one to {y17}. There are no secret numbers, either, though zero cues what to ask next." + (ask_thor_misfire ? "" : " Still, trying out-of-the-way stuff is always worth a try for the clever adventurer.") + "\"" )} ;
          : set_true "ask_thor_misfire" ;
          : done ;
       }
@@ -2638,7 +2665,7 @@ subroutines {
       }
       : else_if (tempint == 17) {
          : cycle key = "rule_17" predictable_order = "true" skip_interval = "0" {
-         : print "\"The seventeenth rule in Graham Nelson's Player's Bill of Rights is <to know how the game is getting on<#f88>>.\"" ;
+         : print "\"The {y17}th rule in Graham Nelson's Player's Bill of Rights is <to know how the game is getting on<#f88>>.\"" ;
          : print "\"Progress tracking with points is a staple of text adventures, but it can feel a bit artificial and distracting to look up, even if the score is in the upper right. But a murder mystery may ask you for five pieces of evidence, or you may know a mansion has three stories and you've only visited one.\"" ;
          : print "\"Here, I tried to give an idea of progress by closing off hub areas as you found them.\"" ;
          }
@@ -3368,6 +3395,9 @@ subroutines {
       : print "{qt} uses all eight planar directions, abbreviated <N S E W NW NE SE SW<#0f0>> (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out} leaves if there is only one exit." ;
       : print "You can {tak} an item, but there is no need to {v_drop} it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
       : print "You can {tlk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
+      : if (talked_to_thor) {
+         : print "You can also {ask} Thor about {rule}s (1-17) with 0 checking for what you haven't asked about." ;
+      }
       : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
       : if (jump_commands_notified) {
          : print {( "To save keystrokes, you can jump around hub locations with " + v_eb + " (east branch.)" + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " )} ;
