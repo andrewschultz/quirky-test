@@ -62,6 +62,8 @@ booleans {
    know_tad : boolean "false" scope="survivor" ;
    chimes_in_my_house : boolean "false" scope="survivor" ;
    asterisk_help_note : boolean "false" scope="survivor" ;
+   half_bonus : boolean "false" scope="survivor" ;
+   bonus_half_note : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -821,6 +823,8 @@ strings {
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {thk}." : "" )} ;
+   for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
+
 }
 
 stats {
@@ -3078,13 +3082,22 @@ subroutines {
          : done ;
       }
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
-      : print "One of those words felt right, but the other didn't. You must be halfway there.{already_got_check}" ;
-      : print "Again, you feel like you got halfway there.{already_got_check}" ;
-      on_exhausted {
-         : print "One word right, one word wrong.{already_got_check}" ;
+      : print "One of those words felt right, but the other didn't. You must be halfway there{for_bonus}.{already_got_check}" ;
+      : print "Again, you feel like you got halfway there{for_bonus}.{already_got_check}" ;
+         on_exhausted {
+            : print "One word right, one word wrong{for_bonus}.{already_got_check}" ;
+         }
       }
       : set_false "already_got_command" ;
    }
+   say_half_b : subroutine {
+      : set_true "half_bonus" ;
+      : gosub "say_half" ;
+      : if (!bonus_half_note) {
+         : print "{otn}since you've been through once, I will assume you know all the core points and are hunting for bonus points. This wasn't available the first time through, to avoid distracting you from the main game." ;
+         : set_true "bonus_half_note" ;
+      }
+      : set_false "half_bonus" ;
    }
    reflexive_warp_reject : subroutine {
       : print "You're already here!";
