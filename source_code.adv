@@ -220,7 +220,8 @@ booleans {
    tutorial_8_talk_voice_done : boolean "false" ;
    tutorial_9_go_west : boolean "false" ;
    tutorial_10_first_base : boolean "false" ;
-   tutorial_item_taken: boolean "false" ;
+   ever_tutorial : boolean "false" scope="survivor" ;
+   post_tutorial_long_notes : boolean "false" scope="survivor" ;
 
    ## parser shortcut booleans
    look_warn: boolean "false" scope="survivor" ;
@@ -272,6 +273,16 @@ integers {
 }
 
 collections {
+   tutorial_stuff : list {
+      items = [
+         "Meta-commands such as {abt}, {credits} and {verbs} give you general information that would break up the flow of an introduction.",
+         "{xme} is a good in-world starter command to tell you about yourself.",
+         "Shorthand such as {v_i} to take inventory and <X<#0f0>> to <EXAMINE<#0f0>> help simplify what you need to type.",
+         "Senses can provide clues. In this case, {qt} uses {lishea}, which implies {tlk}. Also, many parsers may eliminate prepositions for convenience, so {t0} is worth a try",
+         "You can often try going any direction (up, down, in, out, or the eight compass directions) if the room description is unclear. Also, shorthand such as <W<#0f0>> works in place of <GO WEST<#0f0>>",
+         "{qt}'s point-scoring commands are unusual for a parser game, where guess-the-verb is frowned on. However, the commands are all similar to objects or people you run across."
+      ]
+   }
    talk_done : set {} ;
    talk_need : set {
       items = [
@@ -3027,6 +3038,7 @@ subroutines {
       }
    }
    tutorial_progress : subroutine {
+      : set_true "ever_tutorial" ;
       : if (!tutorial_1_about_done) {
          : print "{tcue}An author frequently implements an {abt} commands page for big-picture introductory information that might disrupt the starting narrative. So try {abt} to get started." ;
          : return ;
@@ -3045,11 +3057,11 @@ subroutines {
          : return ;
       }
       : if (!tutorial_5_inventory_done) {
-         : print "{tcue}now you examined yourself with {xme}, another common command is to take inventory to verify you are carrying the item you found. This can be shortened with {v_i}." ;
+         : print "{tcue}now you examined yourself with {xme}, another common command is to take <INVENTORY<#f80>> to verify you are carrying the item you found. This can be shortened with {v_i}." ;
          : return;
       }
       : if (!tutorial_6_x_ask_done) {
-         : print "{tcue}Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as Adventuron ignores prepositions." ;
+         : print "{tcue}Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as TO is part of complex commands such as <GIVE A TO B<#0f0>>." ;
          : return;
       }
       : if (!tutorial_7_listen_done) {
@@ -3057,7 +3069,7 @@ subroutines {
          : return;
       }
       : if (!tutorial_8_talk_voice_done) {
-         : print "{tcue}that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} or <TALK VOICE<#0f0>>. You can even abbreviate {tlk} to {t0}.";
+         : print "{tcue}that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} ({qt} can figure the subject) or <TALK VOICE<#0f0>>. You can even abbreviate {tlk} to {t0}.";
          : return;
       }
       : if (!tutorial_9_go_west) {
@@ -3071,10 +3083,14 @@ subroutines {
       : print "This is a bug. You should have finished the tutorial by now. Let me know how this happened." ;
    }
    tutorial_shutoff : subroutine {
-      : if (in_tutorial) {
-         : print "Congratulations! You've finished the tutorial. Now on with the game. While the tutorial is over, there are no in-game hints, but there should be a walkthrough provided. Hopefully it won't be too necessary." ;
-         : print "One other thing: someone ahead discusses your rights as a parser game (or any game) player and rules game designers should adhere to. You can listen to them as much or as little as you want. Similarly, there are bonus points to find, and you can work as hard at them as you want. There are also footnotes and achievements to revisit on replay. But they are only for really interested people." ;
-         : print "The number-one rule for the player like you, though vague, is: enjoy yourself. Focus on what you like if and when you can, whether it's the necessary puzzles, the optional puzzles, or the discussion of what players have a right to expect. And don't worry about the rest." ;
+      : if (in_tutorial && !post_tutorial_long_notes) {
+         : press_any_key ;
+         : clear_screen ;
+         : set_true "post_tutorial_long_notes" ;
+         : print "Congratulations! You've finished the tutorial. Now on with the game. With the tutorial over, there are no in-game hints, but there should be a walkthrough provided. Hopefully it won't be too necessary." ;
+         : print "One other thing: someone ahead discusses rules game designers should adhere to and your rights as a parser game (or any game) player. There's no penalty for skipping this." ;
+         : print "Similarly, there are bonus points for observant players, and there are also footnotes and achievements to revisit on replay. All this is only for really interested players." ;
+         : print "The number one rule for you to follow as a player, though vague, is: enjoy yourself. Focus on what you like if and when you can, whether it's the necessary puzzles, the optional puzzles, or the discussion of what players have a right to expect from a game. And don't worry about the rest." ;
       }
       : set_true "tutorial_done";
       : set_false "in_tutorial";
@@ -3921,7 +3937,19 @@ on_command {
       : gosub "options_notify" ;
    }
    : match "tutorial _" {
-      : gosub "options_tutorial" ;
+      : if (has_visited("first_base")) {
+         : print "You are already past the end of the tutorial.\n" ;
+         : if (ever_tutorial) {
+            : print "So here's a recap of its contents:" ;
+            : collection_iterate "tutorial_stuff" {
+               : print {( "* " + item() )} ;
+            }
+         } : else {
+            : print "Activating the tutorial would've given a summary of what it taught here. To visit the tutorial, type {tut} {on} before reaching First Base once you've won or restarted {qt}." ;
+         }
+      } : else {
+         : gosub "options_tutorial" ;
+      }
    }
    : match "meta _" {
       : gosub "verb_meta_list" ;
