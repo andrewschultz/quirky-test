@@ -67,7 +67,6 @@ booleans {
 
    ## game option booleans
    score_notify : boolean "true" scope="survivor" ;
-   tutorial_in_options : boolean "true" scope="survivor" ;
    use_color_coding : boolean "true" scope="survivor" ;
 
    ## game progress booleans
@@ -2978,13 +2977,7 @@ subroutines {
 
    options_list : subroutine {
       : print {( "Many games have options for sound, etc. " + qt + " uses <YOUROPT YES/Y<#88f>> and <YOUROPT NO/N<#88f>> to change them. <YOUROPT <#88f>> shows its status." )} ;
-      : if (tutorial_in_options)
-      {
-         : print {( tut + " is the first option command, " + (tutorial_done ? "but you've finished the tutorial, so I won't mention it again" : "though it's disabled once the tutorial is done" ) + "." )} ;
-         : if (tutorial_done) {
-            : set_false "tutorial_in_options" ;
-         }
-      }
+      : print {( "{tut} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." )} ;
       : print "{ch} is used to toggle colored text hints." ;
       : print "{notif} is used to toggle score notification." ;
       : print "Note that {qt} uses {yn} to toggle options instead of {on} and {off}, since {on} is a preposition, which is rejected by the simplified version of Adventuron's parser used here." ;
