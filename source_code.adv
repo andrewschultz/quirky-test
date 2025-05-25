@@ -2404,7 +2404,7 @@ subroutines {
       : else_if (tempint == 9) {
          : cycle key = "rule_9" predictable_order = "true" skip_interval = "0" {
          : print "\"The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>.\"" ;
-         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Directions were always abbreviated, since they were in real life, but eventually conventions settled on I for inventory and X for examine, and so forth. More commonly, Inform allows for pronouns, and MAN might be a synonym for SORCERER and WOMAN for SORCERESS, and so forth. NEWS and PAPER could cue NEWSPAPER. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
+         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Conventions have settled on I for inventory and X for examine, and one- or two-letter abbreviations for directions. Many games use custom abbreviations for verbs they have the player use a lot.\nMore commonly, Inform allows for pronouns, and MAN might be a synonym for SORCERER and WOMAN for SORCERESS, and so forth. NEWS and PAPER could cue NEWSPAPER. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
          : print "\"There are a few synonyms in this game, but because of the oddness of the items, there's not too much that can be done. {qt} also short-circuits this by not making you use many items explicitly.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -3018,7 +3018,7 @@ subroutines {
          : print {( "The argument after <NOTIFY<#0f0>> wasn't recognized. " + notify_string )};
       }
    }
-   options_tutorial: subroutine {
+   options_tutorial : subroutine {
       : match "tutorial yes;tutorial y" {
          : print "Score notify is now on.";
          : set_true "score_notify";
@@ -3772,7 +3772,7 @@ on_command {
       : done ;
    }
    : match "ask _" {
-      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should TALK to first" : "Someone you'll run into shortly." ) )} ;
+      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {tlk} to first" : "Someone you'll run into shortly." ) )} ;
    }
    : match "take _" {
       : if (!take_note) {
