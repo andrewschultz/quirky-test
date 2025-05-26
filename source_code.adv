@@ -818,22 +818,31 @@ objects {
 # end objects
 
 vocabulary {
+   # note a lot of synonyms we would suspect can't be in here e.g. MASTER and PLAN, because then MASTER MASTER would give the right solution, too ... we could circumvent this with original nouns or string manipulation but it's a pain
+   # intro and general
    : noun / aliases = [ooh, task, ask, parchment]
    : noun / aliases = [voice, veering, choice, cheery, cheering]
-   : noun / aliases = [seth, denton, dentons]
-   : noun / aliases = [hill, hills]
+   # plain base
+   : noun / aliases = [seth, denton]
+   : noun / aliases = [beery, thor]
+   # east hub, clockwise
+   : noun / aliases = [low, song]
+   : noun / aliases = [booth, trending]
+   : noun / aliases = [fast, vision]
+   : noun / aliases = [peace, surge, surging]
+   : noun / aliases = [purge, purging]
+   : noun / aliases = [trial, pics]
+   # west hub, clockwise
    : noun / aliases = [box, boxes, crackers]
    : noun / aliases = [cake, trackers]
-   : noun / aliases = [peace, surging]
-   : noun / aliases = [hunter, hunters]
-   : noun / aliases = [grunter, grunters]
-   : noun / aliases = [fission, fishin]
-   : noun / aliases = [booth, trending]
-   : noun / aliases = [surge, surging]
-   : noun / aliases = [purge, purging]
+   : noun / aliases = [meal, dude]
+   # endgame
    : noun / aliases = [glimmer, glimmers, glimmering]
+
+   # aliases for yes/no
    : noun / aliases = [no, n, off]
    : noun / aliases = [yes, y]
+
    : verb / aliases = [ab, abt, about]
    : verb / aliases = [achievements, achievement, achieve, ach, ac]
    : verb / aliases = [ask, rule]
@@ -1442,6 +1451,10 @@ locations {
          : match "talk trackers;listen trackers;talk -;listen -" {
             : gosub "talk_flag" ;
             : print "The cake trackers are too busy grumbling among themselves with \"Lack of pies? Pack of lies!\" and trying to find cake. They're oblivious to you. Perhaps you can sneak in and ..." ;
+            : done ;
+         }
+         : match "x trackers" {
+            : print "The trackers seem preoccupied with finding cake. So preoccupied, they may be foregtting something nice they already have." ;
             : done ;
          }
       }
