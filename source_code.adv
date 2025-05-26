@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.3.5
+   game_version                 = 1.3.6
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -2075,6 +2075,26 @@ locations {
 };
 
 # end locations
+
+zones {
+   zone_start : zone {
+      locations = [ nameless_lameness, burst_face, first_base ]
+   }
+   zone_hubs : zone {
+      locations = [ plain_base, west_tiles, east_branch, stealing_hill ]
+   }
+   zone_east_spokes : zone {
+      locations = [ hub_e_n, hub_e_ne, hub_e_e, hub_e_se, hub_e_s, hub_e_w, hub_e_nw ]
+   }
+   zone_west_spokes : zone {
+      locations = [ hub_w_n, hub_w_ne, hub_w_e, hub_w_s, hub_w_sw, hub_w_w, hub_w_nw ]
+   }
+   zone_endgame : zone {
+      locations = [ gravel_trail, my_house ]
+   }
+}
+
+# end zones
 
 # connections between locations. There are warps for the first few areas, but after that, it's a pretty standard map.
 
