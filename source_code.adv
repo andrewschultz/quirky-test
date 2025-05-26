@@ -3848,13 +3848,6 @@ on_command {
    : if (in_debug) {
       : gosub "debug_commands" ;
    }
-   : match "exits _" {
-      : if (is_at "nameless_lameness") {
-         : print "There's a puzzle here to start, before you get a clue which way to go. The tutorial can walk you through it." ;
-      } : else_if (is_at "burst_face" ) {
-         : print "The way forward is beyond the {cc_burst_face}. It's not a direction, but it's similar to changing WHOA GUEST to GO WEST." ;
-      }
-   }
    : match "think _" {
       : gosub "think_thoughts" ;
    }
