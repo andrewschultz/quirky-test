@@ -810,7 +810,7 @@ objects {
 
    ## post-hub
    travel_grail : object "{cc_travel_grail}" msg="(should be covered in on_command)" ;
-   teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." ;
+   teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." conspicuous="false" ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
 }
@@ -3793,6 +3793,9 @@ on_command {
    : if (is_carried("travel_grail")) {
       : match "x travel;x grail" {
          : print "It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here." ;
+   : if (is_exists("teary_chimes")) {
+      : match "x teary" {
+         : set_sentence "x chimes" ;
       }
    }
    : if (has_visited "plain_base") {
@@ -3882,7 +3885,7 @@ on_command {
    }
    : match "listen _" {
       : if (point_see_glimmering && !summoned_teary_chimes && (is_at "gravel_trail" || is_at "my_house")) {
-         : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's something concrete to reflect on." ;
+         : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's something specific to reflect on." ;
          : create "teary_chimes" target="gravel_trail" ;
          : set_true "summoned_teary_chimes" ;
          : done ;
