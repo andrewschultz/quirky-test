@@ -1107,9 +1107,10 @@ locations {
                : set_integer var="tempint" "6" ;
                : gosub "add_bonus" ;
             }
-            : match "x seth;x dentons" {
-               : print "Very seedy looking. Even its name, though common, seems ominous for some reason.";
+            : match "x seth;x denton;x dentons" {
+               : print "Very seedy looking. Even its name, though common, seems ominous. Why?";
                : gosub "thor_on_seth" ;
+               : update_graphic "seth_dentons_picture" ;
                : done ;
             }
             : match "enter _" {
@@ -1162,6 +1163,10 @@ locations {
          : gosub "footnote_reveal" ;
       }
       on_tick {
+         : if (subject1_is "seth_dentons" ) {
+            : gosub "thor_on_seth" ;
+            : done ;
+         }
          : if (said_bore_outside_base && !thor_knows_bore) {
             : set_true "thor_knows_bore" ;
             : print "You must have looked a bit sheepish or something, or maybe Thor is kinda omniscient, because he laughs and says \"Ah, you figured out my name. No worries. I'm pleased you figured it out. Wouldn't a' hurt my feelings to say it here." ;
@@ -2282,7 +2287,7 @@ subroutines {
    }
    thor_on_seth : subroutine {
       : if (!thor_explained_seth) {
-         : print "Beery Thor casually mentions it'd be nice if it disappeared, but not critical. The ring's not there, but if it was, he would've taken care of things, already." ;
+         : print "Beery Thor casually mentions it'd be nice if Seth Denton's disappeared, but not critical. The ring's not there, but if it was, he would've taken care of things, already." ;
          : set_true "thor_explained_seth" ;
          }
       }
@@ -4081,6 +4086,8 @@ assets {
 
       pacing_rations_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
 
+   #scenery pictures here
+      seth_dentons_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACWSwAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////9DrV1ZAAAA8ElEQVRYw+2Wyw6DIBBFpyuXg39aV/z2/QM6gPVRtUlJc2cho0I0MXM8DKCkhsBPj7+HNAFABQLY27mvh51EgKRJc6ulRQmyAUtrl8obIFENWOZPA8UL2UCtgQwgdAPes0DOgwaguDjvAjAn26eu/T0ArkqwrQxbAMYlYolpuQ8cgGCf+jgAZAEsABvrI4CtzmABWM2dAIAIAC0AYSgAQgcQQQVAJpBalXkm8gzUIQhqBLYjzgDgA0CHqIsBgD0NdwaI03Bdd7YGiAvRmm9rwAXg9gbGZzEw+QHEpxmIngA+27E7gPcf0X+jA3SADtABXkAS5iNZs2sJAAAAAElFTkSuQmCC";
    }
 }
 
