@@ -3816,14 +3816,38 @@ on_command {
       : done ;
    }
    # individual items I can't quite use synonyms for
+   # it's quite possible I could do _ big, etc. But X is the big verb.
+   : if (is_carried("no_greed")) {
+      : match "x no" {
+         : set_sentence "x greed" ;
+      }
+   }
    : if (is_at("west_tiles") || is_at("east_branch")) {
       : match "x big" {
          : set_sentence "x runes" ;
       }
    }
+   : if (is_carried("chalice_map")) {
+      : match "x map;x chalice" {
+         : set_sentence "x map" ;
+      }
+   }
+   : if (is_carried("master_plan")) {
+      : match "x master" {
+         : set_sentence "x plan" ;
+         : done ;
+      }
+   }
+   : if (is_carried("rain_soul") && !is_at("hub_e_s")) {
+      : match "x rain" {
+         : set_sentence "x soul" ;
+      }
+   }
    : if (is_carried("travel_grail")) {
-      : match "x travel;x grail" {
-         : print "It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here." ;
+      : match "x travel" {
+         : set_sentence "x grail" ;
+      }
+   }
    : if (is_exists("teary_chimes")) {
       : match "x teary" {
          : set_sentence "x chimes" ;
