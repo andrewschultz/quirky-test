@@ -782,8 +782,8 @@ objects {
   ## scenery
    cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false" ;
    seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
-   west_runes : scenery "big runes" at="west_tiles" msg="Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." conspicuous="false" ;
-   east_runes : scenery "big runes" at="east_branch" msg="Five runes: a caret, a straight line, two geometric angle signs, a straight line." conspicuous="false" ;
+   big_runes_1 : scenery "big runes" at="west_tiles" msg="Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." conspicuous="false" ;
+   big_runes_2 : scenery "big runes" at="east_branch" msg="Five runes: a caret, a straight line, two geometric angle signs, a straight line." conspicuous="false" ;
    plaster_man : scenery "a plaster man" at="hub_w_n" msg="A plaster man." conspicuous="false" ;
    trending_booth : scenery "a trending booth" at="hub_e_ne" msg="You don't want to get too close." conspicuous="false" ;
 
@@ -3783,6 +3783,12 @@ on_command {
       }
       : print {( "This " + (point_take_crackers ? "wasn't" : "isn't" ) + " where you need to {tak}." )} ;
       : done ;
+   }
+   # individual items I can't quite use synonyms for
+   : if (is_at("west_tiles") || is_at("east_branch")) {
+      : match "x big" {
+         : set_sentence "x runes" ;
+      }
    }
    : if (is_carried("travel_grail")) {
       : match "x travel;x grail" {
