@@ -1951,12 +1951,18 @@ locations {
                : done ;
             }
          }
+
+         : if (point_missing_house) {
+            : match "in *" {
+               : set_sentence "n" ;
+            }
+         }
          : match "missing house" {
             : if (point_missing_house) {
                : print "You already brought the house back." ;
             }
             : else {
-               : print "BOOM! A missing house appears. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter, grateful not to be alone in the open." ;
+               : print "BOOM! A missing house appears to the north. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter, grateful not to be alone in the open." ;
                : set_true "point_missing_house" ;
                : destroy "hissing_mouse" ;
                : gosub "add_point" ;
