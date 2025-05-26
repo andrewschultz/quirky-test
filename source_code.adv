@@ -1522,6 +1522,7 @@ locations {
             : set_false "think_shift_goals" ;
             : destroy "peace_surging" ;
             : destroy "no_greed" ;
+            : pocket "focus" ;
             : gosub "add_point_west" ;
             : gosub "hub_check_dependent" ;
          }
@@ -1572,6 +1573,7 @@ locations {
             : set_false "think_hunters_grill" ;
             : destroy "pacing_rations" ;
             : destroy "crackers" ;
+            : pocket "meal_dude" ;
             : gosub "add_point_west" ;
             : gosub "hub_check_dependent" ;
          }
@@ -1791,7 +1793,7 @@ locations {
                : done ;
             }
          } : else {
-            : match "x dirt; x home" {
+            : match "x dirt;x home" {
                : print "Looks very cozy, but not quite for you." ;
                : done ;
             }
