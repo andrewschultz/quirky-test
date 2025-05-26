@@ -799,13 +799,13 @@ objects {
    pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
-   meal_dude : object "fed, sated" msg="You had quite a meal, dude." ; ## from grunters' hill
+   meal_dude : object "deal-mood meal, dude (eaten)" msg="You reflect on the meal you enjoyed. It will help you deal with something, mentally and/or physically." ; ## from grunters' hill
    confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
-   low_song : object "<a low song<#888>>" msg="They're notes to a song." ; ## fly score
+   low_song : object "<a low song<#888>>" msg="Notes to a song, but no lyrics." ; ## fly score
    fast_vision : object "<a fast vision<#888>>" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
    peace_surging : object "<peace surging<#888>>" msg="You feel peace surging within you." ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
-   rain_soul : object "<a rain soul<#888>>" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out." ;
+   rain_soul : object "<a rain soul<#888>>" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out. So many ideas that need something beyond words to bring them together." ;
    no_greed : object "<no greed<#888>>" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
@@ -1303,7 +1303,7 @@ locations {
       : match "x plaster;x man" {
          : set_integer var="tempint" "13" ;
          : gosub "footnote_reveal" ;
-         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "A plaster man sits here, thinking ... but of what?{footnote_reveal_text}" )}
+         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "The plaster man sits here, in a thinking pose. What thought or thoughts might be inside?{footnote_reveal_text}" )}
          : done ;
       }
       : match "talk plaster;talk man;talk -;listen -;listen plaster;listen man" {
@@ -1504,7 +1504,7 @@ locations {
          }
          : else
          {
-            : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff." ;
+            : print "You stop looking for something direct from the gift shoals. You begin, like, meditating and stuff. You gain general focus!" ;
             : set_true "point_shift_goals" ;
             : set_false "think_shift_goals" ;
             : destroy "peace_surging" ;
@@ -1905,7 +1905,8 @@ locations {
          }
          : else
          {
-            : print "You sing your grim tune at the trim goon. They immediately have a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people.\n\nOkay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
+            : print "With a bit of thought, you see how the low song and rain soul hook together. Why didn't you see it before? The moment must not have been right." ;
+            : print "It is now. The trim goon, on hearing the grim tone, displays a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people.\n\nOkay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
             : set_true "point_grim_tune" ;
             : set_false "think_grim_tune" ;
             : destroy "rain_soul";
