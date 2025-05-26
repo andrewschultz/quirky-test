@@ -3694,6 +3694,10 @@ on_command {
          : set_true "say_warn" ;
       }
    }
+   # note we could add "O needs no argument" here but it's too fiddly for late-comp
+   : match "o _" {
+      : set_sentence "out" ;
+   }
    : match "eat _" {
       : if (point_hunters_grill) {
          : print "You already ate what you needed to." ;
