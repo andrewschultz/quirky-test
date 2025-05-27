@@ -3731,6 +3731,18 @@ on_command {
    : match "o _" {
       : set_sentence "out" ;
    }
+   : if (is_at("zone_hubs")) {
+      : match "out _" {
+         : if (is_at("east_branch") && points_right_side == 7 && point_healing_still) {
+            : set_sentence "sw" ;
+         } : else_if (is_at("west_tiles") && points_left_side == 7 && point_healing_still) {
+            : set_sentence "se" ;
+         } : else {
+            : print "That is ambiguous here, as you have more than one direction worth exploring." ;
+            : done ;
+         }
+      }
+   }
    : match "eat _" {
       : if (point_hunters_grill) {
          : print "You already ate what you needed to." ;
