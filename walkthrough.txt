@@ -10,35 +10,35 @@ This walkthrough also deliberately ignores all bonus points. I'd like to keep th
 
 ===============================================
 
-At first, you are given a way to learn about the game's basics.
+At first, you are given a way to learn about the game's basics. The game tracks tutorial points in the upper right. There are ten points, and you can gain one per command.
 
-> ABOUT
+> ABOUT (1T)
 
 This opens up the THANKS and VERBS commands. They can be done in any order, but the tutorial says to try VERBS first.
 
-> VERBS
+> VERBS (1T)
 
 This opens up more meta-verbs.
 
 Here any one of META, THANKS and OPTIONS will get you to the next step of the tutorial.
 
-> THANKS
+> THANKS (1T)
 
 After this bit, the tutorial says X ME is one of the first commands to use. So why not do so?
 
-> X ME
+> X ME (1T)
 
 Hmm! You find something on you. While you know what it is, the tutorial wants you to be comfortable with INVENTORY.
 
-> I
+> I (1T)
 
 We should now examine what we've gotten.
 
-> X TASK
+> X TASK (1T)
 
 This provides a clue. The veering choice cheering voice is out there. But what is it saying? The tutorial says, use your senses.
 
-> LISTEN
+> LISTEN (1T)
 
 "Whoa! Guest!"
 
@@ -50,21 +50,21 @@ The paper's name is Ooh, Task to Ask.
 
 But first, if you are using the tutorial, it will force you to TALK VOICE. The object is to get the player used to talking with other players. This can be abbreviated.
 
-> T VOICE
+> T VOICE (1T)
 
-Nothing, but good to know.
+Nothing back, but good to know.
 
 How would Whoa Guest fit in this?
 
 With ...
 
-> GO WEST (1)
+> GO WEST (1) (1T)
 
 Note you only have to type W or WEST. I originally meant to be nitpicky, but having Adventuron's parser be nitpicky was too much trouble, and I figured I should give people a chance to guess and then see, oh, that's how things are done.
 
 This brings you to the burst face. It's a starting point, but ... well, still a bit more to do. There's almost a crack in it. It almost leads somewhere.
 
-> FIRST BASE (1)
+> FIRST BASE (1) (1T)
 
 Oh no! A Pro Boor!
 
@@ -89,7 +89,25 @@ There are three non-dead-end locations beyond. East Branch is first if you want 
 
 You can TALK to Thor then ASK him about pedagogical stuff, but none of this is needed if you want to get through quickly.
 
-The below is the quickest way to get through without warps. You can save two moves, and four keystrokes, with warps. Actually, you can save six more keystrokes by typing O to exit the dead ends in the hub.
+First, let's poke around.
+
+> NW
+
+> NE
+
+> CHALICE MAP
+
+Oh no! You need to be prepared for this guy. You can THINK to see point-scoring commands you figured, but you didn't have the in-game prep for them. Yet.
+
+> SW
+
+> U
+
+The hill slopes down east and west.
+
+> E
+
+What follows should be very efficient. You can save two moves, and four keystrokes, with warps. Actually, you can save six more keystrokes by typing O to exit the dead ends in the hub.
 
 > NE
 
@@ -237,7 +255,9 @@ Oh no! A hissing mouse!
 
 > N
 
-Glee simmers.
+Glee simmers. But first--let's get a bonus point! Looking back on this quirky test, you realize it's been a ...
+
+> TURKEY QUEST (1B)
 
 > SEE GLIMMERS (1)
 
@@ -274,3 +294,5 @@ shell fort -+           |             |
             |   shoals
   warring  -+
     bay
+
+So that's how to get through! Notice you didn't have any accomplishments. I did this deliberately, as (spoiler) getting through quickly is an accomplishment.
