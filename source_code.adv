@@ -3650,7 +3650,15 @@ on_tick {
    }
 }
 
-## on_describe is for moving around
+## on_pre_describe/on_describe are mostly for moving ambient items around
+
+on_pre_describe {
+   : if (is_just_entered() && is_at "zone_endgame") {
+      : if (is_exists "teary_chimes") {
+         : create "teary_chimes" ;
+      }
+   }
+}
 
 on_describe {
 }
@@ -3957,9 +3965,9 @@ on_command {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"{footnote_reveal_text}";
    }
    : match "listen _" {
-      : if (point_see_glimmering && !summoned_teary_chimes && (is_at "gravel_trail" || is_at "my_house")) {
+      : if (point_see_glimmering && !summoned_teary_chimes && is_at "zone_endgame") {
          : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's something specific to reflect on." ;
-         : create "teary_chimes" target="gravel_trail" ;
+         : create "teary_chimes" target="my_house" ;
          : set_true "summoned_teary_chimes" ;
          : done ;
       }
