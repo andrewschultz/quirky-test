@@ -1968,9 +1968,12 @@ locations {
             }
          }
 
-         : if (point_missing_house) {
-            : match "in *" {
+         : match "in *" {
+            : if (point_missing_house) {
                : set_sentence "n" ;
+            } : else {
+               : print "There's nothing to go into. Yet." ;
+               : done ;
             }
          }
          : match "missing house" {
@@ -2148,7 +2151,9 @@ connections {
 
       ## endgame stuff
       plain_base, north, gravel_trail,
-      gravel_trail, north, my_house
+      gravel_trail, north, my_house,
+      my_house, leave_oneway, gravel_trail
+
    ]
 }
 
