@@ -107,6 +107,12 @@ The hill slopes down east and west.
 
 > E
 
+Let's verify the map is a loop.
+
+> SW
+
+> NE
+
 What follows should be very efficient. You can save two moves, and four keystrokes, with warps. Actually, you can save six more keystrokes by typing O to exit the dead ends in the hub.
 
 > NE
