@@ -1,0 +1,298 @@
+Quirky Test walkthrough
+
+The game and walkthrough are both copyright 2025 by Andrew Schultz. The walkthrough is published on itch.io and will be on CASA post-comp.
+
+The tutorial is mainly there for people to be acquainted with meta-commands they may not be aware of. There's a puzzle in the spirit of the game, too, but it's solvable by trial and error.
+
+Some of these commands (e.g. the meta-commands) are superfluous in non-tutorial mode.
+
+This walkthrough also deliberately ignores all bonus points. I'd like to keep that challenge. Or, you know, you can just visit https://github.com/andrewschultz/quirky-test and read the source code. It should be low-level detective work even if you didn't find a bonus point.
+
+===============================================
+
+At first, you are given a way to learn about the game's basics. The game tracks tutorial points in the upper right. There are ten points, and you can gain one per command.
+
+> ABOUT (1T)
+
+This opens up the THANKS and VERBS commands. They can be done in any order, but the tutorial says to try VERBS first.
+
+> VERBS (1T)
+
+This opens up more meta-verbs.
+
+Here any one of META, THANKS and OPTIONS will get you to the next step of the tutorial.
+
+> THANKS (1T)
+
+After this bit, the tutorial says X ME is one of the first commands to use. So why not do so?
+
+> X ME (1T)
+
+Hmm! You find something on you. While you know what it is, the tutorial wants you to be comfortable with INVENTORY.
+
+> I (1T)
+
+We should now examine what we've gotten.
+
+> X TASK (1T)
+
+This provides a clue. The veering choice cheering voice is out there. But what is it saying? The tutorial says, use your senses.
+
+> LISTEN (1T)
+
+"Whoa! Guest!"
+
+You may be able to brute-force which way to go, since there are only eight directions.
+
+There is the Rare-Thing-There Ring.
+The initial location is Nameless Lameness.
+The paper's name is Ooh, Task to Ask.
+
+But first, if you are using the tutorial, it will force you to TALK VOICE. The object is to get the player used to talking with other players. This can be abbreviated.
+
+> T VOICE (1T)
+
+Nothing back, but good to know.
+
+How would Whoa Guest fit in this?
+
+With ...
+
+> GO WEST (1) (1T)
+
+Note you only have to type W or WEST. I originally meant to be nitpicky, but having Adventuron's parser be nitpicky was too much trouble, and I figured I should give people a chance to guess and then see, oh, that's how things are done.
+
+This brings you to the burst face. It's a starting point, but ... well, still a bit more to do. There's almost a crack in it. It almost leads somewhere.
+
+> FIRST BASE (1) (1T)
+
+Oh no! A Pro Boor!
+
+> BRO POOR (1)
+
+The Pro Boor leaves you with something called Prayer Lights. It has a double meaning, maybe more.
+
+> PLAYER RIGHTS (1)
+
+You've found your way, and it's time to move on. You find the source of the original voice, Beery Thor.
+
+Now the game opens up a bit. You can dispel Seth Denton's, but that is a bonus point. There are others I won't hint at too heavily in this walkthrough.
+
+But as for further progress? It doesn't matter which way you go first, though starting one way is considerably faster than the other. You will eventually get there either way. The object is to find fifteen spoonerisms that work as follows:
+
+* 8 level 1 spoonerisms
+* 4 level 2 spoonerisms, each of which needs 2 level 1 spoonerisms solved first
+* 2 level 3 spoonerisms, each of which needs 2 level 2 spoonerisms solved first
+* a final level 4 spoonerism, which unlocks the endgame
+
+There are three non-dead-end locations beyond. East Branch is first if you want to go faster, though it has trickier spoonerisms. West Tiles has easier spoonerisms, but most of them rely on others. Only one puzzle in East Branch does.
+
+You can TALK to Thor then ASK him about pedagogical stuff, but none of this is needed if you want to get through quickly.
+
+First, let's poke around.
+
+> NW
+
+> NE
+
+> CHALICE MAP
+
+Oh no! You need to be prepared for this guy. You can THINK to see point-scoring commands you figured, but you didn't have the in-game prep for them. Yet.
+
+> SW
+
+> U
+
+The hill slopes down east and west.
+
+> E
+
+What follows should be very efficient. You can save two moves, and four keystrokes, with warps. Actually, you can save six more keystrokes by typing O to exit the dead ends in the hub.
+
+> NE
+
+> N
+
+Sky floor.
+
+> FLY SCORE (1)
+
+> S
+
+Note that once you solve an area you've changed, you can't go back. This is hopefully to make progress clearer and help you focus on what you still need to do.
+
+> NE
+
+Trending booth.
+
+> BENDING TRUTH (1)
+
+> SW
+
+> E
+
+Warring bay.
+
+> BORING WAY (1)
+
+> W
+
+> SE
+
+Hurt dome.
+
+> DIRT HOME (1)
+
+> NW
+
+> S
+
+Roaring pain.
+
+> POURING RAIN (1)
+
+> N
+
+> W
+
+Money fountain.
+
+> FUNNY MOUNTAIN (1)
+
+> E
+
+To deal with the trim goon, you need the fly score and roaring pain. If you don't have them, you find the trim goon unmoved by your efforts.
+
+> NW
+
+> GRIM TUNE (1)
+
+> SE
+
+> U
+
+You're done here, so now we'll skip over the hills, which we can't do anything with, yet.
+
+> W
+
+You should now get notification you can jump around with two-word commands. You don't really need to, though.
+
+> E
+
+> FELL SHORT (1)
+
+> W
+
+> S
+
+> TAKE CRACKERS (1)
+
+> N
+
+> SW
+
+Doing the right thing with the gift shoals requires the right mind state, acuired by changing the money fountain and warring bay.
+
+> SHIFT GOALS (1)
+
+> NE
+
+> W
+
+Making a meal in Grunters' Hill requires the crackers and, from the fort, the pacing rations.
+
+> HUNTERS GRILL (1)
+
+> E
+
+> NW
+
+Offering something in the Yellow Field requires changing the hurt dome and trending booth.
+
+> FELLOW YIELD (1)
+
+> SE
+
+> N
+
+Having the physical strength and purpose to deal with the Plaster Man requires solving the grunters' hill and the gift shoals.
+
+> MASTER PLAN (1)
+
+> S
+
+> NE
+
+Having the confidence to deal with the Malice Chap requires subduing the yellow field and trim goon.
+
+> CHALICE MAP (1)
+
+> SW
+
+Okay, now we have what we need to find what's in the hill!
+
+> U
+
+> HEALING STILL (1)
+
+You won't be allowed back, but you don't need to come back. You're ready for the endgame.
+
+> W
+
+> SE
+
+East and southwest works equally well. You can use the warp command PB too.
+
+You're back at the Plain Base, but there's one more exit! Well, if you prepare it. What to do with the travel grail?
+
+> GRAVEL TRAIL (1)
+
+> N
+
+Oh no! A hissing mouse!
+
+> MISSING HOUSE (1)
+
+> N
+
+Glee simmers. But first--let's get a bonus point! Looking back on this quirky test, you realize it's been a ...
+
+> TURKEY QUEST (1B)
+
+> SEE GLIMMERS (1)
+
+Now how do you reach those glimmers in My House? Perhaps a recently gained friend...
+
+> HI MOUSE (1)
+
+(High mouse works too, since the trunk is high up.)
+
+Congratulations, you win!
+
+There's a logic map for the puzzle dependencies in PDF format, but I thought I would write the brackets out in text format.
+
+ hurt dome -+
+            +---yellow--+
+  trending -+    field  |
+    booth               |
+                        +-malice chap-+
+                        |             |
+ sky floor -+           |             |
+            |-trim goon-+             |
+   roaring -+                         |
+     pain                             |
+                                      +-travel grail
+    cake   -+                         |
+  trackers  |                         |
+            +-grunters'-+             |
+            |    hill   |             |
+shell fort -+           |             |
+                        +-plaster man-+
+  money    -+           |
+ fountain   |           |
+            +----gift---+
+            |   shoals
+  warring  -+
+    bay
+
+So that's how to get through! Notice you didn't have any accomplishments. I did this deliberately, as (spoiler) getting through quickly is an accomplishment.
