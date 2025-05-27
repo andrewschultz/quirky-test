@@ -611,7 +611,7 @@ strings {
    unknown_begin_note : dynamic_string {( footnotes_available || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
 
    # "can't go that way" dynamic sub-strings
-   back_to_hub : dynamic_string {( is_at "hub_w_n" || is_at "hub_w_ne" || is_at "hub_w_e" || is_at "hub_w_s" || is_at "hub_w_sw" || is_at "hub_w_w" || is_at "hub_w_nw" ? "West Tiles" : "East Branch" )}
+   back_to_hub : dynamic_string {( is_at "zone_west_spokes" ? "West Tiles" : "East Branch" )}
    spoke_out_dir : dynamic_string {( is_at "hub_w_n" || is_at "hub_e_n" ? "south" : is_at "hub_w_ne" || is_at "hub_e_ne" ? "southwest" : is_at "hub_w_e" || is_at "hub_e_e" ? "west" : is_at "hub_e_se" ? "northwest" : is_at "hub_w_s" || is_at "hub_e_s" ? "north" : is_at "hub_w_sw" ? "northeast" : is_at "hub_w_w" || is_at "hub_e_w" ? "east" : is_at "hub_w_nw" || is_at "hub_e_nw" ? "southeast" : "(unknown, bug)" )}
    first_base_cantgo : dynamic_string {( point_bro_poor ? "You need to figure what to do with {cc_prayer_lights} before moving on." : "You'll have to deal with the {cc_pro_boor} before going anywhere." )}
    plain_base_cantgo : dynamic_string {( point_gravel_trail ? "The only passages are northeast and northwest, where you think you've done everything, and north." : "The only viable passages (for now) are northeast and northwest." )}
@@ -3773,7 +3773,7 @@ on_command {
          : redescribe ;
       }
       : match "wt -" {
-         : if (is_at("hub_e_n") || is_at("hub_e_ne") || is_at("hub_e_e") || is_at("hub_e_se") || is_at("hub_e_s") || is_at("hub_e_w") || is_at("hub_w_nw")) {
+         : if (is_at("zone_east_spokes")) {
             : set_true "achieve_tmmt_pre" ;
          }
          : if (is_at "west_tiles") {
@@ -3788,7 +3788,7 @@ on_command {
          : if (is_at "east_branch") {
             : gosub "reflexive_warp_reject" ;
          }
-         : if (is_at("hub_w_n") || is_at("hub_w_ne") || is_at("hub_w_e") || is_at("hub_w_s") || is_at("hub_w_sw") || is_at("hub_w_w") || is_at("hub_w_nw")) {
+         : if (is_at("zone_west_spokes")) {
             : set_true "achieve_tmmt_pre" ;
          }
          : set_integer var = "latest_warp_number" "8";
