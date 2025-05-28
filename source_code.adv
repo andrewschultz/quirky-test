@@ -796,7 +796,7 @@ objects {
    ## hub side items that get used
    ## start in the west, going clockwise
    chalice_map : object "a chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
-   master_plan : object "a master plan" msg="It's written in clear language.\n{map_and_plan}" ; ## from plaster man
+   master_plan : object "a master plan" msg="It's written in clear language.{footnote_reveal_text}\n{map_and_plan}" ; ## from plaster man
    pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
@@ -3883,7 +3883,12 @@ on_command {
    : if (is_carried("master_plan")) {
       : match "x master" {
          : set_sentence "x plan" ;
-         : done ;
+      }
+      : match "x plan" {
+         : mask {
+            : set_integer var="tempint" "13" ;
+            : gosub "footnote_reveal" ;
+         }
       }
    }
    : if (is_carried("rain_soul") && !is_at("hub_e_s")) {
