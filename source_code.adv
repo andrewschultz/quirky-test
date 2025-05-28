@@ -220,6 +220,9 @@ booleans {
    tutorial_8_talk_voice_done : boolean "false" ;
    tutorial_9_go_west : boolean "false" ;
    tutorial_10_first_base : boolean "false" ;
+   meta_tutorial_note_1 : boolean "false" ;
+   meta_tutorial_note_2 : boolean "false" ;
+   temporary_ring_question_blocked : boolean "false" ;
    ever_tutorial : boolean "false" scope="survivor" ;
    post_tutorial_long_notes : boolean "false" scope="survivor" ;
 
@@ -880,6 +883,13 @@ vocabulary {
 locations {
    nameless_lameness : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." {
       on_command {
+         : if (in_tutorial && !tutorial_5_inventory_done && is_carried("ooh_task")) {
+            : match "x ask" {
+               : print "You'll want to <X ASK<#0f0>> or an equivalent next, but as this tutorial is intended to be on rails, the next step is {v_i} to take {v_i_long}." ;
+               : set_true "temporary_ring_question_blocked" ;
+               : done ;
+            }
+         }
          : if (is_beside "cheering_voice") {
             : match "t -;t voice" {
                : set_true "tutorial_8_talk_voice_done" ;
@@ -950,6 +960,10 @@ locations {
       }
       on_tick {
          : if (is_carried "ooh_task" && !tutorial_6_x_ask_done && noun1_is "task" && verb_is "examine" ) {
+            : if (temporary_ring_question_blocked) {
+               : set_false "temporary_ring_question_blocked" ;
+               : return ;
+            }
             : print "But the ring's probably not here. Where can you go? You feel you are stumbling around. You hear the silence shattered. Perhaps you can use one of your senses and pick up a clue." ;
             : set_true "tutorial_6_x_ask_done" ;
             : increment "tutorial_score" ;
@@ -3198,6 +3212,20 @@ subroutines {
 
    check_additional_meta : subroutine {
       : if (!in_tutorial || tutorial_done) {
+         : return ;
+      }
+      : if (!tutorial_1_about_done) {
+         : if (!meta_tutorial_note_1) {
+            : print "{otn}it's good to look into meta-commands offered by the game, but with this tutorial on rails, we are starting with the basics." ;
+            : set_true "meta_tutorial_note_1" ;
+         }
+         : return ;
+      }
+      : if (!tutorial_2_verbs_done) {
+         : if (!meta_tutorial_note_2) {
+            : print "{otn}this tutorial wanted to highlight {verbs} as the most useful of the meta-verbs. So you re-trying this command after doing that will satisfy the next step." ;
+            : set_true "meta_tutorial_note_2" ;
+         }
          : return ;
       }
       : if (tutorial_1_about_done && tutorial_2_verbs_done &&  !tutorial_3_additional_metaverb_done) {
