@@ -691,7 +691,7 @@ strings {
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ; ## remove qualifier only when you used the travel grail
 
    gravel_trail_house : dynamic_string {(
-      point_missing_house ? "to the house you made" : "to, well, nowhere at the moment"
+      point_missing_house ? "to the house you summoned" : "to, well, nowhere at the moment"
    )};
 
    my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
@@ -704,7 +704,7 @@ strings {
    )} ;
 
    chimes_present : dynamic_string {(
-      (summoned_teary_chimes && !bonus_point_cheery_times) ? ". You hear teary chimes, too" : ""
+      (summoned_teary_chimes && !bonus_point_cheery_times) ? ". You hear teary chimes " + (is_at "gravel_trail" ? "here" : "outside" ) + ", too" : ""
    )};
 
    ## color code stuff
@@ -740,6 +740,7 @@ strings {
    cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
    cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "Glee simmers")} ;
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "my house")} ;
+   chimes_description_start : dynamic_string {( is_at ("gravel_trail") ? "The chimes make" : "You can't see them, but you hear them making" )} ;
 
    ## footnote notifications and (potentially) other dynamic strings
    footnote_reveal_text : dynamic_string {( reveal_this_footnote ? " <(FOOTNOTE " + tempint + ")<#f80>>" : "" )} ;
@@ -817,7 +818,7 @@ objects {
 
    ## post-hub
    travel_grail : object "{cc_travel_grail}" msg="(should be covered in on_command)" ;
-   teary_chimes : object "teary chimes" msg="The teary chimes wave in some unseen wind, making small pleasant musical noises." conspicuous="false" ;
+   teary_chimes : object "teary chimes" msg="{chimes_description_start} small pleasant musical noises in the wind." conspicuous="false" ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
 }
@@ -4026,13 +4027,13 @@ on_command {
    }
    : match "listen _" {
       : if (point_see_glimmering && !summoned_teary_chimes && is_at "zone_endgame") {
-         : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's something specific to reflect on." ;
+         : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's some specific tangent to ponder before moving on with things." ;
          : create "teary_chimes" target="my_house" ;
          : set_true "summoned_teary_chimes" ;
          : done ;
       }
       : if (is_exists("teary_chimes")) {
-         : print "The teary chimes still ring out now and then." ;
+         : print "The teary chimes ring out consistently but not incessantly." ;
          : return ;
       }
       : print "You don't hear anything right now." ;
