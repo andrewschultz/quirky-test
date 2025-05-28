@@ -638,6 +638,8 @@ strings {
       )};
    spokes_left : dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
+   runes_desc : dynamic_string {( is_at("west_tiles") ? "Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." : "Five runes: a caret, a straight line, two geometric angle signs, a straight line." )} ;
+
    ## west tiles seeding for dynamic strings, starting north and going clockwise
    hub_w_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
    hub_w_master_plan : string "With the plaster man destroyed, there's not much left here." ;
@@ -782,8 +784,7 @@ objects {
   ## scenery
    cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false" ;
    seth_dentons : scenery "Seth Denton's" msg="It looks forbidding, but you're not sure why." at="plain_base" conspicuous="false";
-   big_runes_1 : scenery "big runes" at="west_tiles" msg="Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." conspicuous="false" ;
-   big_runes_2 : scenery "big runes" at="east_branch" msg="Five runes: a caret, a straight line, two geometric angle signs, a straight line." conspicuous="false" ;
+   big_runes : scenery "big runes" at="west_tiles" msg="{runes_desc}" conspicuous="false" ;
    plaster_man : scenery "a plaster man" at="hub_w_n" msg="A plaster man." conspicuous="false" ;
    trending_booth : scenery "a trending booth" at="hub_e_ne" msg="You don't want to get too close." conspicuous="false" ;
 
@@ -1187,6 +1188,7 @@ locations {
    west_tiles : location "WEST TILES\nSuch nice, orderly tiles here. {sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_left_side)} ;
+         : create "big_runes" ;
       }
       on_command {
          : gosub "rune_parsing" ;
@@ -1211,6 +1213,7 @@ locations {
    east_branch : location "EAST BRANCH\nThe paths here are not super tidy or straight, but they don't look dangerous. {sub_hub}" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_right_side)} ;
+         : create "big_runes" ;
       }
       on_command {
          : gosub "rune_parsing" ;
