@@ -57,6 +57,7 @@ booleans {
    meta_abbrev_noted : boolean "false" ;
    note_homonym : boolean "false" scope="survivor" ;
    anagram_nag : boolean "false" scope="survivor" ;
+   know_tad : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -1060,9 +1061,17 @@ locations {
                : done ;
             }
          }
+         : if (point_bro_poor) {
+            : match "bad teacher" {
+               : print {( know_tad ? "Sorry, no bonus point." : "You chuckle a little at the Pro Boor believing in someone like that. However, since Tad Beecher is (un)fortunately not present, I can't give you a bonus point for exposing him." )} ;
+               : set_true "know_tad" ;
+            }
+         }
          : match "bro poor" {
             : if (!point_bro_poor) {
-               : print "The {cc_pro_boor} looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up. But all the same, they shove a something into your hands, a note of what you're getting into. It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
+               : print "The {cc_pro_boor} looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up." ;
+               : print "As a parting gift, they shove something into your hands, a discussion of what you're getting into, which they assure you is nothing near as good as Tad Beecher's writings." ;
+               : print "It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
                : set_true "point_bro_poor" ;
                : destroy "pro_boor" ;
                : pocket "prayer_lights" ;
