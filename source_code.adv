@@ -19,6 +19,7 @@ game_information {
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
    year_of_release              = 2025
+   year_of_original             = 2025
    copyright_message            = Free for distribution but donations welcome
    short_synopsis               = Wordplay game with tutorial for TALP/TALJ 2025.
 }
@@ -400,7 +401,7 @@ collections {
       "I wanted to show the reader some non-reciprocal directions but not have them there just because. The original hub maps were west and east of Thor, and the passage back was south. The hill always had non-reciprocal directions, and it was simpler just to have the side-hubs' exits mirror each other instead of being identical.",
       "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated.",
       "I was sort of inspired by a combination of Lucy's psychiatrist office and Steven Crowder's disingenuous \"Prove Me Wrong\" table when thinking of this. I have a special, uh, spot in my heart for people who will get up in your business and explain you're very lucky they dropped into your life.",
-      "I'm not allergic to excitement, but I don't particularly like being around people who tell my my life needs to be more exciting, and they can help with that. Taking this point to the extreme, there are people who prefer war to peace. I try to slip this sort of thing into a lot of what I write, but maybe it is too subtle. Or too obscure.",
+      "I'm not allergic to excitement, but I don't particularly like being around people who tell my my life needs to be more exciting, and they can help with that. Taking this point to the extreme, there are people who prefer \"exciting\" conflict to \"boring\" peace.\nI try to slip this sort of thing into a lot of what I write, but maybe it is too subtle. Or too obscure.",
       "While I wanted to avoid too-common spoonerisms in {qt}, plaster man/master plan and roaring pain/pouring rain seemed to fit in nicely. So I kept them.",
       "Um, okay, yeah. The Malice Chap, Trim Goon and guy in Yellow Field are ... similar. I think that's what got me the idea to have the puzzles act as a pyramid, with eight needing no prerequisites, four needing stuff from the eight, two needing stuff from the four, and the final one needing the two.",
       "<TAKE CRACKERS<#f80>> is one of my favorite points and drawings in the whole game. Points, because it uses a standard verb. Drawings, because I performed strenuous research on different-shaped crackers. Google Images, you so cool.",
@@ -835,6 +836,7 @@ vocabulary {
    : noun / aliases = [low, song]
    : noun / aliases = [booth, trending]
    : noun / aliases = [fast, vision]
+   : noun / aliases = [fission, fishin, fishing] # not an actual item, but it makes tracking the one bonus point easier
    : noun / aliases = [peace, surge, surging]
    : noun / aliases = [purge, purging]
    : noun / aliases = [trial, pics]
@@ -869,7 +871,7 @@ vocabulary {
    : verb / aliases = [opt, opts, option, options]
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [points, point, pt, pts, poi, po]
-   : verb / aliases = [verb, verbs]
+   : verb / aliases = [v, verb, verbs]
    : verb / aliases = [x, read]
    : verb / aliases = [eat, taste]
    : verb / aliases = [z, wait]
@@ -3193,7 +3195,7 @@ subroutines {
       }
    }
    meta_links : subroutine {
-      : print "Clicking on the hyperlinks below will open a new tab." ;
+      : print "Clicking on the light green text below will open a new tab." ;
       : print "Here is a link to <TALJ 2025<#8f8>>[https://itch.io/jam/talp2025], where {qt} was entered on release. {qt} would not have been a thing without it, or without <Adventuron<#8f8>>[http://adventuron.io]." ;
       : print "Here is a link to <Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]." ;
       : print "If you find a bug, big or small, and want to report an issue, here is a link to {qtg}." ;
