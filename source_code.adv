@@ -2939,6 +2939,10 @@ subroutines {
       }
    }
    say_half : subroutine {
+      : match "* -;- *" {
+         : print "Feels right, but what to pair that word with?" ;
+         : done ;
+      }
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
       : print "One of those words felt right, but the other didn't. You must be halfway there.{already_got_check}" ;
       : print "Again, you feel like you got halfway there.{already_got_check}" ;
