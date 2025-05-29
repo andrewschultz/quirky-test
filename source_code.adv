@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.3.6
+   game_version                 = 1.3.7
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -59,6 +59,7 @@ booleans {
    note_homonym : boolean "false" scope="survivor" ;
    anagram_nag : boolean "false" scope="survivor" ;
    know_tad : boolean "false" scope="survivor" ;
+   chimes_in_my_house : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -2804,6 +2805,10 @@ subroutines {
       }
       : if (is_exists "teary_chimes") {
          : match "cheery times" {
+            : if (is_at "my_house") {
+               : print "You take a moment to step outside and reflect..." ;
+            : set_true "chimes_in_my_house" ;
+            }
             : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead." ;
             : destroy "teary_chimes" ;
             : set_integer var="tempint" "17" ;
