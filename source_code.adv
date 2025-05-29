@@ -3114,13 +3114,17 @@ subroutines {
    }
    options_tutorial : subroutine {
       : match "tutorial yes;tutorial y" {
-         : print "Score notify is now on.";
-         : set_true "score_notify";
+         : print "Tutorial mode is now on.";
+         : set_true "in_tutorial";
+         : if (footnotes_available && !tutorial_redo_note) {
+            : set_true "tutorial_redo_note" ;
+            : print "{otn}there are no special achievements or footnotes related to the tutorial, if you're looking there." ;
+         }
          : done ;
       }
       : match "tutorial no;tutorial n" {
          : print "Tutorial mode is now off.";
-         : set_false "score_notify";
+         : set_false "in_tutorial";
          : done ;
       }
       : match "tutorial -" {
