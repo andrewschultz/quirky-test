@@ -60,6 +60,7 @@ booleans {
    anagram_nag : boolean "false" scope="survivor" ;
    know_tad : boolean "false" scope="survivor" ;
    chimes_in_my_house : boolean "false" scope="survivor" ;
+   asterisk_help_note : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -864,6 +865,7 @@ vocabulary {
    : verb / aliases = [exit, out]
    : verb / aliases = [listen, hear]
    : verb / aliases = [hi, high]
+   : verb / aliases = [hint, hints]
    : verb / aliases = [hunter, hunting, hunters]
    : verb / aliases = [not, noti, notif, notify]
    : verb / aliases = [o, out]
@@ -3136,7 +3138,7 @@ subroutines {
          : return ;
       }
       : if (!tutorial_2_verbs_done) {
-         : print "{tcue}The {verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass in-game.\nSince {verbs} will show you other meta-commands, too, let's try that next." ;
+         : print "{tcue}The {verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass in-game. Some other games use HELP, though I find it too similar to HINT or HINTS.\nSince {verbs} will show you other meta-commands, too, let's try that next." ;
          : return ;
       }
       : if (!tutorial_3_additional_metaverb_done) {
@@ -4018,6 +4020,17 @@ on_command {
    }
    : match "thanks _" {
       : gosub "meta_thanks" ;
+   }
+   : match "hint _" {
+      : print "There are no in-game hints for {qt}. This webpage should be packaged with a walkthrough.txt, {ch} can tell you what to work on, and you should be notified when you have one word right in a puzzle." ;
+      : done ;
+   }
+   : match "help _" {
+      : print "{qt} prefers {verbs} for technical/parser help and {ch} to cue which things to work on in the game-world. There should also be a walkthrough." ;
+      : if (!asterisk_help_note) {
+         : print "{otn}you can type <*HELP<#f80>> to see Adventuron's default general help." ;
+         : set_true "asterisk_help_note" ;
+      }
    }
    : match "z _" {
       : if (!wait_note) {
