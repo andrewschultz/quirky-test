@@ -229,6 +229,7 @@ booleans {
    temporary_ring_question_blocked : boolean "false" ;
    ever_tutorial : boolean "false" scope="survivor" ;
    post_tutorial_long_notes : boolean "false" scope="survivor" ;
+   tutorial_redo_note : boolean "false" scope="survivor" ;
 
    ## parser shortcut booleans
    look_warn: boolean "false" scope="survivor" ;
@@ -2077,7 +2078,7 @@ locations {
                : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
                : if (!footnotes_available) {
                   : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
-                  : print "These can be tracked with {v_ach} or {v_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qtg} to spoil them." ;
+                  : print "These can be tracked with {v_ach} or {v_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt in {qtg} to spoil them." ;
                }
                : gosub "add_point" ;
                : set_true "footnotes_available" ;
@@ -2290,7 +2291,7 @@ subroutines {
    : press_any_key ;
    : if (footnotes_available) {
       : gosub "footnote_read_from_survivors" ;
-      : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}.";
+      : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}. Also, tutorial mode is shut off by default, and no footnotes or achievements or bonus points are related to it.";
       : press_any_key ;
    }
    : clear_screen ;
@@ -3181,7 +3182,11 @@ subroutines {
       : print "This is a bug. You should have finished the tutorial by now. Let me know how this happened." ;
    }
    tutorial_shutoff : subroutine {
-      : if (in_tutorial && !post_tutorial_long_notes) {
+      : if (in_tutorial && post_tutorial_long_notes) {
+         : press_any_key ;
+         : clear_screen ;
+         : print "Thanks for going through the tutorial again! I did put a lot of effort into making it more than \"do this, then this.\"" ;
+      } : else_if (in_tutorial && !post_tutorial_long_notes) {
          : press_any_key ;
          : clear_screen ;
          : set_true "post_tutorial_long_notes" ;
@@ -4116,14 +4121,14 @@ on_command {
    }
    : match "tutorial _" {
       : if (has_visited("first_base")) {
-         : print "You are already past the end of the tutorial.\n" ;
+         : print "You are already past the end of the tutorial, which ended on solving Burst Face.\n" ;
          : if (ever_tutorial) {
             : print "So here's a recap of its contents:" ;
             : collection_iterate "tutorial_stuff" {
                : print {( "* " + item() )} ;
             }
          } : else {
-            : print "Activating the tutorial would've given a summary of what it taught here. To visit the tutorial, type {tut} {on} before reaching First Base once you've won or restarted {qt}." ;
+            : print "You've obviously done well to get here without the tutorial, which contains only general advice and no hidden secrets, but if you'd like to visit it, type {tut} {on} before reaching First Base once you've won or restarted {qt}." ;
          }
       } : else {
          : gosub "options_tutorial" ;
