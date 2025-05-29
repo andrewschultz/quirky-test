@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.3.7
+   game_version                 = 1.3.8
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -630,7 +630,7 @@ strings {
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here.\"" : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over." : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
@@ -1042,6 +1042,8 @@ locations {
             }
             : if (is_carried("prayer_lights")) {
                : match "_ rights;player _" {
+                  : gosub "say_half" ;
+                  : done ;
                }
             }
          }
