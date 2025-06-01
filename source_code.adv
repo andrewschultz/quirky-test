@@ -76,10 +76,11 @@ booleans {
    ## game progress booleans
    tutorial_done : boolean "false" ;
    talked_to_thor : boolean "false" ;
+   return_to_base_checked : boolean "false" ;
    hill_aware_you_stole : boolean "false" ;
-   noted_diagonal_direction : boolean "false" ;
-   note_nonreciprocal : boolean "false" ; # these last 2 could be survivor, technically, but it has thor chatting with you
-   note_dependent_point : boolean "false" scope="survivor";
+   noted_diagonal_direction : boolean "false" scope="survivor" ;
+   note_nonreciprocal : boolean "false" scope="survivor" ;
+   note_dependent_point : boolean "false" scope="survivor" ;
    note_independent_point : boolean "false" scope="survivor" ;
 
    ## footnote check booleans
@@ -1234,9 +1235,12 @@ locations {
             : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy passages like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
             : set_true "note_nonreciprocal" ;
          }
-         : if (!note_nonreciprocal && is_carried("travel_grail")) {
-            : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
+         : if (!achieve_ssss && !achieve_ssss_pre && !return_to_base_checked && (has_visited "east_branch" || has_visited "west_tiles")) {
+            : if (is_carried("travel_grail")) {
+               : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
                : set_true "achieve_ssss_pre" ;
+            }
+            : set_true "return_to_base_checked" ;
          }
       }
       on_pre_describe {
