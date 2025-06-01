@@ -463,7 +463,7 @@ collections {
          "<BEAST RANCH<#ff0>> in East Branch",
          "<RIG BOONS<#ff0>> in either hub",
          "<SO LONG<#0f0>> when you have the low song",
-         "<VAST FISSION<#0f0>> (or fishin) when you have the fast vision",
+         "<VAST FISSION<#0f0>> (or fishin/fishing) when you have the fast vision",
          "<CEASE PURGING<#0f0>> when you feel peace surging",
          "<SANE ROLE<#0f0>> when you have a rain soul",
          "<GROW NEED<#0f0>> when you have no greed",
@@ -1232,11 +1232,11 @@ locations {
             : set_integer var="tempint" "9" ;
             : gosub "footnote_reveal" ;
             : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy passages like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
-            : if (is_carried("travel_grail")) {
-               : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
+            : set_true "note_nonreciprocal" ;
+         }
+         : if (!note_nonreciprocal && is_carried("travel_grail")) {
+            : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( footnotes_available ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
                : set_true "achieve_ssss_pre" ;
-            }
-            :set_true "note_nonreciprocal" ;
          }
       }
       on_pre_describe {
@@ -2412,7 +2412,7 @@ subroutines {
    }
    bonus_display : subroutine {
       : if (bonus_score == max_bonus_score && !bonus_max_warn) {
-         : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though after this, you can see everything you've found. (Enjoy it. You've earned it!)" ;
+         : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though if you wish to see the list again after this nag, you may bask in your accomplishmenthough after this, you can see everything you've found. (Enjoy it. You've earned it!)" ;
          : set_true "bonus_max_warn" ;
          : return ;
       }
