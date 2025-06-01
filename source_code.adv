@@ -442,10 +442,10 @@ collections {
          "<SO LONG<#0f0>> when you have the low song",
          "<VAST FISSION<#0f0>> (or fishin) when you have the fast vision",
          "<CEASE PURGING<#0f0>> when you feel peace surging",
-         "<PILE TRICKS<#0f0>> when you have the trial pics",
-         "<TILE PRICKS<#0f0>> when you have the trial pics",
+         "<GROW NEED<#0f0>> when you have no greed",
          "<SANE ROLE<#0f0>> when you have a rain soul",
          "<RACING PASSIONS<#00f>> when you have the pacing rations",
+         "<I/EYE STAY<#00f>> in My House",
          "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
       ]
    };
@@ -465,8 +465,8 @@ collections {
          "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#0f0>>",
-         "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#00f>>",
+         "<(unfound yet)<#f0f>>",
          "<(unfound yet)<#f0f>>"
       ]
    };
@@ -2038,7 +2038,14 @@ locations {
    my_house : location "MY HOUSE\n{my_house_description}" {
       on_command {
          : match "eye stay;i stay" {
-            : print "{postcomp}" ;
+            : if (!bonus_point_eye_stay) {
+               : print "You ignore the poster's negative connotations and decide to stay a while." ;
+               : set_true "bonus_point_eye_stay" ;
+               : set_integer var="tempint" "17" ;
+               : gosub "add_bonus" ;
+            } : else {
+               : print "You stay staying, having already proclaimed you would eye a stay." ;
+            }
          }
          : if (!point_see_glimmering || bonus_point_cheery_times) {
             : match "talk _;listen _" {
@@ -2297,8 +2304,6 @@ subroutines {
    : press_any_key ;
    : if (footnotes_available) {
       : gosub "bonus_read_from_survivors" ;
-      : print {( "!" + bonus_point_turkey_quest )} ;
-      : print {( "!" + collection_get {collection -> ("bonus_status") index -> (int("" + 0))} )} ;
       : gosub "footnote_read_from_survivors" ;
       : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}. Also, tutorial mode is shut off by default, and no footnotes or achievements or bonus points are related to it.";
       : press_any_key ;
@@ -2729,7 +2734,13 @@ subroutines {
    item_based_points : subroutine {
       : if (is_carried "no_greed") {
          : match "grow need" {
-            : print "{postcomp}" ;
+            : if (bonus_point_grow_need) {
+               : print "You already grew the right need." ;
+            } : else {
+               : print "Not wanting anything is proof you have no greed, right? It's proof of super virtue? Well, yes and no. It also means you are not trying anything more. So you think of needs to grow, not for power or fame or wealth, but stuff that can help others." ;
+               : set_true "bonus_point_grow_need" ;
+               : set_integer var="tempint" "13" ;
+               : gosub "add_bonus" ;            }
          }
       }
       : if (is_carried "fast_vision") {
@@ -3595,13 +3606,13 @@ subroutines {
       : collection_modify { collection = "bonus_status" index -> (14) content -> (bonus_point_racing_passions ? "1" : "0") }
       : collection_modify { collection = "bonus_status" index -> (15) content -> (bonus_point_eye_stay ? "1" : "0") }
       : collection_modify { collection = "bonus_status" index -> (16) content -> (bonus_point_cheery_times ? "1" : "0") }
-	  : if (bonus_score_start == bonus_score && !achievement_cnnc) {
-         : print "Check if footnote_write_to_survivors really necessary" ;
+	  : if (bonus_score_start == bonus_score && !achieve_cnnc) {
          : print "You get the achievement for no bonus points in one go-through." ;
-         : set_true "bonus_score_max" ;
+         : set_true "achieve_cnnc" ;
 	  }
-	  : if (bonus_score == bonus_score_max && !achievement_cnnc)
-	  : set_integer var="bonus_score_start" {( int("" + bonus_score) )} ;
+	  : if (bonus_score == max_bonus_score && !achieve_cnnc) {
+	   : set_integer var="bonus_score_start" {( int("" + bonus_score) )} ;
+	  }
    }
 
    win_game_stub : subroutine {
