@@ -153,14 +153,16 @@ booleans {
    bonus_point_so_long : boolean "false" scope="survivor" ; ## e n
    bonus_point_vast_fission : boolean "false" scope="survivor" ; ## e ne
    bonus_point_cease_purging : boolean "false" scope="survivor" ; ## e e
-   bonus_point_pile_tricks : boolean "false" scope="survivor" ; # e se
-   bonus_point_tile_pricks : boolean "false" scope="survivor" ; # e se
    bonus_point_sane_role : boolean "false" scope="survivor" ; ## e sw
+   bonus_point_grow_need : boolean "false" ; # e w
 
-   ## endgame bonus point
+   ## endgame bonus points
+   bonus_point_eye_stay : boolean "false" ;
    bonus_point_cheery_times : boolean "false" scope="survivor" ;
 
+   ## jump/walk achievement booleans
    jump_buzzing : boolean "false" ;
+   ever_jump : boolean "false" ;
 
    ## "think" booleans: hub goals are alphabetical so it is not spoiled in-game
    think_chalice_map : boolean "false" ;
@@ -177,11 +179,20 @@ booleans {
    ## reds
    achieve_haih : boolean "false" scope="survivor" ;
    achieve_haih_pre : boolean "false" scope="survivor" ;
-   ## later: MTTM
+   achieve_mttm : boolean "false" scope="survivor" ;
    achieve_tyyt : boolean "false" scope="survivor" ;
 
    ## oranges
-   achieve_tnnt: boolean "false" scope="survivor" ;
+   achieve_tnnt : boolean "false" scope="survivor" ;
+   achieve_cddc2 : boolean "false" scope="survivor" ;
+   achieve_pcpccp : boolean "false" scope="survivor" ;
+   achieve_pcpccp_pre : boolean "false" scope="survivor" ;
+   pcpc_tile : boolean "false" scope="survivor" ;
+   pcpc_pile : boolean "false" scope="survivor" ;
+   achieve_roer : boolean "false" scope="survivor" ;
+   ach_roer_west : boolean "false" scope="survivor" ;
+   ach_roer_east : boolean "false" scope="survivor" ;
+   ach_roer_base : boolean "false" scope="survivor" ;
    achieve_cnnc : boolean "false" scope="survivor" ;
 
    ## yellows
@@ -191,23 +202,27 @@ booleans {
    ## greens
    achieve_ssss : boolean "false" scope="survivor" ;
    achieve_ssss_pre : boolean "false" scope="survivor" ;
-   achieve_gssg: boolean "false" scope="survivor" ;
-   achieve_srrs: boolean "false" scope="survivor" ;
+   achieve_gssg : boolean "false" scope="survivor" ;
+   achieve_rssr : boolean "false" scope="survivor" ;
+   achieve_srrs : boolean "false" scope="survivor" ;
 
    ## blues
-   achieve_cjjc: boolean "false" scope="survivor" ;
-   achieve_cjjc_pre: boolean "false" scope="survivor" ;
+   achieve_cjjc : boolean "false" scope="survivor" ;
+   achieve_cjjc_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
    achieve_tmmt_pre : boolean "false" scope="survivor" ;
-   achieve_dbbd: boolean "false" scope="survivor" ;
-   achieve_cddc: boolean "false" scope="survivor" ;
-   achieve_cddc_pre: boolean "false" scope="survivor" ;
+   achieve_dbbd : boolean "false" scope="survivor" ;
+   achieve_cddc : boolean "false" scope="survivor" ;
+   achieve_cddc_pre : boolean "false" scope="survivor" ;
 
    ## purples
-   achieve_hbbh: boolean "false" scope="survivor" ;
-   achieve_hbbh_pre: boolean "false" scope="survivor" ;
-   achieve_nbbn: boolean "false" scope="survivor" ;
-   achieve_nbbn_pre: boolean "false" scope="survivor" ;
+   achieve_hbbh : boolean "false" scope="survivor" ;
+   achieve_hbbh_pre : boolean "false" scope="survivor" ;
+   achieve_nbbn : boolean "false" scope="survivor" ;
+   achieve_nbbn_pre : boolean "false" scope="survivor" ;
+
+   ## final one
+   achieve_taat : boolean "false" scope="survivor" ;
 
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
@@ -239,9 +254,6 @@ booleans {
 
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ;
 
-   bonus_point_grow_need : boolean "false" scope="survivor" ;
-   bonus_point_eye_stay : boolean "false" scope="survivor" ;
-
 }
 
 # end booleans
@@ -262,6 +274,12 @@ integers {
    hub_think_needed : integer "0" ;
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
    books_read : integer "0" ;
+
+   # achievements
+   rssr_west : integer "0" ;
+   rssr_east : integer "0" ;
+   rssr_base : integer "0" ;
+   rssr_hill : integer "0" ;
 
    ## since Adventuron doesn't allow survivor scope for lists, I need to define the status variables here.
    footnote_1_status : integer "0" scope="survivor" ;
@@ -290,7 +308,6 @@ integers {
 }
 
 collections {
-<<<<<<< HEAD
    tutorial_stuff : list {
       items = [
          "Meta-commands such as {abt}, {credits} and {verbs} give you general information that would break up the flow of an introduction.",
@@ -317,8 +334,6 @@ collections {
          "hub_e_nw"
       ]
    };
-=======
->>>>>>> issue-28-tyyt-survivor
    ask_list : list {
       items = [
          0,
@@ -450,10 +465,10 @@ collections {
          "<SO LONG<#0f0>> when you have the low song",
          "<VAST FISSION<#0f0>> (or fishin) when you have the fast vision",
          "<CEASE PURGING<#0f0>> when you feel peace surging",
-         "<GROW NEED<#0f0>> when you have no greed",
          "<SANE ROLE<#0f0>> when you have a rain soul",
+         "<GROW NEED<#0f0>> when you have no greed",
          "<RACING PASSIONS<#00f>> when you have the pacing rations",
-         "<I/EYE STAY<#00f>> in My House",
+         "<I/EYE STAY<#f0f>> in My House",
          "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
       ]
    };
@@ -764,12 +779,15 @@ strings {
    ## reds = certain verb (presence or absence)
    achievement_haih : string "<Hi, All I Haul<#f00>>" ;
    ## MTTM post-release
-   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
+   achievement_mttm : string "<More than Thor, Man<#f00>>" ;
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
 
-   ## orange = bonus points / game-specific commands
-   ##PCPCCP post-release
+   ## orange = bonus points / footnotes
    ##ROER post-release
+   achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
+   achievement_cddc2 : string "<Cueing Direct Doing: Correct<#f80>>" ;
+   achievement_roer : string "<Reach Out Each Route<#f80>>" ;
+   achievement_pcpccp : string "<Player-Can-Pair-Clan Care Plan<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
 
    ## yellow = asking Thor
@@ -779,6 +797,7 @@ strings {
    ## green = how you get them all
    achievement_ssss : string "<So Slick! Slow? Sick!<#8f8>>" ;
    achievement_gssg : string "<Great Style, Straight Guile<#8f8>>" ;
+   achievement_rssr : string "<Re-Sight-See? Riiight<#8f8>>" ;
    achievement_srrs : string "<Second Revvin' Reckoned? Seven<#8f8>>" ;
 
    ## blue = abusing the warp command
@@ -790,6 +809,9 @@ strings {
    ## purple = examine
    achievement_hbbh : string "<Hi! Beer By Here?<#f0f>>" ;
    achievement_nbbn : string "<Neat-Book-Beat Nook<#f0f>>" ;
+
+   ## last one
+   achievement_taat: string "<Try All: Aye, Trawl<#888>>" ;
 
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 
@@ -2051,12 +2073,17 @@ locations {
       on_command {
          : match "eye stay;i stay" {
             : if (!bonus_point_eye_stay) {
-               : print "You ignore the poster's negative connotations and decide to stay a while." ;
+               : print "You eye a stay, despite the poster's negative connotations. You have a chuckle. Why, of course you'll stay until you've completed your quest. But no more than that." ;
                : set_true "bonus_point_eye_stay" ;
-               : set_integer var="tempint" "17" ;
+               : set_integer var="tempint" "16" ;
                : gosub "add_bonus" ;
             } : else {
                : print "You stay staying, having already proclaimed you would eye a stay." ;
+            }
+         }
+         : if (footnotes_available && !bonus_point_eye_stay) {
+            : match "eye _;i *;_ stay" {
+               : gosub "say_half" ;
             }
          }
          : if (!point_see_glimmering || bonus_point_cheery_times) {
@@ -2375,7 +2402,14 @@ subroutines {
       : decrement "tempint" ; # this is because I use 1-based numbers in my personal table, but Adventuron is 0-based.
       : collection_modify { collection = "bonus_status" index -> (tempint) content -> ("1") }
       : increment "bonus_score";
+      : if (current_location() == "west_tiles") {
+         : set_true "ach_roer_west" ;
+      } : else_if (current_location() == "east_branch") {
+         : set_true "ach_roer_east" ;
+      } : else_if (current_location() == "plain_base") {
+         : set_true "ach_roer_base" ;
       }
+   }
    bonus_display : subroutine {
       : if (bonus_score == max_bonus_score && !bonus_max_warn) {
          : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though after this, you can see everything you've found. (Enjoy it. You've earned it!)" ;
@@ -2629,6 +2663,15 @@ subroutines {
          : set_true "bfa_color_note" ;
       }
    }
+
+   check_pcpc_achievement : subroutine {
+      : if (pcpc_tile && pcpc_pile) {
+         : print "You look towards the fourth wall again. No bonus points? Sadly, no. But an achievement, for thoroughly and observantly inspecting the trial pics. A care plan awaits, on solving this quest!" ;
+         : set_true "achieve_pcpccp_pre" ;
+      } : else {
+         : print "You look towards the fourth wall. It's a good spoonerism, right? Isn't a bonus point in order? Apparently, you need to do a little more, if you're into that sort of thing." ;
+      }
+   }
    evaluate_warp : subroutine {
       : if (latest_warp_number == -2) {
          : set_integer var = "latest_warp_number" "-1";
@@ -2766,8 +2809,9 @@ subroutines {
             } : else {
                : print "Not wanting anything is proof you have no greed, right? It's proof of super virtue? Well, yes and no. It also means you are not trying anything more. So you think of needs to grow, not for power or fame or wealth, but stuff that can help others." ;
                : set_true "bonus_point_grow_need" ;
-               : set_integer var="tempint" "13" ;
-               : gosub "add_bonus" ;            }
+               : set_integer var="tempint" "14" ;
+               : gosub "add_bonus" ;
+            }
          }
       }
       : if (is_carried "fast_vision") {
@@ -2821,23 +2865,21 @@ subroutines {
       }
       : if (is_carried "trial_pics") {
          : match "tile pricks" {
-            : if (!bonus_point_tile_pricks) {
-               : print "A brief worrisome thought envelops you. It was a hurt dome, and you only changed the outside. Or you only saw you changed the outside. But you look at the pictures of what's indoors. No, there are no punji pits you can see. You breathe a sigh of relief.";
-               : set_true "bonus_point_tile_pricks" ;
-               : set_integer var="tempint" "14" ;
-               : gosub "add_bonus" ;
+            : if (!pcpc_tile) {
+               : print "You wonder if it is worth advertising any sort of home security like this, especially since it might backfire on the inhabitant. But a spoonerism's a spoonerism!" ;
+               : set_true "pcpc_tile" ;
+               : gosub "check_pcpc_achievement" ;
             } : else {
-               : print "You already inspected the trial pics for something wrong." ;
+               : print "You already inspected the trial pics that way." ;
             }
          }
          : match "pile tricks" {
-            : if (bonus_point_pile_tricks) {
-               : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
+            : if (!pcpc_pile) {
+               : print "You've found a lot of wordplay tricks so far, and you wonder if you should branch off into salesmanship tricks. There are ethical boundaries, of course, but a spoonerism's a spoonerism!" ;
+               : set_true "pcpc_pile" ;
+               : gosub "check_pcpc_achievement" ;
             } : else {
-               : print "You've found a lot of tricks so far. Why not a few more? You track what you've done and what you hope to do." ;
-               : set_true "bonus_point_pile_tricks" ;
-               : set_integer var="tempint" "13" ;
-               : gosub "add_bonus" ;
+               : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
             }
          }
       }
@@ -2847,7 +2889,7 @@ subroutines {
                : print "Fighting too hard for perfect sanity undoes the point." ;
             } : else {
                : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
-               : set_integer var="tempint" "15" ;
+               : set_integer var="tempint" "13" ;
                : set_true "bonus_point_sane_role" ;
                : gosub "add_bonus" ;
             }
@@ -2920,6 +2962,7 @@ subroutines {
          : return ;
       }
       : set_true "jump_buzzing" ;
+      : set_true "ever_jump" ;
       : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
       : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
       : if (collection_get {collection -> ("jump_list") index -> (int("" + latest_warp_number))} == "1") {
@@ -3356,12 +3399,20 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    track_achievements : subroutine {
+      : if (achieve_taat) {
+         : print "You achieved all the achievements already, including {achievement_taat}. I'm glad you're still here, but ... time to move on?" ;
+         : return ;
+      }
+      : set_true "achieve_taat" ;
       : gosub "track_achievements_1_red" ;
       : gosub "track_achievements_2_orange" ;
       : gosub "track_achievements_3_yellow" ;
       : gosub "track_achievements_4_green" ;
       : gosub "track_achievements_5_blue" ;
       : gosub "track_achievements_6_purple" ;
+      : if (achieve_taat) {
+         : print "For winning all the other achievements, you win the {achievement_taat} achievement! Very impressive, indeed! Thank you for your diligence. Now go play something else. Or, heck, design or write your own game. You're no slouch at thinking up possibilities." ;
+      }
 
       : if (!point_hi_mouse) { # not included in endgame text since that is long enough already, and only those who really want to track achievements will see the color-coding note
          : set_true "ever_achievement" ;
@@ -3372,9 +3423,10 @@ subroutines {
    }
 
    track_achievements_1_red : subroutine {
-      : if (achieve_haih && achieve_tyyt) {
-         : print "You got all the achievements for maxing inventory chatting: {achievement_haih} and {achievement_tyyt}." ;
+      : if (achieve_haih && achieve_mttm && achieve_tyyt) {
+         : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, and {achievement_tyyt}." ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_haih) {
          : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
       }
@@ -3384,6 +3436,16 @@ subroutines {
       }
       : else {
          : print "You haven't unlocked the {achievement_haih} achievement yet." ;
+      }
+      : if (achieve_mttm) {
+         : print "(Already got the {achievement_mttm} achievement for not talking to Thor)";
+      }
+      : else_if (point_hi_mouse && !talked_to_thor) {
+         : print "For not talking to Thor, you win the {achievement_mttm} achievement!" ;
+         : set_true "achieve_mttm" ;
+      }
+      : else {
+         : print "You haven't unlocked the {achievement_mttm} achievement yet." ;
       }
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
@@ -3396,14 +3458,38 @@ subroutines {
    }
 
    track_achievements_2_orange : subroutine {
-      : if (achieve_tnnt && achieve_cnnc) {
-         : print "You already found all the footnotes and bonus points with {achievement_tnnt} and {achievement_cnnc}." ;
+      : if (achieve_tnnt && achieve_cddc2 && achieve_pcpccp && achieve_cnnc && achieve_roer) {
+         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_tnnt) {
-         : print "You already unlocked the {achievement_tnnt} achievement." ;
+         : print "You already unlocked the {achievement_tnnt} achievement for uncovering all the footnotes available." ;
       } : else {
          : gosub "footnote_endgame_check" ;
+      }
+      : if (achieve_cddc2) {
+         : print "You already unlocked the {achievement_cddc2} achievement for brushing aside bonus points." ;
+      } : else_if (bonus_score == 0 && point_hi_mouse) {
+         : print "For brushing aside bonus points, you win the {achievement_cddc2} achievement!" ;
+         : set_true "achieve_cddc2" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_cddc2} achievement yet." ;
+      }
+      : if (achieve_pcpccp) {
+         : print "You already unlocked the {achievement_pcpccp} achievement." ;
+      } : else_if (achieve_pcpccp_pre) {
+         : print "For finding two ways to look at the trial pics, you win the {achievement_pcpccp} achievement!" ;
+         : set_true "achieve_pcpccp" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_pcpccp} achievement yet." ;
+      }
+      : if (achieve_roer) {
+         : print "You already unlocked the {achievement_roer} achievement." ;
+      } : else_if (ach_roer_west && ach_roer_east && ach_roer_base) {
+         : print "For scoring points in every location, you win the {achievement_roer} achievement!" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_roer} achievement yet." ;
       }
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
@@ -3422,15 +3508,17 @@ subroutines {
          : print "You already got both achievements for<ask>ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : gosub "track_achievements_qwwq" ;
       : gosub "track_achievements_kssn" ;
    }
 
    track_achievements_4_green : subroutine {
-      : if (achieve_ssss && achieve_gssg && achieve_srrs) {
-         : print "You got all three achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, and {achievement_srrs}." ;
+      : if (achieve_ssss && achieve_gssg && achieve_rssr && achieve_srrs) {
+         : print "You got all three achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, {achievement_rssr}, and {achievement_srrs}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_ssss) {
          : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
       } : else_if (achieve_ssss_pre) {
@@ -3447,6 +3535,20 @@ subroutines {
             : set_true "achieve_gssg" ;
          } : else {
             : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
+         }
+      }
+      : if (achieve_rssr) {
+         : print "You already unlocked the {achievement_rssr} achievement for taking the minimum number of moves between locations." ;
+      } : else {
+         : if (rssr_east <= 8 && rssr_west <= 8 && (rssr_base + rssr_hill <= 3)) {
+            : if (ever_jump) {
+               : print "You're close to the {achievement_rssr} achievement, but next time, don't use warps." ;
+            } : else {
+               : print "For taking the minimum number of moves between locations, you win the {achievement_rssr} achievement!" ;
+               : set_true "achieve_rssr" ;
+            }
+         } : else {
+            : print "You haven't unlocked the {achievement_rssr} achievement yet." ;
          }
       }
       : if (achieve_srrs) {
@@ -3466,6 +3568,7 @@ subroutines {
          : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc}." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
       } : else_if (achieve_tmmt_pre) {
@@ -3498,6 +3601,7 @@ subroutines {
          : print "You already got both examining achievements: {achievement_hbbh} for beer and {achievement_nbbn} for books." ;
          : return ;
       }
+      : set_false "achieve_taat" ;
       : if (achieve_hbbh) {
          : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
       } : else_if (achieve_hbbh_pre) {
@@ -3791,6 +3895,17 @@ on_pre_describe {
 }
 
 on_describe {
+   : if (!point_healing_still && linger() == 0) {
+      : if (is_at("west_tiles")) {
+         : increment "rssr_west" ;
+      } : else_if (is_at("east_branch")) {
+         : increment "rssr_east" ;
+      } : else_if (is_at("plain_base")) {
+         : increment "rssr_base" ;
+      } : else_if (is_at("stealing_hill")) {
+         : increment "rssr_hill" ;
+      }
+   }
 }
 
 ## Test VERB NOUN that the player types and executes conditional actions
