@@ -282,9 +282,15 @@ integers {
    footnote_16_status : integer "0" scope="survivor" ;
    footnote_17_status : integer "0" scope="survivor" ;
 
+   # TALK TO code rearrangements so survivors aren't too bad (using bitwise arithmetic and some magic numbers)
+   found_talkflag : integer "0" scope="survivor" ;
+   found_talktotal : integer "0" scope="survivor" ;
+   max_talktotal : integer "11" scope="survivor" ;
+   current_talkflag : dynamic_integer {(get_stat { target = "current_location" stat = "stat_talkflag" })}
 }
 
 collections {
+<<<<<<< HEAD
    tutorial_stuff : list {
       items = [
          "Meta-commands such as {abt}, {credits} and {verbs} give you general information that would break up the flow of an introduction.",
@@ -311,6 +317,8 @@ collections {
          "hub_e_nw"
       ]
    };
+=======
+>>>>>>> issue-28-tyyt-survivor
    ask_list : list {
       items = [
          0,
@@ -786,6 +794,10 @@ strings {
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {thk}." : "" )} ;
+}
+
+stats {
+   stat_talkflag : stat ;
 }
 
 ## Objects with vocabulary
@@ -2309,6 +2321,7 @@ subroutines {
       : press_any_key ;
    }
    : clear_screen ;
+   : gosub "init_stats" ;
    }
    init_check : subroutine {
       : if (collection_count("footnote_finding_list") != collection_count("footnote_hinting_list")) {
@@ -2321,6 +2334,20 @@ subroutines {
          : print "WARNING footnote finding list length != footnote hinting text length!" ;
       }
    }
+   init_stats : subroutine {
+      : set_stat stat = "stat_talkflag" target = "first_base" value = "1";
+      : set_stat stat = "stat_talkflag" target = "plain_base" value = "2";
+      : set_stat stat = "stat_talkflag" target = "hub_w_n" value = "4";
+      : set_stat stat = "stat_talkflag" target = "hub_w_ne" value = "8";
+      : set_stat stat = "stat_talkflag" target = "hub_w_s" value = "16";
+      : set_stat stat = "stat_talkflag" target = "hub_w_w" value = "32";
+      : set_stat stat = "stat_talkflag" target = "hub_w_nw" value = "64";
+      : set_stat stat = "stat_talkflag" target = "hub_e_ne" value = "128";
+      : set_stat stat = "stat_talkflag" target = "hub_e_e" value = "256";
+      : set_stat stat = "stat_talkflag" target = "hub_e_w" value = "512";
+      : set_stat stat = "stat_talkflag" target = "hub_e_nw" value = "1024";
+   }
+
    add_point : subroutine {
       : if (score_notify) {
          : print "<Your score just went up by a point!<#ff0>>" ;
@@ -2986,14 +3013,12 @@ subroutines {
       : done ;
    }
    talk_flag : subroutine {
-      : set_integer var="tempint" "0" ;
-      : collection_push { collection = "talk_done" content -> (current_location()) } ;
-      : collection_subtract {
-            collection_1 = talk_need
-            collection_2 = talk_done
-            result       = temp_list
+      : set_integer var="tempint" {( int("" + (found_talkflag % (2 * current_talkflag))) )} ;
+      # : print "{found_talkflag} modulo (2 * {current_talkflag}) = {tempint}. Is it less than {current_talkflag}?" ;
+      : if (tempint < current_talkflag) {
+         : set_integer var="found_talkflag" {( int("" + (found_talkflag + current_talkflag)) )} ;
+         : increment "found_talktotal" ;
       }
-      # : collection_iterate "temp_list" { : print {( "* " + item() )} ; }
    }
    think_thoughts : subroutine {
       : if (!think_chalice_map && !think_fellow_yield && !think_grim_tune && !think_healing_still && !think_hunters_grill && !think_master_plan
@@ -3362,18 +3387,11 @@ subroutines {
       }
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
-      } : else {
-         : collection_subtract {
-               collection_1 = talk_need
-               collection_2 = talk_done
-               result       = temp_list
-         }
-         : if (collection_count("temp_list") == 0) {
-            : print "For trying to talk to everyone who can speak, you win the {achievement_tyyt} achievement!" ;
+      } : else_if (found_talktotal == max_talktotal) {
+         : print "For trying to talk to everyone who can speak, you win the {achievement_tyyt} achievement!" ;
             : set_true "achieve_tyyt" ;
-         } : else {
-            : print "You haven't unlocked the {achievement_tyyt} achievement yet." ;
-         }
+      } : else {
+         : print "You haven't unlocked the {achievement_tyyt} achievement yet. ({found_talktotal}/{max_talktotal})" ;
       }
    }
 
