@@ -1075,6 +1075,12 @@ locations {
                }
                : done ;
             }
+            : if (footnotes_available && !bonus_point_rare_plights) {
+               : match "rare _;_ plights" {
+                  : gosub "say_half_b" ;
+                  : done ;
+               }
+            }
             : match "player rights" {
                : if (!point_player_rights) {
                   : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}\nYou walk towards it." ;
@@ -1155,6 +1161,12 @@ locations {
                   : print "You're not going to quiet the {cc_pro_boor} any further. How to get rid of them?" ;
                }
             }
+            : if (footnotes_available && !bonus_point_shush_lout) {
+               : match "shush _;_ lout" {
+                  : gosub "say_half_b" ;
+                  : done ;
+               }
+            }
          }
       }
    };
@@ -1198,6 +1210,12 @@ locations {
                : set_integer var="tempint" "6" ;
                : gosub "add_bonus" ;
             }
+            : if (footnotes_available && !bonus_point_death_sentence) {
+               : match "death _;_ sentence" {
+                  : gosub "say_half_b" ;
+                  : done ;
+               }
+            }
             : match "x seth;x denton;x dentons" {
                : print "Very seedy looking. Even its name, though common, seems ominous. Why?";
                : gosub "thor_on_seth" ;
@@ -1235,6 +1253,12 @@ locations {
                : print "You already pointed out the, uh, potential alternate functionality of this location.";
             }
             : done ;
+         }
+         : if (footnotes_available && !bonus_point_bane_place) {
+            : match "bane _;_ place" {
+               : gosub "say_half_b" ;
+               : done ;
+            }
          }
       }
       on_describe {
@@ -1287,6 +1311,12 @@ locations {
             }
             : done ;
          }
+         : if (footnotes_available && !bonus_point_test_wiles) {
+            : match "test _;_ wiles" {
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
       }
       on_describe {
          : gosub "list_jump_commands" ;
@@ -1311,6 +1341,12 @@ locations {
                : print "You don't want to tempt something like that into existence too often." ;
             }
             : done ;
+         }
+         : if (footnotes_available && !bonus_point_beast_ranch) {
+            : match "beast _;_ ranch" {
+               : gosub "say_half_b" ;
+               : done ;
+            }
          }
       }
       on_describe {
@@ -2096,7 +2132,7 @@ locations {
          }
          : if (footnotes_available && !bonus_point_eye_stay) {
             : match "eye _;i *;_ stay" {
-               : gosub "say_half" ;
+               : gosub "say_half_b" ;
             }
          }
          : if (!point_see_glimmering || bonus_point_cheery_times) {
@@ -2853,6 +2889,11 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
+         : if (footnotes_available && !bonus_point_grow_need) {
+            : match "grow _;_ need" {
+               : gosub "say_half" ;
+            }
+         }
       }
       : if (is_carried "fast_vision") {
          : match "vast fission" {
@@ -2865,6 +2906,12 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
+         : if (footnotes_available && !bonus_point_vast_fission) {
+            : match "vast _;_ fission" {
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
       }
       : if (is_carried "low_song") {
          : match "so long" {
@@ -2875,6 +2922,12 @@ subroutines {
                : set_true "bonus_point_so_long" ;
                : set_integer var="tempint" "10" ;
                : gosub "add_bonus" ;
+            }
+         }
+         : if (footnotes_available && !bonus_point_so_long) {
+            : match "so _;_ long" {
+               : gosub "say_half_b" ;
+               : done ;
             }
          }
       }
@@ -2890,6 +2943,12 @@ subroutines {
             }
             : done ;
          }
+         : if (footnotes_available && !bonus_point_racing_passions) {
+            : match "racing _;_ passions" {
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
       }
       : if (is_carried "peace_surging") {
          : match "cease purging" {
@@ -2900,6 +2959,12 @@ subroutines {
                : set_true "bonus_point_cease_purging" ;
                : set_integer var="tempint" "12" ;
                : gosub "add_bonus" ;
+            }
+         }
+         : if (footnotes_available && !bonus_point_cease_purging) {
+            : match "cease _;_ purging" {
+               : gosub "say_half_b" ;
+               : done ;
             }
          }
       }
@@ -2934,6 +2999,12 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
+         : if (footnotes_available && !bonus_point_sane_role) {
+            : match "sane _;_ role" {
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
       }
       : if (is_exists "teary_chimes") {
          : match "cheery times" {
@@ -2947,6 +3018,11 @@ subroutines {
             : gosub "add_bonus" ;
             : set_true "bonus_point_cheery_times" ;
             : done ;
+         }
+         : if (footnotes_available && !bonus_point_cheery_times) {
+            : match "cheery _;_ times" {
+               : gosub "say_half_b" ;
+            }
          }
       }
       : if (is_carried("travel_grail")) {
@@ -3074,6 +3150,12 @@ subroutines {
          : set_true "bonus_point_rig_boons" ;
          : set_integer var="tempint" "9" ;
          : gosub "add_bonus" ;
+      }
+      : if (footnotes_available && !bonus_point_rig_boons) {
+         : match "rig _;_ boons" {
+            : gosub "say_half_b" ;
+            : done ;
+         }
       }
    }
    say_half : subroutine {
@@ -4218,6 +4300,12 @@ on_command {
             : gosub "add_bonus" ;
          }
       }
+      : if (footnotes_available && !bonus_point_theory_bore) {
+         : match "theory _;_ bore" {
+            : gosub "say_half_b" ;
+            : done ;
+         }
+      }
    }
    : match "x me;x self;x myself" {
       : set_integer var="tempint" "1" ;
@@ -4240,6 +4328,12 @@ on_command {
          : set_true "bonus_point_turkey_quest" ;
          : set_integer var="tempint" "1" ;
          : gosub "add_bonus";
+      }
+   }
+   : if (footnotes_available && !bonus_point_turkey_quest) {
+      : match "turkey _;_ quest" {
+         : gosub "say_half_b" ;
+         : done ;
       }
    }
    : if (in_debug) {
