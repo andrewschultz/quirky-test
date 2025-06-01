@@ -27,9 +27,10 @@ game_information {
 ## we start with simplest defined then move to more complex
 
 booleans {
-   ## testing booleans
+   ## testing and auxiliary booleans
    in_debug : boolean "false" ;
    cheat_dont_require : boolean "false" ;
+   tempbool : boolean "false" ;
 
    ## meta-command/parser-warning booleans
    apostrophe_warn : boolean "false" scope="survivor" ;
@@ -2465,19 +2466,23 @@ subroutines {
    ask_thor_next_guess : subroutine {
       : set_integer var="tempint" "0";
       : set_integer var="tempint2" "3";
+      : set_true "tempbool" ;
       : collection_iterate "ask_list" {
          : increment "tempint" ;
          : if (int(item()) == 0) {
             : print "You haven't asked Thor at all about rule {tempint} yet." ;
             : done ;
+         } : else {
          }
-         : print {( "{tempint}." + item() + " vs. {tempint2}." )} ;
-         : if (int(item()) < int(tempint2)) {
+         : if (int("" + item()) < int("" + tempint2)) {
             : set_integer var="rule_chosen" {( int("" + tempint) )} ;
             : set_integer var="tempint2" {( int("" + item()) )} ;
+            : set_false "tempbool" ;
+         } : else {
          }
       }
-      : if (tempint2 == 3) {
+      : if (!tempbool) { } # this looks like a bug in Adventuron, that Adventuron needs this.
+      : if (tempbool) {
          : print "You have asked three times about everything!" ;
       } : else {
          : print "You haven't looked fully at rule {rule_chosen} yet." ;
