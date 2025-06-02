@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 1.3.8
+   game_version                 = 2.0.0
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -600,6 +600,7 @@ strings {
    bon : string "<BONUS<#f80>>" ;
    email : string "<blurglecruncheon@gmail.com<#88f>>" ;
    links : string "<LINKS<#f80>>" ;
+   m_versions : string "<VERSIONS<#f80>>" ;
    thk : string "<THINK<#f80>>" ;
    thx : string "<THANKS<#f80>>" ;
    v_pts : string "<POINTS<#f80>>" ;
@@ -630,6 +631,7 @@ strings {
    # game title
    qt : string "<Quirky Test<#ff0>>" ;
    qtg : string "<Quirky Test's GitHub repository<#8f8>>[https://github.com/andrewschultz/quirky-test]" ;
+   qtgame : string "<Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]" ;
 
    # regular commands in green
    ask : string "<ASK<#0f0>>" ;
@@ -960,6 +962,7 @@ vocabulary {
    : verb / aliases = [tut, tutorial]
    : verb / aliases = [points, point, pt, pts, poi, po]
    : verb / aliases = [v, verb, verbs]
+   : verb / aliases = [vers, version, versions]
    : verb / aliases = [x, read]
    : verb / aliases = [eat, taste]
    : verb / aliases = [z, wait]
@@ -3488,10 +3491,11 @@ subroutines {
    }
 
    meta_about : subroutine {
-      : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#0f0>>, a 2023 entry by <Cobwebbed Dragon<#0f0>>, as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
+      : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. It placed 4th of 7 entries." ;
+      : print "I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#8f8>>[https://cobwebbeddragon.itch.io/interactive-adventurer-tutorial-adventure-talp], a 2023 entry by <Cobwebbed Dragon<#8f8>>[https://cobwebbeddragon.itch.io/] (clickable links,) as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
       : print {( "You can see what sort of commands {qt} uses with {verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
-      : print "You can find specific thanks in the {thx} command." ;
-      : print "Relevant links are in the {links} command." ;
+      : print "The {thx} command lists people and entities who helped in {qt}'s production." ;
+      : print "{links} lists relevant links, and {m_versions} lists summaries of versions." ;
       : if (!ever_about) {
          : print "{otn}if you want the mechanic for point-scoring commands spoiled or explained, {v_pts} will do so." ;
          : print {( "{otn}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and " + (has_visited("plain_base") ? "Thor" : "an NPC you'll find") + ", it's my hope {qt} can be enjoyed just as a game." )} ;
@@ -3504,8 +3508,9 @@ subroutines {
    }
    meta_links : subroutine {
       : print "Clicking on the light green text below will open a new tab." ;
+      : print "Here is a link to {qtgame}." ;
       : print "Here is a link to <TALJ 2025<#8f8>>[https://itch.io/jam/talp2025], where {qt} was entered on release. {qt} would not have been a thing without it, or without <Adventuron<#8f8>>[http://adventuron.io]." ;
-      : print "Here is a link to <Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]." ;
+      : print "Here are links to previous incarnations of TALP/TALJ: <TALP 2024<#8f8>>[https://itch.io/jam/talp2024/entries], <TALP 2023<#8f8>>[https://itch.io/jam/talp2023/entries], <TALP 2022<#8f8>>[https://itch.io/jam/talp2022/entries], and <TALP 2021<#8f8>>[https://itch.io/jam/talp/entries]." ;
       : print "If you find a bug, big or small, and want to report an issue, here is a link to {qtg}." ;
       : print "If you would like to share a transcript with me, send it to {email}." ;
       : gosub "check_additional_meta" ;
@@ -3521,11 +3526,18 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
    meta_thanks : subroutine {
-      : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca} and {tx_gf}. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts." ;
+      : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca}, {tx_gf} and <Pinkunz<#0f0>>. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts. {links} will lead you to past comps." ;
       : print "Thanks to {tx_ca} for creating Adventuron." ;
       : print "Thanks (in alphabetical order) to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
       : print "Thanks to {tx_da} and {tx_on} who offered bugfinds and advice during TALJ/TALP 2025." ;
       : print "Thanks to you, for playing this game." ;
+      : gosub "check_additional_meta" ;
+   }
+   meta_versions : subroutine {
+      : print "<Version 1.0.0<#80f>> was released for the TALP 2025 Jam on April 30, 2025." ;
+      : print "There were several in-comp updates. {qtgame} has this, with the details of what they fixed." ;
+      : print "<Version 2.0.0<#80f>> is pending but planned for June 2025. Along with bug fixes and graphic tweaks, two bonus points are replaced, with the old points going toward an achievement. Several achievements are added, and bonus points now carry over after winning. You can now skip introductory rooms on replay if you've found everything you need there for achievements. The bookshelf will also have new book titles once you've read them all." ;
+      : print "There are no future versions planned, barring catastrophic bugs." ;
       : gosub "check_additional_meta" ;
    }
 
@@ -4436,6 +4448,9 @@ on_command {
    }
    : match "thanks _" {
       : gosub "meta_thanks" ;
+   }
+   : match "versions _" {
+      : gosub "meta_versions" ;
    }
    : match "hint _" {
       : print "There are no in-game hints for {qt}. This webpage should be packaged with a walkthrough.txt, {ch} can tell you what to work on, and you should be notified when you have one word right in a puzzle." ;
