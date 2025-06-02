@@ -65,6 +65,7 @@ booleans {
    half_bonus : boolean "false" scope="survivor" ;
    bonus_half_note : boolean "false" scope="survivor" ;
    warn_must_redo : boolean "false" scope="survivor" ;
+   inv_plus_warn : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -266,10 +267,20 @@ booleans {
    inventory_warn : boolean "false" scope="survivor" ;
    long_word_warn : boolean "false" scope="survivor" ;
 
-   can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ;
+   ## dynamic booleans
+   can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ; # for debugging purposes since I GOTO MY_HOUSE a lot
 
    think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_hi_mouse )} ;
    retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fishin || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
+
+   ## inventory/bonus point stuff
+   inv_so_long : dynamic_boolean {( is_carried "low_song" && bonus_point_so_long )} ;
+   inv_vast_fission : dynamic_boolean {( is_carried "fast_vision" && bonus_point_vast_fission )} ;
+   inv_sane_role : dynamic_boolean {( is_carried "rain_soul" && bonus_point_sane_role )} ;
+   inv_grow_need : dynamic_boolean {( is_carried "no_greed" && bonus_point_grow_need )} ;
+   inv_cease_purging : dynamic_boolean {( is_carried "peace_surging" && bonus_point_cease_purging )} ;
+   inv_racing_passions : dynamic_boolean {( is_carried "pacing_rations" && bonus_point_racing_passions )} ;
+   inv_any_bonuses : dynamic_boolean {( inv_so_long || inv_vast_fission || inv_sane_role || inv_grow_need || inv_cease_purging || inv_racing_passions )} ;
 
 }
 
@@ -656,6 +667,9 @@ strings {
    footnote_cue : string "{v_fn} or, for brevity, {v_f}" ;
    bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
 
+   ## inventory
+   pip : string " <(+)<#0f0>>" ;
+
    ## dynamic general strings
 
    yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
@@ -838,6 +852,14 @@ strings {
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {thk}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
+   ## inventory bonus point notes
+   inv_plus_grow_need : dynamic_string {( inv_grow_need ? pip : "" )} ;
+   inv_plus_sane_role : dynamic_string {( inv_sane_role ? pip : "" )} ;
+   inv_plus_vast_fission : dynamic_string {( inv_vast_fission ? pip : "" )} ;
+   inv_plus_so_long : dynamic_string {( inv_so_long ? pip : "" )} ;
+   inv_plus_cease_purging : dynamic_string {( inv_cease_purging ? pip : "" )} ;
+   inv_plus_racing_passions : dynamic_string {( inv_racing_passions ? pip : "" )} ;
+
 }
 
 stats {
@@ -867,17 +889,17 @@ objects {
    ## start in the west, going clockwise
    chalice_map : object "a chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
    master_plan : object "a master plan" msg="It's written in clear language.{footnote_reveal_text}\n{map_and_plan}" ; ## from plaster man
-   pacing_rations : object "pacing rations" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
+   pacing_rations : object "pacing rations{inv_plus_racing_passions}" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "deal-mood meal, dude (eaten)" msg="You reflect on the meal you enjoyed. It will help you deal with something, mentally and/or physically." ; ## from grunters' hill
    confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
-   low_song : object "<a low song<#888>>" msg="Notes to a song, but no lyrics." ; ## fly score
-   fast_vision : object "<a fast vision<#888>>" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
-   peace_surging : object "<peace surging<#888>>" msg="You feel peace surging within you." ; ## warring bay
-   trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. They maybe aren't great if you wanted to sell it. But maybe you could find a way to embellish them." ;
-   rain_soul : object "<a rain soul<#888>>" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out. So many ideas that need something beyond words to bring them together." ;
-   no_greed : object "<no greed<#888>>" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
+   low_song : object "<a low song<#888>>{inv_plus_so_long}" msg="Notes to a song, but no lyrics." ; ## fly score
+   fast_vision : object "<a fast vision<#888>>{inv_plus_vast_fission}" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
+   peace_surging : object "<peace surging<#888>>{inv_plus_cease_purging}" msg="You feel peace surging within you." ; ## warring bay
+   trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. Perhaps they'd be of interest to potential homeowners.\n{trial_pics_seen}" ;
+   rain_soul : object "<a rain soul<#888>>{inv_plus_sane_role}" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out. So many ideas that need something beyond words to bring them together." ;
+   no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
    travel_grail : object "{cc_travel_grail}" msg="(should be covered in on_command)" ;
@@ -4055,6 +4077,10 @@ on_tick {
             : set_true "inventory_incorporeal" ;
          }
       }
+   }
+   : if (verb_is "inventory" && !inv_plus_warn && inv_any_bonuses) {
+      : print "{otn}the plus in parentheses {pip} after an item means you found how to get a bonus point from it." ;
+      : set_true "inv_plus_warn" ;
    }
    : if ((latest_warp_number != -3) && (!achieve_cddc_pre)) {
       : gosub "evaluate_warp" ;
