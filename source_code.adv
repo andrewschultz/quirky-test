@@ -163,10 +163,10 @@ booleans {
    bonus_point_vast_fission : boolean "false" scope="survivor" ; ## e ne
    bonus_point_cease_purging : boolean "false" scope="survivor" ; ## e e
    bonus_point_sane_role : boolean "false" scope="survivor" ; ## e sw
-   bonus_point_grow_need : boolean "false" ; # e w
+   bonus_point_grow_need : boolean "false" scope="survivor" ; # e w
 
    ## endgame bonus points
-   bonus_point_eye_stay : boolean "false" ;
+   bonus_point_eye_stay : boolean "false" scope="survivor" ;
    bonus_point_cheery_times : boolean "false" scope="survivor" ;
 
    ## jump/walk achievement booleans
