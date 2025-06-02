@@ -775,9 +775,11 @@ strings {
       "Another book is"
    )} ;
 
+   ## noting where chimes were solved/are
    chimes_present : dynamic_string {(
       (summoned_teary_chimes && !bonus_point_cheery_times) ? ". You hear teary chimes " + (is_at "gravel_trail" ? "here" : "outside" ) + ", too" : ""
-   )};
+   )} ;
+   chimes_note : dynamic_string {( chimes_in_my_house ? " (Point of order: you recalled cheery times inside the house, but the teary chimes were outside.)" : "" )} ;
 
    ## color code stuff
 
@@ -808,7 +810,7 @@ strings {
 
    ## endgame
    cc_stealing_hill : dynamic_string {( use_color_coding ? "<stealing hill<#f88>>" : "stealing hill")} ;
-   cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "a travel grail")} ## may not be used
+   cc_travel_grail : dynamic_string {( use_color_coding ? "<travel grail<#f88>>" : "travel grail")} ## may not be used
    cc_hissing_mouse : dynamic_string {( use_color_coding ? "<hissing mouse<#f88>>" : "hissing mouse")} ;
    cc_glee_simmers : dynamic_string {( use_color_coding ? "<Glee simmers<#f88>>" : "Glee simmers")} ;
    cc_my_house : dynamic_string {( use_color_coding ? "<my house<#f88>>" : "my house")} ;
@@ -910,7 +912,7 @@ objects {
    no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
 
    ## post-hub
-   travel_grail : object "{cc_travel_grail}" msg="(should be covered in on_command)" ;
+   travel_grail : object "a {cc_travel_grail}" msg="(should be covered in on_command)" ;
    teary_chimes : object "teary chimes" msg="{chimes_description_start} small pleasant musical noises in the wind." conspicuous="false" ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
 
@@ -1643,9 +1645,11 @@ locations {
          : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {tak} here." )} ;
          : done ;
       }
-      : match "_ crackers" {
-         : print "That's what you want, but what to do with it?" ;
-         : done ;
+      : if (!is_carried "crackers") {
+         : match "_ crackers" {
+            : print "That's/Those are what you want, but what to do with it?" ;
+            : done ;
+         }
       }
       : if (!point_take_crackers) {
          : match "_ crackers" {
@@ -2036,6 +2040,7 @@ locations {
          : else
          {
             : print "Nothing happens at first. Then a slow rumbling. A small hill pokes through the ground, sending the money in the fountain everywhere. Outside of the fountain, the money flies into the mountain and helps enlarge it. There must be a lot of money in the fountain, because it takes a while. The resulting funny mountain is an improvement, though the scavengers don't think so. They leave in disgust. As they do, two smaller but approximately as funny mountains poke up and out, creating an even more pleasing landscape." ;
+            : print "You think a bit and realize you feel no greed for the coins in the fountains, wherever they went to." ;
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
             : gosub "add_point_east" ;
@@ -2987,7 +2992,7 @@ subroutines {
                : print "No. Best not get carried away." ;
             } : else {
                : print "You permit yourself to imagine being on a much higher-powered quest. Boy, you showed those boring old pacing rations! And the people who manufactured them! Or, well, you would have, if they were around.\nYour Walter Mitty moment over, you get back to focusing on your main quest." ;
-               : set_integer var="tempint" "16" ;
+               : set_integer var="tempint" "15" ;
                : gosub "add_bonus" ;
                : set_true "bonus_point_racing_passions" ;
                : set_false "retry_racing_passions" ;
@@ -3743,7 +3748,8 @@ subroutines {
       : if (achieve_roer) {
          : print "You already unlocked the {achievement_roer} achievement." ;
       } : else_if (ach_roer_west && ach_roer_east && ach_roer_base) {
-         : print "For scoring points in every location, you win the {achievement_roer} achievement!" ;
+         : print "For scoring points in every location, you win the {achievement_roer} achievement!{chimes_note}" ;
+         : set_true "achieve_roer" ;
       } : else {
          : print "You haven't unlocked the {achievement_roer} achievement yet." ;
       }
@@ -3753,6 +3759,9 @@ subroutines {
       : else_if (bonus_score == max_bonus_score) {
          : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
          : set_true "achieve_cnnc" ;
+         : if (!achieve_cddc2) {
+            : print "{otn}you will automatically get the {achievement_cddc2} achievement on the next playthrough, since it requires you to win one session without finding any bonus points, and there are no bonus points left to find." ;
+         }
       }
       : else {
          : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
@@ -3761,7 +3770,7 @@ subroutines {
 
    track_achievements_3_yellow : subroutine {
       : if (achieve_qwwq && achieve_kssn) {
-         : print "You already got both achievements for<ask>ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
+         : print "You already got both achievements for <ask>ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
          : return ;
       }
       : set_false "achieve_taat" ;
