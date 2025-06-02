@@ -747,6 +747,7 @@ strings {
    confidence_obnoxious : dynamic_string {( confidence_meter == 1 ? "someone obnoxious" : "obnoxious people" )} ;
    map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
       )} ;
+   trial_pics_seen : dynamic_string {( pcpc_tile && pcpc_pile ? "You've found two different ways to look at the pics. There can't be any more." : (!pcpc_tile && !pcpc_pile) ? "Perhaps there is something in the pics, but it can't be SUPER critical." : "You've focused on " + (pcpc_tile ? "the tile pricks" : "how to pile tricks") + ", and yet you feel they have more to offer." )} ;
 
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
@@ -2496,7 +2497,7 @@ subroutines {
    }
    bonus_display : subroutine {
       : if (bonus_score == max_bonus_score && !bonus_max_warn) {
-         : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though if you wish to see the list again after this nag, you may bask in your accomplishmenthough after this, you can see everything you've found. (Enjoy it. You've earned it!)" ;
+         : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though if you wish to see the list again after this nag, {bon} will revert to its regular behavior, so you can see everything you've found. (Enjoy it. You've earned it!)" ;
          : set_true "bonus_max_warn" ;
          : return ;
       }
