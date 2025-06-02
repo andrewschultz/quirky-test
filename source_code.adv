@@ -66,6 +66,7 @@ booleans {
    bonus_half_note : boolean "false" scope="survivor" ;
    warn_must_redo : boolean "false" scope="survivor" ;
    inv_plus_warn : boolean "false" scope="survivor" ;
+   note_book_reshuffle : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -2240,6 +2241,12 @@ locations {
             : gosub "say_half" ;
          }
       }
+      on_describe {
+         : if (achieve_nbbn && !note_book_reshuffle) {
+            : print "{otn}as a small bonus, the books in the bookshelf are different this time. I wasn't creative enough to do any more than that, but I hope you enjoy it, all the same. Thanks again for playing and replaying!" ;
+            : set_true "note_book_reshuffle" ;
+         }
+      }
    }
 
    cht : location "This sets in_debug and cheat_dont_require. You need to L to go back where you were." {
@@ -3160,24 +3167,46 @@ subroutines {
          : set_true "poke_books_yet" ;
          : done ;
       }
-      : cycle key = "books_to_read" predictable_order = "false" skip_interval = "0" {
-         : print "{book_is} <A Will Way Ill<#ff0>>." ;
-         : print "{book_is} <To Prep True Pep<#ff0>>." ;
-         : print "{book_is} <See Bunny, Be Sunny<#ff0>>." ;
-         : print "{book_is} <Chaz, Jess, Jazz, Chess<#ff0>>." ;
-         : print "{book_is} <See Pride Preside<#ff0>>." ;
-         : print "{book_is} <Thumb, Sing Something<#ff0>>." ;
-         : print "{book_is} <Nor Fight For Night<#ff0>>." ;
-         : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
-         : print "{book_is} <Tad, Who HAD To<#ff0>>." ;
-         : print "{book_is} <Kenny Muller's Many Colors<#ff0>>." ;
-         : print "{book_is} <My Son Simon<#ff0>>." ;
-         : print "{book_is} <Two Trolls' True Tolls<#ff0>>." ;
-         : print "{book_is} <Socially Show Sully<#ff0>>." ;
-         : print "{book_is} <Dang! Big Bang, Dig!<#ff0>>." ;
-         : print "{book_is} <Fusty Trite Trustee Fight<#ff0>>." ;
-         : print "{book_is} <Mirth, Waking, Worth Making<#ff0>>." ;
-         : print "{book_is} <Toil, Anchor, Oil Tanker<#ff0>>." ;
+      : if (footnotes_available && achieve_nbbn) {
+         : cycle key = "books_bonus" predictable_order = "false" skip_interval = "0" {
+            : print "{book_is} <Bad Hosts Had Boasts<#ff0>>." ;
+            : print "{book_is} <Boo, Debtor, Do Better<#ff0>>." ;
+            : print "{book_is} <Bought Gourd, Got Bored<#ff0>>." ;
+            : print "{book_is} <Bye, Hidden High Biddin'<#ff0>>." ;
+            : print "{book_is} <Dreamy Stinkers, Steamy Drinkers<#ff0>>." ;
+            : print "{book_is} <Feel Cold, Keel, Fold<#ff0>>." ;
+            : print "{book_is} <Grow, City So Gritty<#ff0>>." ;
+            : print "{book_is} <Hit Wealth, Wit, Health<#ff0>>." ;
+            : print "{book_is} <LOL! Aye, All Lie<#ff0>>." ;
+            : print "{book_is} <Lunch, Pines, Punch Lines<#ff0>>." ;
+            : print "{book_is} <Lurk, Wait, Work Late<#ff0>>." ;
+            : print "{book_is} <Near Home Here, Gnome<#ff0>>." ;
+            : print "{book_is} <Rake Might Make Right<#ff0>>." ;
+            : print "{book_is} <Smite, Woke White Smoke<#ff0>>." ;
+            : print "{book_is} <Thumb, Free From Thee<#ff0>>." ;
+            : print "{book_is} <Will, Styled Still Wild<#ff0>>." ;
+            : print "{book_is} <You May Moo, Yay<#ff0>>." ;
+         }
+      } : else {
+         : cycle key = "books_to_read" predictable_order = "false" skip_interval = "0" {
+            : print "{book_is} <A Will Way Ill<#ff0>>." ;
+            : print "{book_is} <To Prep True Pep<#ff0>>." ;
+            : print "{book_is} <See Bunny, Be Sunny<#ff0>>." ;
+            : print "{book_is} <Chaz, Jess, Jazz, Chess<#ff0>>." ;
+            : print "{book_is} <See Pride Preside<#ff0>>." ;
+            : print "{book_is} <Thumb, Sing Something<#ff0>>." ;
+            : print "{book_is} <Nor Fight For Night<#ff0>>." ;
+            : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
+            : print "{book_is} <Tad, Who HAD To<#ff0>>." ;
+            : print "{book_is} <Kenny Muller's Many Colors<#ff0>>." ;
+            : print "{book_is} <My Son Simon<#ff0>>." ;
+            : print "{book_is} <Two Trolls' True Tolls<#ff0>>." ;
+            : print "{book_is} <Socially Show Sully<#ff0>>." ;
+            : print "{book_is} <Dang! Big Bang, Dig!<#ff0>>." ;
+            : print "{book_is} <Fusty Trite Trustee Fight<#ff0>>." ;
+            : print "{book_is} <Mirth, Waking, Worth Making<#ff0>>." ;
+            : print "{book_is} <Toil, Anchor, Oil Tanker<#ff0>>." ;
+         }
       }
       : increment "books_read";
       : if (books_read == 17) {
