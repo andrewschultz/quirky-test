@@ -46,7 +46,8 @@ booleans {
    summoned_teary_chimes : boolean "false"; # this is equivalent to point_see_glimmering, but this also makes code where we manipulate the chimes more readable.
    have_asked_three : boolean "false" scope="survivor" ;
    have_asked_four : boolean "false" scope="survivor" ;
-   poke_books_yet : boolean "false" ;
+   initial_book_poke : boolean "false" scope="survivor" ;
+   got_footnote_17 : boolean "false" scope="survivor" ;
    noticed_beer : boolean "false" ;
    inventory_incorporeal : boolean "false" ;
    thor_warn_close : boolean "false" ;
@@ -3160,12 +3161,21 @@ subroutines {
       }
    }
    read_book : subroutine {
-      : if (!poke_books_yet) {
+      : if (!initial_book_poke) {
          : set_integer var="tempint" "17" ;
          : gosub "footnote_reveal" ;
          : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr}, or a passage to it, is hidden behind one of the books. However, you find nothing, even after removing the books to see if the bookshelf can be pushed to reveal a secret passage, or something. Even a \"Books, hidden hooks biddin'?\" goes unanswered.\nBut hey, some of those titles look interesting!{footnote_reveal_text}" ;
-         : set_true "poke_books_yet" ;
+         : set_true "initial_book_poke" ;
+         : if (footnotes_available) {
+            : set_true "got_footnote_17" ;
+         }
          : done ;
+      }
+      : if (footnotes_available && !got_footnote_17) {
+         : set_integer var="tempint" "17" ;
+         : gosub "footnote_reveal" ;
+         : print "You peruse the bookshelf again.{footnote_reveal_text}" ;
+         : set_true "got_footnote_17" ;
       }
       : if (footnotes_available && achieve_nbbn) {
          : cycle key = "books_bonus" predictable_order = "false" skip_interval = "0" {
