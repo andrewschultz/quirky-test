@@ -68,6 +68,7 @@ booleans {
    warn_must_redo : boolean "false" scope="survivor" ;
    inv_plus_warn : boolean "false" scope="survivor" ;
    note_book_reshuffle : boolean "false" scope="survivor" ;
+   out_argument_note : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -4239,8 +4240,13 @@ on_command {
          : set_true "say_warn" ;
       }
    }
-   # note we could add "O needs no argument" here but it's too fiddly for late-comp
-   : match "o _" {
+   : match "o _;out _" {
+      : if (out_argument_note) {
+         : match "o *;out *" {
+            : print "{otn}{v_out} requires no argument. It just looks if there's only one exit out." ;
+            : set_true "out_argument_note" ;
+         }
+      }
       : set_sentence "out" ;
    }
    : if (is_at("zone_hubs")) {
