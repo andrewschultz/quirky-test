@@ -665,10 +665,11 @@ strings {
    v_sh : string "<SH<#f80>>" ;
    v_eb : string "<EB<#f80>>" ;
 
-   # tutorial stuff in purple
+   # tutorial and hinty stuff in purple
    tnote : string "<TUTORIAL NOTE:<#f0f>> " ;
    tcue : string "<TUTORIAL CUE:<#f0f>> " ;
    otn : string "<ONE-TIME NOTE:<#f0f>> " ;
+   retry_remind : string "<REMINDER:<#f0f>> you found the bonus point too late last time through, so you may wish to " ;
 
    ## footnotes, achievements, etc.
    v_ach : string "<ACHIEVEMENTS<#f80>>" ;
@@ -1609,9 +1610,12 @@ locations {
          {
             : print "You believe in yourself and use the power of words to make the artillery fall short. The people inside give up on you. They have much easier targets.\nOh! And what did they leave behind? Some very, very sensible pacing rations. They taste bleah enough so you pace yourself eating them, but not so bleah they're inedible. You take them." ;
             : set_true "point_fell_short" ;
-            : pocket "pacing_rations" ;
             : gosub "add_point_west" ;
             : gosub "hub_check_independent" ;
+            : pocket "pacing_rations" ;
+            : if (retry_racing_passions) {
+               : print "{retry_remind}<RACING PASSIONS<#f80>>." ;
+            }
          }
          : done ;
          }
@@ -1855,6 +1859,9 @@ locations {
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
             : pocket "low_song" ;
+            : if (retry_so_long) {
+               : print "{retry_remind}<SO LONG<#f80>>." ;
+            }
          }
          : done ;
          }
@@ -1888,6 +1895,9 @@ locations {
             : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks coalesce into a fast vision -- it came to you so quickly, and it's going to stay!" ;
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
+            : if (retry_vast_fishin) {
+               : print "{retry_remind}<VAST FISSION<#f80>>." ;
+            }
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
          }
@@ -1930,9 +1940,12 @@ locations {
          {
             : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best.\nYou feel peace surging within you. Peace may be boring, but then again, the excitement of war is draining." ;
             : set_true "point_boring_way" ;
-            : pocket "peace_surging" ;
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
+            : pocket "peace_surging" ;
+            : if (retry_cease_purging) {
+               : print "{retry_remind}<CEASE PURGING<#f80>>." ;
+            }
          }
          : done ;
          }
@@ -1994,6 +2007,9 @@ locations {
                : print "As your pain resides, you feel a drip from above. Then another. Then two, then four. Thank goodness for the shelter nearby! You sit there and find watching the rain surprisingly poetic. You feel something rise within you ... a soul full of rain or, more succinctly, a rain soul." ;
                : set_true "point_pouring_rain" ;
                : pocket "rain_soul" ;
+               : if (retry_sane_role) {
+                  : print "{retry_remind}<SANE ROLE<#f80>>." ;
+               }
                : gosub "add_point_east" ;
                : gosub "hub_check_independent" ;
             }
@@ -2051,6 +2067,9 @@ locations {
             : print "You think a bit and realize you feel no greed for the coins in the fountains, wherever they went to." ;
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
+            : if (retry_grow_need) {
+               : print "{retry_remind}<GROW NEED<#f80>>." ;
+            }
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
          }
