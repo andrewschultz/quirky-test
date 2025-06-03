@@ -585,6 +585,8 @@ collections {
 
 strings {
 
+   tempopt : string "blank option" ;
+
    ## delete post-comp
    postcomp : string "This was intended to be a bonus point for the comp version, but ... things got crossed up. It'll be there post-comp. Sorry." ;
 
@@ -689,7 +691,6 @@ strings {
    ask_5_notes : dynamic_string {( bonus_point_rare_plights && bonus_point_shush_lout ? "You got both of them" : bonus_point_rare_plights || bonus_point_shush_lout ? "You got one of them" : "You missed them, but you can go back if you want" )}
 
    my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
-   notify_string : string "You need to specify {notif} {yn} for score notification changes." ;
 
    unknown_begin_note : dynamic_string {( footnotes_available || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
 
@@ -3445,11 +3446,16 @@ subroutines {
       }
    }
 
-   options_cheat : subroutine {
-      : match "cheat -" {
-         : print "CHEAT alone doesn't work. You need to CHEAT YES or CHEAT NO." ;
+   option_err_stub : subroutine {
+      : match "_ -" {
+         : print "Toggling {tempopt} without an argument ({yn}) is not supported." ;
          : done ;
       }
+      : print "Toggling {tempopt} requires one of {yn} as an argument." ;
+      : done ;
+   }
+
+   options_cheat : subroutine {
       : match "cheat yes" {
          : print "CHEAT is now activated. You don't have to do puzzles in order." ;
          : set_true "cheat_dont_require" ;
@@ -3460,15 +3466,11 @@ subroutines {
          : set_false "cheat_dont_require" ;
          : done ;
       }
-      : print "CHEAT requires YES or NO." ;
-      : done ;
+      : set_string var="tempopt" text="CHEAT" ;
+      : gosub "option_err_stub" ;
    }
 
    options_colorhint : subroutine {
-      : match "ch -" {
-         : print "CH/COLORHINT alone doesn't work. You need to CH YES or CH NO." ;
-         : done ;
-      }
       : match "ch yes" {
          : print "Color hints are now activated." ;
          : set_true "use_color_coding" ;
@@ -3479,8 +3481,8 @@ subroutines {
          : set_false "use_color_coding" ;
          : done ;
       }
-      : print "CH/COLORHINT requires YES or NO." ;
-      : done ;
+      : set_string var="tempopt" text="{ch}" ;
+      : gosub "option_err_stub" ;
    }
 
    options_list : subroutine {
@@ -3499,7 +3501,7 @@ subroutines {
       : gosub "check_additional_meta" ;
    }
 
-   options_notify: subroutine {
+   options_notify : subroutine {
       : match "notify yes" {
          : print "Score notify is now on.";
          : set_true "score_notify";
@@ -3510,13 +3512,8 @@ subroutines {
          : set_false "score_notify";
          : done ;
       }
-      : match "notify -" {
-         : print {( "Toggling <NOTIFY<#0f0>> without an argument is not supported. " + notify_string )};
-         : done ;
-      }
-      : match "notify *" {
-         : print {( "The argument after <NOTIFY<#0f0>> wasn't recognized. " + notify_string )};
-      }
+      : set_string var="tempopt" text="{notif}" ;
+      : gosub "option_err_stub" ;
    }
 
    options_startwarp : subroutine {
@@ -3530,15 +3527,12 @@ subroutines {
          : set_false "option_start_warp";
          : done ;
       }
-      : match "* -" {
-         : print "Toggling {vo_cllc} without an argument is not supported.{notify_string}" ;
-         : done ;
-      }
-      : print "The argument after {vo_cllc} wasn't recognized. {notify_string}" ;
+      : set_string var="tempopt" text="start-of-game warp" ;
+      : gosub "option_err_stub" ;
    }
 
    options_tutorial: subroutine {
-      : match "tutorial yes;tutorial y" {
+      : match "tutorial yes" {
          : print "Tutorial mode is now on.";
          : set_true "in_tutorial";
          : if (footnotes_available && !tutorial_redo_note) {
@@ -3547,19 +3541,15 @@ subroutines {
          }
          : done ;
       }
-      : match "tutorial no;tutorial n" {
+      : match "tutorial no" {
          : print "Tutorial mode is now off.";
          : set_false "in_tutorial";
          : done ;
       }
-      : match "tutorial -" {
-         : print {( "Toggling " + tut + " without an argument is not supported. " + notify_string )};
-         : done ;
-      }
-      : match "tutorial *" {
-         : print {( "The argument after " + tut + " wasn't recognized. " + notify_string )};
-      }
+      : set_string var="tempopt" text="{tut}" ;
+      : gosub "option_err_stub" ;
    }
+
    tutorial_progress : subroutine {
       : set_true "ever_tutorial" ;
       : if (!tutorial_1_about_done) {
@@ -3712,7 +3702,7 @@ subroutines {
       : if (talked_to_thor) {
          : print "You can also {ask} Thor about {rule}s (1-17) with 0 checking for what you haven't asked about." ;
       }
-      : print {( "No other standard commands are needed to win " + qt + ". However, " + meta + " will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." )} ;
+      : print "No other standard commands are needed to win {qt}. However, {meta} will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." ;
       : if (jump_commands_notified) {
          : print {( "To save keystrokes, you can jump around hub locations with " + v_eb + " (east branch.)" + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " )} ;
       }
@@ -4704,7 +4694,7 @@ on_command {
       }
       : print {( "Your <core score<#0f0>> is " + score + " out of <" + max_score + "<#0f0>>." )} ;
       : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
-         : print {("You've solved {points_left_side} of 7 parts of West Tiles and {points_right_side} of 7 parts of East Branch.")}
+         : print "You've solved {points_left_side} of 7 parts of West Tiles and {points_right_side} of 7 parts of East Branch." ;
       }
       : print {( "Your <bonus score<#f80>> is {bonus_score} out of <" + max_bonus_score + "<#f80>>." )} ;
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
