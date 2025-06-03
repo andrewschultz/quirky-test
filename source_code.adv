@@ -189,7 +189,7 @@ booleans {
    ## "retry" booleans for THINK: if you got something after losing it
    retry_rare_plights : boolean "false" scope="survivor" ;
    retry_so_long : boolean "false" scope="survivor" ;
-   retry_vast_fishin : boolean "false" scope="survivor" ;
+   retry_vast_fission : boolean "false" scope="survivor" ;
    retry_cease_purging : boolean "false" scope="survivor" ;
    retry_sane_role : boolean "false" scope="survivor" ;
    retry_grow_need : boolean "false" scope="survivor" ;
@@ -276,7 +276,7 @@ booleans {
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ; # for debugging purposes since I GOTO MY_HOUSE a lot
 
    think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_hi_mouse )} ;
-   retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fishin || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
+   retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
 
    ## inventory/bonus point stuff
    inv_so_long : dynamic_boolean {( is_carried "low_song" && bonus_point_so_long )} ;
@@ -1895,7 +1895,7 @@ locations {
             : print "You realize that the trending booth's Stone Cold Facts are ice-cold when it comes to universal truths. You take some time to pause and think how and why the overgeneralizations and out-of-context anecdotes and such are inaccurate. Yet you also realize there's a place for brevity and not having to explain every detail. Some of the rhetorical tricks coalesce into a fast vision -- it came to you so quickly, and it's going to stay!" ;
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
-            : if (retry_vast_fishin) {
+            : if (retry_vast_fission) {
                : print "{retry_remind}<VAST FISSION<#f80>>." ;
             }
             : gosub "add_point_east" ;
@@ -2970,6 +2970,7 @@ subroutines {
             } : else {
                : print "Not wanting anything is proof you have no greed, right? It's proof of super virtue? Well, yes and no. It also means you are not trying anything more. So you think of needs to grow, not for power or fame or wealth, but stuff that can help others." ;
                : set_true "bonus_point_grow_need" ;
+               : set_false "retry_grow_need" ;
                : set_integer var="tempint" "14" ;
                : gosub "add_bonus" ;
             }
@@ -2980,6 +2981,12 @@ subroutines {
             }
          }
       }
+      : if (point_shift_goals && !bonus_point_grow_need) {
+         : match "grow need" {
+            : set_true "retry_grow_need" ;
+            : gosub "warning_bonus_after" ;
+         }
+      }
       : if (is_carried "fast_vision") {
          : match "vast fission" {
             : if (bonus_point_vast_fission) {
@@ -2987,6 +2994,7 @@ subroutines {
             } : else {
                : print "You extrapolate on the fast vision you have and re-interpret events from your past life in many new ways. The mental fission of previous complaints is fast. You make plans for, uh, fishin' for more, once this quest is over. More what? Lighting fires, fighting liars." ;
                : set_true "bonus_point_vast_fission" ;
+               : set_false "retry_vast_fission" ;
                : set_integer var="tempint" "11" ;
                : gosub "add_bonus" ;
             }
@@ -2998,6 +3006,12 @@ subroutines {
             }
          }
       }
+      : if (point_fellow_yield && !bonus_point_vast_fission) {
+         : match "vast fission" {
+            : set_true "retry_vast_fission" ;
+            : gosub "warning_bonus_after" ;
+         }
+      }
       : if (is_carried "low_song") {
          : match "so long" {
             : if (bonus_point_so_long) {
@@ -3005,6 +3019,7 @@ subroutines {
             } : else {
                : print "You use the low song in your head to compose a kiss-off to people whom you don't want to stick in your memory, but they do. It helps lighten a few burdens." ;
                : set_true "bonus_point_so_long" ;
+               : set_false "retry_so_long" ;
                : set_integer var="tempint" "10" ;
                : gosub "add_bonus" ;
             }
@@ -3014,6 +3029,12 @@ subroutines {
                : gosub "say_half_b" ;
                : done ;
             }
+         }
+      }
+      : if (point_grim_tune && !bonus_point_so_long) {
+         : match "so long" {
+            : set_true "retry_so_long" ;
+            : gosub "warning_bonus_after" ;
          }
       }
       : if (is_carried "pacing_rations") {
@@ -3049,6 +3070,7 @@ subroutines {
             } : else {
                : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
                : set_true "bonus_point_cease_purging" ;
+               : set_false "retry_cease_purging" ;
                : set_integer var="tempint" "12" ;
                : gosub "add_bonus" ;
             }
@@ -3058,6 +3080,12 @@ subroutines {
                : gosub "say_half_b" ;
                : done ;
             }
+         }
+      }
+      : if (point_shift_goals && !bonus_point_cease_purging) {
+         : match "cease purging" {
+            : set_true "retry_cease_purging" ;
+            : gosub "warning_bonus_after" ;
          }
       }
       : if (is_carried "trial_pics") {
@@ -3088,6 +3116,7 @@ subroutines {
                : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
                : set_integer var="tempint" "13" ;
                : set_true "bonus_point_sane_role" ;
+               : set_false "retry_sane_role" ;
                : gosub "add_bonus" ;
             }
          }
@@ -3096,6 +3125,12 @@ subroutines {
                : gosub "say_half_b" ;
                : done ;
             }
+         }
+      }
+      : if (point_grim_tune && !bonus_point_sane_role) {
+         : match "sane role" {
+            : set_true "retry_sane_role" ;
+            : gosub "warning_bonus_after" ;
          }
       }
       : if (is_exists "teary_chimes") {
@@ -3358,7 +3393,7 @@ subroutines {
       : if (retry_so_long) {
          : print "-- say <SO LONG<#0f0>> when the low song is in your mind" ;
       }
-      : if (retry_vast_fishin) {
+      : if (retry_vast_fission) {
          : print "-- try <VAST FISSION/FISHIN<#0f0>> when you have a fast vision" ;
       }
       : if (retry_cease_purging) {
