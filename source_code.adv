@@ -764,6 +764,12 @@ strings {
    map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
       )} ;
    trial_pics_seen : dynamic_string {( pcpc_tile && pcpc_pile ? "You've found two different ways to look at the pics. There can't be any more." : (!pcpc_tile && !pcpc_pile) ? "Perhaps there is something in the pics, but it can't be SUPER critical." : "You've focused on " + (pcpc_tile ? "the tile pricks" : "how to pile tricks") + ", and yet you feel they have more to offer." )} ;
+   bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said SO LONG with this low song." : retry_so_long ? "\nYou should say SO LONG now you have this low song again." : "" )} ;
+   bonus_note_vast_fission : dynamic_string {( bonus_point_vast_fission ? "\nYou found VAST FISSION from this." : retry_vast_fission ? "\nYou should find VAST FISSION now you have this fast vision again." : "" )} ;
+   bonus_note_cease_purging : dynamic_string {( bonus_point_cease_purging ? "\nYou figured how to CEASE PURGING from this." : retry_cease_purging ? "\nYou should CEASE PURGING now you feel peace surging again." : "" )} ;
+   bonus_note_sane_role : dynamic_string {( bonus_point_sane_role ? "\nYou thought up a SANE ROLE from this." : retry_sane_role ? "\nYou should think up a SANE ROLE now you have the rain soul again." : "" )} ;
+   bonus_note_grow_need : dynamic_string {( bonus_point_grow_need ? "\nYou figured how to GROW NEED from this." : retry_grow_need ? "\nYou should GROW NEED again now you have no greed again." : "" )} ;
+   bonus_note_racing_passions : dynamic_string {( bonus_point_racing_passions ? "\nYou extracted RACING PASSIONS from this." : retry_racing_passions ? "\nYou should extract RACING PASSIONS again now you have the pacing rations again." : "" )} ;
 
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
@@ -908,17 +914,17 @@ objects {
    ## start in the west, going clockwise
    chalice_map : object "a chalice map" msg="You're not sure where it leads.\n{map_and_plan}" ; ## from malice chap
    master_plan : object "a master plan" msg="It's written in clear language.{footnote_reveal_text}\n{map_and_plan}" ; ## from plaster man
-   pacing_rations : object "pacing rations{inv_plus_racing_passions}" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff." ; ## from shell fort
+   pacing_rations : object "pacing rations{inv_plus_racing_passions}" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff.{bonus_note_racing_passions}" ; ## from shell fort
    crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "deal-mood meal, dude (eaten)" msg="You reflect on the meal you enjoyed. It will help you deal with something, mentally and/or physically." ; ## from grunters' hill
    confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
-   low_song : object "<a low song<#888>>{inv_plus_so_long}" msg="Notes to a song, but no lyrics." ; ## fly score
-   fast_vision : object "<a fast vision<#888>>{inv_plus_vast_fission}" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast." ; ## trending booth
-   peace_surging : object "<peace surging<#888>>{inv_plus_cease_purging}" msg="You feel peace surging within you." ; ## warring bay
+   low_song : object "<a low song<#888>>{inv_plus_so_long}" msg="Notes to a song, but no lyrics.{bonus_note_low_song}" ; ## fly score
+   fast_vision : object "<a fast vision<#888>>{inv_plus_vast_fission}" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast.{bonus_note_vast_fission}" ; ## trending booth
+   peace_surging : object "<peace surging<#888>>{inv_plus_cease_purging}" msg="You feel peace surging within you.{bonus_note_cease_purging}" ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. Perhaps they'd be of interest to potential homeowners.\n{trial_pics_seen}" ;
-   rain_soul : object "<a rain soul<#888>>{inv_plus_sane_role}" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out. So many ideas that need something beyond words to bring them together." ;
-   no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!" ;
+   rain_soul : object "<a rain soul<#888>>{inv_plus_sane_role}" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out. So many ideas that need something beyond words to bring them together.{bonus_note_sane_role}" ;
+   no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!{bonus_note_no_greed}" ;
 
    ## post-hub
    travel_grail : object "a {cc_travel_grail}" msg="(should be covered in on_command)" ;
@@ -2121,7 +2127,8 @@ locations {
          : else
          {
             : print "With a bit of thought, you see how the low song and rain soul hook together. Why didn't you see it before? The moment must not have been right." ;
-            : print "It is now. The trim goon, on hearing the grim tone, displays a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people.\n\nOkay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
+            : print "It is now. The trim goon, on hearing the grim tone, displays a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people!" ;
+            : print "Okay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
             : set_true "point_grim_tune" ;
             : set_false "think_grim_tune" ;
             : destroy "rain_soul";
@@ -3401,7 +3408,7 @@ subroutines {
          : print "-- think <CEASE PURGING<#0f0>> when you feel peace surging" ;
       }
       : if (retry_sane_role) {
-         : print "-- hope for a <SANE ROLE<#0f0>> when you have a rain soul,." ;
+         : print "-- hope for a <SANE ROLE<#0f0>> when you have a rain soul" ;
       }
       : if (retry_grow_need) {
          : print "-- <GROW NEED<#0f0>> when you feel no greed" ;
