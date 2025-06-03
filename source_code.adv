@@ -781,8 +781,10 @@ strings {
       point_missing_house ? "to the house you summoned" : "to, well, nowhere at the moment"
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and poster and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
+
+   ruts_poster_note : dynamic_string {( bonus_point_eye_stay ? "You figured its twist" : "Maybe it actually has a double meaning, though you may just wish to wrap things up here" )} ;
 
    book_is : dynamic_string {(
       books_read == 16 ? "The last book is" :
@@ -930,6 +932,7 @@ objects {
    travel_grail : object "a {cc_travel_grail}" msg="(should be covered in on_command)" ;
    teary_chimes : object "teary chimes" msg="{chimes_description_start} small pleasant musical noises in the wind." conspicuous="false" ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
+   ruts_poster : scenery "a putz-roaster-ruts poster" at="my_house" conspicuous="false" msg="It advertises itself as a Puts-Roaster-Ruts Poster, one of those posters that claim to be ironic with a downer statement. {ruts_poster_note}." ;
 
 }
 
@@ -957,6 +960,7 @@ vocabulary {
    : noun / aliases = [meal, dude]
    # endgame
    : noun / aliases = [glimmer, glimmers, glimmering]
+   : noun / aliases = [putz, roaster, ruts, poster]
 
    # aliases for yes/no
    : noun / aliases = [no, n, off]
