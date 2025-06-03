@@ -1135,6 +1135,7 @@ locations {
                : if (!bonus_point_rare_plights) {
                   : print "You read about people's complaints. Some seem common and some seem exotic indeed. People hard done by mentally, physically, and financially. Their problems seem more interesting and exciting than yours. You know it's important to care about this sort of thing, and yet, there must be something else in {cc_prayer_lights}, something more uplifting, perhaps a justification you deserve more, even if you have a fun game like this to play." ;
                   : set_true "bonus_point_rare_plights" ;
+                  : update_graphic ;
                   : set_integer var="tempint" "3" ;
                   : gosub "add_bonus" ;
                } : else {
@@ -2207,13 +2208,14 @@ locations {
          }
       }
    };
-   my_house : location "MY HOUSE\n{my_house_description}" {
+   my_house : location "MY HOUSE\n{my_house_description}" graphic = "my_house_graphic" {
       on_command {
          : match "eye stay;i stay" {
             : if (!bonus_point_eye_stay) {
-               : print "You eye a stay, despite the poster's negative connotations. You have a chuckle. Why, of course you'll stay until you've completed your quest. But no more than that." ;
+               : print "You eye a stay, despite the poster's negative connotations. Looking closer, you see some complex origami can fold things so the poster, indeed, says I STAY. You have a chuckle. Why, of course you'll stay until you've completed your quest. But no more than that." ;
                : set_true "bonus_point_eye_stay" ;
                : set_integer var="tempint" "16" ;
+               : update_graphic ;
                : gosub "add_bonus" ;
             } : else {
                : print "You stay staying, having already proclaimed you would eye a stay." ;
@@ -4225,6 +4227,16 @@ on_render {
          : overlay "check_mark" x="84" y="0" ;
       }
    }
+   : if (is_at("my_house")) {
+      : if (point_see_glimmering) {
+         : overlay "my_house_glimmer" x="45" y="2" ;
+         : overlay "my_house_glimmer" x="185" y="4" ;
+         : overlay "my_house_glimmer" x="205" y="9" ;
+      }
+      : if (bonus_point_eye_stay) {
+         : overlay "my_house_i_stay" x="158" y="2" ;
+      }
+   }
 }
 
 # end on_render
@@ -4859,9 +4871,9 @@ assets {
       gravel_trail_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABhklEQVRYw+2XsWrDMBCGbzM4g/CbejOkUD9GyFK8BdylnTr4gToUEm0aAr38d6eWQpRR50BzxEGfZMPH3UlO6OgaX8sbIwKuzYLoOlpVoFtZ4N1NYL+/T4FufQEiH4GX4w2BEP+7gE8JeNgNw/gjQDn8MnCitPtYhm8T+BueAk9lAZcSQGC4JeByDpw4DYj1BBCfz7+74CFwJTB7xGGbB68PgTsUmNp5hsWkJlQJD9uMBQGidsIqxRZDHM1VsOkzbq4FmCPJhykwBnUw9RnPJQHczoRbA17TsQ6mMWNJIAa58AyZeA1sxoznUg/oCh6RMlXC1Gcs9ABSg9yIJmudqiB6wLAkQKarj6ByVTD1GQsCyFGUApF2DNfBNGYsCIiaZIqDCtfBps9YFsCm0a1jG6gGNn1xVX4oaYoYrUK26opZwNojyCr7ogrIPrS+VSlXVIGobwPSwgQ7u93QSoA5igGFQXb07PZDK0FgbQv5YvJFE5DKyN9VnWdXtB6Q01rn7SXqiSJwAQXnhjD2IT6rAAAAAElFTkSuQmCC";
 
       ## my house
-      my_house : dynamic_graphic {( point_see_glimmering ? "my_house_after" : "my_house_before" )} ;
-      my_house_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgAD/gAAAAICAAIBAAACAgIDAwMD/AAAA/wD//wAAAP//AP8A///////lVppUAAABzklEQVRYw+3WMVKEMBQG4DfOZCZWWZzR0YrVztLCe9BwABtrjxAquYNewt5GTwQniJAQ3gsbFhYTsPDBLLM7A3z7kxcCd97iZVuyDFHdVc78dwLvr/syPECeAuAuIMGauht0xQ8AIxHAkQDsqQUBSMDyAYQy5QHI+QDunppQgL68vk3lBUCzCeED+COYA7h6tvU0DRCqUpsCQFQNISzg8vOx2x58AGcwCLU6AFgGBwmI9QCQNwWDLqjWA0jWAjI+ow3jAHQAJALdhBC4C5LxicgEQCJoOrDdV2vDLgCMQE9EsB6AWUDmJBB4DNx8v9+b/WsAkAjgZAyI9QB5XzxiF4wDAAEw+TqOAWAIyKYWJDEAkgJ4PMDoeoAMgX4QxAA4bUgnouaLnYicpx4T4F46zy0gagK7V/5i9uKPASDPLIDlsAGAtf/cFKN9WDjL+A0AqbJ1vQmg6O9fh58HBgB8HRMABpBEbsN+GtATgSeAOjIA3z10aY5xpYEAu7eL8499+3E7BDDfuyhVtQ4gVf+AXwPM46UAcIsOwr52g+NyQLe+IgDsMFMIID+mgyNfCpC2m7HUEkC1FCDUZGHuRwA2glMBUoWqahlABAN0EXgBPxNU1ZDbzkZoAAAAAElFTkSuQmCC";
-      my_house_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgAD/gAAAAICAAIBAAACAgIDAwMD/AAAA/wD//wAAAP//AP8A///////lVppUAAAB6ElEQVRYw+3WQU6EMBQG4BeTJnXVwUSjK0Z3Ll14DzYcwI1rj1BWkswR9BLuSHSjJ2JOUKFQ3itThoFpGRc+yJCZBPjmp68U7pzF87pk7qPaq5y57wTOX9d54R0gpwB4URQEEGGN3Q3a4juAgQjAHcBmQ07NCEAClgsgVFMOgDwcwDdF/omnRhSgL69vUzoBUG1CuADuCNwAO4GrZ1NP4wChSuUBYI2BSQAQZUU4GmB1weXXY7s9uADWYBDKEyA/GAAsgZ0ExHIASKuCXheUywEkqwEJP6ANwwB0ACQC3YQg/AKi4YmoCYBEUHVgvfsF7GnDNgCMQE9EsByAGUBiJeB5DNz8vN83+3cPIBHAyRgQywHSrnjALhgGAAJg9HUcAsAQkIwtSEIAJAXwcIDB9QAZAt0gCAGw2pBORNUXMxFZTz0kwL50mhpA0ARWr/yl2bM/BoA0MQCWwgkArP7nTTHah5m1jD8BIFamrk8CyLr7b/3PAz0Avo4JAAOIArdhNw3oicARwDYwAN89dGmOccWeAKu3i/OPdf1x2wcw17soVlsdQKz+AUcDmsdLAWAXHYRdrXrH+YB2fUUA2GFNIYD8GPeOfC5Amm7GUnMA5VyAUKOFue8BmAimAqTyVeU8gPAGaCNwAn4BMMLXgqxDTGkAAAAASUVORK5CYII=";
+      my_house_graphic : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgAD/gAAAAICAAIBAAACAgIDAwMD/AAAA/wD//wAAAP//AP8A///////lVppUAAAB00lEQVRYw+3WMVKEMBQG4KczmYlVwBkdrHa1s7TwHjQcwMbaI4RK7qCXsLfRE7EniEAI7wXCwmICFj6YZXZngG9/8kLgzlm8qEsWPqq9yrn7TuD8dV/4B8hTANwGxFhTd4O2+AAwEgEcCcCcmhOABCwXQChdDoCcD+D2qTEFNJdvblM6AVBtQrgA7gjmAK6fTT1NA4Qq1aYAEGVF8Au4+nxstwcXwBoMQq0OAJbCIAGxHgCyqqDXBeV6AMlqQMpntGEYQBMAiaBpQvDcBfH4RKQDIBFUHVjvq7VhGwBG0ExEsB6AGUBqJeB5DNx8v9/r/asHkAjgZAyI9QBZVzxgF4wDAAEw+ToOAWAISKcWJCEAkgJ4OMDoeoAMgW4QhABYbUgnouqLmYispx4SYF86ywwgaALRK3/Re/7HAJClBsAy2ADA6n+ui9E+zK1l/AaAnTKVbALIu/sf/M8DPQC+jgkAA4gDt2E3DTQTgSOAPDAA3z10aY5xJZ4A0dvlxce+/rjtA5jrXZQUOT3+A34D0I+XAsAuOgi7iuDMOi4HtOsrAsAO04UA8uNOHawjXwqQppux1DyAfSyXAoSaLMz9CMBEcCpAqoU1AJTLAMIboI3ACfgBvwXEgitAoFEAAAAASUVORK5CYII=";
+      my_house_glimmer : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAANklEQVR4nG2NSQ4AIBDCwPj/L9eDUdSRG0uDAUVGwsu1hHpGu8ShQhtEBjfZE1ay/YvyeWr6AQmVHQmjMv6YAAAAAElFTkSuQmCC";
+      my_house_i_stay : base64_png "iVBORw0KGgoAAAANSUhEUgAAABEAAAAQBAMAAAACH4lsAAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAOUlEQVQI133LwQ0AIAwCQDZg/y3ZAGsbifEhn14CBRJ60hKOzJ+unV9BkMkS67AFE9RudzVClN9kAd6aSTDGWNFoAAAAAElFTkSuQmCC";
 
       # final command stuff
       tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
