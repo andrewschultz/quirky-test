@@ -1089,7 +1089,7 @@ locations {
          : match "east _" {
             : set_integer var="tempint" "3" ;
             : gosub "footnote_reveal" ;
-            : print {( "There's no way back. Not that you'd want to go back. Anyway, whoever it was that summoned you would probably just yank you back from your trip back. Well, if they're anywhere near as powerful as their voice.{footnote_reveal_text}" )} ;
+            : print "There's no way back. Not that you'd want to go back. Anyway, whoever it was that summoned you would probably just yank you back from your trip back. Well, if they're anywhere near as powerful as their voice.{footnote_reveal_text}" ;
          }
          : match "first base" {
             : print "You're not sure whether to think or say \"first base,\" so you say it, cautiously.\nYou hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
@@ -2657,7 +2657,7 @@ subroutines {
       }
       : else_if (tempint == 1) {
          : cycle key = "rule_1" predictable_order = "true" skip_interval = "0" {
-            : print {( "\"The first rule in Graham Nelson's Player's Bill of Rights is <not to be killed without warning<#f88>>.\"" )} ;
+            : print "\"The first rule in Graham Nelson's Player's Bill of Rights is <not to be killed without warning<#f88>>.\"" ;
             : print "\"This can refer to rooms you step into that just kill you. Even with <UNDO<#f80>> available, they're still a pain and can interrupt the flow of the game. Of course, there are exceptions. Groundhog Day style games where you learn more with each death can be very intricate and well-received.\"" ;
             : print {( "\"Here, there" + ((bonus_point_death_sentence) ? "was" : "'s") + " only one way to potentially die, and even that, well, it's lampshaded or explained.\"" )} ;
          }
@@ -3484,8 +3484,8 @@ subroutines {
    }
 
    options_list : subroutine {
-      : print {( "Many games have options for sound, etc. " + qt + " uses <YOUROPT YES/Y<#88f>> and <YOUROPT NO/N<#88f>> to change them. <YOUROPT <#88f>> shows its status." )} ;
-      : print {( "{tut} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." )} ;
+      : print "Many games have options for sound, etc. {qt} uses <YOUROPT YES/Y<#88f>> and <YOUROPT NO/N<#88f>> to change them. <YOUROPT <#88f>> shows its status." ;
+      : print "{tut} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." ;
       : print "{ch} is used to toggle colored text hints." ;
       : print "{notif} is used to toggle score notification." ;
       : if (footnotes_available) {
