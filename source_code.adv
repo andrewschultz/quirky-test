@@ -348,10 +348,10 @@ integers {
 collections {
    tutorial_stuff : list {
       items = [
-         "Meta-commands such as {abt}, {credits} and {verbs} give you general information that would break up the flow of an introduction.",
-         "{xme} is a good in-world starter command to tell you about yourself.",
-         "Shorthand such as {v_i} to take inventory and <X<#0f0>> to <EXAMINE<#0f0>> help simplify what you need to type.",
-         "Senses can provide clues. In this case, {qt} uses {lishea}, which implies {tlk}. Also, many parsers may eliminate prepositions for convenience, so {t0} is worth a try",
+         "Meta-commands such as {vm_about}, {vm_credits} and {vm_verbs} give you general information that would break up the flow of an introduction.",
+         "{v_x_me} is a good in-world starter command to tell you about yourself.",
+         "Shorthand such as {vd_i} to take inventory and <X<#0f0>> to <EXAMINE<#0f0>> help simplify what you need to type.",
+         "Senses can provide clues. In this case, {qt} uses {v_listen_hear}, which implies {v_talk}. Also, many parsers may eliminate prepositions for convenience, so {v_t0} is worth a try",
          "You can often try going any direction (up, down, in, out, or the eight compass directions) if the room description is unclear. Also, shorthand such as <W<#0f0>> works in place of <GO WEST<#0f0>>",
          "{qt}'s point-scoring commands are unusual for a parser game, where guess-the-verb is frowned on. However, the commands are all similar to objects or people you run across."
       ]
@@ -458,7 +458,7 @@ collections {
    };
    footnote_text_list : list {
       items = [
-      "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {xme}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this as solipsism. But I think it helps to focus on the puzzles.",
+      "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {v_x_me}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this as solipsism. But I think it helps to focus on the puzzles.",
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>. The link is <here<#f80>>[http://hulkhandsome.itch.io/in-a-manor-of-speaking].",
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a long dead end. That sort of thing is fun for a bit, until it really, really isn't.",
       "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps this spoonerism pair would've made a good book name in the bookshelf at the end.",
@@ -585,15 +585,10 @@ collections {
 
 strings {
 
+   # for options code
    tempopt : string "blank option" ;
 
-   ## delete post-comp
-   postcomp : string "This was intended to be a bonus point for the comp version, but ... things got crossed up. It'll be there post-comp. Sorry." ;
-
-   ## short stubs (ok, exitserr got a bit long)
-   # meta verbs in orange
-   abt : string "<ABOUT<#f80>>" ;
-   cred : string "<CREDITS<#f80>>" ;
+   ## important conditional text stubs
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
       (tutorial_6_x_ask_done && is_at "nameless_lameness") ? "You don't want to wander off without any direction, but maybe that voice could offer a clue." :
       (is_at "nameless_lameness") ? "In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first." :
@@ -606,19 +601,35 @@ strings {
       (is_at "gravel_trail") ? "The passage here is north-south." :
       (is_at "my_house") ? "You can only really go south, but there's no need, since you can just wrap things up here." :
       "This is a dead end, at least for {qt}'s purposes, so you can really only backtrack {spoke_out_dir} to {back_to_hub}, though {v_out} always works, too." )} ;
-   meta : string "<META<#f80>>" ;
-   sco : string "<SCORE<#f80>>" ;
-   bon : string "<BONUS<#f80>>" ;
-   email : string "<blurglecruncheon@gmail.com<#88f>>" ;
-   links : string "<LINKS<#f80>>" ;
-   m_versions : string "<VERSIONS<#f80>>" ;
-   thk : string "<THINK<#f80>>" ;
-   thx : string "<THANKS<#f80>>" ;
-   v_pts : string "<POINTS<#f80>>" ;
-   verbs : string "<VERBS<#f80>>" ;
-   y17 : string "<seventeen<#ff0>>" ;
+   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
+   yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
+   my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
 
-   ## credits
+   # diagnostic and meta verb abbreviations
+   vd_bon : string "<BONUS<#f80>>" ;
+   vd_i : string "<I<#f80>>" ;
+   vd_i_long : string "<INVENTORY<#f80>>" ;
+   vd_sco : string "<SCORE<#f80>>" ;
+   vd_thk : string "<THINK<#f80>>" ;
+
+   # 2nd time through diagnostics
+   vd_ach : string "<ACHIEVEMENTS<#f80>>" ;
+   vd_ac : string "<ACH<#f80>>" ;
+   vd_f0 : string "<FOOTNOTE 0<#f80>>" ;
+   vd_f : string "<F #<#f80>>" ;
+   vd_fn : string "<FOOTNOTE #<#f80>>" ;
+   vd_footnote_cue : string "{vd_fn} or, for brevity, {vd_f}" ;
+
+   vm_about : string "<ABOUT<#f80>>" ;
+   vm_cred : string "<CREDITS<#f80>>" ;
+   vm_links : string "<LINKS<#f80>>" ;
+   vm_meta : string "<META<#f80>>" ;
+   vm_pts : string "<POINTS<#f80>>" ;
+   vm_thx : string "<THANKS<#f80>>" ; # CREDITS is the preferred verb but THANKS maps to credits
+   vm_verbs : string "<VERBS<#f80>>" ;
+   vm_versions : string "<VERSIONS<#f80>>" ;
+
+   ## names in credits
    talj : string "<TALJ<#0f0>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>" ;
    tx_cm : string "<Christopher Merriner<#0f0>>" ;
@@ -635,62 +646,47 @@ strings {
    off : string "<OFF<#f88>>" ;
 
    # options in blue 00f
-   ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
-   notif : string "<NOTIFY<#88f>>" ;
-   tut : string "<TUTORIAL<#88f>>" ;
-   vo_cllc : string "<LEETCHEAP<#f80>> or <CHEATLEEP<#f80>>" ;
+   opt_ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
+   opt_notify : string "<NOTIFY<#88f>>" ;
+   opt_tutorial : string "<TUTORIAL<#88f>>" ;
+   opt_warp : string "<LEETCHEAP<#88f>> or <CHEATLEEP<#88f>>" ;
 
-   # game title
+   # game title/stuff about me
    qt : string "<Quirky Test<#ff0>>" ;
-   qtg : string "<Quirky Test's GitHub repository<#8f8>>[https://github.com/andrewschultz/quirky-test]" ;
-   qtgame : string "<Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]" ;
+   qt_repo : string "<Quirky Test's GitHub repository<#8f8>>[https://github.com/andrewschultz/quirky-test]" ;
+   qt_io : string "<Quirky Test's game page on itch.io<#8f8>>[https://andrewschultz.itch.io/quirky-test]" ;
+   email : string "<blurglecruncheon@gmail.com<#88f>>" ;
 
    # regular commands in green
-   ask : string "<ASK<#0f0>>" ;
-   rule : string "<RULE<#0f0>>" ;
-   lishea : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
+   v_ask : string "<ASK<#0f0>>" ;
+   v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    v_drop : string "<DROP<#0f0>>" ;
    v_o : string "<O<#0f0>>" ;
    v_out : string "<OUT<#0f0>> ({v_o})" ;
-   tak : string "<TAKE<#0f0>>" ;
-   tlk : string "<TALK<#0f0>>" ; # tlk2 = tlk + or <T<#0f0>> (?)
-   t0 : string "<T<#0f0>>" ;
-   xme : string "<X ME<#0f0>>" ;
-
-   # regular meta-command in orange
-   v_i : string "<I<#f80>>" ;
-   v_i_long : string "<INVENTORY<#f80>>" ;
+   v_rule : string "<RULE<#0f0>>" ;
+   v_take : string "<TAKE<#0f0>>" ;
+   v_talk : string "<TALK<#0f0>>" ; # tlk2 = tlk + or <T<#0f0>> (?)
+   v_t0 : string "<T<#0f0>>" ;
+   v_x_me : string "<X ME<#0f0>>" ;
 
    # warp commands in orange
-   v_pb : string "<PB<#f80>>" ;
-   v_wt : string "<WT<#f80>>" ;
-   v_sh : string "<SH<#f80>>" ;
-   v_eb : string "<EB<#f80>>" ;
+   w_pb : string "<PB<#f80>>" ;
+   w_wt : string "<WT<#f80>>" ;
+   w_sh : string "<SH<#f80>>" ;
+   w_eb : string "<EB<#f80>>" ;
 
    # tutorial and hinty stuff in purple
-   tnote : string "<TUTORIAL NOTE:<#f0f>> " ;
-   tcue : string "<TUTORIAL CUE:<#f0f>> " ;
-   otn : string "<ONE-TIME NOTE:<#f0f>> " ;
-   retry_remind : string "<REMINDER:<#f0f>> you found the bonus point too late last time through, so you may wish to " ;
-
-   ## footnotes, achievements, etc.
-   v_ach : string "<ACHIEVEMENTS<#f80>>" ;
-   v_ac : string "<ACH<#f80>>" ;
-   v_fn : string "<FOOTNOTE #<#f80>>" ;
-   v_f0 : string "<FOOTNOTE 0<#f80>>" ;
-   v_f : string "<F #<#f80>>" ;
-   footnote_cue : string "{v_fn} or, for brevity, {v_f}" ;
-   bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
+   note_cue_tutorial : string "<TUTORIAL CUE:<#f0f>> " ;
+   note_once : string "<ONE-TIME NOTE:<#f0f>> " ;
+   note_retry : string "<REMINDER:<#f0f>> you found the bonus point too late last time through, so you may wish to " ;
+   note_tutorial : string "<TUTORIAL NOTE:<#f0f>> " ;
 
    ## inventory
    pip : string " <(+)<#0f0>>" ;
 
    ## dynamic general strings
 
-   yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
    ask_5_notes : dynamic_string {( bonus_point_rare_plights && bonus_point_shush_lout ? "You got both of them" : bonus_point_rare_plights || bonus_point_shush_lout ? "You got one of them" : "You missed them, but you can go back if you want" )}
-
-   my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
 
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
 
@@ -707,7 +703,7 @@ strings {
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {tlk} if you want, or look around for extra content.\"\n" : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {tlk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {ask} about any of the rules in the Player's Bill of Rights." : "to {tlk} whenever, about whatever.") )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {v_talk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about any of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
@@ -876,7 +872,7 @@ strings {
 
    rttr: string "<Rare-Thing-There Ring<#a33>>" ;
 
-   already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {thk}." : "" )} ;
+   already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_thk}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
    ## inventory bonus point notes
@@ -886,6 +882,8 @@ strings {
    inv_plus_so_long : dynamic_string {( inv_so_long ? pip : "" )} ;
    inv_plus_cease_purging : dynamic_string {( inv_cease_purging ? pip : "" )} ;
    inv_plus_racing_passions : dynamic_string {( inv_racing_passions ? pip : "" )} ;
+
+   y17 : string "<seventeen<#ff0>>" ;
 
 }
 
@@ -1006,7 +1004,7 @@ locations {
       on_command {
          : if (in_tutorial && !tutorial_5_inventory_done && is_carried("ooh_task")) {
             : match "x ask" {
-               : print "You'll want to <X ASK<#0f0>> or an equivalent next, but as this tutorial is intended to be on rails, the next step is {v_i} to take {v_i_long}." ;
+               : print "You'll want to <X ASK<#0f0>> or an equivalent next, but as this tutorial is intended to be on rails, the next step is {vd_i} to take {vd_i_long}." ;
                : set_true "temporary_ring_question_blocked" ;
                : done ;
             }
@@ -1047,7 +1045,7 @@ locations {
          }
          : match "x me;x myself;x self" {
             : if (in_tutorial && (!tutorial_1_about_done || !tutorial_2_verbs_done || !tutorial_3_additional_metaverb_done)) {
-               : print "While {xme} is a useful starting command, and one you'll soon be using in this tutorial, I put this tutorial on rails. There are meta-commands to acquaint yourself with first." ;
+               : print "While {v_x_me} is a useful starting command, and one you'll soon be using in this tutorial, I put this tutorial on rails. There are meta-commands to acquaint yourself with first." ;
                : done ;
             }
             : else_if (!is_carried "ooh_task") {
@@ -1073,10 +1071,10 @@ locations {
       on_describe {
          : set_false "in_number_choice" ;
          : if ( is_beside "cheering_voice") {
-            : print "The cheering voice still floats around. You can {lishea} it.";
+            : print "The cheering voice still floats around. You can {v_listen_hear} it.";
          }
          : else_if (is_carried "ooh_task" && tutorial_6_x_ask_done) {
-            : print "But it's no longer silent. Perhaps you can {lishea}.";
+            : print "But it's no longer silent. Perhaps you can {v_listen_hear}.";
          }
       }
       on_tick {
@@ -1250,18 +1248,18 @@ locations {
             }
          }
          : match "listen _" {
-            : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? tlk : ask) + "." )} ;
+            : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? v_talk : v_ask) + "." )} ;
             : done ;
          }
          : match "talk -;talk thor" {
             : gosub "talk_flag" ;
             : if (talked_to_thor) {
-               : print "Now you've broken the ice, probably better to {ask} him about one of the rules, 1-17." ;
+               : print "Now you've broken the ice, probably better to {v_ask} him about one of the rules, 1-17." ;
             } : else {
                : print "\"So, yes, about the Player Rights. Fella name a' Graham Nelson wrote 'em, over thirty years ago now. About what players could and should expect from a game. So it feels challenging but not unfair, and you get your money's and time's worth. It's held up well. It's got {y17} total rules. Some apply more than others in {qt}." ;
-               : print "\"You can {ask} me about them by number, or {rule} works, too. Just the numbers, to keep things simple. I have three things to say about each rule: its original form, what it means and why it's there, and how it applies here in {qt}." ;
+               : print "\"You can {v_ask} me about them by number, or {v_rule} works, too. Just the numbers, to keep things simple. I have three things to say about each rule: its original form, what it means and why it's there, and how it applies here in {qt}." ;
                : print "\"Oh, ask as much or little as you want. It won't affect your final score.\"" ;
-               : print "{otn}{ask} <1-17<#0f0>> is the main command, but {ask} <0<#0f0>> notes one thing you haven't asked about yet. Or one thing you haven't asked fully about yet." ;
+               : print "{note_once}{v_ask} <1-17<#0f0>> is the main command, but {v_ask} <0<#0f0>> notes one thing you haven't asked about yet. Or one thing you haven't asked fully about yet." ;
             }
             : set_true "talked_to_thor" ;
             : done ;
@@ -1627,7 +1625,7 @@ locations {
             : gosub "hub_check_independent" ;
             : pocket "pacing_rations" ;
             : if (retry_racing_passions) {
-               : print "{retry_remind}<RACING PASSIONS<#f80>>." ;
+               : print "{note_retry}<RACING PASSIONS<#f80>>." ;
             }
          }
          : done ;
@@ -1667,7 +1665,7 @@ locations {
          : done ;
       }
       : match "take _" {
-         : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {tak} here." )} ;
+         : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {v_take} here." )} ;
          : done ;
       }
       : if (!is_carried "crackers") {
@@ -1784,7 +1782,7 @@ locations {
       }
       on_tick {
          : if (!apostrophe_warn) {
-            : print "{otn}Adventuron doesn't like apostrophes, so you don't want to use it here, even if it's in the description.";
+            : print "{note_once}Adventuron doesn't like apostrophes, so you don't want to use it here, even if it's in the description.";
             : set_true "apostrophe_warn" ;
          }
       }
@@ -1873,7 +1871,7 @@ locations {
             : gosub "hub_check_independent" ;
             : pocket "low_song" ;
             : if (retry_so_long) {
-               : print "{retry_remind}<SO LONG<#f80>>." ;
+               : print "{note_retry}<SO LONG<#f80>>." ;
             }
          }
          : done ;
@@ -1909,7 +1907,7 @@ locations {
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
             : if (retry_vast_fission) {
-               : print "{retry_remind}<VAST FISSION<#f80>>." ;
+               : print "{note_retry}<VAST FISSION<#f80>>." ;
             }
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
@@ -1957,7 +1955,7 @@ locations {
             : gosub "hub_check_independent" ;
             : pocket "peace_surging" ;
             : if (retry_cease_purging) {
-               : print "{retry_remind}<CEASE PURGING<#f80>>." ;
+               : print "{note_retry}<CEASE PURGING<#f80>>." ;
             }
          }
          : done ;
@@ -2021,7 +2019,7 @@ locations {
                : set_true "point_pouring_rain" ;
                : pocket "rain_soul" ;
                : if (retry_sane_role) {
-                  : print "{retry_remind}<SANE ROLE<#f80>>." ;
+                  : print "{note_retry}<SANE ROLE<#f80>>." ;
                }
                : gosub "add_point_east" ;
                : gosub "hub_check_independent" ;
@@ -2081,7 +2079,7 @@ locations {
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
             : if (retry_grow_need) {
-               : print "{retry_remind}<GROW NEED<#f80>>." ;
+               : print "{note_retry}<GROW NEED<#f80>>." ;
             }
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
@@ -2289,7 +2287,7 @@ locations {
       }
       on_describe {
          : if (achieve_nbbn && !note_book_reshuffle) {
-            : print "{otn}as a small bonus, the books in the bookshelf are different this time. I wasn't creative enough to do any more than that, but I hope you enjoy it, all the same. Thanks again for playing and replaying!" ;
+            : print "{note_once}as a small bonus, the books in the bookshelf are different this time. I wasn't creative enough to do any more than that, but I hope you enjoy it, all the same. Thanks again for playing and replaying!" ;
             : set_true "note_book_reshuffle" ;
          }
       }
@@ -2486,7 +2484,7 @@ subroutines {
       : gosub "bonus_read_from_survivors" ;
       : gosub "footnote_read_from_survivors" ;
       : if (!footnote_nag) {
-         : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {tut} and {ch}.";
+         : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {opt_tutorial} and {opt_ch}.";
          : set_true "footnote_nag" ;
          : press_any_key ;
       }
@@ -2540,7 +2538,7 @@ subroutines {
          : set_true "score_bonus_nag" ;
          : print "<You just found a bonus point!<6>>" ;
          : if (bonus_score == 0) {
-             : print "{otn}{qt} contains several bonus points that are uncued. {sco} will let you know how many you've found, and {bon} will list where you found them." ;
+             : print "{note_once}{qt} contains several bonus points that are uncued. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
          }
       }
       : decrement "tempint" ; # this is because I use 1-based numbers in my personal table, but Adventuron is 0-based.
@@ -2556,7 +2554,7 @@ subroutines {
    }
    bonus_display : subroutine {
       : if (bonus_score == max_bonus_score && !bonus_max_warn) {
-         : print "{otn}you got all the bonus points. Congratulations! {bon} is no longer useful, though if you wish to see the list again after this nag, {bon} will revert to its regular behavior, so you can see everything you've found. (Enjoy it. You've earned it!)" ;
+         : print "{note_once}you got all the bonus points. Congratulations! {vd_bon} is no longer useful, though if you wish to see the list again after this nag, {vd_bon} will revert to its regular behavior, so you can see everything you've found. (Enjoy it. You've earned it!)" ;
          : set_true "bonus_max_warn" ;
          : return ;
       }
@@ -2633,24 +2631,24 @@ subroutines {
       : collection_modify { collection = "ask_list" index -> (tempint) content -> ("" + tempint2) }
       : if (tempint2 == 3 && ! have_asked_three) {
          : set_true "have_asked_three";
-         : print "{otn}the up-arrow on your keyboard will show your previous command. This is useful for if you typed something wrong, or you want to see what you did, or you typed the right thing at the wrong time and want to save keystrokes. Or, here, you can just adjust the number at the end." ;
+         : print "{note_once}the up-arrow on your keyboard will show your previous command. This is useful for if you typed something wrong, or you want to see what you did, or you typed the right thing at the wrong time and want to save keystrokes. Or, here, you can just adjust the number at the end." ;
       }
       : else_if (tempint2 == 4 && ! have_asked_four) {
          : set_true "have_asked_four";
-         : print "{otn}I'll have to ask for some suspension of disbelief, here. Thor's responses for each rule come in cycles of three, the exact same thing every time, and fortunately, unlike us mortals, he never gets bored." ;
+         : print "{note_once}I'll have to ask for some suspension of disbelief, here. Thor's responses for each rule come in cycles of three, the exact same thing every time, and fortunately, unlike us mortals, he never gets bored." ;
       }
       : done ;
    }
    ask_thor : subroutine {
       : if (!talked_to_thor) {
-         : print "You should {tlk} to Thor to introduce yourself before interrogating him." ;
+         : print "You should {v_talk} to Thor to introduce yourself before interrogating him." ;
          : done ;
       }
       : if (!is_int(original "noun1")) {
          : match "ask -" {
                : gosub "ask_thor_next_guess" ;
          }
-         : print "{ask}ing Thor requires a number from 1-17, with no extra text. Zero checks what you've asked so far." ;
+         : print "{v_ask}ing Thor requires a number from 1-17, with no extra text. Zero checks what you've asked so far." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
@@ -2661,7 +2659,7 @@ subroutines {
          : gosub "ask_thor_next_guess" ;
       }
       : if (tempint < 1 || tempint > 17) {
-         : print {( "\"There are only {y17} total {rule}s, so just {ask} about any one from one to {y17}. There are no secret numbers, either, though zero cues what to ask next." + (ask_thor_misfire ? "" : " Still, trying out-of-the-way stuff is always worth a try for the clever adventurer.") + "\"" )} ;
+         : print {( "\"There are only {y17} total {v_rule}s, so just {v_ask} about any one from one to {y17}. There are no secret numbers, either, though zero cues what to ask next." + (ask_thor_misfire ? "" : " Still, trying out-of-the-way stuff is always worth a try for the clever adventurer.") + "\"" )} ;
          : set_true "ask_thor_misfire" ;
          : done ;
       }
@@ -2729,7 +2727,7 @@ subroutines {
          : cycle key = "rule_8" predictable_order = "true" skip_interval = "0" {
             : print "\"The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>.\"" ;
             : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. That's a problem with parsers that accept a lot of words. They may expect exact ones, or they may allow synonyms, and it's tough for the player to decipher.\"" ;
-            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution, though it's not terribly evocative.\n\"So taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
+            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {vm_verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution, though it's not terribly evocative.\n\"So taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2746,7 +2744,7 @@ subroutines {
       : else_if (tempint == 10) {
          : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
          : print "\"The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>.\"" ;
-         : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for SEARCH and EXAMINE may frustrate players.\nOne thing that helps provide a buffer is a {verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {verbs}.\"" ;
+         : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for SEARCH and EXAMINE may frustrate players.\nOne thing that helps provide a buffer is a {vm_verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {vm_verbs}.\"" ;
          : print "\"I used Adventuron's simplified two-word parser. I didn't need any complex actions, so it worked well.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -2818,7 +2816,7 @@ subroutines {
          : return ;
       }
       : if (ever_bonus && ever_footnote) {
-         : print "{otn}{bon} and {v_fn} both follow the same color-coding scheme." ;
+         : print "{note_once}{vd_bon} and {vd_fn} both follow the same color-coding scheme." ;
          : set_true "bf_color_note" ;
       }
    }
@@ -2830,7 +2828,7 @@ subroutines {
          : return ;
       }
       : if (ever_bonus || ever_footnote) {
-         : print "{otn}{v_ach} follows different color-coding from {bon} and {v_fn}, since it requires more wide-ranging actions." ;
+         : print "{note_once}{vd_ach} follows different color-coding from {vd_bon} and {vd_fn}, since it requires more wide-ranging actions." ;
          : set_true "bfa_color_note" ;
       }
    }
@@ -2883,7 +2881,7 @@ subroutines {
    }
    footnote_printer : subroutine {
       : if (!is_int(original "noun1")) {
-         : print "Footnotes require a number. If you wish to list which footnotes you've found, type {v_f0}." ;
+         : print "Footnotes require a number. If you wish to list which footnotes you've found, type {vd_f0}." ;
          : done ;
       }
       : gosub "int_from_noun1" ;
@@ -2949,20 +2947,20 @@ subroutines {
    }
    homonym_close : subroutine {
       : if (!note_homonym) {
-         : print "{otn}you're really close to a point you need. When this happens, you should always get a hopefully amusing response that indicates such. There's no reward for finding them all, though, other than your own amusement." ;
+         : print "{note_once}you're really close to a point you need. When this happens, you should always get a hopefully amusing response that indicates such. There's no reward for finding them all, though, other than your own amusement." ;
          : set_true "note_homonym" ;
       }
    }
    hub_check_dependent : subroutine {
       : if (!note_dependent_point) {
          : set_true "note_dependent_point" ;
-         : print "{otn}solving puzzles that depend on others, like this one, will cause an inventory shuffle. You will lose an item or two but gain one." ;
+         : print "{note_once}solving puzzles that depend on others, like this one, will cause an inventory shuffle. You will lose an item or two but gain one." ;
       }
    }
    hub_check_independent : subroutine {
       : if (!note_independent_point) {
          : set_true "note_independent_point" ;
-         : print "{otn}every critical puzzle you solve here will add an item to your inventory, which will be used implicitly when solving another puzzle. It's not critical to see what they are, but {v_i} may offer clues where to go next." ;
+         : print "{note_once}every critical puzzle you solve here will add an item to your inventory, which will be used implicitly when solving another puzzle. It's not critical to see what they are, but {vd_i} may offer clues where to go next." ;
       }
    }
    hub_jerk : subroutine {
@@ -3198,10 +3196,10 @@ subroutines {
       : print "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions." ;
       : print "" ;
       : print "" ;
-      : print "{v_eb} = East Branch" ;
-      : print "{v_pb} = Plain Base" ;
-      : print "{v_sh} = Stealing Hills" ;
-      : print "{v_wt} = West Tiles" ;
+      : print "{w_eb} = East Branch" ;
+      : print "{w_pb} = Plain Base" ;
+      : print "{w_sh} = Stealing Hills" ;
+      : print "{w_wt} = West Tiles" ;
    }
    mark_jump : subroutine {
       : if (is_at("plain_base")) {
@@ -3240,7 +3238,7 @@ subroutines {
    note_think_command : subroutine {
       : if (!think_noted) {
          : set_true "think_noted" ;
-         : print "{otn}you've found the right thing to say or do, but you weren't prepared yet. {thk} will record this and other point-scoring commands you might discover, for when your character is fully prepared." ;
+         : print "{note_once}you've found the right thing to say or do, but you weren't prepared yet. {vd_thk} will record this and other point-scoring commands you might discover, for when your character is fully prepared." ;
       }
    }
    read_book : subroutine {
@@ -3344,7 +3342,7 @@ subroutines {
       : set_true "half_bonus" ;
       : gosub "say_half" ;
       : if (!bonus_half_note) {
-         : print "{otn}since you've been through once, I will assume you know all the core points and are hunting for bonus points. This wasn't available the first time through, to avoid distracting you from the main game." ;
+         : print "{note_once}since you've been through once, I will assume you know all the core points and are hunting for bonus points. This wasn't available the first time through, to avoid distracting you from the main game." ;
          : set_true "bonus_half_note" ;
       }
       : set_false "half_bonus" ;
@@ -3431,7 +3429,7 @@ subroutines {
       no_answer  = No, I don't need the tutorial.
       var        = in_tutorial
       }
-      : print "Note you can change in and out of tutorial mode with {tut} {yn} before you have completed the first few tasks, though this may break narrative continuity.\nAlso, note that your tutorial progress will appear in the upper right while tutorial mode is active." ;
+      : print "Note you can change in and out of tutorial mode with {opt_tutorial} {yn} before you have completed the first few tasks, though this may break narrative continuity.\nAlso, note that your tutorial progress will appear in the upper right while tutorial mode is active." ;
       : press_any_key ;
       : clear_screen ;
       : ask_bool {
@@ -3506,7 +3504,7 @@ subroutines {
          : set_false "score_notify";
          : done ;
       }
-      : set_string var="tempopt" text="{notif}" ;
+      : set_string var="tempopt" text="{opt_notify}" ;
       : gosub "option_err_stub" ;
    }
 
@@ -3531,7 +3529,7 @@ subroutines {
          : set_true "in_tutorial";
          : if (have_won && !tutorial_redo_note) {
             : set_true "tutorial_redo_note" ;
-            : print "{otn}there are no special achievements or footnotes related to the tutorial, if you're looking there." ;
+            : print "{note_once}there are no special achievements or footnotes related to the tutorial, if you're looking there." ;
          }
          : done ;
       }
@@ -3547,44 +3545,44 @@ subroutines {
    tutorial_progress : subroutine {
       : set_true "ever_tutorial" ;
       : if (!tutorial_1_about_done) {
-         : print "{tcue}An author frequently implements an {abt} commands page for big-picture introductory information that might disrupt the starting narrative. So try {abt} to get started." ;
+         : print "{note_cue_tutorial}An author frequently implements an {vm_about} commands page for big-picture introductory information that might disrupt the starting narrative. So try {vm_about} to get started." ;
          : return ;
       }
       : if (!tutorial_2_verbs_done) {
-         : print "{tcue}The {verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass in-game. Some other games use HELP, though I find it too similar to HINT or HINTS.\nSince {verbs} will show you other meta-commands, too, let's try that next." ;
+         : print "{note_cue_tutorial}The {vm_verbs} meta-command is useful to see what the most common commands are. A meta-command is defined as a request for game status that doesn't cause time to pass in-game. Some other games use HELP, though I find it too similar to HINT or HINTS.\nSince {vm_verbs} will show you other meta-commands, too, let's try that next." ;
          : return ;
       }
       : if (!tutorial_3_additional_metaverb_done) {
-         : print "{tcue}The {abt} and {verbs} meta-commands tipped off additional other meta-commands, listed in <orange<#f80>>, to help navigate the parser. The next step is to try any one now." ;
+         : print "{note_cue_tutorial}The {vm_about} and {vm_verbs} meta-commands tipped off additional other meta-commands, listed in <orange<#f80>>, to help navigate the parser. The next step is to try any one now." ;
          : return ;
       }
       : if (!tutorial_4_x_me_done) {
-         : print {( tcue + (tutorial_x_me_cued ? "{xme} is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial. It may not be as grammatically correct as <X MYSELF<#f80>> or <X SELF<#f80>>, but it's easier to type, and modern parser games try to provide that convenience when sensible." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that {xme} provides clues of who you are and what you're doing with relatively few keystrokes. So try {xme} as your first in-world command.")  )} ;
+         : print {( note_cue_tutorial + (tutorial_x_me_cued ? "{v_x_me} is a standard command to start text adventures, to get your bearings. You'll want to type it now to continue the tutorial. It may not be as grammatically correct as <X MYSELF<#f80>> or <X SELF<#f80>>, but it's easier to type, and modern parser games try to provide that convenience when sensible." : "Now you've looked into the meta-commands, you'll want to have a look at yourself. One convention of text adventures is that {v_x_me} provides clues of who you are and what you're doing with relatively few keystrokes. So try {v_x_me} as your first in-world command.")  )} ;
          : set_true "tutorial_x_me_cued" ;
          : return ;
       }
       : if (!tutorial_5_inventory_done) {
-         : print "{tcue}now you examined yourself with {xme}, another common command is to take {v_i_long} to verify you are carrying the item you found. This can be shortened with {v_i}." ;
+         : print "{note_cue_tutorial}now you examined yourself with {v_x_me}, another common command is to take {vd_i_long} to verify you are carrying the item you found. This can be shortened with {vd_i}." ;
          : return;
       }
       : if (!tutorial_6_x_ask_done) {
-         : print "{tcue}Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as TO is part of complex commands such as <GIVE A TO B<#0f0>>." ;
+         : print "{note_cue_tutorial}Now that you verified you found something new, the next thing to do is to examine it with <X TASK<#0f0>>. Adventuron also recognizes <X ASK<#0f0>> and <X OOH<#0f0>>, but not <X TO<#0f0>>, as TO is part of complex commands such as <GIVE A TO B<#0f0>>." ;
          : return;
       }
       : if (!tutorial_7_listen_done) {
-         : print "{tcue}sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, having only five physical senses should limit the required guesswork nicely." ;
+         : print "{note_cue_tutorial}sometimes a game will indicate you should use one of your senses. While guess-the-verb is frowned upon in parser games, having only five physical senses should limit the required guesswork nicely." ;
          : return;
       }
       : if (!tutorial_8_talk_voice_done) {
-         : print "{tcue}that voice is talking to you. While it's not likely the voice will talk back, you can still try with {tlk} ({qt} can figure the subject) or <TALK VOICE<#0f0>>. You can even abbreviate {tlk} to {t0}.";
+         : print "{note_cue_tutorial}that voice is talking to you. While it's not likely the voice will talk back, you can still try with {v_talk} ({qt} can figure the subject) or <TALK VOICE<#0f0>>. You can even abbreviate {v_talk} to {v_t0}.";
          : return;
       }
       : if (!tutorial_9_go_west) {
-         : print "{tcue}the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." ;
+         : print "{note_cue_tutorial}the {cc_whoa_guest} must be a hint. Perhaps you should determine which direction it wants you to go." ;
          : return ;
       }
       : if (!tutorial_10_first_base) {
-         : print "{tcue}{cc_whoa_guest} had you <GO WEST<#0f0>>. What about the {cc_burst_face}?" ;
+         : print "{note_cue_tutorial}{cc_whoa_guest} had you <GO WEST<#0f0>>. What about the {cc_burst_face}?" ;
          : return ;
       }
       : print "This is a bug. You should have finished the tutorial by now. Let me know how this happened." ;
@@ -3611,12 +3609,12 @@ subroutines {
    meta_about : subroutine {
       : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. It placed 4th of 7 entries." ;
       : print "I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#8f8>>[https://cobwebbeddragon.itch.io/interactive-adventurer-tutorial-adventure-talp], a 2023 entry by <Cobwebbed Dragon<#8f8>>[https://cobwebbeddragon.itch.io/] (clickable links,) as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
-      : print {( "You can see what sort of commands {qt} uses with {verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
-      : print "The {thx} command lists people and entities who helped in {qt}'s production." ;
-      : print "{links} lists relevant links, and {m_versions} lists summaries of versions." ;
+      : print {( "You can see what sort of commands {qt} uses with {vm_verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
+      : print "The {vm_thx}/{vm_credits} command lists people and entities who helped in {qt}'s production." ;
+      : print "{vm_links} lists relevant links, and {vm_versions} lists summaries of versions." ;
       : if (!ever_about) {
-         : print "{otn}if you want the mechanic for point-scoring commands spoiled or explained, {v_pts} will do so." ;
-         : print {( "{otn}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and " + (has_visited("plain_base") ? "Thor" : "an NPC you'll find") + ", it's my hope {qt} can be enjoyed just as a game." )} ;
+         : print "{note_once}if you want the mechanic for point-scoring commands spoiled or explained, {vm_pts} will do so." ;
+         : print {( "{note_once}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and " + (has_visited("plain_base") ? "Thor" : "an NPC you'll find") + ", it's my hope {qt} can be enjoyed just as a game." )} ;
          : set_true "ever_about" ;
       }
       : if (!tutorial_1_about_done) {
@@ -3627,27 +3625,27 @@ subroutines {
 
    meta_links : subroutine {
       : print "Clicking on the light green text below will open a new tab." ;
-      : print "Here is a link to {qtgame}." ;
+      : print "Here is a link to {qt_io}." ;
       : print "Here is a link to <TALJ 2025<#8f8>>[https://itch.io/jam/talp2025], where {qt} was entered on release. {qt} would not have been a thing without it, or without <Adventuron<#8f8>>[http://adventuron.io]." ;
       : print "Here are links to previous incarnations of TALP/TALJ: <TALP 2024<#8f8>>[https://itch.io/jam/talp2024/entries], <TALP 2023<#8f8>>[https://itch.io/jam/talp2023/entries], <TALP 2022<#8f8>>[https://itch.io/jam/talp2022/entries], and <TALP 2021<#8f8>>[https://itch.io/jam/talp/entries]." ;
-      : print "If you find a bug, big or small, and want to report an issue, here is a link to {qtg}." ;
+      : print "If you find a bug, big or small, and want to report an issue, here is a link to {qt_repo}." ;
       : print "If you would like to share a transcript with me, send it to {email}." ;
       : gosub "check_additional_meta" ;
    }
 
    meta_meta_verbs : subroutine {
-      : print "{abt} gives info about the game.";
-      : print "{thx} or {cred} gives info about people who helped make {qt} or make it better.";
-      : print "{thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
-      : print {( "{sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> shows bonus points you've found and clues where to get others." : "" ) )} ;
-      : print "{v_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
+      : print "{vm_about} gives info about the game.";
+      : print "{vm_thx} or {vm_cred} gives info about people who helped make {qt} or make it better.";
+      : print "{vd_thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
+      : print {( "{vd_sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> shows bonus points you've found and clues where to get others." : "" ) )} ;
+      : print "{vm_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
       : if (have_won) {
-         : print "By winning the game, you've opened up footnotes ({footnote_cue}) and achievements tracking ({v_ach}).";
+         : print "By winning the game, you've opened up footnotes ({vd_footnote_cue}) and achievements tracking ({vd_ach}).";
       }
       : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
-      : print "Adventuron-specific {meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
+      : print "Adventuron-specific {vm_meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
       : if (!meta_abbrev_noted) {
-         : print "{otn}you can abbreviate many of the non-native Adventuron commands above. Listing them all would make this readout too long, but experiment, if you like." ;
+         : print "{note_once}you can abbreviate many of the non-native Adventuron commands above. Listing them all would make this readout too long, but experiment, if you like." ;
          : set_true "meta_abbrev_noted" ;
       }
       : gosub "check_additional_meta" ;
@@ -3657,9 +3655,9 @@ subroutines {
       : print "Many games have options for sound, etc. {qt} uses <YOUROPT YES/Y<#88f>> and <YOUROPT NO/N<#88f>> to change them. <YOUROPT <#88f>> shows its status." ;
       : print "{tut} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." ;
       : print "{ch} is used to toggle colored text hints." ;
-      : print "{notif} is used to toggle score notification." ;
+      : print "{opt_notify} is used to toggle score notification." ;
       : if (have_won) {
-         : print "{vo_cllc} now lets you restart at the first room needed to find a footnote, bonus point or achievement, up to Plain Base." ;
+         : print "{opt_warp} now lets you restart at the first room needed to find a footnote, bonus point or achievement, up to Plain Base." ;
       }
       : print "Note that {qt} uses {yn} to toggle options instead of {on} and {off}, since {on} is a preposition, which is often ignored by the simplified version of Adventuron's parser used here." ;
       : print "Also note that typing an option will not set it. At least, not in the initial version of {qt}." ;
@@ -3681,7 +3679,7 @@ subroutines {
    }
 
    meta_thanks : subroutine {
-      : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca}, {tx_gf} and <Pinkunz<#0f0>>. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts. {links} will lead you to past comps." ;
+      : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca}, {tx_gf} and <Pinkunz<#0f0>>. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts. {vm_links} will lead you to past comps." ;
       : print "Thanks to {tx_ca} for creating Adventuron." ;
       : print "Thanks (in alphabetical order) to my testers: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
       : print "Thanks to {tx_da} and {tx_on} who offered bugfinds and advice during TALJ/TALP 2025." ;
@@ -3691,7 +3689,7 @@ subroutines {
 
    meta_versions : subroutine {
       : print "<Version 1.0.0<#80f>> was released for the TALP 2025 Jam on April 30, 2025." ;
-      : print "There were several in-comp updates. {qtgame} has this, with the details of what they fixed." ;
+      : print "There were several in-comp updates. {qt_io} has this, with the details of what they fixed." ;
       : print "<Version 2.0.0<#80f>> is pending but planned for June 2025. Along with bug fixes and graphic tweaks, two bonus points are replaced, with the old points going toward an achievement. Several achievements are added, and bonus points now carry over after winning. You can now skip introductory rooms on replay if you've found everything you need there for achievements. The bookshelf will also have new book titles once you've read them all." ;
       : print "There are no future versions planned, barring catastrophic bugs." ;
       : gosub "check_additional_meta" ;
@@ -3703,20 +3701,20 @@ subroutines {
       }
       : if (!tutorial_1_about_done) {
          : if (!meta_tutorial_note_1) {
-            : print "{otn}it's good to look into meta-commands offered by the game, but with this tutorial on rails, we are starting with the basics." ;
+            : print "{note_once}it's good to look into meta-commands offered by the game, but with this tutorial on rails, we are starting with the basics." ;
             : set_true "meta_tutorial_note_1" ;
          }
          : return ;
       }
       : if (!tutorial_2_verbs_done) {
          : if (!meta_tutorial_note_2) {
-            : print "{otn}this tutorial wanted to highlight {verbs} as the most useful of the meta-verbs. So you re-trying this command after doing that will satisfy the next step." ;
+            : print "{note_once}this tutorial wanted to highlight {vm_verbs} as the most useful of the meta-verbs. So you re-trying this command after doing that will satisfy the next step." ;
             : set_true "meta_tutorial_note_2" ;
          }
          : return ;
       }
       : if (tutorial_1_about_done && tutorial_2_verbs_done &&  !tutorial_3_additional_metaverb_done) {
-         : print "{tnote}You found one specific meta-command. There are others, but I didn't want to force you to see them all. You can if you want. You just need to know that a robust text adventure takes steps to help the player not feel lost. This wasn't always the case back in the '80s, when disk space was much scarcer." ;
+         : print "{note_tutorial}You found one specific meta-command. There are others, but I didn't want to force you to see them all. You can if you want. You just need to know that a robust text adventure takes steps to help the player not feel lost. This wasn't always the case back in the '80s, when disk space was much scarcer." ;
          : set_true "tutorial_3_additional_metaverb_done";
          : increment "tutorial_score" ;
       }
@@ -3729,14 +3727,14 @@ subroutines {
       }
       : print "While {qt} requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." ;
       : print "{qt} uses all eight planar directions, abbreviated <N S E W NW NE SE SW<#0f0>> (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out} leaves if there is only one exit." ;
-      : print "You can {tak} an item, but there is no need to {v_drop} it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
-      : print "You can {tlk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
+      : print "You can {v_take} an item, but there is no need to {v_drop} it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
+      : print "You can {v_talk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : if (talked_to_thor) {
-         : print "You can also {ask} Thor about {rule}s (1-17) with 0 checking for what you haven't asked about." ;
+         : print "You can also {v_ask} Thor about {v_rule}s (1-17) with 0 checking for what you haven't asked about." ;
       }
-      : print "No other standard commands are needed to win {qt}. However, {meta} will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." ;
+      : print "No other standard commands are needed to win {qt}. However, {vm_meta} will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." ;
       : if (jump_commands_notified) {
-         : print {( "To save keystrokes, you can jump around hub locations with " + v_eb + " (east branch.)" + v_pb + " (plain base,) " + (point_healing_still ? "" : v_sh + " (stealing hill,) ") + v_wt + " (west tiles,) " )} ;
+         : print {( "To save keystrokes, you can jump around hub locations with " + w_eb + " (east branch.)" + w_pb + " (plain base,) " + (point_healing_still ? "" : w_sh + " (stealing hill,) ") + w_wt + " (west tiles,) " )} ;
       }
       : if (in_debug && !have_won) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
@@ -3745,7 +3743,7 @@ subroutines {
 
    nl_anagram_check : subroutine {
       : if (!anagram_nag) {
-         : print "{otn}however, the author did write such an anagram game. Three, in fact. You can find <Shuffling Around<#f80>>, <A Roiling Original<#f80>> and <Tours Roust Torus<#f80>>. If you enjoy {qt}, you may enjoy them, too." ;
+         : print "{note_once}however, the author did write such an anagram game. Three, in fact. You can find <Shuffling Around<#f80>>, <A Roiling Original<#f80>> and <Tours Roust Torus<#f80>>. If you enjoy {qt}, you may enjoy them, too." ;
          : set_true "anagram_nag" ;
       }
       : done ;
@@ -3852,7 +3850,7 @@ subroutines {
          : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
          : set_true "achieve_cnnc" ;
          : if (!achieve_cddc2) {
-            : print "{otn}you will automatically get the {achievement_cddc2} achievement on the next playthrough, since it requires you to win one session without finding any bonus points, and there are no bonus points left to find." ;
+            : print "{note_once}you will automatically get the {achievement_cddc2} achievement on the next playthrough, since it requires you to win one session without finding any bonus points, and there are no bonus points left to find." ;
          }
       }
       : else {
@@ -4027,7 +4025,7 @@ subroutines {
    warning_bonus_after : subroutine {
       : print "That would have worked earlier, but you used up the item solving a core puzzle. Maybe next go-round?" ;
       : if (!warn_must_redo) {
-         : print "{otn}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {thk} will keep track of what you saw." ;
+         : print "{note_once}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {vd_thk} will keep track of what you saw." ;
          : set_true "warn_must_redo" ;
       }
    }
@@ -4110,8 +4108,8 @@ subroutines {
       : if (!have_won) {
          : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
          : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
-         : print "These can be tracked with {v_ach} or {v_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qtg} to spoil them." ;
-         : print "Finally, there is a {vo_cllc} command that lets you skip ahead of beginning rooms with no bonus points, footnotes or achievements to discover." ;
+         : print "These can be tracked with {vd_ach} or {vd_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qt_repo} to spoil them." ;
+         : print "Finally, there is a {opt_warp} command that lets you skip ahead of beginning rooms with no bonus points, footnotes or achievements to discover." ;
          : set_true "have_won" ;
          : return ;
       }
@@ -4174,7 +4172,7 @@ themes {
    inventory_list_empty = Nothing (yet)
    inventory_list_header = Stuff you've acquired:\s
    you_cant_go_that_direction                     = {exitserr}
-   unknown_verb                                   = Nothing comes from that. {verbs} gives a list of basic standard verbs{unknown_begin_note}.
+   unknown_verb                                   = Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}.
       }
    }
 }
@@ -4281,13 +4279,13 @@ on_tick {
    : if (!inventory_incorporeal) {
       : match "i _" {
          : if (is_carried("low_song") || is_carried("confidence") || is_carried("focus") || is_carried("no_greed") || is_carried("fast_vision") || is_carried("rain_soul") || is_carried("peace_surging")) {
-            : print "{otn}items listed in <GREY<#888>> are abstract moods or feelings that will help you overcome obstacles when the time comes. You can manipulate some of them, if you're clever enough, but it's not necessary to win {qt}." ;
+            : print "{note_once}items listed in <GREY<#888>> are abstract moods or feelings that will help you overcome obstacles when the time comes. You can manipulate some of them, if you're clever enough, but it's not necessary to win {qt}." ;
             : set_true "inventory_incorporeal" ;
          }
       }
    }
    : if (verb_is "inventory" && !inv_plus_warn && inv_any_bonuses) {
-      : print "{otn}the plus in parentheses {pip} after an item means you found how to get a bonus point from it." ;
+      : print "{note_once}the plus in parentheses {pip} after an item means you found how to get a bonus point from it." ;
       : set_true "inv_plus_warn" ;
    }
    : if ((latest_warp_number != -3) && (!achieve_cddc_pre)) {
@@ -4295,8 +4293,8 @@ on_tick {
    }
    : if (!ever_note_footnote && ever_reveal_footnote) {
       : set_true "ever_note_footnote" ;
-      : print "{otn}you can view footnotes with {footnote_cue}. Each individual footnote's notification only appears once. I won't reveal how many there are, but you can figure the precise number out by guessing and getting different error messages.";
-      : print "You can also type {v_f0} to get a list of footnotes." ;
+      : print "{note_once}you can view footnotes with {vd_footnote_cue}. Each individual footnote's notification only appears once. I won't reveal how many there are, but you can figure the precise number out by guessing and getting different error messages.";
+      : print "You can also type {vd_f0} to get a list of footnotes." ;
    }
    : if_examine "crackers" {
       : set_integer var="tempint" "15" ;
@@ -4353,7 +4351,7 @@ on_pre_command {
    : if (!examine_warn) {
       : match "examine *;look *" {
          : if (original "verb" == "examine") {
-            : print "{otn}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
+            : print "{note_once}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
             : gosub "long_words_note" ;
             : set_true "examine_warn" ;
             : press_any_key ;
@@ -4363,7 +4361,7 @@ on_pre_command {
    : if (!look_warn) {
       : match "look -" {
          : if (original "verb" == "look") {
-            : print "{otn}to save keystrokes, you only need to type <L<#0f0>> to look." ;
+            : print "{note_once}to save keystrokes, you only need to type <L<#0f0>> to look." ;
             : gosub "long_words_note" ;
             : set_true "look_warn" ;
             : press_any_key ;
@@ -4374,7 +4372,7 @@ on_pre_command {
    : if (!inventory_warn) {
       : match "inventory _" {
          : if (original "verb" == "inventory") {
-            : print "{otn}you only need to type {v_i} to take {v_i_long}." ;
+            : print "{note_once}you only need to type {vd_i} to take {vd_i_long}." ;
             : gosub "long_words_note" ;
             : set_true "inventory_warn" ;
             : press_any_key ;
@@ -4388,7 +4386,7 @@ on_pre_command {
 on_command {
    : if (!say_warn) {
       : match "say _" {
-         : print "{otn}if you figure a phrase, you don't need to <SAY#0f0> it explicitly, though it shouldn't hurt to include it." ;
+         : print "{note_once}if you figure a phrase, you don't need to <SAY#0f0> it explicitly, though it shouldn't hurt to include it." ;
          : print "Just use the two words needed. The parser will understand." ;
          : set_true "say_warn" ;
       }
@@ -4396,7 +4394,7 @@ on_command {
    : match "o _;out _" {
       : if (out_argument_note) {
          : match "o *;out *" {
-            : print "{otn}{v_out} requires no argument. It just looks if there's only one exit out." ;
+            : print "{note_once}{v_out} requires no argument. It just looks if there's only one exit out." ;
             : set_true "out_argument_note" ;
          }
       }
@@ -4429,7 +4427,7 @@ on_command {
    : match "credits _" {
       : if (!credits_to_thanks_note) {
          : mask {
-            : print "{otn}General credits from {tx_ca}, the creator of Adventuron, can be seen with <*<#f80>>{cred}." ;
+            : print "{note_once}General credits from {tx_ca}, the creator of Adventuron, can be seen with <*<#f80>>{vm_cred}." ;
             : press_any_key ;
             : set_true "credits_to_thanks_note" ;
          }
@@ -4520,15 +4518,15 @@ on_command {
       : done ;
    }
    : match "ask _" {
-      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {tlk} to first" : "Someone you'll run into shortly." ) )} ;
+      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {v_talk} to first" : "Someone you'll run into shortly." ) )} ;
    }
    : match "take _" {
       : if (!take_note) {
-         : print {( "{tak} is not widely used in {qt}. Most of what you take, you take automatically. There " + (point_take_crackers ? "was that" : "may be a") + " special-case exception, though." )};
+         : print {( "{v_take} is not widely used in {qt}. Most of what you take, you take automatically. There " + (point_take_crackers ? "was that" : "may be a") + " special-case exception, though." )};
          : set_true "take_note" ;
          : done ;
       }
-      : print {( "This " + (point_take_crackers ? "wasn't" : "isn't" ) + " where you need to {tak}." )} ;
+      : print {( "This " + (point_take_crackers ? "wasn't" : "isn't" ) + " where you need to {v_take}." )} ;
       : done ;
    }
    # individual items I can't quite use synonyms for
@@ -4658,13 +4656,13 @@ on_command {
 
    # hint/help do nothing in QT
    : match "hint _" {
-      : print "There are no in-game hints for {qt}. This webpage should be packaged with a walkthrough.txt, {ch} can tell you what to work on, and you should be notified when you have one word right in a puzzle." ;
+      : print "There are no in-game hints for {qt}. This webpage should be packaged with a walkthrough.txt, {opt_ch} can tell you what to work on, and you should be notified when you have one word right in a puzzle." ;
       : done ;
    }
    : match "help _" {
-      : print "{qt} prefers {verbs} for technical/parser help and {ch} to cue which things to work on in the game-world. There should also be a walkthrough." ;
+      : print "{qt} prefers {vm_verbs} for technical/parser help and {opt_ch} to cue which things to work on in the game-world. There should also be a walkthrough." ;
       : if (!asterisk_help_note) {
-         : print "{otn}you can type <*HELP<#f80>> to see Adventuron's default general help." ;
+         : print "{note_once}you can type <*HELP<#f80>> to see Adventuron's default general help." ;
          : set_true "asterisk_help_note" ;
       }
    }
@@ -4699,7 +4697,7 @@ on_command {
       : print "You don't hear anything right now." ;
       : match "listen *" {
          : if (!listen_no_subject_note) {
-            : print "{otn} listening is a general command. It will ignore any subject." ;
+            : print "{note_once} listening is a general command. It will ignore any subject." ;
             : set_true "listen_no_subject_note" ;
             : done ;
          }
@@ -4726,7 +4724,7 @@ on_command {
       : print {( "Your <bonus score<#f80>> is {bonus_score} out of <" + max_bonus_score + "<#f80>>." )} ;
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
-         : print "{otn}You can track which bonus points you've found with <BONUS<#f80>>. Also, while {qt} will always let you know when you're half-right on a core point, it will not do so for bonus points. This isn't to be mean or stingy, but rather to make sure you don't get sidelined guessing a non-quest item." ;
+         : print "{note_once}You can track which bonus points you've found with <BONUS<#f80>>. Also, while {qt} will always let you know when you're half-right on a core point, it will not do so for bonus points. This isn't to be mean or stingy, but rather to make sure you don't get sidelined guessing a non-quest item." ;
       }
    }
    : match "think _" {
@@ -4771,7 +4769,7 @@ on_command {
                : print {( "* " + item() )} ;
             }
          } : else {
-            : print "You've obviously done well to get here without the tutorial, which contains only general advice and no hidden secrets, but if you'd like to visit it, type {tut} {on} before reaching First Base once you've won or restarted {qt}." ;
+            : print "You've obviously done well to get here without the tutorial, which contains only general advice and no hidden secrets, but if you'd like to visit it, type {opt_tutorial} {on} before reaching First Base once you've won or restarted {qt}." ;
          }
       } : else {
          : gosub "options_tutorial" ;
