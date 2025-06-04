@@ -70,6 +70,7 @@ booleans {
    note_book_reshuffle : boolean "false" scope="survivor" ;
    out_argument_note : boolean "false" scope="survivor" ;
    bonus_obfuscated_note_yet : boolean "false" scope="survivor" ;
+   room_name_note : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -1003,6 +1004,12 @@ vocabulary {
 locations {
    nameless_lameness : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." {
       on_command {
+         : if (!room_name_note) {
+            : match "_ nameless;_ lameness;lameness _;nameless _" {
+               : set_true "room_name_note" ;
+               : print "{note_once}in parser games, you generally don't need to do anything direct with the location name proper. You will be able to riff on it in {qt}, for reasons that I hope become clear." ;
+            }
+         }
          : if (in_tutorial && !tutorial_5_inventory_done && is_carried("ooh_task")) {
             : match "x ask" {
                : print "You'll want to <X ASK<#0f0>> or an equivalent next, but as this tutorial is intended to be on rails, the next step is {vd_i} to take {vd_i_long}." ;
