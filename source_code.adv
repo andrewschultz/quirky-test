@@ -2209,6 +2209,11 @@ locations {
    };
    my_house : location "MY HOUSE\n{my_house_description}" graphic = "my_house_graphic" {
       on_command {
+         : if (initial_book_poke) {
+            : match "_ hook;_ bold;_ hold" {
+               : set_sentence {( original "verb" + " book" )} ;
+            }
+         }
          : match "eye stay;i stay" {
             : if (!bonus_point_eye_stay) {
                : print "You eye a stay, despite the poster's negative connotations. Looking closer, you see some complex origami can fold things so the poster, indeed, says I STAY. You have a chuckle. Why, of course you'll stay until you've completed your quest. But no more than that." ;
@@ -3248,7 +3253,8 @@ subroutines {
       : if (!initial_book_poke) {
          : set_integer var="tempint" "17" ;
          : gosub "footnote_reveal" ;
-         : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr}, or a passage to it, is hidden behind one of the books. However, you find nothing, even after removing the books to see if the bookshelf can be pushed to reveal a secret passage, or something. Even a \"Books, hidden hooks biddin'?\" goes unanswered.\nBut hey, some of those titles look interesting!{footnote_reveal_text}" ;
+         : print "You take the time to inspect the whole bookshelf. Perhaps the {rttr}, or a passage to it, is hidden behind one of the books. However, you find nothing, even after removing the books to see if the bookshelf can be pushed to reveal a secret passage, or something. Even a \"Books, hidden hooks biddin'?\" goes unanswered.";
+         : print "However, you do notice <Hook-Bold-Book Hold<#db9>> engraved on it. (It DID seem insufficiently spoonerism-y!) And hey, some of those titles look interesting, too!{footnote_reveal_text}" ;
          : set_true "initial_book_poke" ;
          : if (have_won) {
             : set_true "got_footnote_17" ;
