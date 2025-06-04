@@ -1067,11 +1067,11 @@ locations {
                : done ;
             }
          }
-         : match "salesmen _"  {
+         : match "salesmen _;_ salesmen"  {
             : print "But you already have this wonderful free game! Why would you want to bring in salesmen with an anagram?" ;
             : gosub "nl_anagram_check" ;
          }
-         : match "maleness _"  {
+         : match "maleness _;_ maleness"  {
             : print "You'll be dealing with bringing out abstract concepts from things, but not with anagrams." ;
             : gosub "nl_anagram_check" ;
          }
