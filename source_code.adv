@@ -69,6 +69,7 @@ booleans {
    inv_plus_warn : boolean "false" scope="survivor" ;
    note_book_reshuffle : boolean "false" scope="survivor" ;
    out_argument_note : boolean "false" scope="survivor" ;
+   bonus_obfuscated_note_yet : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -604,6 +605,8 @@ strings {
    bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
    yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
    my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
+   unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
+   custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
 
    # diagnostic and meta verb abbreviations
    vd_bon : string "<BONUS<#f80>>" ;
@@ -687,8 +690,6 @@ strings {
    ## dynamic general strings
 
    ask_5_notes : dynamic_string {( bonus_point_rare_plights && bonus_point_shush_lout ? "You got both of them" : bonus_point_rare_plights || bonus_point_shush_lout ? "You got one of them" : "You missed them, but you can go back if you want" )}
-
-   unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
 
    # "can't go that way" dynamic sub-strings
    back_to_hub : dynamic_string {( is_at "zone_west_spokes" ? "West Tiles" : "East Branch" )}
@@ -3339,6 +3340,14 @@ subroutines {
       : set_false "already_got_command" ;
    }
    say_half_b : subroutine {
+      : if (!have_won) {
+         : print "{custom_unknown_verb_error}" ;
+         : if (!bonus_obfuscated_note_yet) {
+            : print "{note_once}well, not exactly. You've discovered half of a bonus point. But the first time through, I won't be revealing them, so as not to distract you from the main quest. If you replay, you'll get a nudge, since we can assume you know the main way through." ;
+            : set_true "bonus_obfuscated_note_yet" ;
+         }
+         : done ;
+      }
       : set_true "half_bonus" ;
       : gosub "say_half" ;
       : if (!bonus_half_note) {
@@ -4172,7 +4181,7 @@ themes {
    inventory_list_empty = Nothing (yet)
    inventory_list_header = Stuff you've acquired:\s
    you_cant_go_that_direction                     = {exitserr}
-   unknown_verb                                   = Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}.
+   unknown_verb                                   = {custom_unknown_verb_error}
       }
    }
 }
