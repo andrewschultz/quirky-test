@@ -1142,7 +1142,7 @@ locations {
                }
                : done ;
             }
-            : if (have_won && !bonus_point_rare_plights) {
+            : if (!bonus_point_rare_plights) {
                : match "rare _;_ plights" {
                   : gosub "say_half_b" ;
                   : done ;
@@ -1228,7 +1228,7 @@ locations {
                   : print "You're not going to quiet the {cc_pro_boor} any further. How to get rid of them?" ;
                }
             }
-            : if (have_won && !bonus_point_shush_lout) {
+            : if (!bonus_point_shush_lout) {
                : match "shush _;_ lout" {
                   : gosub "say_half_b" ;
                   : done ;
@@ -1277,7 +1277,7 @@ locations {
                : set_integer var="tempint" "6" ;
                : gosub "add_bonus" ;
             }
-            : if (have_won && !bonus_point_death_sentence) {
+            : if (!bonus_point_death_sentence) {
                : match "death _;_ sentence" {
                   : gosub "say_half_b" ;
                   : done ;
@@ -1321,7 +1321,7 @@ locations {
             }
             : done ;
          }
-         : if (have_won && !bonus_point_bane_place) {
+         : if (!bonus_point_bane_place) {
             : match "bane _;_ place" {
                : gosub "say_half_b" ;
                : done ;
@@ -1378,7 +1378,7 @@ locations {
             }
             : done ;
          }
-         : if (have_won && !bonus_point_test_wiles) {
+         : if (!bonus_point_test_wiles) {
             : match "test _;_ wiles" {
                : gosub "say_half_b" ;
                : done ;
@@ -1409,7 +1409,7 @@ locations {
             }
             : done ;
          }
-         : if (have_won && !bonus_point_beast_ranch) {
+         : if (!bonus_point_beast_ranch) {
             : match "beast _;_ ranch" {
                : gosub "say_half_b" ;
                : done ;
@@ -2220,9 +2220,10 @@ locations {
                : print "You stay staying, having already proclaimed you would eye a stay." ;
             }
          }
-         : if (have_won && !bonus_point_eye_stay) {
+         : if (!bonus_point_eye_stay) {
             : match "eye _;i *;_ stay" {
                : gosub "say_half_b" ;
+               : done ;
             }
          }
          : if (!point_see_glimmering || bonus_point_cheery_times) {
@@ -2984,7 +2985,7 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
-         : if (have_won && !bonus_point_grow_need) {
+         : if (!bonus_point_grow_need) {
             : match "grow _;_ need" {
                : gosub "say_half" ;
             }
@@ -3008,7 +3009,7 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
-         : if (have_won && !bonus_point_vast_fission) {
+         : if (!bonus_point_vast_fission) {
             : match "vast _;_ fission" {
                : gosub "say_half_b" ;
                : done ;
@@ -3033,7 +3034,7 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
-         : if (have_won && !bonus_point_so_long) {
+         : if (!bonus_point_so_long) {
             : match "so _;_ long" {
                : gosub "say_half_b" ;
                : done ;
@@ -3059,7 +3060,7 @@ subroutines {
             }
             : done ;
          }
-         : if (have_won && !bonus_point_racing_passions) {
+         : if (!bonus_point_racing_passions) {
             : match "racing _;_ passions" {
                : gosub "say_half_b" ;
                : done ;
@@ -3084,7 +3085,7 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
-         : if (have_won && !bonus_point_cease_purging) {
+         : if (!bonus_point_cease_purging) {
             : match "cease _;_ purging" {
                : gosub "say_half_b" ;
                : done ;
@@ -3129,7 +3130,7 @@ subroutines {
                : gosub "add_bonus" ;
             }
          }
-         : if (have_won && !bonus_point_sane_role) {
+         : if (!bonus_point_sane_role) {
             : match "sane _;_ role" {
                : gosub "say_half_b" ;
                : done ;
@@ -3155,9 +3156,10 @@ subroutines {
             : set_true "bonus_point_cheery_times" ;
             : done ;
          }
-         : if (have_won && !bonus_point_cheery_times) {
+         : if (!bonus_point_cheery_times) {
             : match "cheery _;_ times" {
                : gosub "say_half_b" ;
+			   : done ;
             }
          }
       }
@@ -3318,7 +3320,7 @@ subroutines {
          : set_integer var="tempint" "9" ;
          : gosub "add_bonus" ;
       }
-      : if (have_won && !bonus_point_rig_boons) {
+      : if (!bonus_point_rig_boons) {
          : match "rig _;_ boons" {
             : gosub "say_half_b" ;
             : done ;
@@ -4599,7 +4601,7 @@ on_command {
             : gosub "add_bonus" ;
          }
       }
-      : if (have_won && !bonus_point_theory_bore) {
+      : if (!bonus_point_theory_bore) {
          : match "theory _;_ bore" {
             : gosub "say_half_b" ;
             : done ;
@@ -4629,7 +4631,7 @@ on_command {
          : gosub "add_bonus";
       }
    }
-   : if (have_won && !bonus_point_turkey_quest) {
+   : if (!bonus_point_turkey_quest) {
       : match "turkey _;_ quest" {
          : gosub "say_half_b" ;
          : done ;
