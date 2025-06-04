@@ -921,12 +921,12 @@ objects {
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "deal-mood meal, dude (eaten)" msg="You reflect on the meal you enjoyed. It will help you deal with something, mentally and/or physically." ; ## from grunters' hill
    confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
-   low_song : object "<a low song<#888>>{inv_plus_so_long}" msg="Notes to a song, but no lyrics.{bonus_note_low_song}" ; ## fly score
+   low_song : object "<a low song<#888>>{inv_plus_so_long}" msg="Notes to a song, but no lyrics.{bonus_note_so_long}" ; ## fly score
    fast_vision : object "<a fast vision<#888>>{inv_plus_vast_fission}" msg="You had a fast vision of how to be more persuasive, and it's stayed steadfast.{bonus_note_vast_fission}" ; ## trending booth
    peace_surging : object "<peace surging<#888>>{inv_plus_cease_purging}" msg="You feel peace surging within you.{bonus_note_cease_purging}" ; ## warring bay
    trial_pics : object "trial pics (of the dirt home)" msg="You have some trial pics of the dirt home. Perhaps they'd be of interest to potential homeowners.\n{trial_pics_seen}" ;
    rain_soul : object "<a rain soul<#888>>{inv_plus_sane_role}" msg="You feel rain in your soul, which makes you feel you've lived a little and still have things worth working out. So many ideas that need something beyond words to bring them together.{bonus_note_sane_role}" ;
-   no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!{bonus_note_no_greed}" ;
+   no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!{bonus_note_grow_need}" ;
 
    ## post-hub
    travel_grail : object "a {cc_travel_grail}" msg="(should be covered in on_command)" ;
