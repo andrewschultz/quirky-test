@@ -342,10 +342,10 @@ integers {
    footnote_17_status : integer "0" scope="survivor" ;
 
    # TALK TO code rearrangements so survivors aren't too bad (using bitwise arithmetic and some magic numbers)
-   found_talkflag : integer "0" scope="survivor" ;
-   found_talktotal : integer "0" scope="survivor" ;
-   max_talktotal : integer "11" scope="survivor" ;
-   current_talkflag : dynamic_integer {(get_stat { target = "current_location" stat = "stat_talkflag" })}
+   found_talk_flag : integer "0" scope="survivor" ;
+   found_talk_count : integer "0" scope="survivor" ;
+   max_talk_count : integer "11" scope="survivor" ;
+   current_talk_flag : dynamic_integer {(get_stat { target = "current_location" stat = "stat_talkflag" })}
 
    current_meta_verbs_flag : integer "0" scope="survivor" ;
    found_meta_verbs_count : integer "0" scope="survivor" ;
@@ -3391,11 +3391,11 @@ subroutines {
       : done ;
    }
    talk_flag : subroutine {
-      : set_integer var="tempint" {( int("" + (found_talkflag % (2 * current_talkflag))) )} ;
-      # : print "{found_talkflag} modulo (2 * {current_talkflag}) = {tempint}. Is it less than {current_talkflag}?" ;
-      : if (tempint < current_talkflag) {
-         : set_integer var="found_talkflag" {( int("" + (found_talkflag + current_talkflag)) )} ;
-         : increment "found_talktotal" ;
+      : set_integer var="tempint" {( int("" + (found_talk_flag % (2 * current_talk_flag))) )} ;
+      # : print "{found_talk_flag} modulo (2 * {current_talk_flag}) = {tempint}. Is it less than {current_talk_flag}?" ;
+      : if (tempint < current_talk_flag) {
+         : set_integer var="found_talk_flag" {( int("" + (found_talk_flag + current_talk_flag)) )} ;
+         : increment "found_talk_count" ;
       }
    }
    think_thoughts : subroutine {
@@ -3854,11 +3854,11 @@ subroutines {
       }
       : if (achieve_tyyt) {
          : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
-      } : else_if (found_talktotal == max_talktotal) {
+      } : else_if (found_talk_count == max_talk_count) {
          : print "For trying to talk to everyone who can speak, you win the {achievement_tyyt} achievement!" ;
             : set_true "achieve_tyyt" ;
       } : else {
-         : print "You haven't unlocked the {achievement_tyyt} achievement yet. ({found_talktotal}/{max_talktotal})" ;
+         : print "You haven't unlocked the {achievement_tyyt} achievement yet. ({found_talk_count}/{max_talk_count})" ;
       }
       : if (achieve_gmmg) {
          : print "(Already got the {achievement_gmmg} achievement for trying all the meta-verbs)" ;
@@ -3866,7 +3866,7 @@ subroutines {
          : print "For trying all the meta-verbs, , you win the {achievement_gmmg} achievement!" ;
             : set_true "achieve_gmmg" ;
       } : else {
-         : print "You haven't unlocked the {achievement_gmmg} achievement yet. ({found_meta_verbs_count}/{max_meta_verbs})" ;
+         : print "You haven't unlocked the {achievement_gmmg} achievement yet. ({found_meta_verbs_count}/{max_meta_verbs_count})" ;
       }
    }
 
