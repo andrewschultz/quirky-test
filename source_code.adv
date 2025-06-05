@@ -203,6 +203,7 @@ booleans {
    achieve_haih_pre : boolean "false" scope="survivor" ;
    achieve_mttm : boolean "false" scope="survivor" ;
    achieve_tyyt : boolean "false" scope="survivor" ;
+   achieve_gmmg : boolean "false" scope="survivor" ;
 
    ## oranges
    achieve_tnnt : boolean "false" scope="survivor" ;
@@ -345,6 +346,11 @@ integers {
    found_talktotal : integer "0" scope="survivor" ;
    max_talktotal : integer "11" scope="survivor" ;
    current_talkflag : dynamic_integer {(get_stat { target = "current_location" stat = "stat_talkflag" })}
+
+   current_meta_verbs_flag : integer "0" scope="survivor" ;
+   found_meta_verbs_count : integer "0" scope="survivor" ;
+   found_meta_verbs_flag : integer "0" scope="survivor" ;
+   max_meta_verbs_count : integer "8" scope="survivor" ;
 }
 
 collections {
@@ -353,8 +359,8 @@ collections {
          "Meta-commands such as {vm_about}, {vm_credits} and {vm_verbs} give you general information that would break up the flow of an introduction.",
          "{v_x_me} is a good in-world starter command to tell you about yourself.",
          "Shorthand such as {vd_i} to take inventory and <X<#0f0>> to <EXAMINE<#0f0>> help simplify what you need to type.",
-         "Senses can provide clues. In this case, {qt} uses {v_listen_hear}, which implies {v_talk}. Also, many parsers may eliminate prepositions for convenience, so {v_t0} is worth a try",
-         "You can often try going any direction (up, down, in, out, or the eight compass directions) if the room description is unclear. Also, shorthand such as <W<#0f0>> works in place of <GO WEST<#0f0>>",
+         "Senses can provide clues. In this case, {qt} uses {v_listen_hear}, which implies {v_talk} or, as parsers allow shorthand for convenience, {v_t0} works here too. Note that, again for convenience, the ungrammatical {v_talk} SOMEONE works. No need for TO.",
+         "You can often try going any direction (up, down, in, out, or the eight compass directions) if the room description is unclear. Also, shorthand such as <W<#0f0>> works in place of <GO WEST<#0f0>>.",
          "{qt}'s point-scoring commands are unusual for a parser game, where guess-the-verb is frowned on. However, the commands are all similar to objects or people you run across."
       ]
    }
@@ -840,6 +846,7 @@ strings {
    ## MTTM post-release
    achievement_mttm : string "<More than Thor, Man<#f00>>" ;
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
+   achievement_gmmg : string "<Get a Major Meta-Gauger<#f00>>" ;
 
    ## orange = bonus points / footnotes
    ##ROER post-release
@@ -3236,6 +3243,13 @@ subroutines {
       }
 
    }
+   meta_flag : subroutine {
+      : set_integer var="tempint" {( int("" + (found_meta_verbs_flag % (2 * current_meta_verbs_flag))) )} ;
+      : if (tempint < current_meta_verbs_flag) {
+         : set_integer var="found_meta_verbs_flag" {( int("" + (found_meta_verbs_flag + current_meta_verbs_flag)) )} ;
+         : increment "found_meta_verbs_count" ;
+      }
+   }
    note_diagonal_direction_from_hub : subroutine {
       : if (!has_visited("east_branch") && !has_visited("west_tiles"))
       {
@@ -3645,6 +3659,8 @@ subroutines {
          : set_true "tutorial_1_about_done" ;
          : increment "tutorial_score" ;
       }
+      : set_integer var="current_meta_verbs_flag" "1" ;
+      : gosub "meta_flag" ;
    }
 
    meta_links : subroutine {
@@ -3655,9 +3671,11 @@ subroutines {
       : print "If you find a bug, big or small, and want to report an issue, here is a link to {qt_repo}." ;
       : print "If you would like to share a transcript with me, send it to {email}." ;
       : gosub "check_additional_meta" ;
+      : set_integer var="current_meta_verbs_flag" "2" ;
+      : gosub "meta_flag" ;
    }
 
-   meta_meta_verbs : subroutine {
+   meta_meta : subroutine {
       : print "{vm_about} gives info about the game.";
       : print "{vm_thx} or {vm_cred} gives info about people who helped make {qt} or make it better.";
       : print "{vd_thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
@@ -3673,6 +3691,8 @@ subroutines {
          : set_true "meta_abbrev_noted" ;
       }
       : gosub "check_additional_meta" ;
+      : set_integer var="current_meta_verbs_flag" "4" ;
+      : gosub "meta_flag" ;
    }
 
    meta_options : subroutine {
@@ -3689,6 +3709,8 @@ subroutines {
          : print "<DEBUG OPTION<#ff0>>: <CHEAT<#88f>> turns off/on dependencies in hub puzzles so you can complete them in any order." ;
       }
       : gosub "check_additional_meta" ;
+      : set_integer var="current_meta_verbs_flag" "8" ;
+      : gosub "meta_flag" ;
    }
 
    meta_points : subroutine {
@@ -3700,6 +3722,8 @@ subroutines {
       }
       : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you when you've guessed one right word for core puzzles." ;
       : gosub "check_additional_meta" ;
+      : set_integer var="current_meta_verbs_flag" "16" ;
+      : gosub "meta_flag" ;
    }
 
    meta_thanks : subroutine {
@@ -3709,6 +3733,8 @@ subroutines {
       : print "Thanks to {tx_da} and {tx_on} who offered bugfinds and advice during TALJ/TALP 2025." ;
       : print "Thanks to you, for playing this game." ;
       : gosub "check_additional_meta" ;
+      : set_integer var="current_meta_verbs_flag" "32" ;
+      : gosub "meta_flag" ;
    }
 
    meta_versions : subroutine {
@@ -3717,6 +3743,8 @@ subroutines {
       : print "<Version 2.0.0<#80f>> is pending but planned for June 2025. Along with bug fixes and graphic tweaks, two bonus points are replaced, with the old points going toward an achievement. Several achievements are added, and bonus points now carry over after winning. You can now skip introductory rooms on replay if you've found everything you need there for achievements. The bookshelf will also have new book titles once you've read them all." ;
       : print "There are no future versions planned, barring catastrophic bugs." ;
       : gosub "check_additional_meta" ;
+      : set_integer var="current_meta_verbs_flag" "128" ;
+      : gosub "meta_flag" ;
    }
 
    check_additional_meta : subroutine {
@@ -3763,6 +3791,8 @@ subroutines {
       : if (in_debug && !have_won) {
          : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
+      : set_integer var="current_meta_verbs_flag" "64" ;
+      : gosub "meta_flag" ;
    }
 
    nl_anagram_check : subroutine {
@@ -3798,8 +3828,8 @@ subroutines {
    }
 
    track_achievements_1_red : subroutine {
-      : if (achieve_haih && achieve_mttm && achieve_tyyt) {
-         : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, and {achievement_tyyt}." ;
+      : if (achieve_haih && achieve_mttm && achieve_tyyt && achieve_gmmg) {
+         : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, {achievement_tyyt}, and {achievement_gmmg}." ;
       }
       : set_false "achieve_taat" ;
       : if (achieve_haih) {
@@ -3829,6 +3859,14 @@ subroutines {
             : set_true "achieve_tyyt" ;
       } : else {
          : print "You haven't unlocked the {achievement_tyyt} achievement yet. ({found_talktotal}/{max_talktotal})" ;
+      }
+      : if (achieve_gmmg) {
+         : print "(Already got the {achievement_gmmg} achievement for trying all the meta-verbs)" ;
+      } : else_if (found_meta_verbs_flag == 255) {
+         : print "For trying all the meta-verbs, , you win the {achievement_gmmg} achievement!" ;
+            : set_true "achieve_gmmg" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_gmmg} achievement yet. ({found_meta_verbs_count}/{max_meta_verbs})" ;
       }
    }
 
@@ -4667,7 +4705,7 @@ on_command {
       : gosub "meta_links" ;
    }
    : match "meta _" {
-      : gosub "meta_meta_verbs" ;
+      : gosub "meta_meta" ;
    }
    : match "option _;options _;opts _;opt _" {
       : gosub "meta_options";
