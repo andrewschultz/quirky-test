@@ -1516,12 +1516,13 @@ locations {
       : match "x plaster;x man" {
          : set_integer var="tempint" "13" ;
          : gosub "footnote_reveal" ;
-         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "The plaster man sits here, in a thinking pose. What thought or thoughts might be inside?{footnote_reveal_text}" )}
+         : print {( point_master_plan ? "Guess that fella did have something inside.{footnote_reveal_text}" : "The plaster man sits here, inanimate, in a thinking pose. What thought or thoughts might be inside?{footnote_reveal_text}" )}
          : done ;
       }
       : match "talk plaster;talk man;talk -;listen -;listen plaster;listen man" {
          : if (!point_master_plan) {
-            : print "The plaster man has secrets to divulge, but since he's inanimate, talking and listening isn't the way to go." ;
+            : print "Is the plaster man some sort of golem? You might as well find out. You try to make conversation, but ... nothing. Motionless." ;
+            : print "The plaster man may have secrets to divulge, but since he's inanimate, talking and listening isn't the way to go." ;
             : gosub "talk_flag" ;
          } : else {
             : print "That won't do much good now. Well, it wouldn't have done much good before you destroyed the plaster man and got something useful, either." ;
@@ -3853,9 +3854,9 @@ subroutines {
          : print "You haven't unlocked the {achievement_mttm} achievement yet." ;
       }
       : if (achieve_tyyt) {
-         : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who could speak)" ;
+         : print "(Already got the {achievement_tyyt} achievement for trying to talk to everyone who might speak)" ;
       } : else_if (found_talk_count == max_talk_count) {
-         : print "For trying to talk to everyone who can speak, you win the {achievement_tyyt} achievement!" ;
+         : print "For trying to talk to everyone who might speak, you win the {achievement_tyyt} achievement!" ;
             : set_true "achieve_tyyt" ;
       } : else {
          : print "You haven't unlocked the {achievement_tyyt} achievement yet. ({found_talk_count}/{max_talk_count})" ;
@@ -3863,7 +3864,7 @@ subroutines {
       : if (achieve_gmmg) {
          : print "(Already got the {achievement_gmmg} achievement for trying all the meta-verbs)" ;
       } : else_if (found_meta_verbs_flag == 255) {
-         : print "For trying all the meta-verbs, , you win the {achievement_gmmg} achievement!" ;
+         : print "For trying all the meta-verbs, you win the {achievement_gmmg} achievement!" ;
             : set_true "achieve_gmmg" ;
       } : else {
          : print "You haven't unlocked the {achievement_gmmg} achievement yet. ({found_meta_verbs_count}/{max_meta_verbs_count})" ;
