@@ -936,7 +936,7 @@ objects {
    no_greed : object "<no greed<#888>>{inv_plus_grow_need}" msg="You feel as though you have no greed. But then you decide to overthink things. People who claim they have no greed are maybe fooling themselves, but people who want to be less greedy are maybe greedy to have less greed. Paradoxes!{bonus_note_grow_need}" ;
 
    ## post-hub
-   travel_grail : object "a {cc_travel_grail}" msg="(should be covered in on_command)" ;
+   travel_grail : object "a {cc_travel_grail}" msg="It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here, so it shouldn't be TOO hard to find." ;
    teary_chimes : object "teary chimes" msg="{chimes_description_start} small pleasant musical noises in the wind." conspicuous="false" ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
    ruts_poster : scenery "a putz-roaster-ruts poster" at="my_house" conspicuous="false" msg="It advertises itself as a Puts-Roaster-Ruts Poster, one of those posters that claim to be ironic with a downer statement. {ruts_poster_note}." ;
@@ -4647,6 +4647,11 @@ on_command {
       : match "x travel" {
          : set_sentence "x grail" ;
       }
+      : match "x grail" {
+         : mask {
+            : update_graphic "travel_grail_picture" ;
+         }
+      }
    }
    : if (is_exists("teary_chimes")) {
       : match "x teary" {
@@ -4942,7 +4947,7 @@ assets {
       ## stealing hills
 
       stealing_hill : dynamic_graphic {( point_healing_still ? "stealing_hill_after" : "stealing_hill_before" )} ;
-      stealing_hill_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABvElEQVRYhb2YjY3CMAxGrWaAWwF1AksZgP23QcoAXNK0tLF94M+9EgkhVcF5fXb+oNnRbk/Rcm+chyZ7TZ7YFAIofUTaMFL7vl8HMP+YANwB6vBsATxcoc8AEOWjgisBZA5KF0DtkxoJGQDThQDPLoAycaKehWANngFo7qm/PIcngRfAKIJqn9IKYJbAfwLMZBRBG5sTp3UVkADeyL5uUkHJqgkApwAvgFKgAWIC3ADmRHwjwFmCfgC1Fn0Q4FuFEACrDN8I8Mf1drRm4t/je0sQAFAKjgRyfL8AAEAp2AnU+H4BAIBWsFWifo5E9XfVChYJ6vUhAQiApcAGgIICfQ0FZgYQARCAWox6GSoF7kUIBjAOp3UzVADTNwESfxPA2BAqQHgbCACoTXk5EIuHYEiot8hB6QAiB9OFACIHFYCTBMAygALcBEA9EsoqnK4FGBQsx2FRhdAqhAOMZWgBwAHB/oOC7Vp4QgAMMH8CQOPBADQApMRjCvB46A+OOeB2MaoT8UQGcICDgsLtbpYp3eMCAgC7gtLvhbwD4AICALuCsv5JtQNEouE/eSlQ16KAgAjANhP1vQCeg7X9AsHkk0F1ooCdAAAAAElFTkSuQmCC";
+      stealing_hill_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABLUlEQVRYw+2U7QkCMQyGiwu4QskKHSD7b1PIAGc9Fa4NSN7kIigG7vwjyXNPPgoZom6uuFhyl68AoKunfqcfAqhpHfgDWAEcQ9DPBKCCA1gzU5ICowArAK7AnNj4v5ozgnYA9BZ1Ohug5HTADoCNoXUEAQBMAZCWMhTYBQAAiAIkKyUoAAQgAHYFUFIKKZDxcEQABKCOkdyri0LolAWg7jHvAOK8wlEAOQDwZwCWHvDz23l2AHUABChqAl8ozh1AAZYhED7+uDoAAiw9kNbGuzX2dwAFqCtAG/WbfwRxgFlBe4T7CuEA6zlW9Tc4IYUUbGt9VAAMoM5xC5xhF0B5D1DSAVQPYh3AAdQYxgQ4ANZNjAlwAMwK5i3wZKOQgvkOOAR4AA6bKDsAu3dwxA0OIeGjM4AA1QAAAABJRU5ErkJggg==";
       stealing_hill_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAB4UlEQVRYhb2W2Y3DMAxEiS1FvwRcPH/VjQrYGlZ3SB22SC9CIEgQizOPIwkw/ForOFaXWQb+xf8FgRnADfVtgNHfTGAEmP2tBDaAlb+RwASw9rcRWAB2/iYCA0DYA1xfAdj7WyLQA9wEYIlAD3Dnb4hADTAHAKnMEagBZlcBoI5ACxBWY785BUqA2xNoIlACPPtrN0EHcBCANgIdwIm/MgIVwFEAyghUAGf+uggGgHDXfxjATQSLhwKgO+zb30Sw5IPVis0QrwDC5jEHeNAI7rgW+DtxGJegc7TW6O2wq589fuDa/Dkwfbyd4hPAAcC+ORUxAtgs8dMYh+kvI4h/+M14MOt7R0g4ykjAx7qkvSuafiaESR+p/eJJKQOQnX34j3YnBKlPLlOiw9xE13uAUJQonz//oZEAoQC2Q4ppGca96DpBC9DRo5SnNFrXJr4AZvmcU0LAiN10tP59whDDpGrPdqATgJQn/oXpLlw2+4YQ0vmvco5/NUTgAaAEYIXjH8+10+gmZbb0YhnEunJVkNqJ9O5F+XbuagpS7Iqf+c2WCioV0nQS4o0gdQSpn7Dufe2nRZITANY7kGFrDN62Bb4O38VosTEzAF/i82V0i77nysyeZOz4DCDX633nGiYa6g+Nl0UF3/bTiQAAAABJRU5ErkJggg==";
       stealing_hill_finds : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAACDElEQVRYhb2XO27DMAyGhW69RcGVgM7aNUsPwVW30dalZ6j1sCLqadJIuDiAyZ8ff0mxbf604aEKq5Yxgtzfnyqb9b9BoAaAJt4N0PZXEygB+v5aAh3AqL+SQAUw7q8j0ADM+qsIFAB+DmDfAjDvr7FAApBiYYDGArkDq/4KC8QASwMUFoiXIDcyIbqfCgukAH4HYF8LsFkABYEQYN9fuggygKcBlevGfNywQAYAVwBkFogA/DUA+zIAuAYgsqAB8Kt6DxfDriZobjKA0mFefi3W9QzBjDImQ9wC8JPbNcBGw8PlGODPxLsXbQSgsQbvYXh8bCzwtXZ9v37RxuUU3ICvNcC6mCoCM0lx3RiNAZ+POr4bgL7WTcYbvOk7ICRsZVoDHmsAy9tD0nQ9oen0kUZOrQ3oAVhlGf6pXQibTw2CSImAsYjsGKA1YAXgkxLF/eeeNBwgGYDnJsWQhsdaFB3P1FsDBgAF/ZByFEYr2lQnmF4++hQQ8MA+ddYGDACgkCNSbl+tQCFovnWovmA4C7bfAO1/wOAYFgQf9n+Wg/pyIrJvHeQAtStygJlGaZJmCw9Vz/LSUUE6d6SDG+HOfZdd4GI2DDMgT9s2kYadcJwIwi5vE6GeMK99rifoZToAzGcgwmYb3KBwTxDqktwpRoOF6QHqFBcPIwzq9hGZHXHbcQ/A8+V9+2gmauIfl9daftYMb48AAAAASUVORK5CYII=";
 
@@ -4975,6 +4980,8 @@ assets {
       pacing_rations_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
 
       trial_pics_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAACfUlEQVRYw62YSxbDIAhF2QHbzsytMsws1fgBRCOxyaBNG49cfQ/UwLG4wpUuwosvSh99u/iXbJMbQrud9g/v4w8Bggaot1Bvzk2AUfzc/WkailbUCOokbAKM4+feLYB8zj/yJGwClC6MthbgEjFB/igEex4Q8bUJrAbcxMwXbZtQjp9Uv08A+qsAnDsA/fwTzgfVkoD6PNgHUAa8+0V4AiANSU854wHQCVC6awh9pwUAwBg2tz3eA4wNdZUIfSIWRkQuPf8ChGF8QhxqUJmQSw+6kuAZAGxpLWJ0iVg9SKL0kMuDDyY0RspEZVYMADHAtUjZF1nQSSBKkp7YlgR2GfwGIA+JxNRqgJaosv6ix4OLQiR1VCWhG1jzIOcAAXk86ARQwiLLYQAUgceDTwDaBGwsa4KWBAQCgb4A4JyGqyuyQoPmwfsCtSziPsAhg4HRYgAAsVBW7e+yuPbgI0BQBYDHbTQQSQBEoKT6BgDUUiDsffaFOLk/I/iSYLkj0glISAMT6EJcVySfB98AxIUIpQYtEbtCHB8zJv4FEOTcpioDeb3rTBD0KlQA8AOAo46TUtTo8Ljfpxa/bbe7Vehu5PXgGqBqALe5MIHIxDj1qSz5j4ROSw86DiZl+qO7QVYk4EOf2jk0nXwe9ALk0acOu/ix+6AOgWkS6PoKgDWgXONJGUAAyC0AvEgCD4BcaE38qEHoT8L3ndODntMxiiXQxj+PwYJZBMv//AXAGkzjH8MXEuArxC8A8DIJkHsPateI5lx6/gcgNRjG1wBqO+rxoB+AJvE7AP38AwDWYBJfesDIsPagD8DmgXrvE2YvxxweXAPMtqZqbieT4PDg8QOHyyVCQ7E4uAAAAABJRU5ErkJggg==";
+
+      travel_grail_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA+0lEQVRYw+XYUQrDMAgGYMEL/eABcv/z5ABZjC1rtzcNutHA6NPiV7VbLA3PEluQ23JtRa5vdYtIJ4P12tIBMMAMjxoAkVxTkA7ABMwPq4SSAcMSQEJgsio4ezAC0NyT3TwkG9BXBYgPgL8FAoBVAjD4+BXIB3ysXMD4BoxcQN+UADdgbEqAH9D3JMAPuAvc8QOAq8AfPwJ4CwLxQ4CzE0NbxACahDYeDQhXIAjo0RaMA+afYS2AUQoQBVQ+hnYgrgN0A7RKALgWMI+EKASs43CwC/8dYGPhkwHMqCwBdDCaD2IVoENnMyFuZYA1F6IQcLyiqQLEx6JfmAte02lvuNrpR8AAAAAASUVORK5CYII=";
 
    #scenery pictures here
       seth_dentons_picture : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACWSwAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////9DrV1ZAAAA8ElEQVRYw+2Wyw6DIBBFpyuXg39aV/z2/QM6gPVRtUlJc2cho0I0MXM8DKCkhsBPj7+HNAFABQLY27mvh51EgKRJc6ulRQmyAUtrl8obIFENWOZPA8UL2UCtgQwgdAPes0DOgwaguDjvAjAn26eu/T0ArkqwrQxbAMYlYolpuQ8cgGCf+jgAZAEsABvrI4CtzmABWM2dAIAIAC0AYSgAQgcQQQVAJpBalXkm8gzUIQhqBLYjzgDgA0CHqIsBgD0NdwaI03Bdd7YGiAvRmm9rwAXg9gbGZzEw+QHEpxmIngA+27E7gPcf0X+jA3SADtABXkAS5iNZs2sJAAAAAElFTkSuQmCC";
