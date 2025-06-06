@@ -84,6 +84,9 @@ booleans {
    use_color_coding : boolean "true" scope="survivor" ;
    option_start_warp : boolean "false" scope="survivor" ;
 
+   ## utility booleans
+   show_overlay : boolean "true" scope="survivor" ; # you may not wish for some graphics to show overlay
+
    ## game progress booleans
    tutorial_done : boolean "false" ;
    talked_to_thor : boolean "false" ;
@@ -4266,6 +4269,9 @@ themes {
 # end themes
 
 on_render {
+   : if (!show_overlay) {
+      : done ;
+   }
    : if (is_at("nameless_lameness")) {
       : if (tutorial_7_listen_done) {
          : overlay "o_whoa_guest" x="10" y="10" ;
@@ -4355,7 +4361,9 @@ on_startup {
 
 on_tick {
    : if (verb_is "examine" && subject1_is "ooh_task") {
+      : set_false "show_overlay" ;
       : update_graphic "t_ooh_task" ;
+      : set_true "show_overlay" ;
    }
    : if (jump_buzzing) {
       : print "You shake off the temporary buzzin' in your ears from the jump." ;
@@ -4487,7 +4495,9 @@ on_command {
    : if (is_carried "trial_pics" ) {
       : match "x pics" {
          : mask {
+            : set_false "show_overlay" ;
             : update_graphic "t_trial_pics" ;
+            : set_true "show_overlay" ;
          }
       }
    }
@@ -4644,7 +4654,9 @@ on_command {
    : if (is_carried("chalice_map")) {
       : match "x map;x chalice" {
          : mask {
+            : set_false "show_overlay" ;
             : update_graphic "t_chalice_map" ;
+            : set_true "show_overlay" ;
          }
          : set_sentence "x map" ;
       }
@@ -4655,7 +4667,9 @@ on_command {
       }
       : match "x plan" {
          : mask {
+            : set_false "show_overlay" ;
             : update_graphic "t_master_plan" ;
+            : set_true "show_overlay" ;
             : set_integer var="tempint" "13" ;
             : gosub "footnote_reveal" ;
          }
@@ -4672,7 +4686,9 @@ on_command {
       }
       : match "x grail" {
          : mask {
+            : set_false "show_overlay" ;
             : update_graphic "t_travel_grail" ;
+            : set_true "show_overlay" ;
          }
       }
    }
@@ -4817,7 +4833,9 @@ on_command {
       : match "x pacing;x rations" {
          : print "Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff.";
          : print "The printing on its packaging avoids sensationalism most admirably: <YUM? NO. NUMB, YO!<#888>>" ;
+         : set_false "show_overlay" ;
          : update_graphic "t_pacing_rations" ;
+         : set_true "show_overlay" ;
       }
    }
 
