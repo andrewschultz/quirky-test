@@ -659,6 +659,8 @@ strings {
    tx_on : string "<Olaf Nowacki<#0f0>>" ;
 
    ## items for hints
+   next_go_round : string " (Well, maybe next go round.)" ;
+
    cue_cease_purging : string "<CEASE PURGING<#db8>>" ;
    cue_grow_need : string "<GROW NEED<#db8>>" ;
    cue_racing_passions : string "<RACING PASSIONS<#db8>>" ;
@@ -3049,6 +3051,7 @@ subroutines {
       }
       : if (point_shift_goals && !bonus_point_grow_need) {
          : match "grow need" {
+            : print "You kick yourself slightly ... this would've been useful when you hadn't internalized you had no greed, by the gift shoals.{next_go_round}" ;
             : set_true "retry_grow_need" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3074,6 +3077,7 @@ subroutines {
       }
       : if (point_fellow_yield && !bonus_point_vast_fission) {
          : match "vast fission" {
+            : print "You lament your fast vision wasn't fast enough to see this before you used it up in the yellow field.{maybe_next_time}" ;
             : set_true "retry_vast_fission" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3099,6 +3103,7 @@ subroutines {
       }
       : if (point_grim_tune && !bonus_point_so_long) {
          : match "so long" {
+            : print "You vow, if you ever have the chance again, to say {cue_so_long} to the low song. But you used it up to create the grim tune.{maybe_next_time}" ;
             : set_true "retry_so_long" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3125,6 +3130,7 @@ subroutines {
       }
       : if (point_hunters_grill && !bonus_point_racing_passions) {
          : match "racing passions" {
+			: print "Alas, having eaten the pacing rations by the erstwhile grunters' hills, you can no longer muster up racing passions.{maybe_next_time}" ;
             : set_true "retry_racing_passions" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3150,6 +3156,7 @@ subroutines {
       }
       : if (point_shift_goals && !bonus_point_cease_purging) {
          : match "cease purging" {
+            : print "You kick yourself slightly ... this would've been useful when you hadn't internalized you had no greed, by the gift shoals.{next_go_round}" ;
             : set_true "retry_cease_purging" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3195,6 +3202,7 @@ subroutines {
       }
       : if (point_grim_tune && !bonus_point_sane_role) {
          : match "sane role" {
+			: print "It feels a bit too late to reclaim a sane role, after that grim tune you whipped up called humanity's sanity in general into question.{maybe_next_time}" ;
             : set_true "retry_sane_role" ;
             : gosub "warning_bonus_after" ;
          }
@@ -4122,7 +4130,6 @@ subroutines {
    }
 
    warning_bonus_after : subroutine {
-      : print "That would have worked earlier, but you used up the item solving a core puzzle. Maybe next go-round?" ;
       : if (!warn_must_redo) {
          : print "{note_once}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {vd_thk} will keep track of what you saw." ;
          : set_true "warn_must_redo" ;
@@ -4511,6 +4518,7 @@ on_command {
    }
    : if (has_visited "plain_base" && !bonus_point_rare_plights) {
       : match "rare plights" {
+         : print "A bit too late, you realize {cc_prayer_lights} hid a different, more negative meaning.{next_go_round}" ;
          : set_true "retry_rare_plights" ;
          : gosub "warning_bonus_after" ;
       }
