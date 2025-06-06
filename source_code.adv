@@ -759,7 +759,7 @@ strings {
    hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset. You don't miss the now-vanished gifts." ;
    hub_w_grunters_hill : string "Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
    hub_w_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
-   hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure." ;
+   hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure. But, boy, they're persistent!" ;
    hub_w_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
    ## east branch seeding for dynamic strings, starting north and going clockwise
@@ -4747,7 +4747,7 @@ on_command {
          : print "Hey, now. I'll poke fun at myself a bit, but repeating the joke might make things a bit stale." ;
          }
       : else {
-         : print "Ah! Yes, you are in the spirit of things, here. Have a bonus point!" ;
+         : print "Well observed! Yes, you are definitely in the spirit of things, here. I can't let that go unrewarded." ;
          : if (in_tutorial) {
             : print "Figuring this out in the tutorial is extra impressive. There are still basic commands to figure out, but congratulations on looking ahead to what the main game will be about." ;
          }
