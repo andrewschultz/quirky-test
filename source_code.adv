@@ -283,6 +283,7 @@ booleans {
 
    think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_hi_mouse )} ;
    retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
+   bonus_this_playthrough : dynamic_boolean {( bonus_score > bonus_score_start )} ;
 
    ## inventory/bonus point stuff
    inv_so_long : dynamic_boolean {( is_carried "low_song" && bonus_point_so_long )} ;
@@ -642,6 +643,9 @@ strings {
    vm_thx : string "<THANKS<#f80>>" ; # CREDITS is the preferred verb but THANKS maps to credits
    vm_verbs : string "<VERBS<#f80>>" ;
    vm_versions : string "<VERSIONS<#f80>>" ;
+
+   # system level verb strings
+   vs_quit : string "<QUIT<#f80>>" ;
 
    ## names in credits
    talj : string "<TALJ<#0f0>>" ;
@@ -3711,7 +3715,7 @@ subroutines {
       : if (have_won) {
          : print "By winning the game, you've opened up footnotes ({vd_footnote_cue}) and achievements tracking ({vd_ach}).";
       }
-      : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and <QUIT<#f80>>, to save a game for later, come back to it, or quit." ;
+      : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and {vs_quit}, to save a game for later, come back to it, or quit." ;
       : print "Adventuron-specific {vm_meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
       : if (!meta_abbrev_noted) {
          : print "{note_once}you can abbreviate many of the non-native Adventuron commands above. Listing them all would make this readout too long, but experiment, if you like." ;
@@ -4485,6 +4489,13 @@ on_pre_command {
 ## main on_command
 
 on_command {
+   : match "restart _" {
+      : if (bonus_this_playthrough || have_won) {
+         : mask {
+            : print {( "{note_once}Adventuron sees <RESTART<#f80>> and {vs_quit} as synonyms, so this risks losing all " + (!have_won ? "bonus points" : !bonus_this_playthrough ? "footnote/achievement progress" : "bonus points or footnote/achievement progress") + " found this playthrough." )} ;
+         }
+      }
+   }
    : if (!say_warn) {
       : match "say _" {
          : print "{note_once}if you figure a phrase, you don't need to <SAY#0f0> it explicitly, though it shouldn't hurt to include it." ;
