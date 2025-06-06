@@ -615,7 +615,7 @@ strings {
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
 
-   # diagnostic and meta verb abbreviations
+   # basic diagnostic verb abbreviations
    vd_bon : string "<BONUS<#f80>>" ;
    vd_i : string "<I<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
@@ -630,6 +630,7 @@ strings {
    vd_fn : string "<FOOTNOTE #<#f80>>" ;
    vd_footnote_cue : string "{vd_fn} or, for brevity, {vd_f}" ;
 
+   # meta verb reference strings
    vm_about : string "<ABOUT<#f80>>" ;
    vm_cred : string "<CREDITS<#f80>>" ;
    vm_links : string "<LINKS<#f80>>" ;
@@ -649,6 +650,14 @@ strings {
    tx_wc : string "<Wade Clarke<#0f0>>" ;
    tx_da : string "<DemonApologist<#0f0>>" ;
    tx_on : string "<Olaf Nowacki<#0f0>>" ;
+
+   ## items for hints
+   cue_cease_purging : string "<CEASE PURGING<#db8>>" ;
+   cue_grow_need : string "<GROW NEED<#db8>>" ;
+   cue_racing_passions : string "<RACING PASSIONS<#db8>>" ;
+   cue_sane_role : string "<SANE ROLE<#db8>>" ;
+   cue_so_long : string "<SO LONG<#db8>>" ;
+   cue_vast_fission : string "<VAST FISSION<#db8>>" ;
 
    # yes-or-no
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
@@ -768,12 +777,23 @@ strings {
    map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
       )} ;
    trial_pics_seen : dynamic_string {( pcpc_tile && pcpc_pile ? "You've found two different ways to look at the pics. There can't be any more." : (!pcpc_tile && !pcpc_pile) ? "Perhaps there is something in the pics, but it can't be SUPER critical." : "You've focused on " + (pcpc_tile ? "the tile pricks" : "how to pile tricks") + ", and yet you feel they have more to offer." )} ;
-   bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said SO LONG with this low song." : retry_so_long ? "\nYou should say SO LONG now you have this low song again." : "" )} ;
-   bonus_note_vast_fission : dynamic_string {( bonus_point_vast_fission ? "\nYou found VAST FISSION from this." : retry_vast_fission ? "\nYou should find VAST FISSION now you have this fast vision again." : "" )} ;
-   bonus_note_cease_purging : dynamic_string {( bonus_point_cease_purging ? "\nYou figured how to CEASE PURGING from this." : retry_cease_purging ? "\nYou should CEASE PURGING now you feel peace surging again." : "" )} ;
-   bonus_note_sane_role : dynamic_string {( bonus_point_sane_role ? "\nYou thought up a SANE ROLE from this." : retry_sane_role ? "\nYou should think up a SANE ROLE now you have the rain soul again." : "" )} ;
-   bonus_note_grow_need : dynamic_string {( bonus_point_grow_need ? "\nYou figured how to GROW NEED from this." : retry_grow_need ? "\nYou should GROW NEED again now you have no greed again." : "" )} ;
-   bonus_note_racing_passions : dynamic_string {( bonus_point_racing_passions ? "\nYou extracted RACING PASSIONS from this." : retry_racing_passions ? "\nYou should extract RACING PASSIONS again now you have the pacing rations again." : "" )} ;
+
+   bonus_note_cease_purging : dynamic_string {( bonus_point_cease_purging ? "\nYou figured how to {cue_cease_purging} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_cease_purging} again {once_peace_surging}." : "" )} ;
+   bonus_note_grow_need : dynamic_string {( bonus_point_grow_need ? "\nYou figured how to {cue_grow_need} {with_bonus}." : retry_grow_need ? "\nYou should {cue_grow_need} again {once_no_greed}." : "" )} ;
+   bonus_note_racing_passions : dynamic_string {( bonus_point_racing_passions ? "\nYou extracted {cue_racing_passions} {with_bonus}." : retry_racing_passions ? "\nYou should extract {cue_pacing_rations} again {once_passions}." : "" )} ;
+   bonus_note_sane_role : dynamic_string {( bonus_point_sane_role ? "\nYou thought up a {cue_sane_role} {with_bonus}." : retry_sane_role ? "\nYou should think up a {cue_sane_role} again {once_rain_soul}." : "" )} ;
+   bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said {cue_so_long} {with_bonus}." : retry_so_long ? "\nYou should say {cue_so_long} again {once_so_long}." : "" )} ;
+   bonus_note_vast_fission : dynamic_string {( bonus_point_vast_fission ? "\nYou found {cue_vast_fission} {with_bonus}." : retry_vast_fission ? "\nYou should find {cue_vast_fission} again {once_fast_vision}." : "" )} ;
+
+	with_bonus : string "with this for a bonus point." ;
+
+   once_prayer_lights : dynamic_string {( (is_carried "prayer_lights" ? "now" : "once") + " you have {cc_prayer_lights}" )};
+   once_peace_surging : dynamic_string {( (is_carried "peace_surging" ? "now" : "once") + " you have peace surging" )};
+   once_fast_vision : dynamic_string {( (is_carried "fast_vision" ? "now" : "once") + " you have the fast vision" )};
+   once_low_song : dynamic_string {( (is_carried "low_song" ? "now" : "once") + " you have the low song" )};
+   once_no_greed : dynamic_string {( (is_carried "no_greed" ? "now" : "once") + " you have no greed" )};
+   once_pacing_rations : dynamic_string {( (is_carried "pacing_rations" ? "now" : "once" ) + " you have the pacing rations" )};
+   once_rain_soul : dynamic_string {( (is_carried "rain_soul" ? "now" : "once") + " you have a rain soul" )};
 
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
@@ -1644,7 +1664,7 @@ locations {
             : gosub "hub_check_independent" ;
             : pocket "pacing_rations" ;
             : if (retry_racing_passions) {
-               : print "{note_retry}<RACING PASSIONS<#f80>>." ;
+               : print "{note_retry}{cue_racing_passions}." ;
             }
          }
          : done ;
@@ -1890,7 +1910,7 @@ locations {
             : gosub "hub_check_independent" ;
             : pocket "low_song" ;
             : if (retry_so_long) {
-               : print "{note_retry}<SO LONG<#f80>>." ;
+               : print "{note_retry}{cue_so_long}." ;
             }
          }
          : done ;
@@ -1926,7 +1946,7 @@ locations {
             : set_true "point_bending_truth" ;
             : pocket "fast_vision" ;
             : if (retry_vast_fission) {
-               : print "{note_retry}<VAST FISSION<#f80>>." ;
+               : print "{note_retry}{cue_vast_fission}." ;
             }
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
@@ -1974,7 +1994,7 @@ locations {
             : gosub "hub_check_independent" ;
             : pocket "peace_surging" ;
             : if (retry_cease_purging) {
-               : print "{note_retry}<CEASE PURGING<#f80>>." ;
+               : print "{note_retry}{cue_cease_purging}." ;
             }
          }
          : done ;
@@ -2038,7 +2058,7 @@ locations {
                : set_true "point_pouring_rain" ;
                : pocket "rain_soul" ;
                : if (retry_sane_role) {
-                  : print "{note_retry}<SANE ROLE<#f80>>." ;
+                  : print "{note_retry}{cue_sane_role}." ;
                }
                : gosub "add_point_east" ;
                : gosub "hub_check_independent" ;
@@ -2098,7 +2118,7 @@ locations {
             : set_true "point_funny_mountain" ;
             : pocket "no_greed" ;
             : if (retry_grow_need) {
-               : print "{note_retry}<GROW NEED<#f80>>." ;
+               : print "{note_retry}{cue_grow_need}." ;
             }
             : gosub "add_point_east" ;
             : gosub "hub_check_independent" ;
@@ -3435,28 +3455,28 @@ subroutines {
          : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back into My House";
       }
       : if (retry_available) {
-         : print "Here is what you tried, but it was a bit too late:" ;
+         : print "Here are bonus commands you got right, but it was a bit too late. You can use them on replay." ;
       }
       : if (retry_rare_plights) {
-         : print "-- say <RARE PLIGHTS<#0f0>> when you have Player Rights" ;
+         : print "-- say <RARE PLIGHTS<#0f0>> {once_player_rights}" ;
       }
       : if (retry_so_long) {
-         : print "-- say <SO LONG<#0f0>> when the low song is in your mind" ;
+         : print "-- say {cue_so_long} {once_low_song}" ;
       }
       : if (retry_vast_fission) {
-         : print "-- try <VAST FISSION/FISHIN<#0f0>> when you have a fast vision" ;
+         : print "-- try {cue_vast_fission} {once_fast_vision}" ;
       }
       : if (retry_cease_purging) {
-         : print "-- think <CEASE PURGING<#0f0>> when you feel peace surging" ;
+         : print "-- think {cue_cease_purging} {once_peace_surging}" ;
       }
       : if (retry_sane_role) {
-         : print "-- hope for a <SANE ROLE<#0f0>> when you have a rain soul" ;
+         : print "-- hope for a {cue_sane_role} {once_rain_soul}" ;
       }
       : if (retry_grow_need) {
-         : print "-- <GROW NEED<#0f0>> when you feel no greed" ;
+         : print "-- {cue_grow_need} when you feel no greed" ;
       }
       : if (retry_racing_passions) {
-         : print "-- have <RACING PASSIONS<#0f0>> when you possess the pacing rations" ;
+         : print "-- have {cue_racing_passions} when you possess the pacing rations" ;
       }
       : gosub "check_additional_meta" ;
       : return ;
