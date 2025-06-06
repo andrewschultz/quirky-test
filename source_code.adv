@@ -662,6 +662,7 @@ strings {
    cue_cease_purging : string "<CEASE PURGING<#db8>>" ;
    cue_grow_need : string "<GROW NEED<#db8>>" ;
    cue_racing_passions : string "<RACING PASSIONS<#db8>>" ;
+   cue_rare_plights : string "<RARE PLIGHTS<#db8>>" ;
    cue_sane_role : string "<SANE ROLE<#db8>>" ;
    cue_so_long : string "<SO LONG<#db8>>" ;
    cue_vast_fission : string "<VAST FISSION<#db8>>" ;
@@ -785,6 +786,7 @@ strings {
       )} ;
    trial_pics_seen : dynamic_string {( pcpc_tile && pcpc_pile ? "You've found two different ways to look at the pics. There can't be any more." : (!pcpc_tile && !pcpc_pile) ? "Perhaps there is something in the pics, but it can't be SUPER critical." : "You've focused on " + (pcpc_tile ? "the tile pricks" : "how to pile tricks") + ", and yet you feel they have more to offer." )} ;
 
+   bonus_note_rare_plights : dynamic_string {( bonus_point_rare_plights ? "\nYou figured {cc_player_rights} hid an alternate subtitle {cue_rare_plights} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_rare_plights} again {once_rare_plights}." : "" )} ;
    bonus_note_cease_purging : dynamic_string {( bonus_point_cease_purging ? "\nYou figured how to {cue_cease_purging} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_cease_purging} again {once_peace_surging}." : "" )} ;
    bonus_note_grow_need : dynamic_string {( bonus_point_grow_need ? "\nYou figured how to {cue_grow_need} {with_bonus}." : retry_grow_need ? "\nYou should {cue_grow_need} again {once_no_greed}." : "" )} ;
    bonus_note_racing_passions : dynamic_string {( bonus_point_racing_passions ? "\nYou extracted {cue_racing_passions} {with_bonus}." : retry_racing_passions ? "\nYou should extract {cue_pacing_rations} again {once_passions}." : "" )} ;
@@ -1175,6 +1177,7 @@ locations {
                : if (!bonus_point_rare_plights) {
                   : print "You read about people's complaints. Some seem common and some seem exotic indeed. People hard done by mentally, physically, and financially. Their problems seem more interesting and exciting than yours. You know it's important to care about this sort of thing, and yet, there must be something else in {cc_prayer_lights}, something more uplifting, perhaps a justification you deserve more, even if you have a fun game like this to play." ;
                   : set_true "bonus_point_rare_plights" ;
+                  : set_false "retry_rare_plights" ;
                   : update_graphic ;
                   : set_integer var="tempint" "3" ;
                   : gosub "add_bonus" ;
@@ -1193,6 +1196,9 @@ locations {
                : if (!point_player_rights) {
                   : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\n\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}\nYou walk towards it." ;
                   : gosub "add_point" ;
+                  : if (retry_rare_plights) {
+                     : print "{note_retry}{cue_rare_plights}." ;
+                  }
                   : press_any_key ;
                   : set_true "point_player_rights" ;
                   : goto "plain_base" ;
@@ -3465,7 +3471,7 @@ subroutines {
          : print "Here are bonus commands you got right, but it was a bit too late. You can use them on replay." ;
       }
       : if (retry_rare_plights) {
-         : print "-- say <RARE PLIGHTS<#0f0>> {once_player_rights}" ;
+         : print "-- say {cue_rare_plights} {once_prayer_lights}" ;
       }
       : if (retry_so_long) {
          : print "-- say {cue_so_long} {once_low_song}" ;
@@ -3480,7 +3486,7 @@ subroutines {
          : print "-- hope for a {cue_sane_role} {once_rain_soul}" ;
       }
       : if (retry_grow_need) {
-         : print "-- {cue_grow_need} when you feel no greed" ;
+         : print "-- {cue_grow_need} {once_no_greed}" ;
       }
       : if (retry_racing_passions) {
          : print "-- have {cue_racing_passions} when you possess the pacing rations" ;
@@ -4501,6 +4507,12 @@ on_command {
          : print "{note_once}if you figure a phrase, you don't need to <SAY#0f0> it explicitly, though it shouldn't hurt to include it." ;
          : print "Just use the two words needed. The parser will understand." ;
          : set_true "say_warn" ;
+      }
+   }
+   : if (has_visited "plain_base" && !bonus_point_rare_plights) {
+      : match "rare plights" {
+         : set_true "retry_rare_plights" ;
+         : gosub "warning_bonus_after" ;
       }
    }
    : if (is_carried "trial_pics" ) {
