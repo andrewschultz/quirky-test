@@ -797,7 +797,7 @@ strings {
    bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said {cue_so_long} {with_bonus}." : retry_so_long ? "\nYou should say {cue_so_long} again {once_so_long}." : "" )} ;
    bonus_note_vast_fission : dynamic_string {( bonus_point_vast_fission ? "\nYou found {cue_vast_fission} {with_bonus}." : retry_vast_fission ? "\nYou should find {cue_vast_fission} again {once_fast_vision}." : "" )} ;
 
-	with_bonus : string "with this for a bonus point." ;
+   with_bonus : string "with this for a bonus point." ;
 
    once_prayer_lights : dynamic_string {( (is_carried "prayer_lights" ? "now" : "once") + " you have {cc_prayer_lights}" )};
    once_peace_surging : dynamic_string {( (is_carried "peace_surging" ? "now" : "once") + " you have peace surging" )};
@@ -3131,7 +3131,7 @@ subroutines {
       }
       : if (point_hunters_grill && !bonus_point_racing_passions) {
          : match "racing passions" {
-			: print "Alas, having eaten the pacing rations by the erstwhile grunters' hills, you can no longer muster up racing passions.{maybe_next_time}" ;
+            : print "Alas, having eaten the pacing rations by the erstwhile grunters' hills, you can no longer muster up racing passions.{maybe_next_time}" ;
             : set_true "retry_racing_passions" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3203,7 +3203,7 @@ subroutines {
       }
       : if (point_grim_tune && !bonus_point_sane_role) {
          : match "sane role" {
-			: print "It feels a bit too late to reclaim a sane role, after that grim tune you whipped up called humanity's sanity in general into question.{maybe_next_time}" ;
+            : print "It feels a bit too late to reclaim a sane role, after that grim tune you whipped up called humanity's sanity in general into question.{maybe_next_time}" ;
             : set_true "retry_sane_role" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3224,7 +3224,7 @@ subroutines {
          : if (!bonus_point_cheery_times) {
             : match "cheery _;_ times" {
                : gosub "say_half_b" ;
-			   : done ;
+            : done ;
             }
          }
       }
