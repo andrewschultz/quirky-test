@@ -71,6 +71,7 @@ booleans {
    out_argument_note : boolean "false" scope="survivor" ;
    bonus_obfuscated_note_yet : boolean "false" scope="survivor" ;
    room_name_note : boolean "false" scope="survivor" ;
+   note_partial_achievements : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -210,7 +211,7 @@ booleans {
 
    ## oranges
    achieve_tnnt : boolean "false" scope="survivor" ;
-   achieve_cddc2 : boolean "false" scope="survivor" ;
+   achieve_cddc_0pts : boolean "false" scope="survivor" ;
    achieve_pcpccp : boolean "false" scope="survivor" ;
    achieve_pcpccp_pre : boolean "false" scope="survivor" ;
    pcpc_tile : boolean "false" scope="survivor" ;
@@ -238,8 +239,8 @@ booleans {
    achieve_tmmt : boolean "false" scope="survivor" ;
    achieve_tmmt_pre : boolean "false" scope="survivor" ;
    achieve_dbbd : boolean "false" scope="survivor" ;
-   achieve_cddc : boolean "false" scope="survivor" ;
-   achieve_cddc_pre : boolean "false" scope="survivor" ;
+   achieve_cddc_jump : boolean "false" scope="survivor" ;
+   achieve_cddc_jump_pre : boolean "false" scope="survivor" ;
 
    ## purples
    achieve_hbbh : boolean "false" scope="survivor" ;
@@ -882,7 +883,7 @@ strings {
    ## orange = bonus points / footnotes
    ##ROER post-release
    achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
-   achievement_cddc2 : string "<Cueing Direct Doing: Correct<#f80>>" ;
+   achievement_cddc_0pts : string "<Cueing Direct Doing: Correct<#f80>>" ;
    achievement_roer : string "<Reach Out Each Route<#f80>>" ;
    achievement_pcpccp : string "<Player-Can-Pair-Clan Care Plan<#f80>>" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
@@ -901,7 +902,7 @@ strings {
    achievement_tmmt : string "<Throw Me Mo': Three<#00f>>" ;
    achievement_cjjc : string "<Chump, Joke Jump? Choke<#00f>>" ;
    achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#00f>>" ;
-   achievement_cddc : string "<Cousin, Draft Dozen-Craft<#00f>>" ;
+   achievement_cddc_jump : string "<Cousin, Draft Dozen-Craft<#00f>>" ;
 
    ## purple = examine
    achievement_hbbh : string "<Hi! Beer By Here?<#f0f>>" ;
@@ -2918,7 +2919,7 @@ subroutines {
          : return ;
       }
       : if (collection_count("jump_order_list") == 12) {
-         : set_true "achieve_cddc_pre" ;
+         : set_true "achieve_cddc_jump_pre" ;
          : return ;
       }
    }
@@ -2991,7 +2992,7 @@ subroutines {
    footnote_endgame_check : subroutine {
       : collection_iterate "footnote_status_list" {
          : if (int(item()) == 0) {
-            : print "You haven't unlocked the {achievement_tnnt} achievement yet." ;
+            : print "You haven't unlocked the {achievement_tnnt} achievement yet. (*)" ;
             : return ;
          } : else {
          }
@@ -3869,7 +3870,11 @@ subroutines {
          : gosub "color_check_bfa" ;
       }
 
-      ## grey achievement (post-comp)
+      : if (!note_partial_achievements) {
+         : print "{note_once}achievements with X/Y or * after them can be done over multiple playthroughs." ;
+         : set_true "note_partial_achievements" ;
+      }
+
    }
 
    track_achievements_1_red : subroutine {
@@ -3916,8 +3921,8 @@ subroutines {
    }
 
    track_achievements_2_orange : subroutine {
-      : if (achieve_tnnt && achieve_cddc2 && achieve_pcpccp && achieve_cnnc && achieve_roer) {
-         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
+      : if (achieve_tnnt && achieve_cddc_0pts && achieve_pcpccp && achieve_roer && achieve_cnnc) {
+         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_cddc_0pts},  {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
          : return ;
       }
       : set_false "achieve_taat" ;
@@ -3926,13 +3931,13 @@ subroutines {
       } : else {
          : gosub "footnote_endgame_check" ;
       }
-      : if (achieve_cddc2) {
-         : print "You already unlocked the {achievement_cddc2} achievement for brushing aside bonus points." ;
+      : if (achieve_cddc_0pts) {
+         : print "You already unlocked the {achievement_cddc_0pts} achievement for brushing aside bonus points." ;
       } : else_if (bonus_score == 0 && point_hi_mouse) {
-         : print "For brushing aside bonus points, you win the {achievement_cddc2} achievement!" ;
-         : set_true "achieve_cddc2" ;
+         : print "For brushing aside bonus points, you win the {achievement_cddc_0pts} achievement!" ;
+         : set_true "achieve_cddc_0pts" ;
       } : else {
-         : print "You haven't unlocked the {achievement_cddc2} achievement yet." ;
+         : print "You haven't unlocked the {achievement_cddc_0pts} achievement yet." ;
       }
       : if (achieve_pcpccp) {
          : print "You already unlocked the {achievement_pcpccp} achievement." ;
@@ -3940,7 +3945,7 @@ subroutines {
          : print "For finding two ways to look at the trial pics, you win the {achievement_pcpccp} achievement!" ;
          : set_true "achieve_pcpccp" ;
       } : else {
-         : print "You haven't unlocked the {achievement_pcpccp} achievement yet." ;
+         : print "You haven't unlocked the {achievement_pcpccp} achievement yet. (*)" ;
       }
       : if (achieve_roer) {
          : print "You already unlocked the {achievement_roer} achievement." ;
@@ -3956,8 +3961,8 @@ subroutines {
       : else_if (bonus_score == max_bonus_score) {
          : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
          : set_true "achieve_cnnc" ;
-         : if (!achieve_cddc2) {
-            : print "{note_once}you will automatically get the {achievement_cddc2} achievement on the next playthrough, since it requires you to win one session without finding any bonus points, and there are no bonus points left to find." ;
+         : if (!achieve_cddc_0pts) {
+            : print "{note_once}you will automatically get the {achievement_cddc_0pts} achievement on the next playthrough, since it requires you to win one session without finding any bonus points, and there are no bonus points left to find." ;
          }
       }
       : else {
@@ -4026,8 +4031,8 @@ subroutines {
    }
 
    track_achievements_5_blue : subroutine {
-      : if (achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc) {
-         : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc}." ;
+      : if (achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump) {
+         : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc_jump}." ;
          : return ;
       }
       : set_false "achieve_taat" ;
@@ -4048,13 +4053,13 @@ subroutines {
          : print "You haven't unlocked the {achievement_cjjc} achievement yet." ;
       }
       : gosub "track_achievements_dbbd" ;
-      : if (achieve_cddc) {
-         : print "You already unlocked the {achievement_cddc} achievement for performing all twelve possible warp jumps without duplication." ;
-      } : else_if (achieve_cddc_pre) {
-         : print "For performing all twelve possible warp jumps without duplicating one path, you win the {achievement_cddc} achievement!" ;
-            : set_true "achieve_cddc" ;
+      : if (achieve_cddc_jump) {
+         : print "You already unlocked the {achievement_cddc_jump} achievement for performing all twelve possible warp jumps without duplication." ;
+      } : else_if (achieve_cddc_jump_pre) {
+         : print "For performing all twelve possible warp jumps without duplicating one path, you win the {achievement_cddc_jump} achievement!" ;
+            : set_true "achieve_cddc_jump" ;
       } : else {
-            : print "You haven't unlocked the {achievement_cddc} achievement yet." ;
+            : print "You haven't unlocked the {achievement_cddc_jump} achievement yet." ;
       }
    }
 
@@ -4406,7 +4411,7 @@ on_tick {
       : print "{note_once}the plus in parentheses {pip} after an item means you found how to get a bonus point from it." ;
       : set_true "inv_plus_warn" ;
    }
-   : if ((latest_warp_number != -3) && (!achieve_cddc_pre)) {
+   : if ((latest_warp_number != -3) && (!achieve_cddc_jump_pre)) {
       : gosub "evaluate_warp" ;
    }
    : if (!ever_note_footnote && ever_reveal_footnote) {
