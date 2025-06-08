@@ -2354,7 +2354,7 @@ locations {
       }
    }
 
-   cht : location "This sets in_debug and cheat_dont_require. You need to L to go back where you were." {
+   cht : location "This sets in_debug and cheat_dont_require. You need to L to go back where you were. Or WIN wins." {
       on_tick {
          : set_true "in_debug" ;
          : set_true "cheat_dont_require" ;
@@ -3530,7 +3530,7 @@ subroutines {
       }
    }
    debug_commands : subroutine {
-      : match "wingame _"  {
+      : match "win _;wingame _"  {
          : print {( have_won ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
          : set_true "have_won";
          : gosub "win_game_stub" ;
@@ -3835,7 +3835,7 @@ subroutines {
          : print {( "To save keystrokes, you can jump around hub locations with " + w_eb + " (east branch.)" + w_pb + " (plain base,) " + (point_healing_still ? "" : w_sh + " (stealing hill,) ") + w_wt + " (west tiles,) " )} ;
       }
       : if (in_debug && !have_won) {
-         : print "In debug mode, <WINGAME<#0f0>> will win the game to open up footnotes." ;
+         : print "In debug mode, <WIN<#f80>> or <WINGAME<#0f0>> will win the game to open up footnotes." ;
       }
       : set_integer var="current_meta_verbs_flag" "64" ;
       : gosub "meta_flag" ;
