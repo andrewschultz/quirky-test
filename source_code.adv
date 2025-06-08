@@ -619,6 +619,7 @@ strings {
    my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
+   ach_asterisk : dynamic_string {( !point_hi_mouse || note_partial_achievements ? " (*)" : "" )} ;
 
    # basic diagnostic verb abbreviations
    vd_bon : string "<BONUS<#f80>>" ;
@@ -2992,7 +2993,7 @@ subroutines {
    footnote_endgame_check : subroutine {
       : collection_iterate "footnote_status_list" {
          : if (int(item()) == 0) {
-            : print "You haven't unlocked the {achievement_tnnt} achievement yet. (*)" ;
+            : print "You haven't unlocked the {achievement_tnnt} achievement yet.{ach_asterisk}" ;
             : return ;
          } : else {
          }
@@ -3945,7 +3946,7 @@ subroutines {
          : print "For finding two ways to look at the trial pics, you win the {achievement_pcpccp} achievement!" ;
          : set_true "achieve_pcpccp" ;
       } : else {
-         : print "You haven't unlocked the {achievement_pcpccp} achievement yet. (*)" ;
+         : print "You haven't unlocked the {achievement_pcpccp} achievement yet.{ach_asterisk}" ;
       }
       : if (achieve_roer) {
          : print "You already unlocked the {achievement_roer} achievement." ;
@@ -3953,7 +3954,7 @@ subroutines {
          : print "For scoring points in every location, you win the {achievement_roer} achievement!{chimes_note}" ;
          : set_true "achieve_roer" ;
       } : else {
-         : print "You haven't unlocked the {achievement_roer} achievement yet." ;
+         : print "You haven't unlocked the {achievement_roer} achievement yet.{ach_asterisk}" ;
       }
       : if (achieve_cnnc) {
          : print "(Already got the {achievement_cnnc} achievement for finding all bonus points)" ;
@@ -3966,7 +3967,7 @@ subroutines {
          }
       }
       : else {
-         : print "You haven't unlocked the {achievement_cnnc} achievement yet." ;
+         : print "You haven't unlocked the {achievement_cnnc} achievement yet.{ach_asterisk}" ;
       }
    }
 
@@ -4112,7 +4113,7 @@ subroutines {
       }
       : collection_iterate "ask_list" {
          : if (int(item()) < 3) {
-            : print "You haven't unlocked the {achievement_kssn} achievement yet." ;
+            : print "You haven't unlocked the {achievement_kssn} achievement yet.{ach_asterisk}" ;
             : return ;
          }
       }
@@ -4126,7 +4127,7 @@ subroutines {
       }
       : collection_iterate "ask_list" {
          : if (int(item()) == 0) {
-            : print "You haven't unlocked the {achievement_qwwq} achievement yet." ;
+            : print "You haven't unlocked the {achievement_qwwq} achievement yet.{ach_asterisk}" ;
             : return ;
          }
       }
