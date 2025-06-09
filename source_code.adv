@@ -1009,6 +1009,7 @@ vocabulary {
    : verb / aliases = [ab, abt, about]
    : verb / aliases = [achievements, achievement, achieve, ach, ac]
    : verb / aliases = [ask, rule]
+   : verb / aliases = [attack, cut, hit, kick, punch]
    : verb / aliases = [bonus, bon, bo, b]
    : verb / aliases = [cheatleap, cheetleap, cheatleep, cheetleep, cl, lc, leetcheap] # account for player typos since I made a lot during programmer testing
    : verb / aliases = [score, sco]
@@ -4831,6 +4832,14 @@ on_command {
          : print "While waiting is a standard parser command, there are no timed puzzles in {qt}." ;
          : set_true "wait_note" ;
       }
+   }
+   : match "attack _" {
+      : print "No violence is needed in {qt}, though sometimes there are comic threats of violence, or comic violence in the narrative after you figure what to do." ;
+      : done ;
+   }
+   : match "use _" {
+      : print "While you'll need to use items in inventory, they're implicitly used once you find the right phrase." ;
+      : done ;
    }
    : match "drop _" {
       : print {( drop_referenced ? "No need to {v_drop} anything." : "While classic text adventures often required the player to use {v_drop} due to inventory limits, this is often regarded as needless fiddling today. Modern text adventures, such as this, often take steps to keep the player's inventory manageable so they can focus on puzzles, finding plot-plausible reasons to dispose of items that are no longer necessary. Plus there aren't many items to carry here." )};
