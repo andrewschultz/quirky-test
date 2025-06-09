@@ -4405,6 +4405,12 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (!out_argument_note) {
+      : match "o *;out *" {
+         : print "{note_once}{v_out_b} requires no argument, since it just checks if there is only one exit before going." ;
+         : set_true "out_argument_note" ;
+      }
+   }
    : if (!spoke_out_note && (is_at "zone_west_spokes" || is_at "zone_east_spokes")) {
       : set_true "spoke_out_note" ;
       : print "{note_once}you can use {v_out_b} to leave any dead-end spokes like this, as an alternative to directions." ;
@@ -4565,14 +4571,6 @@ on_command {
       }
    }
    : match "o _;out _" {
-      : if (out_argument_note) {
-         : match "o *;out *" {
-            : print "{note_once}{v_out} requires no argument. It just looks if there's only one exit out." ;
-            : set_true "out_argument_note" ;
-         }
-      }
-      : set_sentence "out" ;
-   }
    : if (is_at("zone_hubs")) {
       : match "out _" {
          : if (is_at("east_branch") && points_right_side == 7 && point_healing_still) {
