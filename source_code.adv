@@ -960,7 +960,7 @@ objects {
    chalice_map : object "a chalice map" msg="It seems to lead to and from somewhere, but the key is missing. You need another document as reference.\n{map_and_plan}" ; ## from malice chap
    master_plan : object "a master plan" msg="It's written in clear language.{footnote_reveal_text}\n{map_and_plan}" ; ## from plaster man
    pacing_rations : object "pacing rations{inv_plus_racing_passions}" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff.{bonus_note_racing_passions}" ; ## from shell fort
-   crackers : object "Crackers" msg="More crackers than you could ever want." ; ## from cake trackers
+   crackers : object "crackers" msg="More crackers than you could ever want." ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "deal-mood meal, dude (eaten)" msg="You reflect on the meal you enjoyed. It will help you deal with something, mentally and/or physically." ; ## from grunters' hill
    confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
@@ -1260,6 +1260,7 @@ locations {
                : print "The {cc_pro_boor} looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up." ;
                : print "As a parting gift, they shove something into your hands, a discussion of what you're getting into, which they assure you is nothing near as good as Tad Beecher's writings." ;
                : print "It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
+               : print "You make a note of the direction the Pro Boor left. Probably the opposite of where you wish to go. But first, what's with {cc_prayer_lights}?" ;
                : set_true "point_bro_poor" ;
                : destroy "pro_boor" ;
                : pocket "prayer_lights" ;
@@ -1675,7 +1676,7 @@ locations {
          }
       }
       : match "x shell;x fort" {
-         : print {( point_fell_short ? "Silent now." : "Tough to approach with that artillerly landing too close to you." )} ;
+         : print {( point_fell_short ? "Silent now." : "Tough to approach with that artillery landing too close to you." )} ;
          : done ;
       }
       : match "listen _;talk -;talk fort;talk shell" {
@@ -1771,7 +1772,7 @@ locations {
             : print "But you don't want to shift your goals back." ;
             }
          : else_if ((!point_funny_mountain || !point_boring_way) && (!cheat_dont_require)) {
-            : print {( "You'd like to shift your goals, but it's not as easy as just wanting to. Perhaps helping " + (point_funny_mountain || point_boring_way ? "more" : "some" ) + " other folks shift their goals to something better would give you enough resililence." )} ;
+            : print {( "You'd like to shift your goals, but it's not as easy as just wanting to. Perhaps helping " + (point_funny_mountain || point_boring_way ? "more" : "some" ) + " other folks shift their goals to something better would give you enough resilience." )} ;
             : if (!think_shift_goals) {
                : increment "hub_think_needed" ;
             }
@@ -1808,7 +1809,7 @@ locations {
          }
          : match "talk -;talk grunters;talk hills;listen -" {
             : gosub "talk_flag" ;
-            : print "Your grunting skills are not up to scratch. You try again with actual words. Still, nothing. Perhaps there are other ways to bring out more than grunting from here." ;
+            : print "You try interacting with what you hear, but your grunting skills are not up to scratch. You try again with actual words. Still, nothing. Perhaps there are other ways to bring out more than grunting from here." ;
             : done ;
          }
       } : else {
@@ -3043,7 +3044,7 @@ subroutines {
    hub_check_independent : subroutine {
       : if (!note_independent_point) {
          : set_true "note_independent_point" ;
-         : print "{note_once}every critical puzzle you solve here will add an item to your inventory, which will be used implicitly when solving another puzzle. It's not critical to see what they are, but {vd_i} may offer clues where to go next." ;
+         : print "{note_once}every critical puzzle you solve will add an item to your {vd_i_long}, which will be used up implicitly when solving another puzzle. While it's not critical to track what they are, their identity may offer clues where to go next." ;
       }
    }
    hub_jerk : subroutine {
