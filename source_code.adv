@@ -1065,6 +1065,10 @@ locations {
                : print "You get no response from the voice, which is not surprising. It seems powerful, and it probably comes from afar. But it was worth a try. Perhaps you will get a better response when you find its source, or when other people or things are close by." ;
                : done ;
             }
+            : match "listen _" {
+               : print "The voice continues saying {cc_whoa_guest} without showing signs of tiring." ;
+               : done ;
+            }
             : match "_ voice" {
                : print "It's probably more what the voice is saying." ;
                : done ;
@@ -1476,6 +1480,10 @@ locations {
 
    stealing_hill : location "{loc_stealing_hill}{footnote_reveal_text}" {
       on_command {
+      : match "_ junk" {
+         : print {( "You don't need to get lost in the junk in general. You " + (point_healing_still ? "already got" : "need a way to find") + " something specifically useful." )} ;
+         : done ;
+      }
       : mask {
          : if (is_carried("travel_grail")) {
             : match "w _;e _;wt _;eb _;pb _" {
@@ -2052,9 +2060,17 @@ locations {
                : print "It's rather shiny, but the glare hurts a bit. You're not sure what it's upset about, but it could be more inviting, even if it were duller." ;
                : done ;
             }
+            : match "talk dome;talk hurt" {
+               : print "Your words echo back to you, distorted and eerie." ;
+               : done ;
+            }
          } : else {
             : match "x dirt;x home" {
                : print "Looks very cozy, but not quite for you." ;
+               : done ;
+            }
+            : match "talk home;talk dirt" {
+               : print "The dirt home is completely peaceful now." ;
                : done ;
             }
          }
