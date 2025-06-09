@@ -72,6 +72,7 @@ booleans {
    bonus_obfuscated_note_yet : boolean "false" scope="survivor" ;
    room_name_note : boolean "false" scope="survivor" ;
    note_partial_achievements : boolean "false" scope="survivor" ;
+   spoke_out_note : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -603,6 +604,7 @@ strings {
    tempopt : string "blank option" ;
 
    ## important conditional text stubs
+   exit_or_out : dynamic_string {( is_at "zone_west_spokes" || is_at "zone_east_spokes" ? "Only way {v_out}: " : "Exits: " )} ;
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
       (tutorial_6_x_ask_done && is_at "nameless_lameness") ? "You don't want to wander off without any direction, but maybe that voice could offer a clue." :
       (is_at "nameless_lameness") ? "In this nameless lameness, any move without figuring where to go could get you even more lost. You need some clue, first." :
@@ -4302,6 +4304,7 @@ themes {
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
    inventory_list_empty = Nothing (yet)
    inventory_list_header = Stuff you've acquired:\s
+   exit_list_header_concise = {exit_or_out}
    you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = {custom_unknown_verb_error}
       }
@@ -4402,6 +4405,10 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (!spoke_out_note && (is_at "zone_west_spokes" || is_at "zone_east_spokes")) {
+      : set_true "spoke_out_note" ;
+      : print "{note_once}you can use {v_out_b} to leave any dead-end spokes like this, as an alternative to directions." ;
+   }
    : if (verb_is "examine" && subject1_is "ooh_task") {
       : set_false "show_overlay" ;
       : update_graphic "t_ooh_task" ;
