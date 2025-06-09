@@ -724,13 +724,14 @@ strings {
    # "can't go that way" dynamic sub-strings
    back_to_hub : dynamic_string {( is_at "zone_west_spokes" ? "West Tiles" : "East Branch" )}
    spoke_out_dir : dynamic_string {( is_at "hub_w_n" || is_at "hub_e_n" ? "south" : is_at "hub_w_ne" || is_at "hub_e_ne" ? "southwest" : is_at "hub_w_e" || is_at "hub_e_e" ? "west" : is_at "hub_e_se" ? "northwest" : is_at "hub_w_s" || is_at "hub_e_s" ? "north" : is_at "hub_w_sw" ? "northeast" : is_at "hub_w_w" || is_at "hub_e_w" ? "east" : is_at "hub_w_nw" || is_at "hub_e_nw" ? "southeast" : "(unknown, bug)" )}
-   first_base_cantgo : dynamic_string {( point_bro_poor ? "You need to figure what to do with {cc_prayer_lights} before moving on." : "You'll have to deal with the {cc_pro_boor} before going anywhere." )}
+   first_base_cantgo : dynamic_string {( point_bro_poor ? "{cc_prayer_lights} has a mystery you will want to crack before moving on. Perhaps it will help you figure why you're here beyond finding <rttr>." : "You'll have to deal with the {cc_pro_boor} before going anywhere." )}
    plain_base_cantgo : dynamic_string {( point_gravel_trail ? "The only passages are northeast and northwest, where you think you've done everything, and north." : "The only viable passages (for now) are northeast and northwest." )}
 
    ## description strings by location
 
    task_read : dynamic_string {( has_visited "plain_base" ? "\nThe small print is easier to read with more light. It says:\nTHERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS SEVENTEEN\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n                    ANDREW" : " There's small print you can't read in this dimness." )} ;
 
+   first_base_first : dynamic_string {( is_first_entered() ? "Finally, a better-lighted place! It's wide open here. " : "" )} ;
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
@@ -1177,7 +1178,7 @@ locations {
          }
       }
    };
-   first_base : location "Now you're getting somewhere! You think.\n{boor_or_not}" {
+   first_base : location "FIRST BASE\n{first_base_first}Beckoned sase, Bird thace, Plome hate, you think to yourself ... no, something else will help you find the source of the voice.\n{boor_or_not}" {
       on_command {
          : if (is_carried "prayer_lights") {
             : match "x book;x lights;x prayer" {
