@@ -2717,7 +2717,7 @@ subroutines {
       }
       : else_if (tempint2 == 4 && ! have_asked_four) {
          : set_true "have_asked_four";
-         : print "{note_once}I'll have to ask for some suspension of disbelief, here. Thor's responses for each rule come in cycles of three, the exact same thing every time, and fortunately, unlike us mortals, he never gets bored." ;
+         : print "{note_once}Thor's responses for each rule come in cycles of three, the exact same thing every time, and fortunately, unlike us mortals, he never gets bored of repeating himself." ;
       }
       : done ;
    }
@@ -2765,7 +2765,7 @@ subroutines {
          : cycle key = "rule_3" predictable_order = "true" skip_interval = "0" {
             : print "\"The third rule in Graham Nelson's Player's Bill of Rights is <to be able to win without the experience of past lives<#f88>>.\"" ;
             : print "\"This can overlap with rule 1 about not getting killed unfairly, and while Groundhog Day games are a thing, that sort of exception may prove the rule. You're generally in a tight loop to start. Then the world expands as you learn more. This isn't just about death, though. Say you have a timed maze where you need to get through in X steps without a map, but you can't go down any dead ends. That creates a lot of busy work which shortly stops feeling like a game.\n\"An exception may be a game where you survive but lose contact with friends (a neutral ending,) and then you piece things together to escape with all your friends. Good-better-best endings are common and add depth to a game. But they should only be there if the player wants more.\"" ;
-            : print "\"The author likes to wimp out about this by allowing only joke deaths, or having a MISSED option in Inform for bonus points (for Adventuron, he's still learning!) And of course, if a puzzle is too hard, this rule is less important (The author's done that to players!)\"" ;
+            : print "\"The author likes to wimp out about this by allowing only joke deaths, or having a <MISSED<#f80>> option in Inform for stuff that's not quite bonus points (for Adventuron, he's still learning!) And of course, if a puzzle is too hard, this rule is less important (The author's done that to players!)\"" ;
          }
          : gosub "ask_thor_tally" ;
       }
@@ -2799,7 +2799,7 @@ subroutines {
       : else_if (tempint == 7) {
          : cycle key = "rule_7" predictable_order = "true" skip_interval = "0" {
          : print "\"The seventh rule in Graham Nelson's Player's Bill of Rights is <not to need to do boring things for the sake of it<#f88>>.\"" ;
-         : print "\"This was less of a worry when there were fewer games to play, and fewer games to fall back on and compare to, so even the busy work seemed new. But with time, there are certain puzzles everyone groans when they see, even if they were neat the first time: wolf/goat/cabbage, 5- and 4- and 3-liter jugs, Towers of Hanoi. Mazes are a 'favorite,' too, though authors have found many ways to subvert this nuisance or provide a reasonable way to jump through the maze.\"" ;
+         : print "\"This was less of a worry when there were fewer games to play, and fewer games to fall back on and compare to, so even the busy work seemed new. But with time, there are certain puzzles everyone groans when they see, even if they were neat the first time: wolf/goat/cabbage, 5- and 4- and 3-liter jugs, Towers of Hanoi, liar/truthteller. Mazes are a 'favorite,' too, though authors have found many ways to subvert this nuisance or provide a reasonable way to jump through the maze.\"" ;
          : print "\"Here the author realized having too many spoonerisms might ruin things. In fact, the original leadup to here had some buffer puzzles which were just me leading you on. I had a word with him.\"" ; ## put in footnote ;
          }
          : gosub "ask_thor_tally" ;
@@ -2808,8 +2808,8 @@ subroutines {
       : else_if (tempint == 8) {
          : cycle key = "rule_8" predictable_order = "true" skip_interval = "0" {
             : print "\"The eighth rule in Graham Nelson's Player's Bill of Rights is <not to have to type exactly the right verb<#f88>>.\"" ;
-            : print "\"It's frustrating to have PUT X IN Y fail only to realize you needed to INSERT X IN Y. That's a problem with parsers that accept a lot of words. They may expect exact ones, or they may allow synonyms, and it's tough for the player to decipher.\"" ;
-            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {vm_verbs} command lists all the verbs, and it's pretty clear which to use. USE X ON Y can even be a blanket solution, though it's not terribly evocative.\n\"So taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
+            : print "\"It's frustrating to have <PUT X IN Y<#0f0>> fail only to realize you needed to <INSERT X IN Y<#0f0>>. That's a problem with parsers that accept a lot of words. They may expect exact ones, or they may allow synonyms, and it's tough for the player to decipher.\"" ;
+            : print "\"Since parsers are no longer shiny and new, and we aren't blown away with being able to type stuff in and get a response, people have seen the advantage of a simplified parser. But authors can also put in notes to direct a player to a good common verb. Or a {vm_verbs} command lists all the verbs, and it's pretty clear which to use. <USE X ON Y<#0f0>> can even be a blanket solution, though it's not terribly evocative.\n\"So taken at face value, {qt} fails this rule miserably. You need the right pair of words, and they don't generally fall in the standard set of parser verbs. But on the other hand, they're clued pretty strongly. This is one of those cases where the author thinks or at least hopes he broke a rule judiciously to provide a new interesting experience. All authors need to, sometimes.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2817,8 +2817,8 @@ subroutines {
       : else_if (tempint == 9) {
          : cycle key = "rule_9" predictable_order = "true" skip_interval = "0" {
          : print "\"The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>.\"" ;
-         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Conventions have settled on I for inventory and X for examine, and one- or two-letter abbreviations for directions. Many games use custom abbreviations for verbs they have the player use a lot.\nMore commonly, Inform allows for pronouns, and MAN might be a synonym for SORCERER and WOMAN for SORCERESS, and so forth. NEWS and PAPER could cue NEWSPAPER. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
-         : print "\"There are a few synonyms in this game, but because of the oddness of the items, there's not too much that can be done. {qt} also short-circuits this by not making you use many items explicitly.\"" ;
+         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Conventions have settled on I for inventory and X for examine, and one- or two-letter abbreviations for directions. Many games use custom abbreviations for verbs they have the player use a lot.\nMore commonly, Inform allows pronouns as shorthand (<TAKE BOTTLE/X IT<#0f0>>, and <MAN<#0f0>> might be a synonym for <SORCERER<#0f0>> and <WOMAN<#0f0>> for <SORCERESS<#0f0>>, and so forth. <NEWS<#0f0>> and <PAPER<#0f0>> could cue <NEWSPAPER<#0f0>>. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
+         : print "\"There are a few synonyms in {qt}, though the items are dissimilar enough that not much is needed. {qt} also short-circuits this problem by not making you use many items explicitly.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2826,7 +2826,7 @@ subroutines {
       : else_if (tempint == 10) {
          : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
          : print "\"The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>.\"" ;
-         : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for SEARCH and EXAMINE may frustrate players.\nOne thing that helps provide a buffer is a {vm_verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you LOOK BEHIND and LOOK UNDER, and the right one is based on the object. But this was prompted by {vm_verbs}.\"" ;
+         : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for <SEARCH<#0f0>> and <EXAMINE<#0f0>> may frustrate players.\nOne thing that helps provide a buffer is a {vm_verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you <LOOK BEHIND<#0f0>> and <LOOK UNDER<#0f0>>, and the right one is based on the object. But this was prompted by {vm_verbs}.\"" ;
          : print "\"I used Adventuron's simplified two-word parser. I didn't need any complex actions, so it worked well.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -2835,8 +2835,8 @@ subroutines {
       : else_if (tempint == 11) {
          : cycle key = "rule_11" predictable_order = "true" skip_interval = "0" {
          : print "\"The eleventh rule in Graham Nelson's Player's Bill of Rights is <to have reasonable freedom of action<#f88>>.\"" ;
-         : print "\"Sometimes having too much to do is confusing, but sometimes not being able to do something indicated (e.g. X SCENERY) is annoying to the player.\"" ;
-         : print "\"Well, there aren't a ton of verbs implemented, and the first bit was on rails, but I wanted to open it up and have something to do right away in the main area.\"" ;
+         : print "\"Sometimes having too much to do is confusing, but sometimes not being able to do something indicated (e.g. <X SCENERY<#0f0>>) is annoying to the player. So programmers need to account for a room name or interesting words in the description with, if nothing else, something like 'That's just for decoration.'\"" ;
+         : print "\"Here, well, there aren't a ton of verbs implemented, and the first bit was on rails, but I wanted to open it up and have something to do right away in the main area.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2844,7 +2844,7 @@ subroutines {
       : else_if (tempint == 12) {
          : cycle key = "rule_12" predictable_order = "true" skip_interval = "0" {
          : print "\"The twelfth rule in Graham Nelson's Player's Bill of Rights is <not to depend too much on luck<#f88>>.\"" ;
-         : print "\"It's difficult, of course. If there is no luck, a game may not be replayable. And it can be fun to strategize to lessen bad luck.\"" ;
+         : print "\"It's difficult, of course. If there is no luck, a game may not be replayable. And it can be fun to strategize to lessen bad luck. But bad luck isn't just throwing the RNG at the player. It can mean a player being misled on what to do if they take one of three equal paths in a fork.\"" ;
          : print "\"In {qt}, there's no luck whatsoever. Which means that one time through may be enough, though {qt} does have bonus points and achievements to hunt down. But only if you're interested.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -2854,7 +2854,7 @@ subroutines {
          : cycle key = "rule_13" predictable_order = "true" skip_interval = "0" {
          : print "\"The thirteenth rule in Graham Nelson's Player's Bill of Rights is <to be able to understand a problem once it is solved<#f88>>.\"" ;
          : print "\"Of course, problems you've seen before aren't fun to solve. And being pushed to make that leap of logic without a spoiler is very gratifying. The player has a right to feel accomplished.\"" ;
-         : print "\"Well, in a one-trick pony adventure like this, \"understand it once it's solved\" is not really a problem. Of course, a problem from the other side is that the player says yeah, yeah, I get it, already, before tuning out.\"" ;
+         : print "\"So, in a one-trick pony adventure like this, 'understand it once it's solved' is likely, but a problem from the other side is that the player says yeah, yeah, I get it, already, before tuning out.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2863,7 +2863,7 @@ subroutines {
          : cycle key = "rule_14" predictable_order = "true" skip_interval = "0" {
          : print "\"The fourteenth rule in Graham Nelson's Player's Bill of Rights is <not to be given too many red herrings<#f88>>.\"" ;
          : print "\"A too on-rails game is boring. It's fun to have those side ventures. But they can be inane, or they can make the player worry they missed something.\"" ;
-         : print "\"Here, well, there are a few bonus points I hope you enjoy, and for those who enjoy hunting down footnotes and achievements, I have them too. Do as much or as little as you want.\"" ;
+         : print "\"Here, well, there are a few bonus points I hope you enjoy, and for those who enjoy hunting down footnotes and achievements, I have them too. Do as much or as little as you want. Or just poke through the source code to save time. The author made an effort to make it readable.\"" ;
          }
          : gosub "ask_thor_tally" ;
       }
@@ -2879,7 +2879,7 @@ subroutines {
          : cycle key = "rule_16" predictable_order = "true" skip_interval = "0" {
          : print "\"The sixteenth rule in Graham Nelson's Player's Bill of Rights is <not to need to be American<#f88>>.\"" ;
          : print "\"This was one of the more controversial rules, as the definition is not very exact. But of course, it's not just about being American. Needing to know obscure stuff specific to any culture or trivia might make it hard for people to enjoy things fully, even if along the way you learn interesting things about a culture or hobby.\"" ;
-         : print "\"For {qt}, there's a slang word or two here that originate in the US, but the hope is, it is logical with only so many possible misspellings.\"" ;
+         : print "\"For {qt}, there's a slang word or two here that originate in the US, but the hope is, it is relatively common, or logical with only so many possible misspellings.\"" ;
          }
          : gosub "ask_thor_tally" ;
       }
@@ -2887,7 +2887,7 @@ subroutines {
          : cycle key = "rule_17" predictable_order = "true" skip_interval = "0" {
          : print "\"The {y17}th rule in Graham Nelson's Player's Bill of Rights is <to know how the game is getting on<#f88>>.\"" ;
          : print "\"Progress tracking with points is a staple of text adventures, but it can feel a bit artificial and distracting to look up, even if the score is in the upper right. But a murder mystery may ask you for five pieces of evidence, or you may know a mansion has three stories and you've only visited one.\"" ;
-         : print "\"Here, I tried to give an idea of progress by closing off hub areas as you found them.\"" ;
+         : print "\"Here, the hub areas beyond give an idea of progress by closing off spokes as you figure what to do there.\"" ;
          }
          : gosub "ask_thor_tally" ;
       }
