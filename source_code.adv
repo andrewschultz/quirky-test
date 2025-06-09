@@ -104,6 +104,7 @@ booleans {
    ever_reveal_footnote : boolean "false" scope="survivor" ;
    ever_note_footnote : boolean "false" scope="survivor" ;
    history_footnote_found : boolean "false" scope="survivor" ; # I could look up footnote #8 (which will probably remain static)
+   plaster_man_talked : boolean "false" scope="survivor" ;
    reveal_this_footnote : boolean "false" ; # this is the only footnote variable that might change
 
    ## verb usage notifications (only need noting once if you replay)
@@ -717,6 +718,7 @@ strings {
 
    ## dynamic general strings
 
+   plaster_man_q : dynamic_string {( plaster_man_talked ? "Nothing, again." : "Is the plaster man some sort of golem? You might as well find out. You try to make conversation, but ... nothing. Motionless." )} ;
    ask_5_notes : dynamic_string {( bonus_point_rare_plights && bonus_point_shush_lout ? "You got both of them" : bonus_point_rare_plights || bonus_point_shush_lout ? "You got one of them" : "You missed them, but you can go back if you want" )}
 
    # "can't go that way" dynamic sub-strings
@@ -1570,7 +1572,8 @@ locations {
       }
       : match "talk plaster;talk man;talk -;listen -;listen plaster;listen man" {
          : if (!point_master_plan) {
-            : print "Is the plaster man some sort of golem? You might as well find out. You try to make conversation, but ... nothing. Motionless." ;
+            : print "{plaster_man_q}" ;
+            : set_true "plaster_man_talked" ;
             : print "The plaster man may have secrets to divulge, but since he's inanimate, talking and listening isn't the way to go." ;
             : gosub "talk_flag" ;
          } : else {
