@@ -1,0 +1,160 @@
+The color coding is different for achievements than footnotes or bonus points. There are spoilers for the main game here, but it's assumed you've already been through, if you want to look in here.
+
+* RED ACHIEVEMENTS
+
+** Hi, All I Haul
+
+This suggests looking at your inventory.
+
+More specifically, it suggest looking at your inventory when you have the maximum number of items.
+
+When does that happen? When you've solved all the independent puzzles and none of the dependent ones.
+
+So you need to solve all of East Branch except the Trim Goon, then the Cake Trackers and Shell Fort in West Tiles. Then take inventory.
+
+** More Than Thor, Man
+
+Don't talk to Thor.
+
+** Too Yacky: You, Tacky
+
+This suggests talking to lots of people. In particular, every person you can find, even hostile ones.
+
+The talk_need list has a list of places you need to talk.
+
+First Base (Pro Boor)
+Plain Base (Beery Thor)
+Plaster Man (W/N) (before getting the master plan)
+Malice Chap (W/NE) (before getting chalice map)
+Cake Trackers (W/S) (before you TAKE CRACKERS)
+Grunters' Hill (W/W) (before setting the hunters' grills)
+Yellow Field (W/NW) (before saying FELLOW YIELD)
+Trending Booth (E/NE) (before BENDING TRUTH)
+Warring Bay (E/E) (before BORING WAY)
+Money Fountain (E/W) (any time)
+Trim Goon (E/NW) (before GRIM TUNE)
+
+** Get a Major Meta-Gauger
+
+This requires you to perform all the informational meta-verbs acknowledged elsewhere. Diagnostics (INVENTORY, SCORE) don't count. Neither do options.
+
+ABOUT
+LINKS
+META
+OPTIONS
+POINTS
+THANKS
+VERBS
+VERSIONS
+
+Or synonyms.
+
+* ORANGE ACHIEVEMENTS
+
+** Totes Need Notes Teed
+
+The footnote_finding_list list in the source spoils things. However, hopefully there isn't anything too detailed to spoil, since it's mostly about examining.
+
+Ones not found in the flow of the game include
+
+X ME twice
+EAST at Burst Face (with note you can't go back)
+X PRO BOOR
+XYZZY (clued by the big runes)
+X TRENDING BOOTH
+X PLASTER MAN/MASTER PLAN/POURING RAIN/ROARING PAIN
+X MALICE CHAP
+X CRACKERS
+X HISSING MOUSE
+X BOOKSHELF
+
+** Cueing Direct Doing: Correct
+
+No bonus points on one runthrough.
+
+** Player-Can-Pair-Clan Care Plan
+
+TILE PRICKS and PILE TRICKS with the trial pics.
+
+** Reach Out Each Route
+
+Score a point based on an item in each area.
+
+TEST WILES or RIG BOONS in West Tiles.
+
+BEAST RANCH or RIG BOONS in East Branch.
+
+CHEERY TIMES can be done in My House, but it affects the chimes outside.
+
+EYE STAY in My House.
+
+Clever! Nap? Never! (Clap!)
+
+Get all bonus points. Note this gets Reach Out Each Route and will get you Cueing Direct Doing: Correct on the next runthrough, if you haven't got it already.
+
+* YELLOW ACHIEVEMENTS
+
+** Quell-Worrying-Well Querying
+
+TALK THOR, then
+
+ASK 1, ASK 2, etc. to ASK 17.
+
+This is facilitated by the up-arrow key.
+
+** Knowin' Stuff, Stowin' 'Nuff
+
+ASK all three times. This is trickier to track, but again, the up-arrow key makes things go faster.
+
+* GREEN ACHIEVEMENTS (SPEED RUN RELATED)
+
+** So Slick! Slow? Sick!
+
+Don't return to Plain Base until you have the grail.
+
+** Great Style, Straight Guile
+
+Try no dependent puzzles before you're ready. For instance, if you try GRIM TUNE before FLY SCORE or POURING RAIN, that'd cost you the achievement this time through.
+
+** Re-Sight-See? Riiight
+
+Take the minimum moves between locations. So go northeast, then solve things clockwise from north, then up and west, and solve things clockwise from east. Then up to Stealing Hill for the grail.
+** Second Revvin' Reckoned? Seven!
+
+Do all seven dependent puzzles in the post-hub area out of order. (Plaster Man, Malice Chap, Gift Shoals, Grunters' Hill, Yellow Field, Trim Goon, Stealing Hill). Note you can solve some non-dependent puzzles first, just not any two that work together.
+
+* BLUE ACHIEVEMENTS (JUMP/WARP RELATED)
+
+** Throw Me Mo': Three
+
+Warp three rooms over. There are 14 ways to do this: From a west hub room to East Branch, or an east hub room to West Branch.
+
+** Chump, Joke Jump? Choke
+
+Try to jump back to Stealing Hill after you got the grail.
+
+** Did-Buzzin'-Bid? Dozen
+
+There are twelve from/to combinations for jumps. Try them all.
+
+** Cousin, Draft Dozen-Craft
+
+Perform all twelve jumps without repeating, or walking anywhere.
+
+This is tricky, and I don't want to spoil it, as I think it's a rewarding puzzle!
+
+V qrevirq gur fbyhgvba ol abgvat tbvat pybpxjvfr sebz Cynva Onfr, gura onpx pbhagrepybpxjvfr tbg zr rvtug. Gura gnpxvat ba erpvcebpny jnecf orgjrra gur onfr naq gur uvyy gb gur raq be fgneg tbg zr gb gra.
+
+Gura nal gvzr lbh ner ng gur oenapu be gur gvyrf, whfg vafreg n jnec gb gur gvyrf/oenapu naq onpx.
+
+* PURPLE ACHIEVEMENTS (examine stuff)
+
+** Hi! Beer By Here?
+
+There's implied beer with Thor's picture and with the description. You may also guess where beer might be, and it must be somewhere, given the accomplishment.
+
+(VERB) BEER around Thor.
+
+** Neat-Book-Beat Nook
+
+X SHELF until you are told it's the last one. (There are seventeen books as of the first release.)
