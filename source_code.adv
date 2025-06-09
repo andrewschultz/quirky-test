@@ -48,11 +48,11 @@ booleans {
    have_asked_four : boolean "false" scope="survivor" ;
    initial_book_poke : boolean "false" scope="survivor" ;
    got_footnote_17 : boolean "false" scope="survivor" ;
-   noticed_beer : boolean "false" ;
-   inventory_incorporeal : boolean "false" ;
-   thor_warn_close : boolean "false" ;
-   ask_thor_misfire : boolean "false" ;
-   score_bonus_nag : boolean "false" ;
+   noticed_beer : boolean "false" scope="survivor" ;
+   inventory_incorporeal : boolean "false" scope="survivor" ;
+   thor_warn_close : boolean "false" scope="survivor" ;
+   ask_thor_misfire : boolean "false" scope="survivor" ;
+   score_bonus_nag : boolean "false" scope="survivor" ;
    bonus_max_warn : boolean "false" scope="survivor" ;
    said_bore_outside_base : boolean "false" ;
    thor_knows_bore : boolean "false" ;
@@ -1497,7 +1497,7 @@ locations {
       }
 
       : match "x hill;x stealing" {
-         : print {( point_gravel_trail ? "Nope. It hasn't discovered your theft yet. Better leave before it does." : "It seems to be sleeping. Maybe you could pinch something from it, if you knew what you wanted and how to get it." )} ;
+         : print {( point_healing_still ? "Nope. It hasn't discovered your theft yet. Better leave before it does." : "It seems to be sleeping. Maybe you could pinch something from it, if you knew what you wanted and how to get it." )} ;
       }
       : match "d w" {
          : set_sentence "w" ;
