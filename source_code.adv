@@ -2176,6 +2176,11 @@ locations {
    };
    hub_e_nw : location "{point_grim_tune ? hub_e_grim_tune : hub_e_trim_goon}" {
       on_command {
+      : match "talk _;listen _" {
+         : gosub "hub_jerk" ;
+         : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
+         : done ;
+      }
       : if (point_grim_tune) {
          : match "x tune;x grim" {
             : print "It's yours. You're proud of it. You will remember it fondly through the rest of your quest." ;
@@ -2184,11 +2189,6 @@ locations {
       } : else {
          : match "x goon;x trim" {
             : print "Not gonna beat the {cc_trim_goon} physically. Or with fear. Maybe some other emotion?" ;
-            : done ;
-         }
-         : match "talk _;listen _" {
-            : gosub "hub_jerk" ;
-            : print "Negotiations don't exactly interest the {cc_trim_goon}. Perhaps there's a way to rattle the {cc_trim_goon} without quite talking." ;
             : done ;
          }
       }
