@@ -415,10 +415,10 @@ collections {
          "<Try going east from Burst Face<#f00>>",
          "<Examine the Pro Boor<#f00>>",
          "<First description for Plain Base<#f80>>",
-         "<Visit either hub<#ff0>>",
-         "<Get to Stealing Hill<#ff0>>",
+         "<Visit both West Tiles and East Branch<#ff0>>",
          "<XYZZY<#ff0>>",
-         "<Return to Thor after visiting Stealing Hill<#ff0>>",
+         "<Visit Stealing Hill<#888>>",
+         "<Escape Stealing Hill with the grail<#888>>",
          "<Get to Sky Floor<#0f0>>",
          "<Examine the trending booth<#0f0>>",
          "<Get to Warring Bay<#0f0>>",
@@ -437,9 +437,9 @@ collections {
          "<Examine someone<#f00>>",
          "<Found during core walkthrough<#f80>>",
          "<Found during core walkthrough<#ff0>>",
-         "<Found during core walkthrough<#ff0>>",
          "<Magic word<#ff0>>",
-         "<Found during core walkthrough<#ff0>>",
+         "<Found during core walkthrough<#888>>",
+         "<Found during core walkthrough<#888>>",
          "<Found during core walkthrough<#0f0>>",
          "<Examine something<#0f0>>",
          "<Found during core walkthrough<#0f0>>",
@@ -479,9 +479,9 @@ collections {
       "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps this spoonerism pair would've made a good book name in the bookshelf at the end.",
       "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need an apostrophe for a proper spoonerism include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.\nI also had ideas for hostile NPCs including Tad Beecher, Quinn Wick and Trav Hubble, but there was enough to program.",
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Which actually worked out okay because East Branch has more bonus points (meant to be hard) than West Tiles.\nAlso, recycling the names as signs helped fill the whole graphic for Plain Base.",
-      "Originally this was called Fate Hill, which works semantically but isn't believable as part of the story. It lampshaded that this was an important place to be, but I think the location and new name do this. The hill, of course, gets hateful anyway.",
       "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.\nI didn't want it just to be inside knowledge, though, so I put the runes in as a puzzle.",
       "I wanted to show the reader some non-reciprocal directions but not have them there just because. The original hub maps were west and east of Thor, and the passage back was south. The hill always had non-reciprocal directions, and it was simpler just to have the side-hubs' exits mirror each other instead of being identical.",
+      "Originally, this was called Fate Hill, which works semantically but is too abstract. It sounds wobbly, too. But still, the temporary name did its job. It lampshaded that this was an important place to be, but I think the location and new name do this. However, one side result of Fate Hill was giving the hill facial expressions, which made me smile, at least.",
       "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated.",
       "I was sort of inspired by a combination of Lucy's psychiatrist office and Steven Crowder's disingenuous \"Prove Me Wrong\" table when thinking of this. I have a special, uh, spot in my heart for people who will get up in your business and explain you're very lucky they dropped into your life.",
       "I'm not allergic to excitement, but I don't particularly like being around people who tell my my life needs to be more exciting, and they can help with that. Taking this point to the extreme, there are people who prefer \"exciting\" conflict to \"boring\" peace.\nI try to slip this sort of thing into a lot of what I write, but maybe it is too subtle. Or too obscure.",
@@ -1392,15 +1392,9 @@ locations {
          }
       }
       on_describe {
-         : if (!note_nonreciprocal && has_visited("stealing_hill")) {
-            : set_integer var="tempint" "9" ;
-            : gosub "footnote_reveal" ;
-            : print "\"Oh, so you've been to the hill,\" says Thor. \"I hope the directions didn't turn you around too much. You know, going up and then west or east to get back. Bendy passages like this shouldn't be used often, but here, I sort of hope they give you a feeling the hill is elevated, in your mental map.{footnote_reveal_text}\"";
-            : set_true "note_nonreciprocal" ;
-         }
          : if (!achieve_ssss && !achieve_ssss_pre && !return_to_base_checked && (has_visited "east_branch" || has_visited "west_tiles")) {
             : if (is_carried("travel_grail")) {
-               : print {( "Thor also points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( have_won ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
+               : print {( "Thor points to your {cc_travel_grail}. \"Very impressive, getting it without coming back here. You deserve an achievement for that. " + ( have_won ? "You've seen them already" : "You'll see them" ) + " on completion of your quest.\"" )} ;
                : set_true "achieve_ssss_pre" ;
             }
             : set_true "return_to_base_checked" ;
@@ -1485,7 +1479,7 @@ locations {
       }
    };
 
-   stealing_hill : location "{loc_stealing_hill}{footnote_reveal_text}" {
+   stealing_hill : location "{loc_stealing_hill}" {
       on_command {
       : match "_ junk" {
          : print {( "You don't need to get lost in the junk in general. You " + (point_healing_still ? "already got" : "need a way to find") + " something specifically useful." )} ;
@@ -1494,7 +1488,9 @@ locations {
       : mask {
          : if (is_carried("travel_grail")) {
             : match "w _;e _;wt _;eb _;pb _" {
-               : print "As you slip away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, since hills don't generally move around a lot, but hey, the principle's the important thing." ;
+               : set_integer var="tempint" "9" ;
+               : gosub "footnote_reveal" ;
+               : print "As you slip away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, since hills don't generally move around a lot, but hey, the principle's the important thing.{footnote_reveal_text}" ;
                : set_true "hill_aware_you_stole" ;
                : gosub "brief_hill_mad" ;
             }
@@ -1558,12 +1554,16 @@ locations {
          }
       }
       }
-      on_pre_describe {
-         : set_integer var="tempint" "7" ;
-         : gosub "footnote_reveal" ;
-      }
       on_describe {
          : gosub "list_jump_commands" ;
+         : set_integer var="tempint" "8" ;
+         : gosub "footnote_reveal" ;
+         : if (is_first_entered()) {
+            : print "{note_once}since this location is up from two different rooms, going down is ambiguous. Nonreciprocal directions aren't usually a recommended part of adventure games, since they can confuse the player, but here, I wanted the directions to give the feeling of a hill.{footnote_reveal_text}" ;
+            : if (have_won) {
+               : set_true "note_nonreciprocal" ;
+            }
+         }
       }
    };
 
@@ -4871,7 +4871,7 @@ on_command {
       : set_true "drop_referenced" ;
    }
    : match "xyzzy _" {
-      : set_integer var="tempint" "8" ;
+      : set_integer var="tempint" "7" ;
       : gosub "footnote_reveal" ;
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"{footnote_reveal_text}";
    }
