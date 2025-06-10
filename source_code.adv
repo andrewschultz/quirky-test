@@ -817,7 +817,7 @@ strings {
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
-   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nYou can go " + ( has_visited("west_tiles") ? "back to West Tiles" : "west" ) + " or " + ( has_visited("east_branch") ? "back to East Branch" : "east" ) + "." )};
+   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nTwo paths slope back down here, " + ( has_visited("west_tiles") ? "back to West Tiles" : "west" ) + " and " + ( has_visited("east_branch") ? "back to East Branch" : "east" ) + "." )};
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ; ## remove qualifier only when you used the travel grail
 
    gravel_trail_house : dynamic_string {(
@@ -1049,7 +1049,7 @@ vocabulary {
 ## Locations and location-specific parser rules
 
 locations {
-   nameless_lameness : location "You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "r_nameless_lameness" {
+   nameless_lameness : location "NAMELESS LAMENESS\nYou are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "r_nameless_lameness" {
       on_command {
          : if (!room_name_note) {
             : match "_ nameless;_ lameness;lameness _;nameless _" {
@@ -1507,7 +1507,7 @@ locations {
          : set_sentence "e" ;
       }
       : match "d _" {
-         : print "But there are two ways to go down, here, technically. East or west. So you'll need to be specific." ;
+         : print "Since there are two ways to go down, east or west, I'll need you to be specific." ;
          : done ;
       }
       : match "talk _;listen _" {
@@ -1719,7 +1719,7 @@ locations {
             : done ;
          }
          : match "x trackers" {
-            : print "The trackers seem preoccupied with finding cake. So preoccupied, they may be foregtting something nice they already have." ;
+            : print "The trackers seem preoccupied with finding cake. So preoccupied, they may be forgetting something nice they already have." ;
             : done ;
          }
       }
@@ -1962,7 +1962,7 @@ locations {
          : if (!point_bending_truth) {
             : gosub "talk_flag" ;
          }
-         : print {( point_bending_truth ? "Nothing to say or hear, but the quiet sure is nice." : "Talking and listening doesn't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
+         : print {( point_bending_truth ? "Nothing to say or hear any more, but the quiet sure is nice." : "Talking and listening doesn't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
          : done ;
       }
       : match "x booth" {
