@@ -191,7 +191,10 @@ booleans {
    think_hunters_grill : boolean "false" ;
    think_master_plan : boolean "false" ;
    think_shift_goals : boolean "false" ;
-   think_hi_mouse : boolean "false" ; ## put endgame at end
+
+   think_gravel_trail : boolean "false" ; ## put endgame at end
+   think_hi_mouse : boolean "false" ;
+
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
 
    ## "retry" booleans for THINK: if you got something after losing it
@@ -282,9 +285,11 @@ booleans {
    long_word_warn : boolean "false" scope="survivor" ;
 
    ## dynamic booleans
+   at_spoke : dynamic_boolean {( is_at "zone_west_spokes" || is_at "zone_east_spokes" )} ;
+   at_hub : dynamic_boolean {( is_at "west_tiles" || is_at "east_branch" )} ;
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ; # for debugging purposes since I GOTO MY_HOUSE a lot
 
-   think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_hi_mouse )} ;
+   think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_gravel_trail || think_hi_mouse )} ;
    retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
    bonus_this_playthrough : dynamic_boolean {( bonus_score > bonus_score_start )} ;
 
@@ -3245,10 +3250,13 @@ subroutines {
                : print "You'd sort of grown attached to it, but he is bigger than you, and it is a little heavy.";
                : destroy "travel_grail" ;
                : set_true "point_gravel_trail" ;
+               : set_false "think_gravel_trail" ;
                : gosub "add_point" ;
                : update_graphic ;
             } : else {
-               : print "Nothing happens. Perhaps you'll want to use the travel grail elsewhere. Like somewhere that might have passages you haven't explored." ;
+               : print {( "That feels right, but you don't just want to go opening up random trails." + ( at_hub ? " There are already enough here, which you've explored thoroughly." : is_at "stealing_hill" ? " You're not equipped to go exploring any deep caves or long paths, anyway." : " Where could there be somewhere new to go, but it isn't in view yet?" ) )} ;
+               : set_true "think_gravel_trail" ;
+               : gosub "note_think_command" ;
             }
             : done ;
          }
@@ -3506,6 +3514,9 @@ subroutines {
       }
       : if (think_shift_goals) {
          : print "-- help others out enough to be able to <SHIFT GOALS<#0f0>> (West Tiles, SW)";
+      }
+      : if (think_gravel_trail) {
+         : print "-- find the right place to open up the <GRAVEL TRAIL<#0f0>>" ;
       }
       : if (think_hi_mouse) {
          : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back into My House";
