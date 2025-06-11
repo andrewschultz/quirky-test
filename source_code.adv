@@ -968,7 +968,7 @@ objects {
    chalice_map : object "a chalice map" msg="It seems to lead to and from somewhere, but the key is missing. You need another document as reference.\n{map_and_plan}" ; ## from malice chap
    master_plan : object "a master plan" msg="It's written in clear language.{footnote_reveal_text}\n{map_and_plan}" ; ## from plaster man
    pacing_rations : object "pacing rations{inv_plus_racing_passions}" msg="Very sensible rations for any sort of long journey, obviously completely well-thought-out and unemotional and stuff.{bonus_note_racing_passions}" ; ## from shell fort
-   crackers : object "crackers" msg="More crackers than you could ever want." ; ## from cake trackers
+   crackers : object "crackers" msg="All shapes and textures and colors--the boxes and the crackers themselves. What a variety! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ; ## from cake trackers
    focus : object "<focus<#888>>" msg="It's hard to focus on your focus, but you know you have it, since you feel less distracted by what doesn't matter." ; ## from gifting shoals
    meal_dude : object "deal-mood meal, dude (eaten)" msg="You reflect on the meal you enjoyed. It will help you deal with something, mentally and/or physically." ; ## from grunters' hill
    confidence : object "<Confidence<#888>> ({confidence_level})" msg="You examine how you're feeling. You have {confidence_level} confidence from outwitting {confidence_obnoxious}." ; ## from yellow field / trim goon
@@ -4472,11 +4472,6 @@ on_tick {
       : print "{note_once}you can view footnotes with {vd_footnote_cue}. Each individual footnote's notification only appears once. I won't reveal how many there are, but you can figure the precise number out by guessing and getting different error messages.";
       : print "You can also type {vd_f0} to get a list of footnotes." ;
    }
-   : if_examine "crackers" {
-      : set_integer var="tempint" "15" ;
-      : gosub "footnote_reveal" ;
-      : print "All shapes and textures and colors. What a variety! You vowed, when you were a kid, that you would buy one of each box of crackers you found in the story and eat one from each, each day. But this dream burst as you got older.{footnote_reveal_text}" ;
-   }
 }
 
 ## on_pre_describe/on_describe are mostly for moving ambient items around
@@ -4593,6 +4588,8 @@ on_command {
    : if (is_carried "crackers") {
       : match "x crackers" {
          : mask {
+            : set_integer var="tempint" "15" ;
+            : gosub "footnote_reveal" ;
             : set_false "show_overlay" ;
             : update_graphic "t_crackers" ;
             : set_true "show_overlay" ;
