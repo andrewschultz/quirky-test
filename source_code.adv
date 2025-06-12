@@ -709,11 +709,11 @@ strings {
    v_t0 : string "<T<#0f0>>" ;
    v_x_me : string "<X ME<#0f0>>" ;
 
-   # warp commands in orange
-   w_pb : string "<PB<#f80>>" ;
-   w_wt : string "<WT<#f80>>" ;
-   w_sh : string "<SH<#f80>>" ;
-   w_eb : string "<EB<#f80>>" ;
+   # warp commands in blue, to match their achievement color
+   w_pb : string "<PB<#00f>>" ;
+   w_wt : string "<WT<#00f>>" ;
+   w_sh : string "<SH<#00f>>" ;
+   w_eb : string "<EB<#00f>>" ;
 
    # tutorial and hinty stuff in purple
    note_cue_tutorial : string "<TUTORIAL CUE:<#f0f>> " ;
