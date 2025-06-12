@@ -769,12 +769,12 @@ strings {
    hub_w_chalice_map : string "You got the chalice map here. There can't really be anything left to do." ;
    hub_w_shell_fort : string "A {cc_shell_fort} sits here. It occasionally fires rounds that get close to you. While there's no danger of you getting hit, it's still annoying and gets in the way of trying to find anything." ;
    hub_w_fell_short : string "The shell fort lies barren now. You even ransacked it for rations." ;
-   hub_w_cake_trackers : string "{cc_cake_trackers} mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
-   hub_w_take_crackers : string "Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
+   hub_w_cake_trackers : string "^c^<CA<#f00>>KE <TR<#f88>><AC<#654>><KE<#800>><RS<#cb9>>\n^l^{cc_cake_trackers} mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
+   hub_w_take_crackers : string "^c^<CRACKERS<#cb9>>\n^l^Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
    hub_w_gift_shoals : string "{cc_gift_shoals} are here. They sure have washed up a lot of gifts! Nothing you particularly like or can use, but you're drawn to them anyway, in your current mental state." ;
    hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset. You don't miss the now-vanished gifts." ;
-   hub_w_grunters_hill : string "Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
-   hub_w_hunters_grill : string "Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
+   hub_w_grunters_hill : string "^c^<GRUNTERS'<#888>> <HILL<#8f8>>\n^l^Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
+   hub_w_hunters_grill : string "^c^<HUNTERS' GRILL<#080>>\n^l^Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
    hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure. But, boy, they're persistent!" ;
    hub_w_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
@@ -783,15 +783,15 @@ strings {
    hub_e_fly_score : string "It was inspirational to think up a neat little tune here, but you realize you want to share it." ;
    hub_e_trending_booth : string "A {cc_trending_booth} sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
    hub_e_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
-   hub_e_warring_bay : string "You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
-   hub_e_boring_way : string "Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
-   hub_e_hurt_dome : string "A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to hurt anyone or anything actively by launching missiles. But perhaps you could remove the hurt?" ;
-   hub_e_dirt_home : string "The dirt home you summoned stands here, infinitely less menacing than its previous form." ;
-   hub_e_roaring_pain : string "You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
-   hub_e_pouring_rain : string "The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
-   hub_e_money_fountain : string "A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
-   hub_e_funny_mountain : string "A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
-   hub_e_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
+   hub_e_warring_bay : string "^c^<WARRING BAY<#c00>>\n^l^You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
+   hub_e_boring_way : string "^c^<BORING WAY<#888>>\n^l^Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
+   hub_e_hurt_dome : string "^c^<HURT DOME<#c00>>\n^l^A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to hurt anyone or anything actively by launching missiles. But perhaps you could remove the hurt?" ;
+   hub_e_dirt_home : string "^c^<DIRT HOME<#a98>>\n^l^The dirt home you summoned stands here, infinitely less menacing than its previous form." ;
+   hub_e_roaring_pain : string "^c^<ROARING PAIN<#c00>>\n^l^You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
+   hub_e_pouring_rain : string "^c^<POURING RAIN<#00f>>\n^l^The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
+   hub_e_money_fountain : string "^c^<MONEY FOUNTAIN<#fc0>>\n^l^A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
+   hub_e_funny_mountain : string "^c^<FUNNY MOUNTAIN<#f88>>\n^l^A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
+   hub_e_trim_goon : string "^c^<TRIM GOON<#c00>>\n^l^A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
    hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reinforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## details for hub items
@@ -822,7 +822,7 @@ strings {
    ## stealing hill
    stealing_hill_desc: dynamic_string {( point_healing_still ? "The stealing hill seems quiet, for now, but it will probably figure someone stole its grail, eventually." : "A {cc_stealing_hill} glares at you (the hills have eyes, you know) as if to say, you're not getting anything useful from it! And yet, there's so much junk lying around, if you know what to get and have a plan to get there, you can nab it quickly."
    )};
-   loc_stealing_hill : dynamic_string {( "THE STEALING HILL\n{stealing_hill_desc}\nTwo paths slope back down here, " + ( has_visited("west_tiles") ? "back to West Tiles" : "west" ) + " and " + ( has_visited("east_branch") ? "back to East Branch" : "east" ) + "." )};
+   loc_stealing_hill : dynamic_string {( "^c^<STEALING HILL<#0f0>>\n^l^{stealing_hill_desc}\nTwo paths slope back down here, " + ( has_visited("west_tiles") ? "back to West Tiles" : "west" ) + " and " + ( has_visited("east_branch") ? "back to East Branch" : "east" ) + "." )};
    stealing_hill_mad: dynamic_string {( "You don't have any reason to risk the full wrath of the stealing hill. You got something useful" + (point_gravel_trail ? "" : ", you're pretty sure") + "." )} ; ## remove qualifier only when you used the travel grail
 
    gravel_trail_house : dynamic_string {(
@@ -1054,7 +1054,7 @@ vocabulary {
 ## Locations and location-specific parser rules
 
 locations {
-   nameless_lameness : location "NAMELESS LAMENESS\nYou are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "r_nameless_lameness" {
+   nameless_lameness : location "^c^<NAMELESS LAMENESS<#888>>\n^l^You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "r_nameless_lameness" {
       on_command {
          : if (!room_name_note) {
             : match "_ nameless;_ lameness;lameness _;nameless _" {
@@ -1153,7 +1153,7 @@ locations {
          }
       }
    };
-   burst_face : location "Having come west from the nameless lameness, you find yourself stuck at this {cc_burst_face}. It's time to take another initial step. Or it would be, without that {cc_burst_face} in the way." graphic = "r_burst_face" {
+   burst_face : location "^c^<BURST FACE<#00c>>\n^l^Having come west from the nameless lameness, you find yourself stuck at this {cc_burst_face}. It's time to take another initial step. Or it would be, without that {cc_burst_face} in the way." graphic = "r_burst_face" {
       on_command {
          : match "x face;x burst" {
             : print "The burst face looks stern, yet at the same time, a bit weary, maybe just impatient for you to say the right thing. Whatever it's been guarding, well, it's been a long while. If you say the right thing, you can get by it." ;
@@ -1186,7 +1186,7 @@ locations {
          }
       }
    };
-   first_base : location "FIRST BASE\n{first_base_first}Beckoned sase, Bird thace, Plome hate, you think to yourself ... no, something else will help you find the source of the voice.\n{boor_or_not}" {
+   first_base : location "^c^<FIRST BASE<#cb9>>\n^l^{first_base_first}Beckoned sase, Bird thace, Plome hate, you think to yourself ... no, something else will help you find the source of the voice.\n{boor_or_not}" {
       on_command {
          : if (is_carried "prayer_lights") {
             : match "x book;x lights;x prayer" {
@@ -1305,7 +1305,7 @@ locations {
          }
       }
    };
-   plain_base : location "PLAIN BASE\nYou are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the <northeast<#44f>> and <northwest<#44f>>{describe_gravel_trail}. You don't see any way back to First Base.{describe_seth_denton}\n{describe_beery_thor}" {
+   plain_base : location "^c^<PLAIN BASE<#888>>\n^l^You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the <northeast<#44f>> and <northwest<#44f>>{describe_gravel_trail}. You don't see any way back to First Base.{describe_seth_denton}\n{describe_beery_thor}" {
       on_command {
          : match "_ beer" {
             : if (noticed_beer) {
@@ -1422,7 +1422,7 @@ locations {
       }
    };
 
-   west_tiles : location "WEST TILES\nSuch nice, orderly tiles here. {sub_hub}" graphic = "r_west_tiles" {
+   west_tiles : location "^c^<W<#0f0>><E<#cb9>><S<#0f0>><T<#cb9>> <T<#0f0>><I<#cb9>><L<#0f0>><E<#cb9>><S<#0f0>>\n^l^Such nice, orderly tiles here. {sub_hub}" graphic = "r_west_tiles" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_left_side)} ;
          : create "big_runes" ;
@@ -1453,7 +1453,7 @@ locations {
       }
    };
 
-   east_branch : location "EAST BRANCH\nThe paths here are not super tidy or straight, but they don't look dangerous. {sub_hub}" graphic = "r_east_branch" {
+   east_branch : location "^c^<E<#8f8>><A<#cb9>><S<#8f8>><T<#cb9>> <B<#8f8>><R<#cb9>><A<#8f8>><N<#cb9>><C<#8f8>><H<#cb9>>\n^l^The paths here are not super tidy or straight, but they don't look dangerous. {sub_hub}" graphic = "r_east_branch" {
       on_pre_describe {
          : set_integer var = "tempint" {(points_right_side)} ;
          : create "big_runes" ;
@@ -1572,7 +1572,7 @@ locations {
       }
    };
 
-   hub_w_n : location "{point_master_plan ? hub_w_master_plan : hub_w_plaster_man}" {
+   hub_w_n : location "^c^<PLASTER MAN<#ccc>>\n^l^{point_master_plan ? hub_w_master_plan : hub_w_plaster_man}" {
       on_command {
       : match "x plaster;x man" {
          : set_integer var="tempint" "13" ;
@@ -1624,7 +1624,7 @@ locations {
          }
       }
    };
-   hub_w_ne : location "{point_chalice_map ? hub_w_chalice_map : hub_w_malice_chap}" {
+   hub_w_ne : location "^c^<SCENE MORE MEAN/SORE<#800>>\n^l^{point_chalice_map ? hub_w_chalice_map : hub_w_malice_chap}" {
       on_command {
       : match "talk _;listen _" {
          : gosub "hub_jerk" ;
@@ -1675,7 +1675,7 @@ locations {
          }
       }
    };
-   hub_w_e : location "{point_fell_short ? hub_w_fell_short : hub_w_shell_fort}" {
+   hub_w_e : location "^c^<SHELL FORT<#888>>\n^l^{point_fell_short ? hub_w_fell_short : hub_w_shell_fort}" {
       on_command {
       : if (point_fell_short) {
          : match "listen _;talk _" {
@@ -1760,7 +1760,7 @@ locations {
          }
       }
    };
-   hub_w_sw : location "{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
+   hub_w_sw : location "^c^<GIFT SHOALS<#fc0>>\n^l^{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
       on_command {
       : if (!point_shift_goals) {
          : match "take gifts" {
@@ -1866,7 +1866,7 @@ locations {
          }
       }
    };
-   hub_w_nw : location "{point_fellow_yield ? hub_w_fellow_yield : hub_w_yellow_field}" {
+   hub_w_nw : location "^c^<YELLOW FIELD<#ff0>>\n^l^{point_fellow_yield ? hub_w_fellow_yield : hub_w_yellow_field}" {
       on_command {
       : if (!point_fellow_yield) {
          : match "x fellow" {
@@ -1913,7 +1913,7 @@ locations {
       }
    };
 
-   hub_e_n : location "{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}{footnote_reveal_text}" {
+   hub_e_n : location "^c^<S<#00c>><K<#44f>><Y<#00c>> <F<#44f>><L<#00c>><O<#44f>><O<#00c>><R<#44f>>\n^l^{point_fly_score ? hub_e_fly_score : hub_e_sky_floor}{footnote_reveal_text}" {
       on_pre_describe {
          : set_integer var="tempint" "10" ;
          : gosub "footnote_reveal" ;
@@ -1962,7 +1962,7 @@ locations {
       }
       }
    };
-   hub_e_ne : location "{point_bending_truth ? hub_e_bending_truth : hub_e_trending_booth}" {
+   hub_e_ne : location "^c^<TRENDING BOOTH<#f8f>>\n^l^{point_bending_truth ? hub_e_bending_truth : hub_e_trending_booth}" {
       on_command {
       : match "talk _;listen _" {
          : if (!point_bending_truth) {
@@ -2180,7 +2180,7 @@ locations {
          }
       }
    };
-   hub_e_nw : location "{point_grim_tune ? hub_e_grim_tune : hub_e_trim_goon}" {
+   hub_e_nw : location "^c^<WRATH/POUT PATH/ROUTE<#800>>\n^l^{point_grim_tune ? hub_e_grim_tune : hub_e_trim_goon}" {
       on_command {
       : match "talk _;listen _" {
          : gosub "hub_jerk" ;
@@ -2238,7 +2238,7 @@ locations {
          }
       }
    };
-   gravel_trail : location "This is a gravel trail running south back to the plain base and north {gravel_trail_house}{chimes_present}." {
+   gravel_trail : location "^c^<GRAVEL TRAIL<#888>>\n^l^This is a gravel trail running south back to the plain base and north {gravel_trail_house}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
             : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
@@ -2293,7 +2293,7 @@ locations {
          }
       }
    };
-   my_house : location "MY HOUSE\n{my_house_description}" graphic = "r_my_house" {
+   my_house : location "^c^<MY HOUSE<#fc0>>\n^l^{my_house_description}" graphic = "r_my_house" {
       on_command {
          : if (initial_book_poke) {
             : match "_ hook;_ bold;_ hold" {
