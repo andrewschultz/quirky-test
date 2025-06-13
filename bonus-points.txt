@@ -1,23 +1,25 @@
-A list of all bonus points, in rough game order (hubs, clockwise in hub side rooms, west then east):
+A list of all bonus points, in rough game order: hubs, clockwise in hub side rooms, west then east. Yes, starting east is easier, but I was reading left to right in my map.
 
-Where you get each is in parentheses, though for 10-16, it can only occur when holding a certain item.
+Where you get each is in parentheses. For the most part, you can just use the phrase, though each of 10-15 requires a different specific item.
+
+Also note that if you win and the game resets, the bonus points you got are recorded, so you don't have to remember to do them all. In addition, if you figure an item-based bonus point too late, the game tracks this for you if you replay and re-acquire the item.
 
 1. TURKEY QUEST (at any time)
-2. SHUSH LOUT (only with Pro Boor present)
+2. SHUSH LOUT (only with Pro Boor present, must LISTEN or TALK around Pro Boor first)
 3. RARE PLIGHTS (only with Player Rights carried)
 4-6. BANE PLACE (around Thor)
-4-6. THEORY BORE (if you've seen Thor, different reactions if he's around)
+4-6. THEORY BORE (once you've seen Thor. You act slightly differently, figuring this in the hubs)
 4-6. DEATH SENTENCE (anywhere)
 7-9. TEST WILES (west tiles)
 7-9. BEAST RANCH (east branch)
 7-9. RIG BOONS (either hub)
-10. SO LONG (low song, E N)
-11. VAST FISSION/FISHIN (fast vision, E NE)
-12. CEASE PURGING (peace surging, E E)
-13. SANE ROLE (rain soul, E SW)
-14. GROW NEED (no greed, E W)
-15. RACING PASSIONS (pacing rations, W E)
+10. SO LONG only with (low song, E N)
+11. VAST FISSION/FISHIN (only with fast vision, E NE)
+12. CEASE PURGING (only with peace surging, E E)
+13. SANE ROLE (only with rain soul, E SW)
+14. GROW NEED (only with no greed, E W)
+15. RACING PASSIONS (only with pacing rations, W E)
 16. I/EYE STAY (My House)
-17. TEARY CHIMES (must LISTEN before final bonus point)
+17. TEARY CHIMES (must LISTEN before final bonus point--this can be done in My House or Gravel Trail)
 
 14 and 16 were not in the comp release. Instead, at 13-14, there were PILE TRICKS/TRIAL PICS, which you needed the trial pics for. Discovering both now awards the player an achievement.

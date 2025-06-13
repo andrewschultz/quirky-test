@@ -457,13 +457,13 @@ You have no greed, but you want something ...
 We'll get a few footnotes along the way. The numbers pedant in me says perhaps six and seven should be switched. Note you don't need to X RUNES, but it helps.
 
 > X RUNES
-> U (F7)
+> U (F8)
 > W (F6)
 > X RUNES
 
 Combine the west runes (top) and the east runes (bottom) to get ...
 
-> XYZZY (F8)
+> XYZZY (F7)
 
 This can be done at any time, but it's not clued until you examine both runes. Now you will get footnote 9 next time you visit Thor, but there's no rush.
 
@@ -505,8 +505,8 @@ And now for another footnote!
 > SW
 > U
 > HEALING STILL (1)
-> W
-> SE (F9)
+> W (F9)
+> SE
 
 Now, according to the list, you just have two more things to examine to find all the footnotes. One's in clear view, but one isn't.
 
