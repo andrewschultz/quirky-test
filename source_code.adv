@@ -2390,6 +2390,22 @@ locations {
       }
    }
 
+   kill_hassle_hill_castle : location "^c^<KILL-HASSLE HILL CASTLE<#fc0>>\n^l^You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games. Hey, you made it this far, you're more likely than most to enjoy them." graphic = "r_kill_hassle_hill_castle" {
+      on_command {
+         : match "l _" {
+            : redescribe ;
+         }
+         : if (is_at "kill_hassle_hill_castle") {
+            : cycle key = "silly_ads" predictable_order = "true" skip_interval = "0" {
+               : print "You wonder if an anagram-themed quest might be just the thing now. A thought runs through your mind, completely spontaneous, that the <Stale Tales Slate<#dcb>> series with <Shuffling Around<#dcb>>, <A Roiling Original<#dcb>> (longer) or <Tours Roust Torus<#dcb>> (shorter) would be just the thing." ;
+               : print "You ponder taking a trip to the mysterious cities of <Threediopolis<#dcb>> and <Fourdiopolis<#dcb>>, where how you get there is as important as the location." ;
+               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his itch.io page." ;
+            }
+            : done ;
+         }
+      }
+   }
+
    cht : location "This sets in_debug and cheat_dont_require. You need to L to go back where you were. Or WIN wins." {
       on_tick {
          : set_true "in_debug" ;
@@ -5121,6 +5137,9 @@ assets {
       s_tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
       s_costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
       s_the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYw+XXQQqEMAwF0EAOkKsEuvSYs/IcLr1Ub5BxAkpFIwj2Z8AobhT6sOmvkj1dlS5KDo/T8+OXoHS5cxQ8DgjHL36H+gPCYmdI9ynwcfhsChgCsOqDnTaBX7oDvAs07AIA4CfQsA8RAOMIsPQGBFA5WozKhADYjSzsBIjTyCBToGEcKwTAK2Dyo21CCKBui2Ao07CPIgjgzirsAahNDo3jZ5/FCAA3gHmedi8AAajNVjD42W5GAACHAIYALj4JCwYQhqDiAcrJAKK3A9Kn4PU9oOvPyD8BBAlY0+9qK0AnoSQD1JIBkgxQSwZIMkAtGSAYQPxFZBDA3foCa3swCduC+zcAAAAASUVORK5CYII=";
+
+   # final final silly room
+      r_kill_hassle_hill_castle : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoCAMAAAAmJNS7AAADAFBMVEUAAACAAAAAgACAgAAAAICAAIAAgIDAwMDA3MDStJZAIABgIACAIACgIADAIADgIAAAQAAgQABAQABgQACAQACgQADAQADgQAAAYAAgYABAYABgYACAYACgYADAYADgYAAAgAAggABAgABggACAgACggADAgADggAAAoAAgoABAoABgoACAoACgoADAoADgoAAAwAAgwABAwABgwACAwACgwADAwADgwAAA4AAg4ABA4ABg4ACA4ACg4ADA4ADg4AAAAEAgAEBAAEBgAECAAECgAEDAAEDgAEAAIEAgIEBAIEBgIECAIECgIEDAIEDgIEAAQEAgQEBAQEBgQECAQECgQEDAQEDgQEAAYEAgYEBAYEBgYECAYECgYEDAYEDgYEAAgEAggEBAgEBggECAgECggEDAgEDggEAAoEAgoEBAoEBgoECAoECgoEDAoEDgoEAAwEAgwEBAwEBgwECAwECgwEDAwEDgwEAA4EAg4EBA4EBg4ECA4ECg4EDA4EDg4EAAAIAgAIBAAIBgAICAAICgAIDAAIDgAIAAIIAgIIBAIIBgIICAIICgIIDAIIDgIIAAQIAgQIBAQIBgQICAQICgQIDAQIDgQIAAYIAgYIBAYIBgYICAYICgYIDAYIDgYIAAgIAggIBAgIBggICAgICggIDAgIDggIAAoIAgoIBAoIBgoICAoICgoIDAoIDgoIAAwIAgwIBAwIBgwICAwICgwIDAwIDgwIAA4IAg4IBA4IBg4ICA4ICg4IDA4IDg4IAAAMAgAMBAAMBgAMCAAMCgAMDAAMDgAMAAIMAgIMBAIMBgIMCAIMCgIMDAIMDgIMAAQMAgQMBAQMBgQMCAQMCgQMDAQMDgQMAAYMAgYMBAYMBgYMCAYMCgYMDAYMDgYMAAgMAggMBAgMBggMCAgMCggMDAgMDggMAAoMAgoMBAoMBgoMCAoMCgoMDAoMDgoMAAwMAgwMBAwMBgwMCAwMCgwMD/+/CgoKSAgID/AAAA/wD//wAAAP//AP8A//////9T2BU2AAACbElEQVRo3uXXu3LDIBAF0Gu69P7/Sj8JBUpGjiSQln3w0mSyRWZkO4Z7WJAMVyhgNZRP6v4ulmXBl6m2f7GOUy6gmNO5DgTeszPjAEC/RAMI49jjswB6Ae/ZmV3zo5ydbwFhnJr8LIBW4Gcmn/kcf407AEQ7EADHt/t9oPb8PIBOwN8B/DX/DlBcfFAdkAv4HGBddT0AIaJrFUjmlS4PDaA7AEmA7Fv30Xxrfgng5wNdAKA+AYt7wPv7FpAB5HziB6A6AdfEIJ/Y0QCQmp7fA1UAaAcQe0ANoFt4FuB2HvrG9dcBQHMPTM9BBgCFHa8DMHYA+gAIAgKA9QhESeACsJ+FjflVALyAJ0sCALcZUAYwPAtBl83pBFAJsKWw/hBIOuAUMAIAymhOV/w58M7q9hQkA6B0G8ifhcrj1Jx/NgA0AFQ1APUwqAdAbwBeoDixtAGOVQZ3DoBrATUA9Lmc67EJSjOrPgJAARgawA0AsAucL3xS0Vfy++M2gAWgQqAvwJD8FgD7neC8xFZNAAPuAGYAq8B5te3mpQXAkn8UgFmgI8Co/DYA6YfhdZb9AAz5V2Mk168FQnhPqRD6NYAR4N4CIa85+bNqawAzAArJ5wnchowxJg4YC7C3QCjWQ/kPAnMg6+cRhJqfPyaXGA3gRABJ4LNOyd/sojF/sOfpDxDGAZD5JwM0CzQAiOsfKuJUAMSkHgX4TGCb1UwAREmATQG2DAAxyf8rgBkALgegEKZ0wD5yBuCeAbgSzAA4hn0AQBSYABApAMwBIFsgzgVIx2xqgAcAehyC+Ziv1yv8IYAOHXAZ8t8BXEdsAvgGx6V8iE6sqEAAAAAASUVORK5CYII=";
 
    # general overlay graphic (s)
       o_check_mark : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAEFJREFUKFNjZCAE/jP8Z2BkYAQpAxN4AdGKkRQSNploxWgK8ZtMtGIsChEmo0viVQzSBlOAQyGqm0lSjGw6jlgCAPhyHAy7s/zYAAAAAElFTkSuQmCC";
