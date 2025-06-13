@@ -73,6 +73,7 @@ booleans {
    room_name_note : boolean "false" scope="survivor" ;
    note_partial_achievements : boolean "false" scope="survivor" ;
    spoke_out_note : boolean "false" scope="survivor" ;
+   room_change_noted : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -289,6 +290,7 @@ booleans {
    at_spoke : dynamic_boolean {( is_at "zone_west_spokes" || is_at "zone_east_spokes" )} ;
    at_hub : dynamic_boolean {( is_at "west_tiles" || is_at "east_branch" )} ;
    can_enter_trail : dynamic_boolean {( point_gravel_trail || has_visited("my_house") )} ; # for debugging purposes since I GOTO MY_HOUSE a lot
+   in_name_change_room : dynamic_boolean {( is_at "hub_w_s" || is_at "hub_w_w" || is_at "hub_e_e" || is_at "hub_e_se" || is_at "hub_e_s" || is_at "hub_e_w" )} ;
 
    think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_gravel_trail || think_hi_mouse )} ;
    retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
@@ -2597,6 +2599,10 @@ subroutines {
    add_point : subroutine {
       : if (score_notify) {
          : print "<Your score just went up by a point!<#ff0>>" ;
+      }
+      : if (!room_change_noted && in_name_change_room) {
+         : print "{note_once}some locations, like this, change their name. (Six total.) You can probably guess what the name changes to, but if you are curious enough to see the small silly change, you'll need to {v_l} after figuring what to do." ;
+         : set_true "room_change_noted" ;
       }
       : increment "score" ;
       }
