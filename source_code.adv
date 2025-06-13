@@ -99,6 +99,7 @@ booleans {
    note_dependent_point : boolean "false" scope="survivor" ;
    note_independent_point : boolean "false" scope="survivor" ;
    footnote_nag : boolean "false" scope="survivor" ;
+   thor_ring : boolean "false" scope="survivor" ;
 
    ## footnote check booleans
    have_won : boolean "false" scope="survivor" ;
@@ -2355,11 +2356,11 @@ locations {
                : update_graphic "s_costly_lost_key" ;
                : press_any_key ;
                : print "The moment of truth! CLICK. The key unlocks the trunk, leaving, of course ... the {rttr}!" ;
+               : gosub "add_point" ;
                : update_graphic "s_the_ring" ;
                : press_any_key ;
                : clear_screen ;
                : gosub "win_notes" ;
-               : gosub "add_point" ;
                : set_false "think_hi_mouse" ;
                : set_true "point_hi_mouse" ;
                : gosub "track_achievements" ;
@@ -4258,11 +4259,18 @@ subroutines {
       : win_game ;
    }
    win_notes : subroutine {
+      : set_true "thor_ring" ;
+      : update_graphic "s_the_ring" ;
+      : set_false "thor_ring" ;
       : if (!have_won) {
          : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
+         : press_any_key ;
          : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
          : print "These can be tracked with {vd_ach} or {vd_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qt_repo} to spoil them." ;
          : print "Finally, there is a {opt_warp} command that lets you skip ahead of beginning rooms with no bonus points, footnotes or achievements to discover." ;
+         : print "Press any key to see the list of commands." ;
+         : press_any_key ;
+         : clear_screen ;
          : set_true "have_won" ;
          : return ;
       }
@@ -4334,6 +4342,10 @@ themes {
 # end themes
 
 on_render {
+   : if (thor_ring) {
+      : overlay "o_thor" x="0" y="0" ;
+      : done ;
+   }
    : if (!show_overlay) {
       : done ;
    }
@@ -5101,7 +5113,7 @@ assets {
       # final command stuff
       s_tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
       s_costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
-      s_the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABBUlEQVRYw+XXUQqDMAwG4EAOkKsE+ugx9+Q5fPRSvUHnAo4KRmgX/w7MZC+C/WjTv0qltTJdlDQ/jtrHT07pdqdd0Axwx092h+4HuMXGkNuXwMbhsyVgCKBkG+y0CezvdoB1gbpdAAB8BOr2IQJQ2ANsvQEBZPY2ozIhACUwCzsBfhoVyBKoG8cKAfAOWOxXNyEEkL+bYErLdIwiCCByF/YAcpVD8/w6ZjECwBVgXZfDBCAAuToKJrvqwwgAYBfAEMDFK2HCANwQVDxAeTCA6OmA4Uvw+B7Q/WPknwCCBOzp98tREJ2EMhjQPgHBABkM6JiAWIAMBvRMQChAMAD/jahAANH1BsdzMAmMVyO0AAAAAElFTkSuQmCC";
+      s_the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYw+XXQQqEMAwF0EAOkKsEuvSYs/IcLr1Ub5BxAkpFIwj2Z8AobhT6sOmvkj1dlS5KDo/T8+OXoHS5cxQ8DgjHL36H+gPCYmdI9ynwcfhsChgCsOqDnTaBX7oDvAs07AIA4CfQsA8RAOMIsPQGBFA5WozKhADYjSzsBIjTyCBToGEcKwTAK2Dyo21CCKBui2Ao07CPIgjgzirsAahNDo3jZ5/FCAA3gHmedi8AAajNVjD42W5GAACHAIYALj4JCwYQhqDiAcrJAKK3A9Kn4PU9oOvPyD8BBAlY0+9qK0AnoSQD1JIBkgxQSwZIMkAtGSAYQPxFZBDA3foCa3swCduC+zcAAAAASUVORK5CYII=";
 
    # general overlay graphic (s)
       o_check_mark : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAEFJREFUKFNjZCAE/jP8Z2BkYAQpAxN4AdGKkRQSNploxWgK8ZtMtGIsChEmo0viVQzSBlOAQyGqm0lSjGw6jlgCAPhyHAy7s/zYAAAAAElFTkSuQmCC";
