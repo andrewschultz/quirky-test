@@ -4305,7 +4305,7 @@ subroutines {
 themes {
    my_theme : theme {
       status_bar {
-         : header_text;
+         : header_text ;
          : dynamic_text "my_score" ;
       }
       theme_settings {
@@ -4881,6 +4881,8 @@ on_command {
       : if (!wait_note) {
          : print "While waiting is a standard parser command, there are no timed puzzles in {qt}." ;
          : set_true "wait_note" ;
+      } : else {
+         : print "\"Stuff too tough. Stew!\" you muse." ;
       }
    }
    : match "attack _" {
