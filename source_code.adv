@@ -100,7 +100,7 @@ booleans {
    note_dependent_point : boolean "false" scope="survivor" ;
    note_independent_point : boolean "false" scope="survivor" ;
    footnote_nag : boolean "false" scope="survivor" ;
-   thor_ring : boolean "false" scope="survivor" ;
+   thor_left : boolean "false" scope="survivor" ;
 
    ## footnote check booleans
    have_won : boolean "false" scope="survivor" ;
@@ -701,8 +701,9 @@ strings {
 
    # regular commands in green
    v_ask : string "<ASK<#0f0>>" ;
-   v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    v_drop : string "<DROP<#0f0>>" ;
+   v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
+   v_l : string "<L<#0f0>>" ;
    v_o : string "<O<#0f0>>" ;
    v_out : string "<OUT<#0f0>>" ;
    v_out_b : string "{v_out} ({v_o})" ;
@@ -4265,9 +4266,9 @@ subroutines {
       : win_game ;
    }
    win_notes : subroutine {
-      : set_true "thor_ring" ;
+      : set_true "thor_left" ;
       : update_graphic "s_the_ring" ;
-      : set_false "thor_ring" ;
+      : set_false "thor_left" ;
       : if (!have_won) {
          : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
          : press_any_key ;
@@ -4348,7 +4349,7 @@ themes {
 # end themes
 
 on_render {
-   : if (thor_ring) {
+   : if (thor_left) {
       : overlay "o_thor" x="0" y="0" ;
       : done ;
    }
@@ -4557,7 +4558,7 @@ on_pre_command {
    : if (!look_warn) {
       : match "look -" {
          : if (original "verb" == "look") {
-            : print "{note_once}to save keystrokes, you only need to type <L<#0f0>> to look." ;
+            : print "{note_once}to save keystrokes, you only need to type {v_l} to look." ;
             : gosub "long_words_note" ;
             : set_true "look_warn" ;
             : press_any_key ;
