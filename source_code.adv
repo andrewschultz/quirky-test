@@ -3941,8 +3941,22 @@ subroutines {
       : gosub "track_achievements_4_green" ;
       : gosub "track_achievements_5_blue" ;
       : gosub "track_achievements_6_purple" ;
-      : if (achieve_taat) {
-         : print "For winning all the other achievements, you win the {achievement_taat} achievement! Very impressive, indeed! Thank you for your diligence. Now go play something else. Or, heck, design or write your own game. You're no slouch at thinking up possibilities." ;
+      : if (!achieve_taat) {
+         : print "For winning all the other achievements, you win the {achievement_taat} achievement! Very impressive, indeed! Thank you for your diligence. Now go play something else. Or, heck, design or write your own game. You're no slouch at thinking up possibilities. Or, even better ..." ;
+         : press_any_key ;
+         : clear_screen ;
+         : set_true "thor_left" ;
+         : update_graphic "s_sound_group_ground_soup" ;
+         : set_false "thor_left" ;
+         : print "\"Oh my goodness! You did it!\" says Thor. \"You achieved all the achievements! This calls for a celebration!\"" ;
+         : print "\"More-Lead-Lore Mead would be too much for mere mortals, but we have just the thing. Sound-Group-Ground Soup.\"" ;
+         : print "It would be rude to decline, and anyway, it smells pretty good. So colorful. Tastes good, too." ;
+         : press_any_key ;
+         : print "\"But that's not all! You get your own place to stay as long as you like. It even has ... suggestions for other adventures! Sound great? Great! It's your very own ..." ;
+         : press_any_key ;
+         : goto "kill_hassle_hill_castle" ;
+         : redescribe ;
+         : done ;
       }
 
       : if (!point_hi_mouse) { # not included in endgame text since that is long enough already, and only those who really want to track achievements will see the color-coding note
@@ -4301,7 +4315,7 @@ subroutines {
          : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
          : print "These can be tracked with {vd_ach} or {vd_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qt_repo} to spoil them." ;
          : print "Finally, there is a {opt_warp} command that lets you skip ahead of beginning rooms with no bonus points, footnotes or achievements to discover." ;
-         : print "Press any key to see the list of commands." ;
+         : print "Press any key to see the list of achievements." ;
          : press_any_key ;
          : clear_screen ;
          : set_true "have_won" ;
@@ -5147,6 +5161,7 @@ assets {
       s_tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
       s_costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
       s_the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYw+XXQQqEMAwF0EAOkKsEuvSYs/IcLr1Ub5BxAkpFIwj2Z8AobhT6sOmvkj1dlS5KDo/T8+OXoHS5cxQ8DgjHL36H+gPCYmdI9ynwcfhsChgCsOqDnTaBX7oDvAs07AIA4CfQsA8RAOMIsPQGBFA5WozKhADYjSzsBIjTyCBToGEcKwTAK2Dyo21CCKBui2Ao07CPIgjgzirsAahNDo3jZ5/FCAA3gHmedi8AAajNVjD42W5GAACHAIYALj4JCwYQhqDiAcrJAKK3A9Kn4PU9oOvPyD8BBAlY0+9qK0AnoSQD1JIBkgxQSwZIMkAtGSAYQPxFZBDA3foCa3swCduC+zcAAAAASUVORK5CYII=";
+      s_sound_group_ground_soup : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAAD/AACAQAAAgADggED///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfj+eBAAABtElEQVRYhe2YC46DIBCGySYcwD3BVusF1hsYDzAx4f5XWWYYBBTbAtNu0nSSqhSc/5vhIarMP5v6ALwlgMqZfgEAsFZJpRQA3Ahyp5hSiABAog2Z/O9jDyUBAK/udb76E0tHA5+bASgU8rvXmya+GNe04ocpAA+NAKBIfSc9GuMALh2V7MGsodJTaLy9EQB9pMpWmyVsAi7dt0uA0++oQZQJ66ANAAxgjw9Wa5kxzi383kWMAChOJcLhPpl+aVRQCpsSQCNusNkmgGAU8uJHgP1dF4fTU5IGHiC6sQs4A9jdi0tErB9lxQH0XMSmMhlIxwACjO7/lUrX2U8BKztHZGJj4DALRpPgbBH7mRj0hWbBjXXAAezXANYWWwdwGNSvhGAkAHT9s8D/2kwH1dKnoRYBiDwU7gdABgCOcWc7INNsO7RZrQuQeRxnU/CQqejYZnU+mFsCoC4FKjm1WY0TTy20Ka2/RWZbXt4J6nDxWgKVuWqzMj8Rr9ibUVEKpN+MSh3FtGIABTMhaSr3dgyPPY15D/UEgPCSWNRI9gPF3X44NhD+QgKnO5Kzmqd8osnuCk/a/gHRaNgGa2ryHQAAAABJRU5ErkJggg==";
 
    # final final silly room
       r_kill_hassle_hill_castle : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoCAMAAAAmJNS7AAADAFBMVEUAAACAAAAAgACAgAAAAICAAIAAgIDAwMDA3MDStJZAIABgIACAIACgIADAIADgIAAAQAAgQABAQABgQACAQACgQADAQADgQAAAYAAgYABAYABgYACAYACgYADAYADgYAAAgAAggABAgABggACAgACggADAgADggAAAoAAgoABAoABgoACAoACgoADAoADgoAAAwAAgwABAwABgwACAwACgwADAwADgwAAA4AAg4ABA4ABg4ACA4ACg4ADA4ADg4AAAAEAgAEBAAEBgAECAAECgAEDAAEDgAEAAIEAgIEBAIEBgIECAIECgIEDAIEDgIEAAQEAgQEBAQEBgQECAQECgQEDAQEDgQEAAYEAgYEBAYEBgYECAYECgYEDAYEDgYEAAgEAggEBAgEBggECAgECggEDAgEDggEAAoEAgoEBAoEBgoECAoECgoEDAoEDgoEAAwEAgwEBAwEBgwECAwECgwEDAwEDgwEAA4EAg4EBA4EBg4ECA4ECg4EDA4EDg4EAAAIAgAIBAAIBgAICAAICgAIDAAIDgAIAAIIAgIIBAIIBgIICAIICgIIDAIIDgIIAAQIAgQIBAQIBgQICAQICgQIDAQIDgQIAAYIAgYIBAYIBgYICAYICgYIDAYIDgYIAAgIAggIBAgIBggICAgICggIDAgIDggIAAoIAgoIBAoIBgoICAoICgoIDAoIDgoIAAwIAgwIBAwIBgwICAwICgwIDAwIDgwIAA4IAg4IBA4IBg4ICA4ICg4IDA4IDg4IAAAMAgAMBAAMBgAMCAAMCgAMDAAMDgAMAAIMAgIMBAIMBgIMCAIMCgIMDAIMDgIMAAQMAgQMBAQMBgQMCAQMCgQMDAQMDgQMAAYMAgYMBAYMBgYMCAYMCgYMDAYMDgYMAAgMAggMBAgMBggMCAgMCggMDAgMDggMAAoMAgoMBAoMBgoMCAoMCgoMDAoMDgoMAAwMAgwMBAwMBgwMCAwMCgwMD/+/CgoKSAgID/AAAA/wD//wAAAP//AP8A//////9T2BU2AAACbElEQVRo3uXXu3LDIBAF0Gu69P7/Sj8JBUpGjiSQln3w0mSyRWZkO4Z7WJAMVyhgNZRP6v4ulmXBl6m2f7GOUy6gmNO5DgTeszPjAEC/RAMI49jjswB6Ae/ZmV3zo5ydbwFhnJr8LIBW4Gcmn/kcf407AEQ7EADHt/t9oPb8PIBOwN8B/DX/DlBcfFAdkAv4HGBddT0AIaJrFUjmlS4PDaA7AEmA7Fv30Xxrfgng5wNdAKA+AYt7wPv7FpAB5HziB6A6AdfEIJ/Y0QCQmp7fA1UAaAcQe0ANoFt4FuB2HvrG9dcBQHMPTM9BBgCFHa8DMHYA+gAIAgKA9QhESeACsJ+FjflVALyAJ0sCALcZUAYwPAtBl83pBFAJsKWw/hBIOuAUMAIAymhOV/w58M7q9hQkA6B0G8ifhcrj1Jx/NgA0AFQ1APUwqAdAbwBeoDixtAGOVQZ3DoBrATUA9Lmc67EJSjOrPgJAARgawA0AsAucL3xS0Vfy++M2gAWgQqAvwJD8FgD7neC8xFZNAAPuAGYAq8B5te3mpQXAkn8UgFmgI8Co/DYA6YfhdZb9AAz5V2Mk168FQnhPqRD6NYAR4N4CIa85+bNqawAzAArJ5wnchowxJg4YC7C3QCjWQ/kPAnMg6+cRhJqfPyaXGA3gRABJ4LNOyd/sojF/sOfpDxDGAZD5JwM0CzQAiOsfKuJUAMSkHgX4TGCb1UwAREmATQG2DAAxyf8rgBkALgegEKZ0wD5yBuCeAbgSzAA4hn0AQBSYABApAMwBIFsgzgVIx2xqgAcAehyC+Ziv1yv8IYAOHXAZ8t8BXEdsAvgGx6V8iE6sqEAAAAAASUVORK5CYII=";
