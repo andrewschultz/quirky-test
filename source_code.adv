@@ -42,6 +42,7 @@ booleans {
    ever_about : boolean "false" ; # this is equivalent tutorial_1_about_done, but it's a bit clearer for certain parts of the code.
    entered_seth_dentons : boolean "false" ;
    know_lush_shout : boolean "false" ;
+   boor_talked : boolean "false" scope="survivor" ;
    thor_explained_seth : boolean "false" ;
    summoned_teary_chimes : boolean "false"; # this is equivalent to point_see_glimmering, but this also makes code where we manipulate the chimes more readable.
    have_asked_three : boolean "false" scope="survivor" ;
@@ -1260,6 +1261,7 @@ locations {
             : match "talk -;talk boor" {
                : print "The {cc_pro_boor} babbles on about what a REAL quest is, {lush_shout_note}, disappointed you don't immediately agree. You sense the {cc_pro_boor} has a weakness, though." ;
                : set_true "know_lush_shout" ;
+               : set_true "boor_talked" ;
                : gosub "talk_flag" ;
                : done ;
             }
@@ -4333,7 +4335,7 @@ subroutines {
       : if (option_start_warp && cheat_leap_level < 3) {
          : if (int(collection_get{ collection -> ("footnote_status_list") index -> (2) }) == 0) {
             : set_integer var="last_cheat_leap_level" "1" ;
-         } : else_if (!bonus_point_shush_lout || !bonus_point_rare_plights || (int(collection_get{ collection -> ("footnote_status_list") index -> (3) }) == 0)) {
+         } : else_if (!bonus_point_shush_lout || !bonus_point_rare_plights || !boor_talked || (int(collection_get{ collection -> ("footnote_status_list") index -> (3) }) == 0)) {
             : set_integer var="last_cheat_leap_level" "2" ;
          } : else {
             : set_integer var="last_cheat_leap_level" "3" ;
