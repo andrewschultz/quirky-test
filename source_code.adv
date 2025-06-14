@@ -805,7 +805,7 @@ strings {
    hub_e_pouring_rain : string "^c^<POURING RAIN<#00f>>\n^l^The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
    hub_e_money_fountain : string "^c^<MONEY FOUNTAIN<#fc0>>\n^l^A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
    hub_e_funny_mountain : string "^c^<FUNNY MOUNTAIN<#f88>>\n^l^A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
-   hub_e_trim_goon : string "^c^<TRIM GOON<#c00>>\n^l^A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
+   hub_e_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
    hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reinforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
 
    ## details for hub items
@@ -823,7 +823,7 @@ strings {
    bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said {cue_so_long} {with_bonus}." : retry_so_long ? "\nYou should say {cue_so_long} again {once_so_long}." : "" )} ;
    bonus_note_vast_fission : dynamic_string {( bonus_point_vast_fission ? "\nYou found {cue_vast_fission} {with_bonus}." : retry_vast_fission ? "\nYou should find {cue_vast_fission} again {once_fast_vision}." : "" )} ;
 
-   with_bonus : string "with this for a bonus point." ;
+   with_bonus : string "with this for a bonus point" ;
 
    once_prayer_lights : dynamic_string {( (is_carried "prayer_lights" ? "now" : "once") + " you have {cc_prayer_lights}" )};
    once_peace_surging : dynamic_string {( (is_carried "peace_surging" ? "now" : "once") + " you have peace surging" )};
@@ -1331,7 +1331,7 @@ locations {
             : if (noticed_beer) {
                : print "Thor already explained about the beer." ;
             } : else {
-               : print "\"Ah yes. The beer. It's mainly a prop. Mostly colored water. It makes me seem much more chatty and vibrant than I am. Plus I don't want to set a bad example for mortals who get hangovers, or worse.\"" ;
+               : print "\"Ah yes. The beer. It's mainly a prop. Mostly colored water. It makes me seem much more chatty and vibrant than I am. I kinda worry it's a bad example for mortals who get hangovers, or worse, even if I don't drink from it.\"" ;
                : set_true "noticed_beer" ;
                : set_true "achieve_hbbh_pre" ;
             }
@@ -1561,7 +1561,7 @@ locations {
             : print "Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
             : update_graphic "s_stealing_hill_grail" ;
             : press_any_key ;
-            : print "As you take it, you think you hear the beginnings of an angry groaning. It might be time to move on -- you can't see anything else to do here!" ;
+            : print "As you take it, you think you hear the beginnings of an angry inhuman groaning. If it's the hill, now might be a really good time to move on. You can't see anything else to do here!" ;
             : gosub "add_point" ;
             : set_true "point_healing_still" ;
             : set_false "think_healing_still" ;
@@ -1625,7 +1625,7 @@ locations {
          }
          : else
          {
-            : print "You have reason to find a master plan, and your feast with the hunters has left you stronger. Without much trouble, you bust open the master plan and find it." ;
+            : print {( "You have reason to find a master plan, and your feast with the hunters has left you stronger. Without much trouble, you bust open the plaster man (checking to make " + ( plaster_man_talked ? "extra " : "" ) + "sure it's inanimate) and find said master plan." )} ;
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
             : gosub "add_point_west" ;
@@ -1951,7 +1951,7 @@ locations {
          }
       }
       : match "talk _" {
-         : print "Talking would disturb the poetic artsy feel here." ;
+         : print "Talking would disturb the poetic artsy sitting-and-communing feel here. Even, or especially, small talk like \"More fly floor, my!\"" ;
          : done ;
       }
       : match "listen _" {
@@ -2261,7 +2261,7 @@ locations {
    gravel_trail : location "^c^<GRAVEL TRAIL<#888>>\n^l^This is a gravel trail running south back to the plain base and north {gravel_trail_house}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
-            : print "A {cc_hissing_mouse} hisses here! It's not lethal, but it doesn't seem to belong here, and it's not happy about that." ;
+            : print "A {cc_hissing_mouse} hisses here! It's not lethal, but you can't blame it for feeling scared and nervous, vulnerable out here in the open." ;
          }
       }
       on_command {
@@ -2269,7 +2269,7 @@ locations {
             : match "x mouse;x hissing" {
                : set_integer var="tempint" "16" ;
                : gosub "footnote_reveal" ;
-               : print "The mouse's hissing appears more defensive than anything. It makes you think \"Gray mouse may grouse.\"{footnote_reveal_text}" ;
+               : print "The mouse's hissing appears more defensive than anything. Can you blame it, out in the open, a target for predators?\nThe hissing still makes you think \"Gray mouse may grouse.\"{footnote_reveal_text}" ;
                : done ;
             }
             : match "get mouse" {
@@ -2423,7 +2423,7 @@ locations {
                : print "<Why Pout<#dcb>> also involves a sort of wordplay I won't spoil, but the title is a clue." ;
                : print "You wonder too about discovering <The Cube in the Cavern<#dcb>>, a game based on a three-dimensional map of ... a cube." ;
                : print "You wonder if <Ugly Oafs<#dcb>> is worth a try. However, you stumble upon inside information that the author meant to put out a post-comp release but never did, because playtesting was too hard. As <the IFWiki page<#0f0>>[https://www.ifwiki.org/Ugly_Oafs] says, explaining what it's about would be a spoiler. Walkthrough recommended. Only for the hardcore. Perhaps it is the sort of thing where you can be glad it exists, and not much more." ;
-               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his itch.io page." ;
+               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his <itch.io page<#0f0>>[http://itch.io/andrew-schultz]. Unless, of course, you found the advertisements so enthralling, you can't help but read through them again, to keep the energy pulsing." ;
             }
             : done ;
          }
@@ -2760,7 +2760,7 @@ subroutines {
       }
       : else_if (tempint2 == 4 && ! have_asked_four) {
          : set_true "have_asked_four";
-         : print "{note_once}Thor's responses for each rule come in cycles of three, the exact same thing every time, and fortunately, unlike us mortals, he never gets bored of repeating himself." ;
+         : print "{note_once}Thor's responses for each rule come in cycles of three: the rule itself, an explanation, and its application to {qt}. Being an upstanding sort of immortal (unlike Loki,) he'll never get impatient cycling through his responses word for word." ;
       }
       : done ;
    }
@@ -2870,7 +2870,7 @@ subroutines {
          : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
          : print "\"The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>.\"" ;
          : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for <SEARCH<#0f0>> and <EXAMINE<#0f0>> may frustrate players.\nOne thing that helps provide a buffer is a {vm_verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you <LOOK BEHIND<#0f0>> and <LOOK UNDER<#0f0>>, and the right one is based on the object. But this was prompted by {vm_verbs}.\"" ;
-         : print "\"I used Adventuron's simplified two-word parser. I didn't need any complex actions, so it worked well.\"" ;
+         : print "\"{qt} uses Adventuron's simplified two-word parser, since all point-scoring commands are two words. You never need to <USE THIS ON THAT<#0f0>> explicitly.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -2897,7 +2897,7 @@ subroutines {
          : cycle key = "rule_13" predictable_order = "true" skip_interval = "0" {
          : print "\"The thirteenth rule in Graham Nelson's Player's Bill of Rights is <to be able to understand a problem once it is solved<#f88>>.\"" ;
          : print "\"Of course, problems you've seen before aren't fun to solve. And being pushed to make that leap of logic without a spoiler is very gratifying. The player has a right to feel accomplished.\"" ;
-         : print "\"So, in a one-trick pony adventure like this, 'understand it once it's solved' is likely, but a problem from the other side is that the player says yeah, yeah, I get it, already, before tuning out.\"" ;
+         : print "\"So, in a one-trick pony adventure such as {qt}, 'understand it once it's solved' is likely, and the hope is, the understanding's more than semantic. A problem from the other side is that the player says yeah, yeah, I get it, already, before tuning out.\"" ;
          }
          : gosub "ask_thor_tally" ;
          : return ;
@@ -3538,11 +3538,11 @@ subroutines {
    }
    think_thoughts : subroutine {
       : if (!think_available && !retry_available) {
-         : print "There's nothing on your mind that you tried to do but weren't able to." ;
+         : print "You can't think of anything you tried to do, but you didn't have the resources yet." ;
          : return ;
       }
       : if (think_available) {
-         : print "Here is what you tried to do, and you haven't gotten it to work yet:" ;
+         : print "Here are things that seemed like they should work, but you didn't have the resources yet:" ;
       }
       : if (think_chalice_map) {
          : print "-- get the <CHALICE MAP<#0f0>> (West Tiles, NE)";
@@ -4386,7 +4386,7 @@ themes {
       }
       system_messages {
 
-   i_cant_do_that = That's a valid command, but not here.
+   i_cant_do_that = That's a valid command, but not right here and now.
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
    invalid_choice                                 = {yn_or_12}
@@ -4589,7 +4589,8 @@ on_pre_command {
          }
       : set_integer var="tempint" "2" ;
       : gosub "footnote_reveal" ;
-      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text} The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet someone who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
+      : print "The voice says \"Yes, yes. That is the right way.\"{footnote_reveal_text}" ;
+      : print "The fogginess clears a bit, but as you go west, you can't see anyone.\n\"Just a little more vetting. You'll meet someone who, uh, failed. Don't worry, though. They're obnoxious but harmless.\"";
       : set_true "point_go_west" ;
       : set_true "tutorial_9_go_west" ;
       : increment "tutorial_score" ;
@@ -4785,7 +4786,7 @@ on_command {
       : done ;
    }
    : match "ask _" {
-      : print {( "ASK is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {v_talk} to first" : "Someone you'll run into shortly." ) )} ;
+      : print {( "{v_ask} is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {v_talk} to first" : "someone you'll run into shortly." ) )} ;
    }
    : match "take _" {
       : if (!take_note) {
