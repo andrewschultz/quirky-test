@@ -4336,7 +4336,6 @@ subroutines {
          : return ;
       }
       : print "Thor nods and smiles. \"Won't give you the long spiel again, but yeah, thanks for your continued patronage and interest. Ugh. That sounded corprorate.\"" ;
-      : print {( "" + collection_get{ collection -> ("footnote_status_list") index -> (2) } )} ;
       : if (option_start_warp && cheat_leap_level < 3) {
          : if (int(collection_get{ collection -> ("footnote_status_list") index -> (2) }) == 0) {
             : set_integer var="last_cheat_leap_level" "1" ;
@@ -4346,16 +4345,17 @@ subroutines {
             : set_integer var="last_cheat_leap_level" "3" ;
          }
       }
-      : print "{option_start_warp} {last_cheat_leap_level} vs {cheat_leap_level}." ;
       : if (last_cheat_leap_level > cheat_leap_level) {
          : set_integer var="cheat_leap_level" {( int("" + last_cheat_leap_level) )} ;
          : print {( "Thor gives you a thumbs-up and says that, due to you finding a bit more bonus content this time, you'll start " + ( cheat_leap_level == 3 ? "at the plain base, the fartheset ahead you can start" : "a bit farther this time" ) + "." )} ;
+         : press_any_key ;
       }
    }
    win_warp_start : subroutine {
       : if (!option_start_warp) {
          : return ;
       }
+      : pocket "ooh_task" ;
       : if (cheat_leap_level == 1) {
          : set_integer var="score" "1" ;
          : goto "burst_face" ;
