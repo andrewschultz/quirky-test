@@ -424,7 +424,7 @@ collections {
          "<Examine the Pro Boor<#f00>>",
          "<First description for Plain Base<#f80>>",
          "<Visit both West Tiles and East Branch<#ff0>>",
-         "<XYZZY<#ff0>>",
+         "{v_xyzzy}",
          "<Visit Stealing Hill<#888>>",
          "<Escape Stealing Hill with the grail<#888>>",
          "<Get to Sky Floor<#0f0>>",
@@ -484,10 +484,10 @@ collections {
       "AFGNCAAP is a self-depreciating joke from Zork: Grand Inquisitor, meaning Ageless, Faceless, Gender Neutral, Culturally Ambiguous Adventure Person, to describe you. This was who you were throughout the Zork series.\n\"As good-looking as ever\" is the default response in Inform for {v_x_me}. It's an inside joke among experienced players and programmers that anyone who leaves this in is a bit of a novice, and the rest of the game may be underimplemented.\nIt's a joke I like a lot, because I throw in a lot of AFGNCAAPs and also procrastinate implementing item descriptions. I've never really felt qualified to put forth a protagonist with a strong culture or heritage. Some people interpret this as solipsism. But I think it helps to focus on the puzzles.",
       "I wanted the initial bit to be an escape-the-room, but I didn't want the verb to be too hard. I was drawing a blank until I thought of Hulk Handsome's game, Go West, which ... well, the title is a bit of a spoiler. Nah, I thought, I couldn't just copy that, and the Village People, and the Pet Shop Boys.\n\nBut I never thought of anything better, and besides, it made me laugh a bit. Also, Adventuron allowed for different sorts of syntax, so you can just type <W<#f80>>. I do enjoy getting and giving keyboard shortcuts.\nAlso, I encourage you to play his game, <In a Manor of Speaking<#f80>>. The link is <here<#f80>>[http://hulkhandsome.itch.io/in-a-manor-of-speaking].",
       "It's fun to reward the player for looking into things or even trying to break the game a bit. Here, though, and in the hub, I wanted to restrict movement to places you were done with, so you'd have less \"opportunity\" to wander down a long dead end. That sort of thing is fun for a bit, until it really, really isn't.",
-      "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was FIRST BASE then HOLD BUB, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. HOLD BUB was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps this spoonerism pair would've made a good book name in the bookshelf at the end.",
+      "The Pro Boor was a late addition. I didn't really have an antagonist, and the original puzzle to get through was {f_first_base} then {f_hold_bub}, which Thor said. This was simple but artificial. But sometimes writing out a placeholder puzzle is the only thing to get you started on something more effective. Or less ineffective. {f_hold_bub} was originally there because you had to reach the Bold Hub, which I split in two after creating, but it felt like it violated the Players' Bill of Rights for making a player do something just to do something. The Bold Hub eventually became Plain Base.\nThe Pro Boor was also originally named the Teen Clown, but I just couldn't quite offer an excuse for why you would wind up in a town or want to leave it. Perhaps this spoonerism pair would've made a good book name in the bookshelf at the end.",
       "I'm proud of Seth Denton's, since the name itself doesn't quite make a spoonerism without the apostrophe, and it doesn't seem particularly ominous.\nOther names that need an apostrophe for a proper spoonerism include Sean Kent's conscience (if you don't pronounce it PRECISELY) and Fran Blake's bran flakes. Well, you can have one bran flake, but many of them as cereal would be more common.\nHearty Pat's came to mind as a store, too. But that's not a proper name.\nI also had ideas for hostile NPCs including Tad Beecher, Quinn Wick and Trav Hubble, but there was enough to program.",
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Which actually worked out okay because East Branch has more bonus points (meant to be hard) than West Tiles.\nAlso, recycling the names as signs helped fill the whole graphic for Plain Base.",
-      "XYZZY is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like PLUGH, YOHO and PLOVER, summoned a hollow voice saying \"FOOL!\" in the original Adventure.\nI didn't want it just to be inside knowledge, though, so I put the runes in as a puzzle.",
+      "{v_xyzzy} is a sort of in-joke for parser players and programmers. Some love it and some hate it. It, along with other commands like <PLUGH<#f80>>, <YOHO<#f80>> and <PLOVER<#f80>>, summoned a hollow voice saying \"FOOL!\" in the original Adventure.\nI didn't want it just to be inside knowledge, though, so I put the runes in as a puzzle.",
       "I wanted to show the reader some non-reciprocal directions but not have them there just because. The original hub maps were west and east of Thor, and the passage back was south. The hill always had non-reciprocal directions, and it was simpler just to have the side-hubs' exits mirror each other instead of being identical.",
       "Originally, this was called Fate Hill, which works semantically but is too abstract. It sounds wobbly, too. But still, the temporary name did its job. It lampshaded that this was an important place to be, but I think the location and new name do this. However, one side result of Fate Hill was giving the hill facial expressions, which made me smile, at least.",
       "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated.",
@@ -712,6 +712,7 @@ strings {
    v_talk : string "<TALK<#0f0>>" ; # tlk2 = tlk + or <T<#0f0>> (?)
    v_t0 : string "<T<#0f0>>" ;
    v_x_me : string "<X ME<#0f0>>" ;
+   v_xyzzy : string "<XYZZY<#f80>>" ;
 
    # warp commands in blue, to match their achievement color
    w_pb : string "<PB<#00f>>" ;
@@ -727,6 +728,10 @@ strings {
 
    ## inventory
    pip : string " <(+)<#0f0>>" ;
+
+   # command(s) referred to in footnotes (real or apocryphal)
+   f_first_base : string "<FIRST BASE<#f80>>" ;
+   f_hold_bub : string "<HOLD BUB<#f80>>" ;
 
    ## dynamic general strings
 
