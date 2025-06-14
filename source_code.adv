@@ -74,6 +74,7 @@ booleans {
    note_partial_achievements : boolean "false" scope="survivor" ;
    spoke_out_note : boolean "false" scope="survivor" ;
    room_change_noted : boolean "false" scope="survivor" ;
+   thor_asked_once : boolean "false" scope = "survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -752,8 +753,8 @@ strings {
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {v_talk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about any of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
-   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why.{footnote_reveal_text}" : "" )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {v_talk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about " + (thor_asked_once ? "more" : "any" ) + " of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
+   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "\nAn establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why." : "There's no trace of Seth Denton's, and maybe that's all for the better." )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
    hubdir : dynamic_string {( is_at("west_tiles") ? "west" : "east" )} ;
@@ -2738,6 +2739,7 @@ subroutines {
       : done ;
    }
    ask_thor_tally : subroutine {
+      : set_true "thor_asked_once" ;
       : decrement "tempint" ;
       : set_integer var="tempint2" {( int(collection_get{ collection -> ("ask_list") index -> ( tempint ) }) + 1 )} ;
       : if (tempint2 > 4) {
