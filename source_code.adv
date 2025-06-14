@@ -850,6 +850,8 @@ strings {
    )} ;
    chimes_note : dynamic_string {( chimes_in_my_house ? " (Point of order: you recalled cheery times inside the house, but the teary chimes were outside.)" : "" )} ;
 
+   castle_description : dynamic_string {( is_first_entered() ? "You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games. Hey, you made it this far, you're more likely than most to enjoy them." : "You continue to sit back and feel a sense of accomplishment. And yet, at the same time, you may or may not appreciate an idea for a new adventure popping in your head." )}
+
    ## color code stuff
 
    ## intro first
@@ -2390,15 +2392,23 @@ locations {
       }
    }
 
-   kill_hassle_hill_castle : location "^c^<KILL-HASSLE HILL CASTLE<#fc0>>\n^l^You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games. Hey, you made it this far, you're more likely than most to enjoy them." graphic = "r_kill_hassle_hill_castle" {
+   kill_hassle_hill_castle : location "^c^<KILL-HASSLE HILL CASTLE<#fc0>>\n^l^{castle_description}" graphic = "r_kill_hassle_hill_castle" {
       on_command {
          : match "l _" {
             : redescribe ;
          }
          : if (is_at "kill_hassle_hill_castle") {
             : cycle key = "silly_ads" predictable_order = "true" skip_interval = "0" {
-               : print "You wonder if an anagram-themed quest might be just the thing now. A thought runs through your mind, completely spontaneous, that the <Stale Tales Slate<#dcb>> series with <Shuffling Around<#dcb>>, <A Roiling Original<#dcb>> (longer) or <Tours Roust Torus<#dcb>> (shorter) would be just the thing." ;
+               : print "You wonder if there are other spoonerism-based quests. Why, indeed there are! <Roads of Liches<#dcb>> was written for EctoComp, <Trail Stash<#dcb>> was written in Twine for IFComp, and the author has a few more plans. Consider this a poke to himself to get going, already." ;
+               : print "You wonder if an anagram-themed quest might be just the thing now. A thought runs through your mind, completely spontaneous, that the <Stale Tales Slate<#f88>> series with <Shuffling Around<#dcb>>, <A Roiling Original<#dcb>> (longer) or <Tours Roust Torus<#dcb>> (shorter) would be just the thing." ;
                : print "You ponder taking a trip to the mysterious cities of <Threediopolis<#dcb>> and <Fourdiopolis<#dcb>>, where how you get there is as important as the location." ;
+               : print "You come across information about the <Prime Pro-Rhyme Row<#f88>>, a series of rhyming games starting with <Very Vile Fairy File<#dcb>>." ;
+               : print "You consider you might be up for some palindromes, which <Ailihphilia<#dcb>> has in spades. Be a tsilihphilist! Don't have aibohphobia!" ;
+               : print "You muse over Pig Latin and its possibilities. Suddenly, you realize <Under They Thunder<#dcb>> covers them all, although it does bang on for a while, because the author had nothing else to do during COVID. <Weary Eerie Way<#dcb>> is more succinct." ;
+               : print "Or perhaps chess adventures are your thing. There are a whopping five: Fivebyfivia Delenda Est, Fourbyfourian Quarryin', You Won't Get Her Back, Zero Chance of Recovery, Xenophobic Opposites Unite." ;
+               : print "<Why Pout<#dcb>> also involves a sort of wordplay I won't spoil, but the title is a clue." ;
+               : print "You wonder too about discovering <The Cube in the Cavern<#dcb>>, a game based on a three-dimensional map of ... a cube." ;
+               : print "You wonder if <Ugly Oafs<#dcb>> is worth a try. However, you stumble upon inside information that the author meant to put out a post-comp release but never did, because playtesting was too hard. As <the IFWiki page<#0f0>>[https://www.ifwiki.org/Ugly_Oafs] says, explaining what it's about would be a spoiler. Walkthrough recommended. Only for the hardcore. Perhaps it is the sort of thing where you can be glad it exists, and not much more." ;
                : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his itch.io page." ;
             }
             : done ;
