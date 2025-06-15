@@ -5099,6 +5099,9 @@ on_command {
          : gosub "options_tutorial" ;
       }
    }
+   : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" {
+      : print "{custom_unknown_verb_error}" ;
+   }
 }
 
 # end on_command
