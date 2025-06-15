@@ -36,6 +36,7 @@ booleans {
    apostrophe_warn : boolean "false" scope="survivor" ;
    say_warn : boolean "false" scope="survivor" ;
    credits_to_thanks_note : boolean "false" scope="survivor" ;
+   inventory_arg_warn : boolean "false" scope="survivor" ;
 
    ## done once in-game booleans (non-critical, or duplicate)
    xme_twice : boolean "false" ;
@@ -3635,8 +3636,10 @@ subroutines {
    }
    long_words_note : subroutine {
       : if (!long_word_warn) {
-      : print "<ALSO:<#f0f>> in general, longer words will work, but parser conventions have evolved to help save the player keystrokes." ;
-      : set_true "long_word_warn" ;
+         : mask {
+            : print "<ALSO:<#f0f>> in general, longer words will work, but parser conventions have evolved to help save the player keystrokes." ;
+            : set_true "long_word_warn" ;
+         }
       }
    }
    debug_commands : subroutine {
@@ -4631,12 +4634,9 @@ on_pre_command {
    }
    : if (!examine_warn) {
       : match "examine *;look *" {
-         : if (original "verb" == "examine") {
-            : print "{note_once}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
-            : gosub "long_words_note" ;
-            : set_true "examine_warn" ;
-            : press_any_key ;
-         }
+         : print "{note_once}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
+         : gosub "long_words_note" ;
+         : set_true "examine_warn" ;
       }
    }
    : if (!look_warn) {
@@ -4653,10 +4653,11 @@ on_pre_command {
    : if (!inventory_warn) {
       : match "inventory _" {
          : if (original "verb" == "inventory") {
-            : print "{note_once}you only need to type {vd_i} to take {vd_i_long}." ;
-            : gosub "long_words_note" ;
-            : set_true "inventory_warn" ;
-            : press_any_key ;
+            : mask {
+               : print "{note_once}you only need to type {vd_i} to take {vd_i_long}." ;
+               : gosub "long_words_note" ;
+               : set_true "inventory_warn" ;
+            }
          }
       }
    }
@@ -5097,6 +5098,15 @@ on_command {
          }
       } : else {
          : gosub "options_tutorial" ;
+      }
+   }
+   : match "i *" { # this can't easily be put in pre_command, because I STAY is possible for a bonus point
+      : mask {
+         : set_sentence "i" ;
+         : if (!inventory_arg_warn) {
+            : print "{note_once}{vd_i}/{vd_i_long} requires no argument." ;
+            : set_true "inventory_arg_warn" ;
+         }
       }
    }
    : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" {
