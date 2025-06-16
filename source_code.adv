@@ -2413,6 +2413,10 @@ locations {
          : match "l _" {
             : redescribe ;
          }
+         : match "_ should;_ girt;_ good;_ shirt;_ bold;_ manner;_ mold;_ banner" {
+            : print "Your rewards are tucked safely away, waiting to give a confidence boost for your next adventure. Which you can find just waiting around, if you can't think of one." ;
+            : done ;
+         }
          : if (is_at "kill_hassle_hill_castle") {
             : cycle key = "silly_ads" predictable_order = "true" skip_interval = "0" {
                : print "You wonder if there are other spoonerism-based quests. Why, indeed there are! <Roads of Liches<#dcb>> was written for EctoComp, <Trail Stash<#dcb>> was written in Twine for IFComp, and the author has a few more plans. Consider this a poke to himself to get going, already." ;
@@ -3999,6 +4003,7 @@ subroutines {
          : set_true "thor_left" ;
          : update_graphic "s_final_rewards" ;
          : set_false "thor_left" ;
+         : print "A <should-girt-good shirt<#f0f>> and a <bold-manner-mold banner<#f0f>>! No, you don't ever have to wear the shirt. Keep it as a sort of lightweight trophy. Just, look at both of them next time you're feeling down, like you can't do anything, and remember ... you achieved all the achievements in {qt}!" ;
          : print "\"But that's not all! You get your own place to stay as long as you like. It even has ... suggestions for other adventures! Sound great? Great! It's your very own ..." ;
          : press_any_key ;
          : goto "kill_hassle_hill_castle" ;
@@ -4634,9 +4639,11 @@ on_pre_command {
    }
    : if (!examine_warn) {
       : match "examine *;look *" {
-         : print "{note_once}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
-         : gosub "long_words_note" ;
-         : set_true "examine_warn" ;
+         : if (original "verb" == "examine") {
+            : print "{note_once}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
+            : gosub "long_words_note" ;
+            : set_true "examine_warn" ;
+         }
       }
    }
    : if (!look_warn) {
