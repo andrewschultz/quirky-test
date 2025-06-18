@@ -2371,6 +2371,7 @@ locations {
                : print "You call on the mouse, who seemed friendly and grateful you made it a home. It appears. You point to the glimmering." ;
                : press_any_key ;
                : print "The mouse uncovers a very small chest, which you, with your experienced adventuring prowess, know must be a tiny shrunk shiny trunk. But it is locked!" ;
+               : set_false "show_overlay" ;
                : update_graphic "s_tiny_shrunk_shiny_trunk" ;
                : press_any_key ;
                : print "There's still glimmering around, though, and the mouse dumps all sorts of things at your feet. Finally ... a key! And not just any key. You can tell it must be a costly lost key. You motion that the mouse can keep everything else. It scampers away gratefully." ;
@@ -2379,6 +2380,7 @@ locations {
                : print "The moment of truth! CLICK. The key unlocks the trunk, leaving, of course ... the {rttr}!" ;
                : gosub "add_point" ;
                : update_graphic "s_the_ring" ;
+               : set_true "show_overlay" ;
                : press_any_key ;
                : clear_screen ;
                : gosub "win_notes" ;
