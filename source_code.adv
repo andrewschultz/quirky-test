@@ -3468,23 +3468,23 @@ subroutines {
          }
       } : else {
          : cycle key = "books_to_read" predictable_order = "false" skip_interval = "0" {
-            : print "{book_is} <A Will Way Ill<#ff0>>." ;
-            : print "{book_is} <To Prep True Pep<#ff0>>." ;
-            : print "{book_is} <See Bunny, Be Sunny<#ff0>>." ;
             : print "{book_is} <Chaz, Jess, Jazz, Chess<#ff0>>." ;
-            : print "{book_is} <See Pride Preside<#ff0>>." ;
-            : print "{book_is} <Thumb, Sing Something<#ff0>>." ;
-            : print "{book_is} <Nor Fight For Night<#ff0>>." ;
-            : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
-            : print "{book_is} <Tad, Who HAD To<#ff0>>." ;
-            : print "{book_is} <Kenny Muller's Many Colors<#ff0>>." ;
-            : print "{book_is} <My Son Simon<#ff0>>." ;
-            : print "{book_is} <Two Trolls' True Tolls<#ff0>>." ;
-            : print "{book_is} <Socially Show Sully<#ff0>>." ;
             : print "{book_is} <Dang! Big Bang, Dig!<#ff0>>." ;
             : print "{book_is} <Fusty Trite Trustee Fight<#ff0>>." ;
+            : print "{book_is} <Kenny Muller's Many Colors<#ff0>>." ;
             : print "{book_is} <Mirth, Waking, Worth Making<#ff0>>." ;
+            : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
+            : print "{book_is} <My Son Simon<#ff0>>." ;
+            : print "{book_is} <Nor Fight For Night<#ff0>>." ;
+            : print "{book_is} <See Bunny, Be Sunny<#ff0>>." ;
+            : print "{book_is} <See Pride Preside<#ff0>>." ;
+            : print "{book_is} <Socially Show Sully<#ff0>>." ;
+            : print "{book_is} <Tad, Who HAD To<#ff0>>." ;
+            : print "{book_is} <Thumb, Sing Something<#ff0>>." ;
+            : print "{book_is} <To Prep True Pep<#ff0>>." ;
             : print "{book_is} <Toil, Anchor, Oil Tanker<#ff0>>." ;
+            : print "{book_is} <Two Trolls' True Tolls<#ff0>>." ;
+            : print "{book_is} <A Will Way Ill<#ff0>>." ;
          }
       }
       : increment "books_read";
