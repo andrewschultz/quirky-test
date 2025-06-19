@@ -685,6 +685,12 @@ strings {
    tx_on : string "<Olaf Nowacki<#0f0>>[https://fumbaloaoa.itch.io/]" ;
    tx_ta : string "<Tabitha<#0f0>>[https://alyshkalia.itch.io/]" ;
 
+   ## links
+   link_itch : string "<itch.io page<#0f0>>[http://itch.io/andrew-schultz]" ;
+   link_shuffling : string "<Shuffling Around<#dcb>>[https://andrewschultz.itch.io/shuffling-around]" ;
+   link_roiling : string "<A Roiling Original<#dcb>>[https://andrewschultz.itch.io/a-roiling-original] (soon)" ;
+   link_torus : string "<Tours Roust Torus<#dcb>>[https://andrewschultz.itch.io/tours-roust-torus]" ;
+
    ## items for hints
    next_go_round : string " (Well, maybe next go round.)" ;
 
@@ -869,7 +875,7 @@ strings {
    )} ;
    chimes_note : dynamic_string {( chimes_in_my_house ? " (Point of order: you recalled cheery times inside the house, but the teary chimes were outside.)" : "" )} ;
 
-   castle_description : dynamic_string {( is_first_entered() ? "You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games. Hey, you made it this far, you're more likely than most to enjoy them.\n{note_once}only top-level meta-verbs (RESTART, {vs_tss}) can be used here. This room is just denouement." : "You continue to sit back and feel a sense of accomplishment. And yet, at the same time, you may or may not appreciate an idea for a new adventure popping in your head." )}
+   castle_description : dynamic_string {( is_first_entered() ? "You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games, with links, too. Hey, you made it this far, you're more likely than most to enjoy them.\n{note_once}only top-level meta-verbs ({vs_restart}, {vs_tss}) can be used here. This room is just denouement." : "You continue to sit back and feel a sense of accomplishment. And yet, at the same time, you may or may not appreciate an idea for a new adventure popping in your head." )}
 
    ## color code stuff
 
@@ -2429,17 +2435,18 @@ locations {
          }
          : if (is_at "kill_hassle_hill_castle") {
             : cycle key = "silly_ads" predictable_order = "true" skip_interval = "0" {
-               : print "You wonder if there are other spoonerism-based quests. Why, indeed there are! <Roads of Liches<#dcb>> was written for EctoComp, <Trail Stash<#dcb>> was written in Twine for IFComp, and the author has a few more plans. Consider this a poke to himself to get going, already." ;
-               : print "You wonder if an anagram-themed quest might be just the thing now. A thought runs through your mind, completely spontaneous, that the <Stale Tales Slate<#f88>> series with <Shuffling Around<#dcb>>, <A Roiling Original<#dcb>> (longer) or <Tours Roust Torus<#dcb>> (shorter) would be just the thing." ;
-               : print "You ponder taking a trip to the mysterious cities of <Threediopolis<#dcb>> and <Fourdiopolis<#dcb>>, where how you get there is as important as the location." ;
-               : print "You come across information about the <Prime Pro-Rhyme Row<#f88>>, a series of rhyming games starting with <Very Vile Fairy File<#dcb>>." ;
-               : print "You consider you might be up for some palindromes, which <Ailihphilia<#dcb>> has in spades. Be a tsilihphilist! Don't have aibohphobia!" ;
+               : print "You wonder if there are other spoonerism-based quests. Why, indeed there are! <Roads of Liches<#dcb>>[https://andrewschultz.itch.io/roads-of-liches] was written for EctoComp, <Trail Stash<#dcb>>[https://andrewschultz.itch.io/trail-stash] was written in Twine for IFComp, and the author has a few more plans. Consider this a poke to himself to get going, already." ;
+               : print "You wonder if an anagram-themed quest might be just the thing now. A thought runs through your mind, completely spontaneous, that the <Stale Tales Slate<#f88>> series with {link_shuffling}, {link_roiling} (longer) or {link_torus} (shorter) would be just the thing." ;
+               : print "You ponder taking a trip to the mysterious cities of <Threediopolis<#dcb>>[https://andrewschultz.itch.io/threediopolis] and <Fourdiopolis<#dcb>>[https://andrewschultz.itch.io/fourdiopolis], where how you get there is as important as the location." ;
+               : print "You come across information about the <Prime Pro-Rhyme Row<#f88>>, a series of rhyming games starting with <Very Vile Fairy File<#dcb>>[https://andrewschultz.itch.io/very-vile-fairy-file]." ;
+               : print "You consider you might be up for some palindromes, which <Ailihphilia<#dcb>>[https://andrewschultz.itch.io/ailihphilia] has in spades. Be a tsilihphilist! Don't have aibohphobia!" ;
                : print "You muse over Pig Latin and its possibilities. Suddenly, you realize <Under They Thunder<#dcb>> covers them all, although it does bang on for a while, because the author had nothing else to do during COVID. <Weary Eerie Way<#dcb>> is more succinct." ;
                : print "Or perhaps chess adventures are your thing. There are a whopping five: Fivebyfivia Delenda Est, Fourbyfourian Quarryin', You Won't Get Her Back, Zero Chance of Recovery, Xenophobic Opposites Unite." ;
-               : print "<Why Pout<#dcb>> also involves a sort of wordplay I won't spoil, but the title is a clue." ;
+               : print "<Why Pout<#dcb>>[https://andrewschultz.itch.io/why-pout] also involves a sort of wordplay I won't spoil, but the title is a clue." ;
                : print "You wonder too about discovering <The Cube in the Cavern<#dcb>>, a game based on a three-dimensional map of ... a cube." ;
                : print "You wonder if <Ugly Oafs<#dcb>> is worth a try. However, you stumble upon inside information that the author meant to put out a post-comp release but never did, because playtesting was too hard. As <the IFWiki page<#0f0>>[https://www.ifwiki.org/Ugly_Oafs] says, explaining what it's about would be a spoiler. Walkthrough recommended. Only for the hardcore. Perhaps it is the sort of thing where you can be glad it exists, and not much more." ;
-               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his <itch.io page<#0f0>>[http://itch.io/andrew-schultz]. Unless, of course, you found the advertisements so enthralling, you can't help but read through them again, to keep the energy pulsing." ;
+               : print "Now for, some general resource links: <IFDB<#0f0>>[http://ifdb.org] and <ifarchive.org<#0f0>>[http://ifarchive.org] track game reviews and binaries. <ifcomp.org<#0f0>>[http://ifcomp.org] and <Spring Thing<#0f0>>[http://springthing.org] are competitions where I submitted many of the works above." ;
+               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his {link_itch}. Unless, of course, you found the advertisements so enthralling, you can't help but read through them again, to keep the energy pulsing." ;
             }
             : done ;
          }
@@ -4007,7 +4014,7 @@ subroutines {
 
    nl_anagram_check : subroutine {
       : if (!anagram_nag) {
-         : print "{note_once}however, the author did write such an anagram game. Three, in fact. You can find <Shuffling Around<#f80>>, <A Roiling Original<#f80>> and <Tours Roust Torus<#f80>>. If you enjoy {qt}, you may enjoy them, too." ;
+         : print "{note_once}however, I actually did write such an anagram game. Three, in fact. You can find {link_shuffling}, {link_roiling} and {link_torus} at {link_itch}. If you enjoy {qt}, you may enjoy them, too." ;
          : set_true "anagram_nag" ;
       }
       : done ;
