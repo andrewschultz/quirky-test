@@ -669,7 +669,9 @@ strings {
    vm_versions : string "<VERSIONS<#f80>>" ;
 
    # system level verb strings
+   vs_restart : string "<RESTART<#f80>>" ;
    vs_quit : string "<QUIT<#f80>>" ;
+   vs_tss : string "<TSTART<#f80>> and <TSTOP<#f80>>" ;
 
    ## names in credits
    talj : string "<TALJ<#0f0>>" ;
@@ -867,7 +869,7 @@ strings {
    )} ;
    chimes_note : dynamic_string {( chimes_in_my_house ? " (Point of order: you recalled cheery times inside the house, but the teary chimes were outside.)" : "" )} ;
 
-   castle_description : dynamic_string {( is_first_entered() ? "You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games. Hey, you made it this far, you're more likely than most to enjoy them." : "You continue to sit back and feel a sense of accomplishment. And yet, at the same time, you may or may not appreciate an idea for a new adventure popping in your head." )}
+   castle_description : dynamic_string {( is_first_entered() ? "You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games. Hey, you made it this far, you're more likely than most to enjoy them.\n{note_once}only top-level meta-verbs (RESTART, {vs_tss}) can be used here. This room is just denouement." : "You continue to sit back and feel a sense of accomplishment. And yet, at the same time, you may or may not appreciate an idea for a new adventure popping in your head." )}
 
    ## color code stuff
 
@@ -3890,8 +3892,8 @@ subroutines {
       : if (have_won) {
          : print "By winning the game, you've opened up footnotes ({vd_footnote_cue}) and achievements tracking ({vd_ach}).";
       }
-      : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, <RESTORE<#f80>> and {vs_quit}, to save a game for later, come back to it, or quit." ;
-      : print "Adventuron-specific {vm_meta} commands include <TSTART<#f80>> and <TSTOP<#f80>>, which start and stop a transcript." ;
+      : print "Adventuron also offers the standard parser meta-commands of <SAVE<#f80>>, {vs_restart} and {vs_quit}, to save a game for later, come back to it, or quit." ;
+      : print "Adventuron-specific {vm_meta} commands include {vs_tss}, which start and stop a transcript." ;
       : if (!meta_abbrev_noted) {
          : print "{note_once}you can abbreviate many of the non-native Adventuron commands above. Listing them all would make this readout too long, but experiment, if you like." ;
          : set_true "meta_abbrev_noted" ;
@@ -4724,7 +4726,7 @@ on_command {
    : match "restart _" {
       : if (bonus_this_playthrough || have_won) {
          : mask {
-            : print {( "{note_once}Adventuron sees <RESTART<#f80>> and {vs_quit} as synonyms, so this risks losing all " + (!have_won ? "bonus points" : !bonus_this_playthrough ? "footnote/achievement progress" : "bonus points or footnote/achievement progress") + " found this playthrough." )} ;
+            : print {( "{note_once}Adventuron sees {vs_restart} and {vs_quit} as synonyms, so this risks losing all " + (!have_won ? "bonus points" : !bonus_this_playthrough ? "footnote/achievement progress" : "bonus points or footnote/achievement progress") + " found this playthrough." )} ;
          }
       }
    }
