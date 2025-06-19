@@ -2385,7 +2385,8 @@ locations {
                : set_false "show_overlay" ;
                : update_graphic "s_tiny_shrunk_shiny_trunk" ;
                : press_any_key ;
-               : print "There's still glimmering around, though, and the mouse dumps all sorts of things at your feet. Finally ... a key! And not just any key. You can tell it must be a costly lost key. You motion that the mouse can keep everything else. It scampers away gratefully." ;
+               : print "There's still glimmering around, though, and the mouse dumps all sorts of things at your feet. Finally ... a key! And not just any key. You can tell it must be a costly lost key. You can't help exclaiming \"Cor! The THOR key!\"" ;
+               : print "You motion that the mouse can keep everything else. It scampers away gratefully." ;
                : update_graphic "s_costly_lost_key" ;
                : press_any_key ;
                : print "The moment of truth! CLICK. The key unlocks the trunk, leaving, of course ... the {rttr}!" ;
@@ -2427,7 +2428,9 @@ locations {
             : redescribe ;
          }
          : match "restart _;restore _;tstart _;tstop _" {
-            : done ;
+            : mask {
+               : done ;
+            }
          }
          : match "_ should;_ girt;_ good;_ shirt;_ bold;_ manner;_ mold;_ banner" {
             : print "Your rewards are tucked safely away, waiting to give a confidence boost for your next adventure. Which you can find just waiting around, if you can't think of one." ;
@@ -3582,7 +3585,7 @@ subroutines {
       : if (!have_won) {
          : print "{custom_unknown_verb_error}" ;
          : if (!bonus_obfuscated_note_yet) {
-            : print "{note_once}well, not exactly. You've discovered half of a bonus point. But the first time through, I won't be revealing them, so as not to distract you from the main quest. If you replay, you'll get a nudge, since we can assume you know the main way through." ;
+            : print "{note_once}well, not exactly. You've discovered half of a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you replay, you'll get a nudge, since it's assumed you know the main way through." ;
             : set_true "bonus_obfuscated_note_yet" ;
          }
          : done ;
