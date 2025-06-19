@@ -2418,6 +2418,9 @@ locations {
          : match "l _" {
             : redescribe ;
          }
+         : match "restart _;restore _;tstart _;tstop _" {
+            : done ;
+         }
          : match "_ should;_ girt;_ good;_ shirt;_ bold;_ manner;_ mold;_ banner" {
             : print "Your rewards are tucked safely away, waiting to give a confidence boost for your next adventure. Which you can find just waiting around, if you can't think of one." ;
             : done ;
