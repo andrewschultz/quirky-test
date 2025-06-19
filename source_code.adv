@@ -753,7 +753,7 @@ strings {
 
    ## description strings by location
 
-   task_read : dynamic_string {( has_visited "plain_base" ? "\nThe small print is easier to read with more light. It says:\nTHERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS SEVENTEEN\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n                    ANDREW" : " There's small print you can't read in this dimness." )} ;
+   task_read : dynamic_string {( has_visited "first_base" ? "\nThe small print is easier to read with more light. It says:\nTHERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n                    ANDREW" : " There's small print you can't read in this dimness." )} ;
 
    first_base_first : dynamic_string {( is_first_entered() ? "Finally, a better-lighted place! It's wide open here. " : "" )} ;
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It'll be a while, unless you can disrupt things." : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
@@ -5245,7 +5245,7 @@ assets {
 
       t_master_plan : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAsElEQVRYw+2XUQqAMAxDe4Nc2+PmBrWd/hYRpBHWMv0T30KydnaIy95+4A+1AQDcLV50gwwAQD6QKmBKALhUAd77VwFsH0NamBBhQ6gUoMeqHNCkQBxCySEC8EsBHYBRCzAxXDEsLdgUwzqETQpIAX6gAMUemBhyTUTRECEFYNWPu2KoA7hjqARgrmoqnxh2dcM8CwnZSAaU95I+BcKFJu2GKMbCpm64/j93w00Bvq4TiqVbYdqbbzEAAAAASUVORK5CYII=";
 
-      t_ooh_task : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYheWYUQoCMQxE9wa9/50CvUoPEIidZD/W9i9qRmhWVArqI5PMsF6Wq3Ftlfui5MdsbCetFqCpzEvNX2y+2Yl+DYASs+4IvRpg2N2BCYAGaFaBPMBaxQD4OfTA7glIK/AJQHQ/JqAcYASA2D0B5RLQZwA+gOaLdH/kNUgDrAfVAHQrHt79+TR3QCBBOcB2Uh1G60F9GLkCoYLUA9B9gA7QzI0obAhGRAmjZ1HC6K3KZ8D9x1cAVtTrw2hHOgxgaPQfXoRNOC8L6ABtjr5qhHEnZAF9CP/BiDwI4EHYBMqd0UJ0GEBkgd4XQQL6ENLX8AkQEpx3Z/Stv+leQtqKrntlWgkAAAAASUVORK5CYII=";
+      t_ooh_task : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDw8PD/AAAA/wD//wAAAP//AP8A///////YXWLVAAAA/0lEQVRYw+VYMQ7DMAj0mK1f7ohU/6gf8MBj/IBIKYc9pRu1gMq4SjIlp+O4Ey2XrXr5KtuLihUA3evhC+CoLKeS3kgenpc3gFMOEzWF0LwBdJoMCAAQUK0dsANYJAErgEM+CQ5oKsDcgV8ACPsnTQW4A+gDANNUAG2nAfgAyGdu+iN/H7gz4A0g3Iq7si8XmQFGC9wBhIdRtAZkCtCBxq+3lD+AcB9IEEZqRMOGYEQhYbRCg3+sAfUfGJFaUfMPo3AfCA+jOviHF2ES9suCBJuRREEdYYwGbCfCDEakQQAPwiSEbEahWZAgjCD/Ok9ACxJsRonCaLRgv81o1d90H6WwmMxnBz/iAAAAAElFTkSuQmCC";
 
       t_pacing_rations : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAk0lEQVRYw+2WXQrAIAyDc//DeoUOfzYrDmUwDBjbF32QftSaiEAOfD6A0KX53f4ANkwFgAmBAMCZARuGBEBtN+JERqK8gBxASktl740IQKtFggC577WmKAAahPIqF5kRH+B4AXopXnoFfAB7kWPul4wL8NixLEDxY9p/gAUAfwVw6qwA0MsvyF5AB1Bzw0nsD/B3XEeQyfWQ2qlQAAAAAElFTkSuQmCC";
 
