@@ -2356,6 +2356,14 @@ locations {
                : set_sentence {( original "verb" + " book" )} ;
             }
          }
+         : match "gee _" {
+            : match "gee slimmer" {
+               : print "You try to finagle a quick-fix weight loss program, not for vanity's sake, but to slide into little cracks. But 1) you'd have to get a LOT slimmer, and 2) exercising and eating better/less is the only way to go. But it was worth a try--I mean, the spelling worked, even if the pronunciation didn't." ;
+               : done ;
+            }
+            : print "{custom_unknown_verb_error}";
+            : done ;
+         }
          : match "eye stay;i stay" {
             : if (!bonus_point_eye_stay) {
                : print "You eye a stay, despite the poster's negative connotations. Looking closer, you see some complex origami can fold things so the poster, indeed, says I STAY. You have a chuckle. Why, of course you'll stay until you've completed your quest. But no more than that." ;
