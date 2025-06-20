@@ -51,7 +51,8 @@ booleans {
    have_asked_four : boolean "false" scope="survivor" ;
    initial_book_poke : boolean "false" scope="survivor" ;
    got_footnote_17 : boolean "false" scope="survivor" ;
-   noticed_beer : boolean "false" scope="survivor" ;
+   noticed_beer_ever : boolean "false" scope="survivor" ;
+   noticed_beer_this_time : boolean "false" ;
    inventory_incorporeal : boolean "false" scope="survivor" ;
    thor_warn_close : boolean "false" scope="survivor" ;
    ask_thor_misfire : boolean "false" scope="survivor" ;
@@ -1342,13 +1343,14 @@ locations {
    plain_base : location "^c^<PLAIN BASE<#888>>\n^l^You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the <northeast<#44f>> and <northwest<#44f>>{describe_gravel_trail}. You don't see any way back to First Base.\n{describe_seth_denton}{footnote_reveal_text}\n{describe_beery_thor}" {
       on_command {
          : match "_ beer" {
-            : if (noticed_beer) {
-               : print "Thor already explained about the beer." ;
+            : if (noticed_beer_ever) {
+               : print {( "Thor already explained about the beer." + (noticed_beer_this_time ? "" : " You only needed to guess it was there once for the achievement." ) )} ;
             } : else {
                : print "\"Ah yes. The beer. It's mainly a prop. Mostly colored water. It makes me seem much more chatty and vibrant than I am. I kinda worry it's a bad example for mortals who get hangovers, or worse, even if I don't drink from it.\"" ;
-               : set_true "noticed_beer" ;
+               : set_true "noticed_beer_ever" ;
                : set_true "achieve_hbbh_pre" ;
             }
+            : set_true "noticed_beer_this_time" ;
          }
          : match "listen _" {
             : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? v_talk : v_ask) + "." )} ;
