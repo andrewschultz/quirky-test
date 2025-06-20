@@ -5101,6 +5101,36 @@ on_command {
       : gosub "footnote_reveal" ;
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"{footnote_reveal_text}";
    }
+   : match "sing _" {
+      : if (point_grim_tune) {
+         : print "You already sang the grim tune. Sadly, it's faded from memory." ;
+         : done ;
+      }
+      : if (!is_carried "low_song" && !is_carried "rain_soul") {
+         : print "You have neither words nor notes right now." ;
+         : done ;
+      }
+      : if (!is_carried "low_song" || !is_carried "rain_soul") {
+         : print {( "You have " + (is_carried "rain_soul" ? "words but not notes" : "notes but not words") + " right now." )} ;
+         : done ;
+      }
+      : if (is_at "hub_e_nw") {
+         : print "You have the song and soul, but what specifically will you sing to the trim goon?" ;
+         : done ;
+      }
+      : if (is_at "plain_base") {
+         : print "With all those songs of Norse legend, you're worried yours wouldn't be close to adequate." ;
+         : done ;
+      }
+      : if (is_at "hub_w_n" && !point_master_plan) {
+         : print "Interesting try, but you fail to shatter the plaster man with your singing." ;
+      }
+      : if ((is_at "hub_w_nw" && !point_fellow_yield) || (is_at "hub_w_ne" && !point_chalice_map)) {
+         : print "That won't dispel the rough crowd of one nearby." ;
+      }
+      : print "You have no appreciative audience here." ;
+      : done ;
+   }
    : match "listen _" {
       : if (point_see_glimmering && !summoned_teary_chimes && is_at "zone_endgame") {
          : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's some specific tangent to ponder before moving on with things." ;
