@@ -1866,6 +1866,9 @@ locations {
             : print "With the hunters long gone, the meal finished, and the hills no longer grunting, there's not much chance for meaningful interaction." ;
             : done ;
          }
+         : match "_ hill" {
+            : print "You can't do much to or with the hills except, well, find what they can be changed to." ;
+         }
       }
       : match "hunters grill" {
          : if (point_hunters_grill) {
@@ -1949,6 +1952,9 @@ locations {
             : set_boolean var = "already_got_command" {( think_fellow_yield && !point_fellow_yield )} ;
             : gosub "say_half" ;
             }
+         }
+         : match "_ field" {
+            : print {( "It's very yellow. But you " + (point_fellow_yield ? "needed" : "need" ) + " to deal with the fellow." )} ;
          }
       }
    };
@@ -2195,6 +2201,11 @@ locations {
          : print {( point_funny_mountain ? "You can't really match the mountain's jokes, but you don't need to. You're happy enough." : "Denizens of the fountain don't seem to care about you. They just keep trying to fish money out of the fountain, which disappears." )} ;
          : done ;
       }
+      : if (!point_funny_mountain) {
+         : match "_ people" {
+            : print "They ignore you. But they are not important. They can't be changed, but perhaps something here can." ;
+         }
+      }
       : match "funny mountain" {
          : if (point_funny_mountain) {
             : print "You already changed the scenery here for the better. Making the mountain bigger might destabilize it." ;
@@ -2329,6 +2340,11 @@ locations {
          : if (!point_missing_house) {
             : match "missing _;_ house" {
                : gosub "say_half" ;
+            }
+         }
+         : if (is_beside "hissing_mouse") {
+            : match "_ mouse" {
+               : print "You probably don't want to do anything directly physically with the mouse. Perhaps you can improve the environment to its liking." ;
             }
          }
       }
