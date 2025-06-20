@@ -1198,7 +1198,11 @@ locations {
             : print "There's no way back. Not that you'd want to go back. Anyway, whoever it was that summoned you would probably just yank you back from your trip back. Well, if they're anywhere near as powerful as their voice.{footnote_reveal_text}" ;
          }
          : match "first base" {
-            : print "You're not sure whether to think or say \"first base,\" so you say it, cautiously.\nYou hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
+            : if (have_won) {
+               : print "You dispel the burst face more confidently this time, having the benefit of experience. Even better, the {cc_pro_boor} shocks you a lot less." ;
+            } : else {
+               : print "You're not sure whether to think or say \"first base,\" so you say it, cautiously.\nYou hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
+            }
             : update_graphic "s_burst_face_after" ;
             : set_true "point_first_base" ;
             : set_true "tutorial_10_first_base" ;
@@ -3429,7 +3433,7 @@ subroutines {
    note_diagonal_direction_from_hub : subroutine {
       : if (!has_visited("east_branch") && !has_visited("west_tiles"))
       {
-         : print "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. There're just hubs with dead ends northeast and northwest, so hopefully you can visualize the map in your head.\"" ;
+         : print {( have_won ? "Small talk from Thor. \"Those diagonal directions a pain?\"\n\"Nah, used to 'em,\" you say. He nods and smiles." : "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. There're just hubs with dead ends northeast and northwest, so hopefully you can visualize the map in your head.\"" )} ;
          : set_true "noted_diagonal_direction" ;
          : press_any_key ;
          : return ;
