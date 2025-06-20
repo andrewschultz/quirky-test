@@ -5110,6 +5110,7 @@ on_command {
       } : else {
          : print "\"Stuff too tough. Stew!\" you muse." ;
       }
+      : done ;
    }
    : match "attack _" {
       : print "No explicit violence is needed in {qt}, though sometimes there are comic threats of violence, or comic violence in the narrative after you figure what to do." ;
@@ -5119,9 +5120,18 @@ on_command {
       : print "While you'll need to use items in inventory, they're implicitly used once you find the right phrase." ;
       : done ;
    }
+   : match "give _" {
+      : print "You never need to GIVE or SHOW anything in {qt}. It's done implicitly when you find the right command." ;
+      : done ;
+   }
+   : match "enter _;in _" {
+      : print "You never need to ENTER or go IN explicitly in {qt}, though {v_o} is used when there's only one exit." ;
+      : done ;
+   }
    : match "drop _" {
       : print {( drop_referenced ? "No need to {v_drop} anything." : "While classic text adventures often required the player to use {v_drop} due to inventory limits, this is often regarded as needless fiddling today. Modern text adventures, such as this, often take steps to keep the player's inventory manageable so they can focus on puzzles, finding plot-plausible reasons to dispose of items that are no longer necessary. Plus there aren't many items to carry here." )};
       : set_true "drop_referenced" ;
+      : done ;
    }
    : match "xyzzy _" {
       : set_integer var="tempint" "7" ;
