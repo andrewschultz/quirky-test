@@ -2458,10 +2458,13 @@ locations {
          : match "l _" {
             : redescribe ;
          }
-         : match "restart _;restore _;tstart _;tstop _" {
+         : match "load _;save _;restart _;restore _;tstart _;tstop _" {
             : mask {
                : done ;
             }
+         }
+         : match "n _;s _;e _;w _;u _;d _;in _;exit _;exits _;ne _;nw _;se _;sw _" {
+            : print "There's nowhere left to explore in {qt}. But the list of adventures here may give you somewhere, or something, else to try." ;
          }
          : match "_ should;_ girt;_ good;_ shirt;_ bold;_ manner;_ mold;_ banner" {
             : print "Your rewards are tucked safely away, waiting to give a confidence boost for your next adventure. Which you can find just waiting around, if you can't think of one." ;
