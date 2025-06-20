@@ -37,6 +37,7 @@ booleans {
    say_warn : boolean "false" scope="survivor" ;
    credits_to_thanks_note : boolean "false" scope="survivor" ;
    inventory_arg_warn : boolean "false" scope="survivor" ;
+   inventory_post_note : boolean "false" ;
 
    ## done once in-game booleans (non-critical, or duplicate)
    xme_twice : boolean "false" ;
@@ -3139,6 +3140,22 @@ subroutines {
       }
       : gosub "talk_flag" ;
    }
+   inventory_arg_check : subroutine {
+      : match "i *" { # this can't easily be put in pre_command, because I STAY is possible for a bonus point
+         : if (is_at "my_house") {
+            : match "i stay" {
+               : return ;
+            }
+         }
+         : mask {
+            : set_sentence "i" ;
+            : if (!inventory_arg_warn) {
+               : set_true "inventory_post_note" ;
+               : set_true "inventory_arg_warn" ;
+            }
+         }
+      }
+   }
    item_based_points : subroutine {
       : if (is_carried "no_greed") {
          : match "grow need" {
@@ -4602,6 +4619,10 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (inventory_post_note) {
+      : print "{note_once}{vd_i}/{vd_i_long} requires no argument." ;
+      : set_false "inventory_post_note" ;
+   }
    : if (!out_argument_note) {
       : match "o *;out *" {
          : print "{note_once}{v_out_b} requires no argument, since it just checks if there is only one exit before going." ;
@@ -5168,15 +5189,7 @@ on_command {
          : gosub "options_tutorial" ;
       }
    }
-   : match "i *" { # this can't easily be put in pre_command, because I STAY is possible for a bonus point
-      : mask {
-         : set_sentence "i" ;
-         : if (!inventory_arg_warn) {
-            : print "{note_once}{vd_i}/{vd_i_long} requires no argument." ;
-            : set_true "inventory_arg_warn" ;
-         }
-      }
-   }
+   : gosub "inventory_arg_check" ;
    : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" {
       : print "{custom_unknown_verb_error}" ;
    }
