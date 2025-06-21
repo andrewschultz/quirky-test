@@ -833,12 +833,12 @@ strings {
       )} ;
    trial_pics_seen : dynamic_string {( pcpc_tile && pcpc_pile ? "You've found two different ways to look at the pics. There can't be any more." : (!pcpc_tile && !pcpc_pile) ? "Perhaps there is something in the pics, but it can't be SUPER critical." : "You've focused on " + (pcpc_tile ? "the tile pricks" : "how to pile tricks") + ", and yet you feel they have more to offer." )} ;
 
-   bonus_note_rare_plights : dynamic_string {( bonus_point_rare_plights ? "\nYou figured {cc_player_rights} hid an alternate subtitle {cue_rare_plights} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_rare_plights} again {once_rare_plights}." : "" )} ;
+   bonus_note_rare_plights : dynamic_string {( bonus_point_rare_plights ? "\nYou figured {cc_prayer_lights} hid an alternate subtitle {cue_rare_plights} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_rare_plights} again {once_prayer_lights}." : "" )} ;
    bonus_note_cease_purging : dynamic_string {( bonus_point_cease_purging ? "\nYou figured how to {cue_cease_purging} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_cease_purging} again {once_peace_surging}." : "" )} ;
    bonus_note_grow_need : dynamic_string {( bonus_point_grow_need ? "\nYou figured how to {cue_grow_need} {with_bonus}." : retry_grow_need ? "\nYou should {cue_grow_need} again {once_no_greed}." : "" )} ;
-   bonus_note_racing_passions : dynamic_string {( bonus_point_racing_passions ? "\nYou extracted {cue_racing_passions} {with_bonus}." : retry_racing_passions ? "\nYou should extract {cue_pacing_rations} again {once_passions}." : "" )} ;
+   bonus_note_racing_passions : dynamic_string {( bonus_point_racing_passions ? "\nYou extracted {cue_racing_passions} {with_bonus}." : retry_racing_passions ? "\nYou should extract {cue_racing_passions} again {once_pacing_rations}." : "" )} ;
    bonus_note_sane_role : dynamic_string {( bonus_point_sane_role ? "\nYou thought up a {cue_sane_role} {with_bonus}." : retry_sane_role ? "\nYou should think up a {cue_sane_role} again {once_rain_soul}." : "" )} ;
-   bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said {cue_so_long} {with_bonus}." : retry_so_long ? "\nYou should say {cue_so_long} again {once_so_long}." : "" )} ;
+   bonus_note_so_long : dynamic_string {( bonus_point_so_long ? "\nYou said {cue_so_long} {with_bonus}." : retry_so_long ? "\nYou should say {cue_so_long} again {once_low_song}." : "" )} ;
    bonus_note_vast_fission : dynamic_string {( bonus_point_vast_fission ? "\nYou found {cue_vast_fission} {with_bonus}." : retry_vast_fission ? "\nYou should find {cue_vast_fission} again {once_fast_vision}." : "" )} ;
 
    with_bonus : string "with this for a bonus point" ;
@@ -983,7 +983,7 @@ stats {
 objects {
   ## pedagogical stuff
    ooh_task : object "Ooh, Task to Ask ('Ooh Task')" msg="It is a request to find the {rttr}.{task_read}";
-   prayer_lights : object "{cc_prayer_lights}" msg="It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.";
+   prayer_lights : object "{cc_prayer_lights}" msg="It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.{bonus_note_prayer_lights}";
 
   ## scenery
    cheering_voice : scenery "cheering voice" msg="It gives a cheery {cc_whoa_guest}" conspicuous="false" ;
@@ -3237,7 +3237,7 @@ subroutines {
       }
       : if (point_fellow_yield && !bonus_point_vast_fission) {
          : match "vast fission" {
-            : print "You lament your fast vision wasn't fast enough to see this before you used it up in the yellow field.{maybe_next_time}" ;
+            : print "You lament your fast vision wasn't fast enough to see this before you used it up in the yellow field.{next_go_round}" ;
             : set_true "retry_vast_fission" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3263,7 +3263,7 @@ subroutines {
       }
       : if (point_grim_tune && !bonus_point_so_long) {
          : match "so long" {
-            : print "You vow, if you ever have the chance again, to say {cue_so_long} to the low song. But you used it up to create the grim tune.{maybe_next_time}" ;
+            : print "You vow, if you ever have the chance again, to say {cue_so_long} to the low song. But you used it up to create the grim tune.{next_go_round}" ;
             : set_true "retry_so_long" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3290,7 +3290,7 @@ subroutines {
       }
       : if (point_hunters_grill && !bonus_point_racing_passions) {
          : match "racing passions" {
-            : print "Alas, having eaten the pacing rations by the erstwhile grunters' hills, you can no longer muster up racing passions.{maybe_next_time}" ;
+            : print "Alas, having eaten the pacing rations by the erstwhile grunters' hills, you can no longer muster up racing passions.{next_go_round}" ;
             : set_true "retry_racing_passions" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3362,7 +3362,7 @@ subroutines {
       }
       : if (point_grim_tune && !bonus_point_sane_role) {
          : match "sane role" {
-            : print "It feels a bit too late to reclaim a sane role, after that grim tune you whipped up called humanity's sanity in general into question.{maybe_next_time}" ;
+            : print "It feels a bit too late to reclaim a sane role, after that grim tune you whipped up called humanity's sanity in general into question.{next_go_round}" ;
             : set_true "retry_sane_role" ;
             : gosub "warning_bonus_after" ;
          }
@@ -3719,7 +3719,7 @@ subroutines {
          : print "-- {cue_grow_need} {once_no_greed}" ;
       }
       : if (retry_racing_passions) {
-         : print "-- have {cue_racing_passions} when you possess the pacing rations" ;
+         : print "-- have {cue_racing_passions} {once_pacing_rations}" ;
       }
       : gosub "check_additional_meta" ;
       : return ;
@@ -3795,7 +3795,7 @@ subroutines {
          : set_false "use_color_coding" ;
          : done ;
       }
-      : set_string var="tempopt" text="{ch}" ;
+      : set_string var="tempopt" text="{opt_ch}" ;
       : gosub "option_err_stub" ;
    }
 
@@ -3845,7 +3845,7 @@ subroutines {
          : set_false "in_tutorial";
          : done ;
       }
-      : set_string var="tempopt" text="{tut}" ;
+      : set_string var="tempopt" text="{opt_tutorial}" ;
       : gosub "option_err_stub" ;
    }
 
