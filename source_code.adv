@@ -644,6 +644,7 @@ strings {
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
    ach_asterisk : dynamic_string {( !point_hi_mouse || note_partial_achievements ? " (*)" : "" )} ;
+   bonus_yellow : dynamic_string {( "<" + max_bonus_score + "<#ff0>>" )} ;
 
    # basic diagnostic verb abbreviations
    vd_bon : string "<BONUS<#f80>>" ;
@@ -5206,9 +5207,15 @@ on_command {
       }
       : print {( "Your <core score<#0f0>> is " + score + " out of <" + max_score + "<#0f0>>." )} ;
       : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
-         : print "You've solved {points_left_side} of 7 parts of West Tiles and {points_right_side} of 7 parts of East Branch." ;
+         : print {( "You've solved " + (points_left_side < 7 ? "{points_left_side} of 7" : "all" ) + " places by West Tiles and " + (points_right_side < 7 ? "{points_right_side} of 7" : "all") + "places by East Branch." )} ;
       }
-      : print {( "Your <bonus score<#f80>> is {bonus_score} out of <" + max_bonus_score + "<#f80>>." )} ;
+      : if (bonus_score == max_bonus_score) {
+         : print "You've gotten all {max_bonus_score} bonus points." ;
+      } : else_if (bonus_score == 0) {
+         : print "You haven't found any of the {bonus_yellow} bonus points yet." ;
+      } : else {
+         : print "Your <bonus score<#ff0>> is {bonus_score} out of {bonus_yellow}." ;
+      }
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
          : print "{note_once}You can track which bonus points you've found with <BONUS<#f80>>. Also, while {qt} will always let you know when you're half-right on a core point, it will not do so for bonus points. This isn't to be mean or stingy, but rather to make sure you don't get sidelined guessing a non-quest item." ;
