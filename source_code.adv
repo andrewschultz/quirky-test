@@ -764,7 +764,7 @@ strings {
    # "can't go that way" dynamic sub-strings
    back_to_hub : dynamic_string {( is_at "zone_west_spokes" ? "West Tiles" : "East Branch" )}
    spoke_out_dir : dynamic_string {( is_at "hub_w_n" || is_at "hub_e_n" ? "south" : is_at "hub_w_ne" || is_at "hub_e_ne" ? "southwest" : is_at "hub_w_e" || is_at "hub_e_e" ? "west" : is_at "hub_e_se" ? "northwest" : is_at "hub_w_s" || is_at "hub_e_s" ? "north" : is_at "hub_w_sw" ? "northeast" : is_at "hub_w_w" || is_at "hub_e_w" ? "east" : is_at "hub_w_nw" || is_at "hub_e_nw" ? "southeast" : "(unknown, bug)" )}
-   first_base_cantgo : dynamic_string {( point_bro_poor ? "{cc_prayer_lights} has a mystery you will want to crack before moving on. Perhaps it will help you figure why you're here beyond finding <rttr>." : "You'll have to deal with the {cc_pro_boor} before going anywhere." )}
+   first_base_cantgo : dynamic_string {( point_bro_poor ? "{cc_prayer_lights} has a mystery you will want to crack before moving on. Perhaps it will help you figure why you're here beyond finding {rttr}." : "You'll have to deal with the {cc_pro_boor} before going anywhere." )}
    plain_base_cantgo : dynamic_string {( point_gravel_trail ? "The only passages are northeast and northwest, where you think you've done everything, and north." : "The only viable passages (for now) are northeast and northwest." )}
 
    ## description strings by location
@@ -955,9 +955,9 @@ strings {
    achievement_nbbn : string "<Neat-Book-Beat Nook<#f0f>>" ;
 
    ## last one
-   achievement_taat: string "<Try All: Aye, Trawl<#888>>" ;
+   achievement_taat : string "<Try All: Aye, Trawl<#888>>" ;
 
-   rttr: string "<Rare-Thing-There Ring<#a33>>" ;
+   rttr : string "<Rare-Thing-There Ring<#a33>>" ;
 
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_thk}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
@@ -4001,7 +4001,7 @@ subroutines {
       : print "Thanks (in alphabetical order) to people who offered bug-finds and advice." ;
       : print "    Pre-comp: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
       : print "    In-comp: {tx_da} and {tx_on}." ;
-      : print "    Post-comp: {tx_ta}." ;
+      : print "    Post-comp: {tx_ll} and {tx_ta}." ;
       : print "Thanks to you, for giving {qt} a chance." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "32" ;
@@ -5207,7 +5207,7 @@ on_command {
       }
       : print {( "Your <core score<#0f0>> is " + score + " out of <" + max_score + "<#0f0>>." )} ;
       : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
-         : print {( "You've solved " + (points_left_side < 7 ? "{points_left_side} of 7" : "all" ) + " places by West Tiles and " + (points_right_side < 7 ? "{points_right_side} of 7" : "all") + "places by East Branch." )} ;
+         : print {( "You've solved " + (points_left_side < 7 ? "{points_left_side} of 7" : "all" ) + " places by West Tiles and " + (points_right_side < 7 ? "{points_right_side} of 7" : "all") + " places by East Branch." )} ;
       }
       : if (bonus_score == max_bonus_score) {
          : print "You've gotten all {max_bonus_score} bonus points." ;
