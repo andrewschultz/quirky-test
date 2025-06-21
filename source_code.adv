@@ -772,7 +772,7 @@ strings {
    task_read : dynamic_string {( has_visited "first_base" ? "\nThe small print is easier to read with more light. It says:\nTHERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n                    ANDREW" : " There's small print you can't read in this dimness." )} ;
 
    first_base_first : dynamic_string {( is_first_entered() ? "Finally, a better-lighted place! It's wide open here. " : "" )} ;
-   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "The {cc_pro_boor} has started blustering away. It's pretty high-energy bluster, too, the sort that only grows more intense if you get sucked in. How to cut through it?" : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them. You'll need to disrupt them just so.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
+   boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "But less peaceful. The {cc_pro_boor} is blustering away. It's pretty high-energy bluster, too, the sort that only grows more intense if you get sucked in. How to cut through it?" : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them. You'll need to disrupt them just so.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor. I sent you that message. I'd love to {v_talk} about what to do and see here. Mostly big-picture summaries of what's in that book. Hey, I can take it off your hands so you won't need to lug it around during the real adventure.\"\nSounds fair. You hand it over.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about " + (thor_asked_once ? "more" : "any" ) + " of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
@@ -1202,7 +1202,7 @@ locations {
             : if (have_won) {
                : print "You dispel the burst face more confidently this time, having the benefit of experience. Even better, the {cc_pro_boor} shocks you a lot less." ;
             } : else {
-               : print "You're not sure whether to think or say \"first base,\" so you say it, cautiously.\nYou hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on. Before you know it, you're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
+               : print "You're not sure whether to think or say \"first base,\" so you say it, cautiously.\nYou hear a slow rumbling as the burst face crumbles. You feel sad, but maybe you are releasing it from tedium. As you walk forward, you look back, and funnily enough, it builds back up again.\nSo you continue on, slightly worried there may be a baseball phrase to mangle. Plome hate? Fight reeled? Fen tour, sealed? Mitcher's pound?\nA loud shout interrupts these thoughts. You're confronted by someone who introduces themselves as a {cc_pro_boor}! They warn you against going forward, because that way, pointlessness lies.";
             }
             : update_graphic "s_burst_face_after" ;
             : set_true "point_first_base" ;
@@ -1224,7 +1224,7 @@ locations {
          }
       }
    };
-   first_base : location "^c^<FIRST BASE<#cb9>>\n^l^{first_base_first}Beckoned sase, Bird thace, Plome hate, you think to yourself ... no, something else will help you find the source of the voice.\n{boor_or_not}" {
+   first_base : location "^c^<FIRST BASE<#cb9>>\n^l^{first_base_first}{boor_or_not}" {
       on_command {
          : if (is_carried "prayer_lights") {
             : match "x book;x lights;x prayer" {
