@@ -663,7 +663,7 @@ strings {
 
    # meta verb reference strings
    vm_about : string "<ABOUT<#f80>>" ;
-   vm_cred : string "<CREDITS<#f80>>" ;
+   vm_credits : string "<CREDITS<#f80>>" ;
    vm_links : string "<LINKS<#f80>>" ;
    vm_meta : string "<META<#f80>>" ;
    vm_pts : string "<POINTS<#f80>>" ;
@@ -680,7 +680,7 @@ strings {
    talj : string "<TALJ<#0f0>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>[https://adventuron.itch.io/]" ;
    tx_cm : string "<Christopher Merriner<#0f0>>[https://christophermerriner.itch.io/]" ;
-   tx_ds : string "<Deborah Sherwood<#0f0>> (no itch.io link)" ;
+   tx_ds : string "<Deborah Sherwood<#0f0>>[https://dsherwood.itch.io]" ;
    tx_gf : string "<Garry Francis<#0f0>>[https://warrigal.itch.io/]" ;
    tx_ll : string "<Leon Lin<#0f0>>[https://leonwlin.itch.io/]" ;
    tx_wc : string "<Wade Clarke<#0f0>>[https://wade-clarke.itch.io/]" ;
@@ -3945,10 +3945,10 @@ subroutines {
    }
 
    meta_meta : subroutine {
-      : print "{vm_about} gives info about the game.";
-      : print "{vm_thx} or {vm_cred} gives info about people who helped make {qt} or make it better.";
+      : print "{vm_about} gives general info about {qt}.";
+      : print "{vm_thx} or {vm_credits} gives lists people who helped me make or improve {qt}.";
       : print "{vd_thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
-      : print {( "{vd_sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> shows bonus points you've found and clues where to get others." : "" ) )} ;
+      : print {( "{vd_sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> lists bonus points you've found and clues where to get others." : "" ) )} ;
       : print "{vm_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
       : if (have_won) {
          : print "By winning the game, you've opened up footnotes ({vd_footnote_cue}) and achievements tracking ({vd_ach}).";
@@ -3966,8 +3966,8 @@ subroutines {
 
    meta_options : subroutine {
       : print "Many games have options for sound, etc. {qt} uses <YOUROPT YES/Y<#88f>> and <YOUROPT NO/N<#88f>> to change them. <YOUROPT <#88f>> shows its status." ;
-      : print "{tut} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." ;
-      : print "{ch} is used to toggle colored text hints." ;
+      : print "{opt_tutorial} toggles the tutorial early in the game. With the tutorial finished, it recaps the lessons taught." ;
+      : print "{opt_ch} is used to toggle colored text hints." ;
       : print "{opt_notify} is used to toggle score notification." ;
       : if (have_won) {
          : print "{opt_warp} now lets you restart at the first room needed to find a footnote, bonus point or achievement, up to Plain Base." ;
@@ -3989,7 +3989,7 @@ subroutines {
       : collection_iterate "spoonerism_examples" {
          : print {( "* " + item() )} ;
       }
-      : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you when you've guessed one right word for core puzzles." ;
+      : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you when you've guessed one right word for core puzzles. If you replay, it will give a nudge when you guess a bonus point half-right." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "16" ;
       : gosub "meta_flag" ;
@@ -4002,7 +4002,7 @@ subroutines {
       : print "    Pre-comp: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
       : print "    In-comp: {tx_da} and {tx_on}." ;
       : print "    Post-comp: {tx_ta}." ;
-      : print "Thanks to you, for playing this game." ;
+      : print "Thanks to you, for giving {qt} a chance." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "32" ;
       : gosub "meta_flag" ;
@@ -4847,7 +4847,7 @@ on_command {
    : match "credits _" {
       : if (!credits_to_thanks_note) {
          : mask {
-            : print "{note_once}General credits from {tx_ca}, the creator of Adventuron, can be seen with <*<#f80>>{vm_cred}." ;
+            : print "{note_once}General credits from {tx_ca}, the creator of Adventuron, can be seen with <*<#f80>>{vm_credits}." ;
             : press_any_key ;
             : set_true "credits_to_thanks_note" ;
          }
