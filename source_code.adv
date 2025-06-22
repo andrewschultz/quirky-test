@@ -2735,7 +2735,7 @@ subroutines {
    add_bonus : subroutine {
       : if (score_notify) {
          : set_true "score_bonus_nag" ;
-         : print "<You just found a bonus point!<6>>" ;
+         : print "<You just found a bonus point!<#ff0>>" ;
          : if (bonus_score == 0) {
              : print "{note_once}{qt} contains several bonus points that are uncued. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
          }
@@ -2918,7 +2918,7 @@ subroutines {
       : else_if (tempint == 7) {
          : cycle key = "rule_7" predictable_order = "true" skip_interval = "0" {
          : print "\"The seventh rule in Graham Nelson's Player's Bill of Rights is <not to need to do boring things for the sake of it<#f88>>.\"" ;
-         : print "\"This was less of a worry when there were fewer games to play, and fewer games to fall back on and compare to, so even the busy work seemed new. But with time, there are certain puzzles everyone groans when they see, even if they were neat the first time: wolf/goat/cabbage, 5- and 4- and 3-liter jugs, Towers of Hanoi, liar/truthteller. Mazes are a 'favorite,' too, though authors have found many ways to subvert this nuisance or provide a reasonable way to jump through the maze.\"" ;
+         : print "\"This was less of a worry when there were fewer games to play, and fewer games to fall back on and compare to, so even the busy work seemed new. But with time, there are certain puzzles everyone groans when they see, even if they were neat the first time: wolf/goat/cabbage, 5- and 4- and 3-liter jugs, Towers of Hanoi, liar/truthteller. Mazes are a \"favorite,\" too, though authors have found many entertaining ways to subvert this nuisance or provide a reasonable way to jump through the maze.\n\"Oh, and some may find all this discussion, uh, boring. But it's not necessary to win, and you can just bulldoze through it if you're that sort of completionist." ;
          : print "\"Here the author realized having too many spoonerisms might ruin things. In fact, the original leadup to here had some buffer puzzles which were just me leading you on. I had a word with him.\"" ; ## put in footnote ;
          }
          : gosub "ask_thor_tally" ;
@@ -2998,7 +2998,7 @@ subroutines {
          : cycle key = "rule_16" predictable_order = "true" skip_interval = "0" {
          : print "\"The sixteenth rule in Graham Nelson's Player's Bill of Rights is <not to need to be American<#f88>>.\"" ;
          : print "\"This was one of the more controversial rules, as the definition is not very exact. But of course, it's not just about being American. Needing to know obscure stuff specific to any culture or trivia might make it hard for people to enjoy things fully, even if along the way you learn interesting things about a culture or hobby.\"" ;
-         : print "\"For {qt}, there's a slang word or two here that originate in the US, but the hope is, it is relatively common, or logical with only so many possible misspellings.\"" ;
+         : print "\"For {qt}, there's a slang word or two here that originate in the US, and there was even lampshading the puzzle that brought this about (Zork II's baseball puzzle, getting by Burst Face.) But hopefully every critical puzzle is either relatively common or logical with only so many possible misspellings.\"" ;
          }
          : gosub "ask_thor_tally" ;
       }
