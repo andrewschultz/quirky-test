@@ -81,6 +81,7 @@ booleans {
    room_change_noted : boolean "false" scope="survivor" ;
    thor_asked_once : boolean "false" scope = "survivor" ;
    read_bookshelf_this_time : boolean "false" ;
+   pig_drawing_credits : boolean "false" scope = "survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -2466,10 +2467,7 @@ locations {
          : match "l _" {
             : redescribe ;
          }
-         : match "17 _;_ 17;seventeen _;_ seventeen" {
-            : print "{yp17}" ;
-            : done ;
-         }
+         : gosub "yellow_pig_blather" ;
          : match "load _;save _;restart _;restore _;tstart _;tstop _" {
             : mask {
                : done ;
@@ -4526,6 +4524,20 @@ subroutines {
          : goto "plain_base" ;
       }
    }
+
+   yellow_pig_blather : subroutine {
+      : match "17 _;_ 17;seventeen _;_ seventeen" {
+         : set_false "show_overlay" ;
+         : update_graphic "s_yellow_pig" ;
+         : set_true "show_overlay" ;
+         : print "{yp17}" ;
+         : if (!pig_drawing_credits) {
+            : print "{note_once}the image above is a pixillated replica of <the one found here at pngwing.com<#0f0>>[https://www.pngwing.com/en/free-png-huybm]." ;
+            : set_true "pig_drawing_credits" ;
+         }
+         : done ;
+      }
+   }
 }
 
 # end subroutines
@@ -5293,8 +5305,7 @@ on_command {
    : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" {
       : print "{custom_unknown_verb_error}" ;
    }
-   : match "17 _;_ 17;seventeen _;_ seventeen" {
-      : print "{yp17}" ;
+   : gosub "yellow_pig_blather" ;
    }
 }
 
@@ -5409,6 +5420,7 @@ assets {
       s_the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYw+XXQQqEMAwF0EAOkKsEuvSYs/IcLr1Ub5BxAkpFIwj2Z8AobhT6sOmvkj1dlS5KDo/T8+OXoHS5cxQ8DgjHL36H+gPCYmdI9ynwcfhsChgCsOqDnTaBX7oDvAs07AIA4CfQsA8RAOMIsPQGBFA5WozKhADYjSzsBIjTyCBToGEcKwTAK2Dyo21CCKBui2Ao07CPIgjgzirsAahNDo3jZ5/FCAA3gHmedi8AAajNVjD42W5GAACHAIYALj4JCwYQhqDiAcrJAKK3A9Kn4PU9oOvPyD8BBAlY0+9qK0AnoSQD1JIBkgxQSwZIMkAtGSAYQPxFZBDA3foCa3swCduC+zcAAAAASUVORK5CYII=";
       s_sound_group_ground_soup : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAAD/AACAQAAAgADggED///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfj+eBAAABtElEQVRYhe2YC46DIBCGySYcwD3BVusF1hsYDzAx4f5XWWYYBBTbAtNu0nSSqhSc/5vhIarMP5v6ALwlgMqZfgEAsFZJpRQA3Ahyp5hSiABAog2Z/O9jDyUBAK/udb76E0tHA5+bASgU8rvXmya+GNe04ocpAA+NAKBIfSc9GuMALh2V7MGsodJTaLy9EQB9pMpWmyVsAi7dt0uA0++oQZQJ66ANAAxgjw9Wa5kxzi383kWMAChOJcLhPpl+aVRQCpsSQCNusNkmgGAU8uJHgP1dF4fTU5IGHiC6sQs4A9jdi0tErB9lxQH0XMSmMhlIxwACjO7/lUrX2U8BKztHZGJj4DALRpPgbBH7mRj0hWbBjXXAAezXANYWWwdwGNSvhGAkAHT9s8D/2kwH1dKnoRYBiDwU7gdABgCOcWc7INNsO7RZrQuQeRxnU/CQqejYZnU+mFsCoC4FKjm1WY0TTy20Ka2/RWZbXt4J6nDxWgKVuWqzMj8Rr9ibUVEKpN+MSh3FtGIABTMhaSr3dgyPPY15D/UEgPCSWNRI9gPF3X44NhD+QgKnO5Kzmqd8osnuCk/a/gHRaNgGa2ryHQAAAABJRU5ErkJggg==";
       s_final_rewards : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEUAAAD///+l2Z/dAAAB6UlEQVQ4y33Uv0tbQRwA8BQHh3Zx6pilf4Ag0oLKGx2LYM3q1s12KQmIeTpYEYcO4tbwcA5YOojDS3JCEXFoO7QhgkgcxCCWXETsN/q9e1/vzqjF+74+uOMOPny/9+PdN0Pc1w3vhxkW4EJvkDxJASpzG6OjU4AJnbXx+9MBbQddEyYFXNtuvs90aaBwN0pLMfQfcEEB4dK22+T7gAHP1DdCWQvp42gBIh90qU+FKMWIrH0egp8+aJkWGRC3KnsA0gdN06QFUD1jgTANUEYOvGSAvQNE2Yxbi2edvKw/BgmpHGmkHyPSpvg+9xho0jlKkI6vZOUpQNZLgaTHiWbpXL2unm4Nhh4AG4FiM8pW/wwytylJTREdzKfeBQApEnFtrDe/9NbgTnJWVN1MHX3wdtE4now2UJRwd04VzuWwdw5b7brYRHGIq0X96q1c804yf/I7ivHT4UVQvFqV/kkS/K0LgeulfFjEBgtOdgyojPZb0H7HAHujGCQQGHDERUjGLVCw5FKUGNCwQEM0030u28MMyBkgNAQv8NfMtGbWYAFpyK7j/jTzLtwabH3YXY7Yh+N2QbY+NJtsfYCBibIgVx9MhI5fYWAzV7Z/dq8+cGByxYJefeDAmy8O3NYHBnwdKIt/5im7ePhuAIC7inOp/q9RAAAAAElFTkSuQmCC";
+      s_yellow_pig : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABI0lEQVRYw+2YQQ6EMAhFWTbh0ix7HPZcbop1LNpuhphvMpG4aEy0L/xfQKk+HPQCvADJx3qUBwCk+PbW4waE3zNAQmxH0PcFksxIBsBiKG0MPSkJgoQH2C7hDPtNAgDIBBBZCkCC9dak3C4DAMwJUN50YG1sSAB18ftiBFIC/e5NPQcoAIkA3BVQpAlngCCCViyA2m6/oyI8AeD1+FqYwQBHMMQDPABGTeg5YAabkM/FyBh6DK8dySmebEatLCqwHa8oSma+y2ZgCQAayTbTzwCUm28plQDlG0aRLMA49WcLViTAQoCKBPAGzLEApQVIeqBZUGX/OOL8AciPZIXHlgIH8MkzTJ/i85BWIICQFQmiExqgERQJRb+tiaAA7w+KPwP4AGOnyrkUw3SbAAAAAElFTkSuQmCC";
 
    # final final silly room
       r_kill_hassle_hill_castle : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoCAMAAAAmJNS7AAADAFBMVEUAAACAAAAAgACAgAAAAICAAIAAgIDAwMDA3MDStJZAIABgIACAIACgIADAIADgIAAAQAAgQABAQABgQACAQACgQADAQADgQAAAYAAgYABAYABgYACAYACgYADAYADgYAAAgAAggABAgABggACAgACggADAgADggAAAoAAgoABAoABgoACAoACgoADAoADgoAAAwAAgwABAwABgwACAwACgwADAwADgwAAA4AAg4ABA4ABg4ACA4ACg4ADA4ADg4AAAAEAgAEBAAEBgAECAAECgAEDAAEDgAEAAIEAgIEBAIEBgIECAIECgIEDAIEDgIEAAQEAgQEBAQEBgQECAQECgQEDAQEDgQEAAYEAgYEBAYEBgYECAYECgYEDAYEDgYEAAgEAggEBAgEBggECAgECggEDAgEDggEAAoEAgoEBAoEBgoECAoECgoEDAoEDgoEAAwEAgwEBAwEBgwECAwECgwEDAwEDgwEAA4EAg4EBA4EBg4ECA4ECg4EDA4EDg4EAAAIAgAIBAAIBgAICAAICgAIDAAIDgAIAAIIAgIIBAIIBgIICAIICgIIDAIIDgIIAAQIAgQIBAQIBgQICAQICgQIDAQIDgQIAAYIAgYIBAYIBgYICAYICgYIDAYIDgYIAAgIAggIBAgIBggICAgICggIDAgIDggIAAoIAgoIBAoIBgoICAoICgoIDAoIDgoIAAwIAgwIBAwIBgwICAwICgwIDAwIDgwIAA4IAg4IBA4IBg4ICA4ICg4IDA4IDg4IAAAMAgAMBAAMBgAMCAAMCgAMDAAMDgAMAAIMAgIMBAIMBgIMCAIMCgIMDAIMDgIMAAQMAgQMBAQMBgQMCAQMCgQMDAQMDgQMAAYMAgYMBAYMBgYMCAYMCgYMDAYMDgYMAAgMAggMBAgMBggMCAgMCggMDAgMDggMAAoMAgoMBAoMBgoMCAoMCgoMDAoMDgoMAAwMAgwMBAwMBgwMCAwMCgwMD/+/CgoKSAgID/AAAA/wD//wAAAP//AP8A//////9T2BU2AAACbElEQVRo3uXXu3LDIBAF0Gu69P7/Sj8JBUpGjiSQln3w0mSyRWZkO4Z7WJAMVyhgNZRP6v4ulmXBl6m2f7GOUy6gmNO5DgTeszPjAEC/RAMI49jjswB6Ae/ZmV3zo5ydbwFhnJr8LIBW4Gcmn/kcf407AEQ7EADHt/t9oPb8PIBOwN8B/DX/DlBcfFAdkAv4HGBddT0AIaJrFUjmlS4PDaA7AEmA7Fv30Xxrfgng5wNdAKA+AYt7wPv7FpAB5HziB6A6AdfEIJ/Y0QCQmp7fA1UAaAcQe0ANoFt4FuB2HvrG9dcBQHMPTM9BBgCFHa8DMHYA+gAIAgKA9QhESeACsJ+FjflVALyAJ0sCALcZUAYwPAtBl83pBFAJsKWw/hBIOuAUMAIAymhOV/w58M7q9hQkA6B0G8ifhcrj1Jx/NgA0AFQ1APUwqAdAbwBeoDixtAGOVQZ3DoBrATUA9Lmc67EJSjOrPgJAARgawA0AsAucL3xS0Vfy++M2gAWgQqAvwJD8FgD7neC8xFZNAAPuAGYAq8B5te3mpQXAkn8UgFmgI8Co/DYA6YfhdZb9AAz5V2Mk168FQnhPqRD6NYAR4N4CIa85+bNqawAzAArJ5wnchowxJg4YC7C3QCjWQ/kPAnMg6+cRhJqfPyaXGA3gRABJ4LNOyd/sojF/sOfpDxDGAZD5JwM0CzQAiOsfKuJUAMSkHgX4TGCb1UwAREmATQG2DAAxyf8rgBkALgegEKZ0wD5yBuCeAbgSzAA4hn0AQBSYABApAMwBIFsgzgVIx2xqgAcAehyC+Ziv1yv8IYAOHXAZ8t8BXEdsAvgGx6V8iE6sqEAAAAAASUVORK5CYII=";
