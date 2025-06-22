@@ -437,7 +437,7 @@ collections {
          "<Examine the Pro Boor<#f00>>",
          "<First description for Plain Base<#f80>>",
          "<Visit both West Tiles and East Branch<#ff0>>",
-         "{v_xyzzy}",
+         "<Use the secret magic word/command:<#ff0>> {v_xyzzy}",
          "<Visit Stealing Hill<#888>>",
          "<Escape Stealing Hill with the grail<#888>>",
          "<Get to Sky Floor<#0f0>>",
@@ -795,7 +795,7 @@ strings {
       )};
    spokes_left : dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
-   runes_desc : dynamic_string {( is_at("west_tiles") ? "Five runes: two v's, two geometric angle signs rotated 180 degrees, one v." : "Five runes: a caret, a straight line, two geometric angle signs, a straight line." )} ;
+   runes_desc : dynamic_string {( "Five orange runes stand out against the green grass: " + (is_at("west_tiles") ? "two v's, two number-sevens too wide at the top, one v." : " a caret, a straight vertical line, two geometric angle signs, another straight vertical line.") )} ;
 
    ## west tiles seeding for dynamic strings, starting north and going clockwise
    hub_w_plaster_man : string "A {cc_plaster_man} stands here. Perhaps there is something inside it." ;
@@ -4965,6 +4965,13 @@ on_command {
       : match "x big" {
          : set_sentence "x runes" ;
       }
+      : mask {
+         : match "x runes" {
+            : set_false "show_overlay" ;
+            : update_graphic "s_big_runes" ;
+            : set_true "show_overlay" ;
+         }
+      }
    }
    : if (is_carried("chalice_map")) {
       : match "x map;x chalice" {
@@ -5379,6 +5386,11 @@ assets {
       r_my_house : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgAD/gAAAAICAAIBAAACAgIDAwMD/AAAA/wD//wAAAP//AP8A///////lVppUAAAB20lEQVRYw+3WP07DMBQG8AeSJTMlQQKVqYWNkYF7ZMkBWJg5gjORK0Qg+QzsLHCiduxk8s95z6nTpMFOGPioiKjU5MdXPydwZw3PyojMRZqznNuvBNZ3N5l7gDgFwE1AhBm6GjThB4CeCuBIAfqjKQEIwNgAgapjAYjxAG5+NKKA6vTVZbZWQC5zKaUNYK9gDOD6WedpGCDVXi0KyOW+ILgFXH0+Nj8PNoCxGAI1OwBYDAcNyPkAkBSBzhTs5wMIVgJiPmIM/QCqAkgFQTmEueMpiPo3oroAUkExhsUQzjeGTQFYQbUR5fMBmAbERgOO18DN9/t9/frqAAQCOFkDcj5A0oZ7nIJ+ACAABm/HPgAMAfHQA4kPgKAA7g/Q+zxAlkC7CHwAjDGkG1Hxh96IjG/dJ8A8dZJogNcGwlf+Ur/SPwaAJNYAlsACAFb+53UYncPUeIxfALBWOqtFAGl7/Z37faADwNsxAWABkecxbLeBaiOwFJB6BuC9hz6aY10rR4Dw7fLiY1P+uu0CmO1etMpSevwH/AZQf70UAGboImwTwplxnA5onq8IACesDgLIm2u1M458KkDoacaocQDzuJ0KCNRgsPcjAF3BqQChJuYAsJ0GCJwBmgqsgB91Fdukz0PhzwAAAABJRU5ErkJggg==";
       o_my_house_shiny : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAANklEQVR4nG2NSQ4AIBDCwPj/L9eDUdSRG0uDAUVGwsu1hHpGu8ShQhtEBjfZE1ay/YvyeWr6AQmVHQmjMv6YAAAAAElFTkSuQmCC";
       o_my_house_bonus_flip : base64_png "iVBORw0KGgoAAAANSUhEUgAAABEAAAAQBAMAAAACH4lsAAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAPUlEQVQI133Lyw0AIAwC0G7gDizA/mt1AewnNsaDXPoSqNlkqVNyHIk/XTu9gsNFhhiHJYigZ5tVC6P5nWyofUyOEih6/wAAAABJRU5ErkJggg==";
+
+      # inter-room dynamic graphics
+      s_big_runes : dynamic_graphic {( is_at "east_branch" ? "s_big_runes_east" : "s_big_runes_west" )} ;
+      s_big_runes_east : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEX/gAAAwAA7v3XfAAAA8klEQVQ4y+XSQQ6CMBAF0BoWXfYIHIWjIeFicBOO0CULwsgM/YPfCOrahvyE77NCnSC65hqxeNitSHgBLwGQk9eNx3uQGwSBKTpoESdgahEEhsqBIAiM/QfQdWgGQRDoRzSjIE5AJwgC1YCmFwSBOKGpBPEM1qhvbk0UBIGUC1ijlCCwJD19A0lKMKjnApYkJQjMtd4Z8Hlh0CzXIDe6K3YpHxFoVwAfKAJTq2+mzTFQDOxsDPhAERjsdLU5BorAaP+PAZ8XAp1d2hzzQqC3TbQ55oVAZd/S5h7CbQ8C0X5Xm7CtPX4D2zHmL8HJM1ytPwEPSPdTt25HPIkAAAAASUVORK5CYII=";
+      s_big_runes_west : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEX/gAAAwAA7v3XfAAABHklEQVQ4y+WSwY2EMBAEfeLhp0NwKIQGiMQgE4fgJw9EH3b3GKM9aQM4tGqpTGkG2Hb4crl/JAQgM2bnfhgVPwV3X4yX4IH0XajxCBVNGICNJ3O5N38IK7DTQgvDKizlVy20MHQ6W2mhhaHT1IEWWhhWIZUXsZOB8Ramy3MM37mEYRXydAWOAS6FUMJ4Bo657wWGkMIxnpFjgFMhlBCPyDH3vcgQUjjjMXLMIwglhNyEQ/ESrpAn7inPwxBK8GninvJGDKE66ZP2lG/CEEoYNu0pX5UhlLDu2qOWpIadUPd0pSFKWJZ20krzEvZVD9KVhihhG2zPUxqihORtzyMQe2HvC2UoIQfbY4Uy7IXUF0poQv1fUl+ov4TcF0oI/AIq2z05VCLflQAAAABJRU5ErkJggg==";
 
       # final command stuff
       s_tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
