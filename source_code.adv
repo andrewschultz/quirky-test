@@ -975,7 +975,9 @@ strings {
    inv_plus_cease_purging : dynamic_string {( inv_cease_purging ? pip : "" )} ;
    inv_plus_racing_passions : dynamic_string {( inv_racing_passions ? pip : "" )} ;
 
+   # Easter Eggy stuff
    y17 : string "<seventeen<#ff0>>" ;
+   yp17 : string "Ah, so you're wondering what 17 is about. Well, I went to Hampshire College Summer Studies in Mathematics program long ago. They have an in-joke about a yellow pig and the number 17. I realized after the initial release that 17 appeared in two places: maximum bonus points and {pbr}.\nThey also have an aversion for pink pigs and the number 23, which is the maximum core score, but I'll spin that as \"23 is the bare minimum, but 17 shows you thought.\"\nAnd while I didn't go for a career in mathematics, the fun they had there left an impression: I wanted to do fun thinky stuff. {qt}, I hope, qualifies." ;
 
 }
 
@@ -2463,6 +2465,10 @@ locations {
       on_command {
          : match "l _" {
             : redescribe ;
+         }
+         : match "17 _;_ 17;seventeen _;_ seventeen" {
+            : print "{yp17}" ;
+            : done ;
          }
          : match "load _;save _;restart _;restore _;tstart _;tstop _" {
             : mask {
@@ -5286,6 +5292,9 @@ on_command {
    : gosub "inventory_arg_check" ;
    : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" {
       : print "{custom_unknown_verb_error}" ;
+   }
+   : match "17 _;_ 17;seventeen _;_ seventeen" {
+      : print "{yp17}" ;
    }
 }
 
