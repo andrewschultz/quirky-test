@@ -4798,12 +4798,14 @@ on_command {
          }
       }
    }
-   : if (!say_warn) {
-      : match "say _" {
-         : print "{note_once}if you figure a phrase, you don't need to <SAY<#0f0>> it explicitly, though it shouldn't hurt to include it." ;
-         : print "Just use the two words needed. The parser will understand." ;
+   : match "say _" {
+      : if (!say_warn) {
+         : print "{note_once}if you figure a phrase, using {v_say} will confuse {qt}'s parser, which only looks for the first two words. If you wish to talk to someone or something, use the generic {v_talk_cues} instead.\nOr you can hit the up-arrow, home and delete the first four letters to try saying or thinking a special phrase." ;
          : set_true "say_warn" ;
+         : done ;
       }
+      : print "{note_reminder}{v_say} confuses {qt}'s parser, so you may want to remove it and try again, or just {v_talk_cues}." ;
+      : done ;
    }
    : if (has_visited "plain_base" && !bonus_point_rare_plights) {
       : match "rare plights" {
