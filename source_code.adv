@@ -645,6 +645,8 @@ strings {
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
    ach_asterisk : dynamic_string {( !point_hi_mouse || note_partial_achievements ? " (*)" : "" )} ;
    bonus_yellow : dynamic_string {( "<" + max_bonus_score + "<#ff0>>" )} ;
+   pbr : dynamic_string {( talked_to_thor ? "rules in the Player's Bill of Rights" : "things to {v_ask} {thor_if_known} about" )} ;
+   thor_if_known : dynamic_string {( has_visited("plain_base") ? "Thor" : "an NPC you'll find" )} ;
 
    # basic diagnostic verb abbreviations
    vd_bon : string "<BONUS<#f80>>" ;
@@ -3924,7 +3926,7 @@ subroutines {
       : print "{vm_links} lists relevant links, and {vm_versions} lists summaries of versions." ;
       : if (!ever_about) {
          : print "{note_once}if you want the mechanic for point-scoring commands spoiled or explained, {vm_pts} will do so." ;
-         : print {( "{note_once}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and " + (has_visited("plain_base") ? "Thor" : "an NPC you'll find") + ", it's my hope {qt} can be enjoyed just as a game." )} ;
+         : print "{note_once}finally, while {qt} has a lot of meta-commentary with footnotes (once you've won) and {thor_if_known}, it's my hope {qt} can be enjoyed just as a game." ;
          : set_true "ever_about" ;
       }
       : if (!tutorial_1_about_done) {
