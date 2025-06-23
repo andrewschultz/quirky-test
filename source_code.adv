@@ -388,7 +388,7 @@ collections {
       items = [
          "Meta-commands such as {vm_about}, {vm_credits} and {vm_verbs} give you general information that would break up the flow of an introduction.",
          "{v_x_me} is a good in-world starter command to tell you about yourself.",
-         "Shorthand such as {vd_i} to take inventory and <X<#0f0>> to <EXAMINE<#0f0>> help simplify what you need to type.",
+         "Shorthand such as {vd_i} to take inventory and {v_x} to <EXAMINE<#0f0>> help simplify what you need to type.",
          "Senses can provide clues. In this case, {qt} uses {v_listen_hear}, which implies {v_talk} or, as parsers allow shorthand for convenience, {v_t0} works here too. Note that, again for convenience, the ungrammatical {v_talk} SOMEONE works. No need for TO.",
          "You can often try going any direction (up, down, in, out, or the eight compass directions) if the room description is unclear. Also, shorthand such as <W<#0f0>> works in place of <GO WEST<#0f0>>.",
          "{qt}'s point-scoring commands are unusual for a parser game, where guess-the-verb is frowned on. However, the commands are all similar to objects or people you run across."
@@ -740,6 +740,7 @@ strings {
    v_talk : string "<TALK<#0f0>>" ;
    v_t0 : string "<T<#0f0>>" ;
    v_talk_cues : string "{v_talk} or {v_t0}" ;
+   v_x : string "<X<#0f0>>" ;
    v_x_me : string "<X ME<#0f0>>" ;
    v_xyzzy : string "<XYZZY<#f80>>" ;
 
@@ -2067,7 +2068,7 @@ locations {
             : print "They seem quite involved and focused, bonded by the excitement." ;
          }
       } : else {
-         : match "x boring; x way" {
+         : match "x boring;x way" {
             : print "Pleasantly uninteresting, compared to what was here." ;
          }
       }
@@ -2935,7 +2936,7 @@ subroutines {
       : else_if (tempint == 9) {
          : cycle key = "rule_9" predictable_order = "true" skip_interval = "0" {
          : print "\"The ninth rule in Graham Nelson's Player's Bill of Rights is <to be allowed to try reasonable synonyms<#f88>>.\"" ;
-         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Conventions have settled on I for inventory and X for examine, and one- or two-letter abbreviations for directions. Many games use custom abbreviations for verbs they have the player use a lot.\nMore commonly, Inform allows pronouns as shorthand (<TAKE BOTTLE/X IT<#0f0>>, and <MAN<#0f0>> might be a synonym for <SORCERER<#0f0>> and <WOMAN<#0f0>> for <SORCERESS<#0f0>>, and so forth. <NEWS<#0f0>> and <PAPER<#0f0>> could cue <NEWSPAPER<#0f0>>. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
+         : print "\"This should apply to verbs and nouns. Parser command abbreviations over the years have made this easier. Conventions have settled on {vd_i} for inventory and {v_x} for examine, and one- or two-letter abbreviations for directions. Many games use custom abbreviations for verbs they have the player use a lot. Adventuron accepts singular or plural versions of a noun.\n\"Inform allows pronouns as shorthand (<TAKE BOTTLE/X IT<#0f0>>, and <MAN<#0f0>> might be a synonym for <SORCERER<#0f0>> and <WOMAN<#0f0>> for <SORCERESS<#0f0>>, and so forth. <NEWS<#0f0>> and <PAPER<#0f0>> could cue <NEWSPAPER<#0f0>>. It's fun to be able to type things out if you want, but it shouldn't be a chore.\"" ;
          : print "\"There are a few synonyms in {qt}, though the items are dissimilar enough that not much is needed. {qt} also short-circuits this problem by not making you use many items explicitly.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -4077,7 +4078,7 @@ subroutines {
       }
       : print "While {qt} requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." ;
       : print "{qt} uses all eight planar directions, abbreviated <N S E W NW NE SE SW<#0f0>> (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out_b} leaves if there is only one exit." ;
-      : print "You can {v_take} an item, but there is no need to {v_drop} it. You can also <X<#0f0>> it, which is short for <EXAMINE<#0f0>>." ;
+      : print "You can {v_take} an item, but there is no need to {v_drop} it. You can also {v_x} it, which is short for <EXAMINE<#0f0>>." ;
       : print "You can {v_talk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : if (talked_to_thor) {
          : print "You can also {v_ask} Thor about {v_rule}s (1-17) with 0 checking for what you haven't asked about." ;
@@ -4796,7 +4797,7 @@ on_pre_command {
    : if (!examine_warn) {
       : match "examine *;look *" {
          : if (original "verb" == "examine") {
-            : print "{note_once}to save keystrokes, you only need to type <X<#0f0>> (noun) to examine." ;
+            : print "{note_once}to save keystrokes, you only need to type {v_x} (noun) to examine." ;
             : gosub "long_words_note" ;
             : set_true "examine_warn" ;
          }
@@ -5324,7 +5325,6 @@ on_command {
       : print "{custom_unknown_verb_error}" ;
    }
    : gosub "yellow_pig_blather" ;
-   }
 }
 
 # end on_command
