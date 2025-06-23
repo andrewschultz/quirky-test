@@ -4255,7 +4255,11 @@ subroutines {
          }
       }
       : else {
-         : print "You haven't unlocked the {achievement_cnnc} achievement yet.{ach_asterisk}" ;
+         : if (bonus_score_start == max_bonus_score) {
+            : print "You're locked into the {achievement_cnnc} achievement, but you can't officially earn it until you've won again." ;
+         } : else {
+            : print "You haven't unlocked the {achievement_cnnc} achievement yet.{ach_asterisk}" ;
+         }
       }
       : if (!all_orange_achievements) {
          : set_false "achieve_taat" ;
