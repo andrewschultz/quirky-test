@@ -117,6 +117,7 @@ booleans {
    history_footnote_found : boolean "false" scope="survivor" ; # I could look up footnote #8 (which will probably remain static)
    plaster_man_talked : boolean "false" scope="survivor" ;
    reveal_this_footnote : boolean "false" ; # this is the only footnote variable that might change
+   footnote_complete_nag : boolean "false" ;
 
    ## verb usage notifications (only need noting once if you replay)
    drop_referenced : boolean "false" scope="survivor" ;
@@ -3061,7 +3062,24 @@ subroutines {
          : return ;
       }
    }
+   footnote_complete_check : subroutine {
+      : if (footnote_complete_nag) {
+         : return ;
+      }
+      : set_integer var = "tempint" "0";
+      : collection_iterate "footnote_finding_list" {
+         : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
+         : if (tempint2 == 0) {
+            : return ;
+         }
+         : increment "tempint" ;
+      }
+      : print {( "{note_once}you've found all the footnotes. Congratulations! You no longer need this for reference, but <F 0<#f80>> will revert to its regular behavior after this so you can review all you found. " + (achieve_tnnt ? "As you may've seen, this netted you an achievement, too." : "You've also earned an achievement.") )} ;
+      : set_true "footnote_complete_nag" ;
+      : done ;
+   }
    footnote_lister : subroutine {
+      : gosub "footnote_complete_check" ;
       : print "{bflist}" ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
