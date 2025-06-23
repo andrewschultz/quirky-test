@@ -305,8 +305,13 @@ booleans {
    retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
    bonus_this_playthrough : dynamic_boolean {( bonus_score > bonus_score_start )} ;
 
-   ## achievments
-   all_jump_achievements : dynamic_boolean {( achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
+   ## achievements
+   all_red_achievements : dynamic_boolean {( achieve_haih || achieve_mttm || achieve_tyyt || achieve_gmmg )} ;
+   all_orange_achievements : dynamic_boolean {( achieve_tnnt || achieve_cddc_0pts || achieve_pcpccp || achieve_roer || achieve_cnnc )} ;
+   all_yellow_achievements : dynamic_boolean {( achieve_qwwq || achieve_kssn )} ; # yeah yeah yeah grammatically it should be both but I want consistent variable names
+   all_green_achievements : dynamic_boolean {( achieve_ssss || achieve_tnnt || achieve_tnnt || achieve_kssn )} ;
+   all_blue_achievements : dynamic_boolean {( achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
+   all_purple_achievements : dynamic_boolean {( achieve_hbbh || achieve_nbbn )} ;
 
    ## inventory/bonus point stuff
    inv_so_long : dynamic_boolean {( is_carried "low_song" && bonus_point_so_long )} ;
@@ -3444,7 +3449,7 @@ subroutines {
       : set_integer var="tempint" {( int("" + original "noun1") )} ;
    }
    list_jump_commands : subroutine {
-      : if (all_jump_achievements || jump_commands_notified) {
+      : if (all_blue_achievements || jump_commands_notified) {
          : return ;
       }
       : if ((!has_visited("plain_base")) || (!has_visited("west_tiles")) || (!has_visited("east_branch")) || (!has_visited("stealing_hill"))) {
@@ -4164,7 +4169,6 @@ subroutines {
          : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, {achievement_tyyt}, and {achievement_gmmg}." ;
          : return ;
       }
-      : set_false "achieve_taat" ;
       : if (achieve_haih) {
          : print "(Already got the {achievement_haih} achievement for taking inventory with the maximum number of items possible)";
       }
@@ -4201,6 +4205,9 @@ subroutines {
       } : else {
          : print "You haven't unlocked the {achievement_gmmg} achievement yet. ({found_meta_verbs_count}/{max_meta_verbs_count})" ;
       }
+      : if (!all_red_achievements) {
+         : set_false "achieve_taat" ;
+      }
    }
 
    track_achievements_2_orange : subroutine {
@@ -4208,7 +4215,6 @@ subroutines {
          : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_cddc_0pts},  {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
          : return ;
       }
-      : set_false "achieve_taat" ;
       : if (achieve_tnnt) {
          : print "You already unlocked the {achievement_tnnt} achievement for uncovering all the footnotes available." ;
       } : else {
@@ -4251,6 +4257,9 @@ subroutines {
       : else {
          : print "You haven't unlocked the {achievement_cnnc} achievement yet.{ach_asterisk}" ;
       }
+      : if (!all_orange_achievements) {
+         : set_false "achieve_taat" ;
+      }
    }
 
    track_achievements_3_yellow : subroutine {
@@ -4258,9 +4267,11 @@ subroutines {
          : print "You already got both achievements for {v_ask}ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
          : return ;
       }
-      : set_false "achieve_taat" ;
       : gosub "track_achievements_qwwq" ;
       : gosub "track_achievements_kssn" ;
+      : if (!all_yellow_achievements) {
+         : set_false "achieve_taat" ;
+      }
    }
 
    track_achievements_4_green : subroutine {
@@ -4268,7 +4279,6 @@ subroutines {
          : print "You got all four achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, {achievement_rssr}, and {achievement_srrs}." ;
          : return ;
       }
-      : set_false "achieve_taat" ;
       : if (achieve_ssss) {
          : print "(Already got the {achievement_ssss} achievement for not returning to Thor until you got the grail)" ;
       } : else_if (achieve_ssss_pre) {
@@ -4311,14 +4321,16 @@ subroutines {
             : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
          }
       }
+      : if (!all_green_achievements) {
+         : set_false "achieve_taat" ;
+      }
    }
 
    track_achievements_5_blue : subroutine {
-      : if (all_jump_achievements) {
+      : if (all_blue_achievements) {
          : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc_jump}." ;
          : return ;
       }
-      : set_false "achieve_taat" ;
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;
       } : else_if (achieve_tmmt_pre) {
@@ -4344,6 +4356,9 @@ subroutines {
       } : else {
             : print "You haven't unlocked the {achievement_cddc_jump} achievement yet." ;
       }
+      : if (!all_blue_achievements) {
+         : set_false "achieve_taat" ;
+      }
    }
 
    track_achievements_6_purple : subroutine {
@@ -4351,7 +4366,6 @@ subroutines {
          : print "You already got both examining achievements: {achievement_hbbh} for beer and {achievement_nbbn} for books." ;
          : return ;
       }
-      : set_false "achieve_taat" ;
       : if (achieve_hbbh) {
          : print "(Already got the {achievement_hbbh} achievement for noting beer around Thor)" ;
       } : else_if (achieve_hbbh_pre) {
@@ -4367,6 +4381,9 @@ subroutines {
          : set_true "achieve_nbbn" ;
       } : else {
          : print "You haven't unlocked the {achievement_nbbn} achievement yet." ;
+      }
+      : if (!all_purple_achievements) {
+         : set_false "achieve_taat" ;
       }
    }
 
