@@ -261,9 +261,7 @@ Oh no! A hissing mouse!
 
 > N
 
-Glee simmers. But first--let's get a bonus point! Looking back on this quirky test, you realize it's been a ...
-
-> TURKEY QUEST (1B)
+Glee simmers.
 
 > SEE GLIMMERS (1)
 
@@ -301,7 +299,7 @@ shell fort -+           |             |
   warring  -+
     bay
 
-So that's how to get through! Notice you didn't have any accomplishments. I did this deliberately, as (spoiler) getting through quickly is an accomplishment, as is going through without scoring bonus points any one time. Below the spacing, I discuss how to get all the achievements.
+So that's how to get through! Notice you didn't have any accomplishments, except for completing things without scoring a bonus point. I did this deliberately, as (spoiler) getting through quickly is an accomplishment, as is going through without scoring bonus points any one time. Below the spacing, I discuss how to get all the bonus points and footnotes. Achievements are in another document, since they require a few times through, and you probably need to have the general path nailed down.
 
 If you don't want things spoiled, but you want a clue, use BO to see bonus points remaining and F 0 to see footnotes remaining.
 
@@ -340,7 +338,9 @@ If you don't want things spoiled, but you want a clue, use BO to see bonus point
 
 
 
-Getting all the footnotes and getting all the bonus points are separate achievements. Let's have an abridged run-through that builds on the main walkthrough and knocks out both. Footnotes are roughly arranged as you'd find them, with east hub spokes second-last and west hub spokes last before the endgame, clockwise from north.
+Getting all the footnotes and getting all the bonus points are separate achievements. Let's have an abridged run-through that builds on the main walkthrough and knocks out both. Footnotes and bonus points are roughly arranged by room in distance from the start: lameness (red,) burst face (red,) first base (red,) plain base (orange,) the two hubs (yellow,) East Branch spokes (green,) West Tiles spokes (blue,) Stealing Hill (grey,) and the endgame. The first bonus point is colored white, as it can be achieved at any time. (Yes, the first footnote can, too, but it's also just repeating something you have to do right away.) Note the bonus points are not quite achieved in order, as we get 8-14 before 7.
+
+If you don't get everything the first time through, you can also use CHEATLEEP YES or LEETCHEAP YES to allow a leap past areas where you discovered extra content.
 
 > TURKEY QUEST (B1)
 > X ME
@@ -411,15 +411,15 @@ You can get this footnote before and after the core point here.
 
 Now about that fast vision.
 
-> VAST FISHIN (B11)
+> VAST FISSION (B11)
 
-Vast Fission or Fishing also works.
+Vast Fishin or Fishing also works.
 
 > SW
 > E (F12)
 > BORING WAY (1)
 
-The peace, surging, may inspire you to say stuff.
+The peace, surging, may inspire you to a heartfelt plea.
 
 > CEASE PURGING (B12)
 
@@ -465,7 +465,9 @@ Combine the west runes (top) and the east runes (bottom) to get ...
 
 > XYZZY (F7)
 
-This can be done at any time, but it's not clued until you examine both runes. Now you will get footnote 9 next time you visit Thor, but there's no rush.
+This can be done at any time, but it's not clued until you examine both runes. Now you will get footnote 9 next time you visit Thor, but there's no rush. In the meantime, West Tiles indicates ...
+
+> TEST WILES (B7)
 
 > E
 > FELL SHORT (1)
@@ -478,9 +480,11 @@ Oh my! Pacing rations! So boring, and yet ...
 > S
 > TAKE CRACKERS (1)
 
-Brief footnote detour.
+Brief footnote detour. With item-specific graphics!
 
 > X CRACKERS (F15)
+
+From here on, all points scored depend on having solved two other puzzles.
 
 > N
 > SW
@@ -497,7 +501,7 @@ Brief footnote detour.
 > S
 > NE
 
-And now for another footnote!
+And now for another footnote! While this references the goon and the field, you need to examine the Malice Chap, specifically.
 
 > X MALICE CHAP (F14)
 
@@ -532,5 +536,11 @@ Wait, what's that noise?
 
 > LISTEN
 > CHEERY TIMES (B17)
+
+One last footnote before winning, to complete the set.
+
+> X BOOK (F17)
+
+There are seventeen total. Keep examining to see all the titles, or just ...
 
 > HI MOUSE (1)

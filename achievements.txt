@@ -119,6 +119,7 @@ Try no dependent puzzles before you're ready. For instance, if you try GRIM TUNE
 ** Re-Sight-See? Riiight
 
 Take the minimum moves between locations. So go northeast, then solve things clockwise from north, then up and west, and solve things clockwise from east. Then up to Stealing Hill for the grail.
+
 ** Second Revvin' Reckoned? Seven!
 
 Do all seven dependent puzzles in the post-hub area out of order. (Plaster Man, Malice Chap, Gift Shoals, Grunters' Hill, Yellow Field, Trim Goon, Stealing Hill). Note you can solve some non-dependent puzzles first, just not any two that work together.
@@ -158,3 +159,416 @@ There's implied beer with Thor's picture and with the description. You may also 
 ** Neat-Book-Beat Nook
 
 X SHELF until you are told it's the last one. (There are seventeen books as of the first release.)
+
+==============================================================
+
+People who like to optimize things may wonder how many times through you need. I think the answer is two, but you have to be very careful.
+
+Achievements not affected by walkthrough (can/should be done first so your mind is clear for the second time through)
+** Too Yacky: You, Tacky (talk in first base, plain base, W:W/S/N/NE, E:NE/E/W/NW)
+** Get a Major Meta-Gauger
+** Player-Can-Pair-Clan Care Plan
+** Hi! Beer By Here?
+** Neat-Book-Beat Nook
+
+Achievements not affected by walkthrough but mutually exclusive:
+** More Than Thor, Man (don't talk to Thor at all--do this 2nd time through)
+** Quell-Worrying-Well Querying
+** Knowin' Stuff, Stowin' 'Nuff (talk to Thor about everything)
+
+Must be done 2nd time but otherwise doesn't affect other achievements:
+** Totes Need Notes Teed (details in walkthrough.txt -- the key thing here is remembering to examine stuff before it disappears)
+
+Special order:
+** Hi, All I Haul
+
+Bonus point stuff (once through with all, once through with none, no conflicts otherwise):
+** Cueing Direct Doing: Correct
+** Reach Out Each Route
+
+Mutually exclusive (no THINK, all THINK):
+** Great Style, Straight Guile
+** Second Revvin' Reckoned? Seven!
+
+Efficiency and warping (can only do one or the other):
+* Efficiency
+** So Slick! Slow? Sick! (get grail without revisiting Thor)
+** Re-Sight-See? Riiight (this is not achievable if you use a warp command)
+* Warping
+** Throw Me Mo': Three
+** Chump, Joke Jump? Choke
+** Did-Buzzin'-Bid? Dozen
+** Cousin, Draft Dozen-Craft
+
+So one plan to get things done in two runs (and avoid tricky oversights)
+
+1. be very efficient the first time through. Get all the bonus points. Do not do any commands out of order. Do not visit a spoke more than once. (sweep east hub then west) Get through all the independent achievements. Don't forget to X BEER and X SHELF for one cycle. ASK 0 around Thor to make sure you got everything. TALK everywhere, before scoring a point. While you can ASK or TALK the second time through, there's enough to juggle there that you may miss stuff.
+
+2. the second time through, be sure to get all the footnotes. This requires examining some entities before getting rid of them. (#3 is also tricky as you must go east in Burst Face and not FIRST BASE right away! Also, read the bookshelf again for #17.) Use all the jump commands before getting the grail, and be sure to try the seven dependent point-scoring hub commands first. Also, do not do a dependent point-scoring command until you have gotten all the independent ones in the hub.
+
+This is all possible in theory. But when I tried it I always overlooked something. However, I'll assume that you get all bonus points first time through and get So Slick/Re-Sight-See as well. (Not too bad, clockwise from north in east, clockwise from east in west.) And I'll list what to do once you reach Thor. Perhaps if I revise this document one day I can give a proof of how to get through in two playthroughs.
+
+>NW
+Malice Chap, Master Plan, Fellow Yield, Shift Goals, Hunters Grill
+>U
+Healing Still
+>E
+Grim Tune
+
+Now we do the warps -- well, 3 of the 4. Then we get all the independent hub points, then INVENTORY. Then get the rest, including the grail. ST when back at Plain Base.
+
+This is the short version. The long version is below. Note that, on trip 1, you can't verify you got achievements with ACH, but they will be recorded. Bonus points (1st trip) and footnotes (2nd) are marked, as well as places you talk for Too Yacky.
+
+=================================TRIP 1
+> TURKEY QUEST (B1)
+> X ME
+> X TASK
+> LISTEN
+> W
+
+> ABOUT
+> LINKS
+> META
+> OPTIONS
+> POINTS
+> THANKS
+> VERBS
+> VERSIONS (achieved Get a Major Meta-Gauger)
+
+> FIRST BASE
+
+> T (yacky 1/11)
+
+> LISTEN
+> SHUSH LOUT (B2)
+> BRO POOR (1)
+> RARE PLIGHTS (B3)
+> PLAYER RIGHTS (1)
+> BANE PLACE (B4)
+> THEORY BORE (B5)
+> DEATH SENTENCE (B6)
+
+> X BEER (achieved Hi! Beer By Here?)
+
+> T (yacky 2/11)
+
+> ASK 1
+> ASK 1
+> ASK 1
+> ASK 2
+> ASK 2
+> ASK 2
+> ASK 3
+> ASK 3
+> ASK 3
+> ASK 4
+> ASK 4
+> ASK 4
+> ASK 5
+> ASK 5
+> ASK 5
+> ASK 6
+> ASK 6
+> ASK 6
+> ASK 7
+> ASK 7
+> ASK 7
+> ASK 8
+> ASK 8
+> ASK 8
+> ASK 9
+> ASK 9
+> ASK 9
+> ASK 10
+> ASK 10
+> ASK 10
+> ASK 11
+> ASK 11
+> ASK 11
+> ASK 12
+> ASK 12
+> ASK 12
+> ASK 13
+> ASK 13
+> ASK 13
+> ASK 14
+> ASK 14
+> ASK 14
+> ASK 15
+> ASK 15
+> ASK 15
+> ASK 16
+> ASK 16
+> ASK 16
+> ASK 17 (achieved Quell-Worrying-Well Querying)
+> ASK 17
+> ASK 17 (achieved Knowin' Stuff, Stowin' 'Nuff)
+
+> NE
+> BEAST RANCH (B8)
+> RIG BOONS (B9)
+> N
+> FLY SCORE (1)
+> SO LONG (B10)
+> S
+> NE
+
+> T (yacky 3/11)
+
+> BENDING TRUTH (1)
+> VAST FISSION (B11)
+> SW
+> E
+
+> T (yacky 4/11)
+
+> BORING WAY (1)
+> CEASE PURGING (B12)
+> W
+> SE
+> DIRT HOME (1)
+
+Doesn't matter which you do first below.
+
+> TILE PRICKS
+> PILE TRICKS (achieved Player-Can-Pair-Clan Care Plan)
+
+> NW
+> S
+> POURING RAIN (1)
+> SANE ROLE (B13)
+> N
+> W
+
+> T (yacky 5/11)
+
+> FUNNY MOUNTAIN (1)
+> NO GREED (B14)
+> E
+> NW
+
+> T (yacky 6/11)
+
+> GRIM TUNE (1)
+> SE
+> U
+> W
+> TEST WILES (B7)
+> E
+> FELL SHORT (1)
+> RACING PASSIONS (B15)
+> W
+> S
+
+> T (yacky 7/11)
+
+> TAKE CRACKERS (1)
+> N
+> SW
+> SHIFT GOALS (1)
+> NE
+> W
+
+> T (yacky 8/11)
+
+> HUNTERS GRILL (1)
+> E
+> NW
+
+> T (yacky 9/11)
+
+> FELLOW YIELD (1)
+> SE
+> N
+
+> T (yacky 10/11)
+
+> MASTER PLAN (1)
+> S
+> NE
+
+> T (yacky 11/11) (achieved Too Yacky: You, Tacky)
+
+> CHALICE MAP (1)
+> SW
+> U
+> HEALING STILL (1)
+> W
+> SE
+> GRAVEL TRAIL (1)
+> N
+> MISSING HOUSE (1)
+> N
+> I STAY (B16)
+> SEE GLIMMERS (1)
+> LISTEN
+> CHEERY TIMES (B17) (achieved Reach Out Each Route -- note the chimes are actually outside, so this counts as one point in each room)
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK
+> X BOOK (achieved Neat-Book-Beat Nook)
+
+> HI MOUSE (1)
+
+=================================
+
+This next time, you'll automatically get Cueing Direct Doing: Correct, since you're unable to get any bonus points this time around, though it won't officially register until the end. Note you don't have to read any of the footnotes to get the footnote achievement.
+
+> X ME
+> X ME (F1)
+> X TASK
+> LISTEN
+> W (F2)
+> E (F3)
+> FIRST BASE
+> X BOOR (F4)
+> BRO POOR
+> PLAYER RIGHTS (F5)
+
+Okay, we branch from the previous walkthrough here. First, we get everything in the wrong order...
+
+> NW
+
+Examining the runes isn't necessary for footnote 7, but it may help show you what's going on.
+
+> X RUNES
+
+> NW
+> FELLOW YIELD
+> SE
+> N
+> X MAN (F13)
+> MASTER PLAN
+> S
+> NE
+> X CHAP (F14)
+> CHALICE MAP
+> SW
+> SW
+> SHIFT GOALS
+> NE
+> W
+> HUNTERS GRILL
+> E
+
+Now we can get two independent items, the ones that solve the Grunters' Hill. This saves a bit of time, since otherwise we'd have to try GRIM TUNE before it works, then come back west, then take inventory before using GRIM TUNE successfully.
+
+> E
+> FELL SHORT
+> W
+> S
+> TAKE CRACKERS
+> X CRACKERS (F15)
+> N
+
+Now we can sweep the east side.
+
+> U (F8)
+> HEALING STILL
+> E (F6)
+> X RUNES
+> XYZZY (F7)
+> NW
+> GRIM TUNE (achieved Second Revvin' Reckoned? Seven!)
+
+If you type ACH, you'll notice achievements are lumped together by type.
+
+Now, we need to get the remaining independent items.
+
+> SE
+> N (F10)
+> FLY SCORE
+> S
+> NE
+> X BOOTH (F11)
+> BENDING TRUTH
+> SW
+> E (F12)
+> BORING WAY
+> W
+> SE
+> DIRT HOME
+> NW
+> S
+> POURING RAIN
+> N
+> W
+> FUNNY MOUNTAIN
+> I (achieved Hi, All I Haul)
+
+Now we can clear everything else out. But wait! First, let's get the jump achievements! Well, three of them.
+
+> WT (achieved Throw Me Mo': Three)
+
+The point is that some jumps let you go three squares, some two. A spoke from the opposite hub always does the trick.
+
+You can start anywhere for the next bit.
+
+> SH
+> PB
+> SH
+> EB
+> PB
+> WT
+> PB
+> EB
+> SH
+> WT
+> EB
+> WT (achieved Did-Buzzin'-Bid? Dozen) (achieved Cousin, Draft Dozen-Craft)
+
+Back where you started, but with two more achievements under your belt.
+
+> NW
+> TRIM GOON
+> SE
+> U
+> W
+> SW
+> SHIFT GOALS
+> NE
+> W
+> HUNTERS GRILL
+> E
+> NW
+> FELLOW YIELD
+> SE
+> N
+> MASTER PLAN
+> S
+> NE
+> CHALICE MAP
+> SW
+> U
+> HEALING STILL
+> W (F9)
+
+One more jump achievement to get. This one is unwise, but the game catches you.
+
+> SH (achieved Chump, Joke Jump? Choke)
+
+Nope, you can't walk or jump back to Stealing Hill.
+
+> SE
+> GRAVEL TRAIL
+> N
+> X MOUSE (F16)
+> MISSING HOUSE
+> N
+> X BOOK (F17)
+> SEE GLIMMERS
+> HI MOUSE (achieved Cueing Direct Doing: Correct) (achieved More Than Thor, Man)
+
