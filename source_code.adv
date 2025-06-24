@@ -4611,12 +4611,13 @@ themes {
       system_messages {
 
    i_cant_do_that = That's a valid command, but not right here and now.
+   not_present = You can't see ${entity} here.
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
    invalid_choice                                 = {yn_or_12}
    post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
    inventory_list_empty = Nothing (yet)
-   inventory_list_header = Stuff you've acquired:\s
+   inventory_list_header = In your {pssp}:\s
    exit_list_header_concise = {exit_or_out}
    you_cant_go_that_direction                     = {exitserr}
    unknown_verb                                   = {custom_unknown_verb_error}
