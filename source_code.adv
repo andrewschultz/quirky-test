@@ -79,9 +79,10 @@ booleans {
    note_partial_achievements : boolean "false" scope="survivor" ;
    spoke_out_note : boolean "false" scope="survivor" ;
    room_change_noted : boolean "false" scope="survivor" ;
-   thor_asked_once : boolean "false" scope = "survivor" ;
+   thor_asked_once : boolean "false" scope="survivor" ;
    read_bookshelf_this_time : boolean "false" ;
-   pig_drawing_credits : boolean "false" scope = "survivor" ;
+   pig_drawing_credits : boolean "false" scope="survivor" ;
+   big_inventory_this_time : boolean "false" ; # no survivor scope since I want to nag the player for the achievement
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -4760,8 +4761,12 @@ on_tick {
    : if (in_tutorial) {
       : gosub "tutorial_progress" ;
    }
-   : if (!inventory_incorporeal) {
-      : match "i _" {
+   : match "i _" {
+      : if (!achieve_haih && !big_inventory_this_time && carried() >=5 && carried() != 9) {
+         : print "Boy! You're carrying a lot, but the {pssp} is holding up well. You idly wonder if you can test its strength further." ;
+         : set_true "big_inventory_this_time" ;
+      }
+      : if (!inventory_incorporeal) {
          : if (is_carried("low_song") || is_carried("confidence") || is_carried("focus") || is_carried("no_greed") || is_carried("fast_vision") || is_carried("rain_soul") || is_carried("peace_surging")) {
             : print "{note_once}items listed in <GREY<#888>> are abstract moods or feelings that will automatically help you overcome obstacles when the time comes. You can manipulate some of them beyond this, if you're clever enough, but it's not necessary to win {qt}." ;
             : set_true "inventory_incorporeal" ;
