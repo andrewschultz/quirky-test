@@ -250,6 +250,7 @@ booleans {
    achieve_srrs : boolean "false" scope="survivor" ;
 
    ## blues
+   achieve_bwwb : boolean "false" scope="survivor" ;
    achieve_cjjc : boolean "false" scope="survivor" ;
    achieve_cjjc_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
@@ -310,7 +311,7 @@ booleans {
    all_orange_achievements : dynamic_boolean {( achieve_tnnt || achieve_cddc_0pts || achieve_pcpccp || achieve_roer || achieve_cnnc )} ;
    all_yellow_achievements : dynamic_boolean {( achieve_qwwq || achieve_kssn )} ; # yeah yeah yeah grammatically it should be both but I want consistent variable names
    all_green_achievements : dynamic_boolean {( achieve_ssss || achieve_tnnt || achieve_tnnt || achieve_kssn )} ;
-   all_blue_achievements : dynamic_boolean {( achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
+   all_blue_achievements : dynamic_boolean {( achieve_bwwb && achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
    all_purple_achievements : dynamic_boolean {( achieve_hbbh || achieve_nbbn )} ;
 
    ## inventory/bonus point stuff
@@ -958,6 +959,7 @@ strings {
    achievement_srrs : string "<Second Revvin' Reckoned? Seven<#8f8>>" ;
 
    ## blue = abusing the warp command
+   achievement_bwwb : string "<Balk \"Why? Walk By!\"<#00f>>" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#00f>>" ;
    achievement_cjjc : string "<Chump, Joke Jump? Choke<#00f>>" ;
    achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#00f>>" ;
@@ -4332,8 +4334,16 @@ subroutines {
 
    track_achievements_5_blue : subroutine {
       : if (all_blue_achievements) {
-         : print "You got all four achievements that use the warp commands: {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc_jump}." ;
+         : print "You got all five achievements that use the warp commands: {achievement_bwwb}, {achievement_tmmt}, {achievement_cjjc}, {achievement_dbbd}, and {achievement_cddc_jump}." ;
          : return ;
+      }
+      : if (achieve_bwwb) {
+         : print "(Already got the {achievement_bwwb} achievement for using no jump commands)" ;
+      } : else_if (!ever_jump) {
+         : print "For not using a jump command, you win the {achievement_bwwb} achievement!" ;
+         : set_true "achieve_bwwb" ;
+      } : else {
+         : print "You haven't unlocked the {achievement_bwwb} achievement yet." ;
       }
       : if (achieve_tmmt) {
          : print "(Already got the {achievement_tmmt} achievement for a three-room jump)" ;

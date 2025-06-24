@@ -126,6 +126,10 @@ Do all seven dependent puzzles in the post-hub area out of order. (Plaster Man, 
 
 * BLUE ACHIEVEMENTS (JUMP/WARP RELATED)
 
+** Balk "Why? Walk By!"
+
+Don't use any of the four jump commands.
+
 ** Throw Me Mo': Three
 
 Warp three rooms over. There are 14 ways to do this: From a west hub room to East Branch, or an east hub room to West Branch.
@@ -191,10 +195,11 @@ Mutually exclusive (no THINK, all THINK):
 ** Second Revvin' Reckoned? Seven!
 
 Efficiency and warping (can only do one or the other):
-* Efficiency
+* Efficiency / no jumps
 ** So Slick! Slow? Sick! (get grail without revisiting Thor)
 ** Re-Sight-See? Riiight (this is not achievable if you use a warp command)
-* Warping
+** Balk \"Why? Walk By!"
+* Warping / jumps
 ** Throw Me Mo': Three
 ** Chump, Joke Jump? Choke
 ** Did-Buzzin'-Bid? Dozen
