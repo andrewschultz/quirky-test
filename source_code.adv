@@ -512,7 +512,7 @@ collections {
       "I originally based the hub names on the ease of finding spoonerisms. Then I changed the hub names to signs in Plain Base. You may've noticed that everything in West Tiles (formerly Quickie Trips) requires just switching leading letters, while East Branch (formerly Tricky Quips) requires both switching leading letters and changing letters after.\nAfter designing everything to decide which puzzles depended on which others, I also realized that five of West Tiles's puzzles depended on other puzzles, while only one of East Branch did. But I didn't want to uproot a whole game plan just to bring different puzzles together. So I left the quickie trips to be tricky quips in their own way and vice versa. Which actually worked out okay because East Branch has more bonus points (meant to be hard) than West Tiles.\nAlso, recycling the names as signs helped fill the whole graphic for Plain Base.",
       "{v_xyzzy} is a sort of in-joke for parser players and programmers. Some love it and some hate it. <PLUGH<#f80>> and  <PLOVER<#f80>> are less common. All summoned a hollow voice saying \"FOOL!\" in the original Adventure. <YOHO<#f80>> is another one.\nI didn't want this footnote to be just inside knowledge, though, so I put the runes in as a puzzle.",
       "I wanted to show the reader some non-reciprocal directions but not have them there just because. The original hub maps were west and east of Thor, and the passage back was south. The hill always had non-reciprocal directions, and it was simpler just to have the side-hubs' exits be diagonal instead of bendy.",
-      "Originally, this was called Fate Hill, which works semantically but is too abstract. It sounds wobbly, too. But still, the temporary name did its job. It lampshaded that this was an important place to be, but I think the location and new name do this. However, one side result of Fate Hill was giving the hill facial expressions, which made me smile, at least.",
+      "Originally, Stealing Hill was called Fate Hill, which works semantically but is too abstract. It sounds wobbly, too, but the temporary name did its job. It lampshaded that it was an important place to be, and it presented the hill as an antagonist, with facial expressions and everything. This might not have happened if I'd gone to Stealing Hill right away.",
       "This was originally the scaring floor, with a flaring score. But it was one of those ideas that felt intermediary. I put my spoonerism finder through both FL/SC and FL/SK flips. Sky floor seems more poetic, and I was worried about the answer being slang, but it really was a short enough word I figured people could guess it even if frustrated. I spent a lot of time looking for something more complex that probably would've been worse.",
       "I was sort of inspired by a combination of Lucy's psychiatrist office and Steven Crowder's disingenuous \"Prove Me Wrong\" table when thinking of this. I have a special, uh, spot in my heart for people who will get up in your business and explain you're very lucky they dropped into your life.",
       "I'm not allergic to excitement, but I don't particularly like being around people who tell my my life needs to be more exciting, and they can help with that. Taking this point to the extreme, there are people who prefer \"exciting\" conflict to \"boring\" peace.\nI try to slip this sort of thing into a lot of what I write, but maybe it is too subtle. Or too obscure.",
@@ -811,7 +811,7 @@ strings {
       tempint == 1 ? "six" :
       "(error, bug, {tempint})"
       )};
-   spokes_left : dynamic_string {( tempint == 0 ? "You haven't gotten anything yet from any of the seven outward spokes here." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
+   spokes_left : dynamic_string {( tempint == 0 ? "You haven't figured what to do in any of the seven outward spokes here. Yet." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
    runes_desc : dynamic_string {( "Five orange runes stand out against the green grass: " + (is_at("west_tiles") ? "two v's, two number-sevens too wide at the top, one v." : " a caret, a straight vertical line, two geometric angle signs, another straight vertical line.") )} ;
 
@@ -826,7 +826,7 @@ strings {
    hub_w_take_crackers : string "^c^<CRACKERS<#cb9>>\n^l^Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
    hub_w_gift_shoals : string "{cc_gift_shoals} are here. They sure have washed up a lot of gifts! Nothing you particularly like or can use, but you're drawn to them anyway, in your current mental state." ;
    hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset. You don't miss the now-vanished gifts." ;
-   hub_w_grunters_hill : string "^c^<GRUNTERS'<#888>> <HILL<#8f8>>\n^l^Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
+   hub_w_grunters_hill : string "^c^<GRUNTERS'<#888>> <HILLS<#8f8>>\n^l^Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
    hub_w_hunters_grill : string "^c^<HUNTERS' GRILL<#080>>\n^l^Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
    hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure. But, boy, they're persistent!" ;
    hub_w_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
@@ -1274,7 +1274,7 @@ locations {
             }
             : match "player rights" {
                : if (!point_player_rights) {
-                  : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}\nYou walk towards it." ;
+                  : print "Yes. It makes sense. A few things still seem a bit hidden, and shockingly, after ten pages, the writing turns to Norse runes! You're helpless here, not having played Ultima IV or V for a good long while. But you're curious: you should be grateful for any game at all, right? Especially if it's free? Programmers work so hard on their games! Asking for more seems pushy.\nYou look around and listen. You hear something in the distance -- it sounds like the voice that said {cc_whoa_guest}\nYou walk towards it." ;
                   : gosub "add_point" ;
                   : press_any_key ;
                   : set_true "point_player_rights" ;
@@ -1719,8 +1719,8 @@ locations {
             : done ;
          }
          : print "You offer to relieve the malice chap of his chalice map. He looks at you like you're crazy. You mention he's probably had it a while and hasn't figured what to do with it. He mentions he's just had more valuable things to search for. But he might sell it. You, of course, don't have money." ;
-         : print "But what you do have is confidence. And as annoying as he is, you realize you may be annoying him more. Especially when you start asking what he's searching for, and what he did to try to search for the map. You ask how he could have missed looking around the general area. You guilt-trip him by saying, why, there's a whole world to the northeast he can explore but you can't.";
-         : print "He gets sick of you pretty quickly. \"Look, if it's really THAT important to you, have it. It'll be funny, thinking of how close you might be to your goal, but you'll still miss out. Because he's heard there are traps the map doesn't tell you how to get by.\"";
+         : print "But what you do have is confidence. And as annoying as he is, you realize you may be annoying him more. Especially when you start asking what he's searching for and imply he missed a few obvious things around the general area. You even guilt-trip him by saying, why, there's a whole world to the northeast he can explore but you can't.";
+         : print "He gets sick of you pretty quickly. \"Look, if it's really THAT important to you, have it. It'll be funny, thinking of how close you might be to your goal, but you'll still miss out.\" Because he's heard there are traps the map doesn't tell you how to get by.";
          : print "This doesn't faze you. You've internalized your confidence without realizing it. It's so internalized, it even, well, disappears from your inventory to make way for the chalice map." ;
          : set_true "point_chalice_map" ;
          : set_false "think_chalice_map" ;
@@ -1927,7 +1927,7 @@ locations {
       }
       on_tick {
          : if (!apostrophe_warn) {
-            : print "{note_once}Adventuron doesn't like apostrophes, so you don't want to use any here, even if it's in the description.";
+            : print "{note_once}Adventuron doesn't like apostrophes, so you don't want to use any here, even if one's in the description.";
             : set_true "apostrophe_warn" ;
          }
       }
@@ -2037,7 +2037,7 @@ locations {
          : if (!point_bending_truth) {
             : gosub "talk_flag" ;
          }
-         : print {( point_bending_truth ? "Nothing to say or hear any more, but the quiet sure is nice." : "Standard talking and listening won't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
+         : print {( point_bending_truth ? "Nothing to say or hear any more, but the quiet sure is nice." : "A brief chat verifies standard talking and listening won't do much with headstrong folks like this. Maybe there's a way to call them out." )} ;
          : done ;
       }
       : match "x booth" {
@@ -2221,7 +2221,7 @@ locations {
       }
       : match "talk _;listen _" {
          : gosub "talk_flag" ;
-         : print {( point_funny_mountain ? "You can't really match the mountain's jokes, but you don't need to. Theirs make you happy enough." : "Denizens of the fountain don't seem to care about you. They just keep trying to fish money out of the fountain, which disappears." )} ;
+         : print {( point_funny_mountain ? "You can't really match the mountain's jokes, but you don't need to. Theirs make you happy enough." : "Denizens of the fountain don't seem to care about you. They just keep trying to fish money out of the fountain, but their hands go right through the money." )} ;
          : done ;
       }
       : if (!point_funny_mountain) {
@@ -2292,8 +2292,8 @@ locations {
          : else
          {
             : print "With a bit of thought, you see how the low song and rain soul hook together. Why didn't you see it before? The moment must not have been right." ;
-            : print "It is now. The trim goon, on hearing the grim tone, displays a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people!" ;
-            : print "Okay, not really. They just come back and mope about how society is out to get them. But that's actually better for society than before." ;
+            : print "It is now. The trim goon, on hearing the grim tune, displays a rush of discomfort with their lot in life. Don't they deserve more? They go off to join a pyramid scheme, in hopes of finding it. Unfortunately, they get fleeced by people more awful than they, but fortunately, they learn a lesson from it and dedicate the rest of their life to helping other people!" ;
+            : print "Okay, not really. They just move along and mope about how society is out to get them. But that's actually better for society than before." ;
             : set_true "point_grim_tune" ;
             : set_false "think_grim_tune" ;
             : destroy "rain_soul";
@@ -3184,7 +3184,7 @@ subroutines {
       : set_true "got_all_footnotes_note" ;
    }
    gain_confidence : subroutine {
-      : print {( "You gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
+      : print {( "You also gain " + (confidence_meter > 0 ? "even more " : "") + "confidence from this small contretemps." )};
       : increment "confidence_meter" ;
       : pocket "confidence" ;
       : return ;
@@ -3198,7 +3198,7 @@ subroutines {
    hub_check_dependent : subroutine {
       : if (!note_dependent_point) {
          : set_true "note_dependent_point" ;
-         : print "{note_once}solving puzzles that depend on others, like this one, will cause you to gain an item but lose two. Parser games often do this to avoid inventory bloat and worries the player may need to use a certain item again." ;
+         : print "{note_once}solving puzzles that depend on others, like this one, will usually cause you to gain an item but lose two. Parser games often do this to avoid inventory bloat and worries the player may need to use a certain item again." ;
       }
    }
    hub_check_independent : subroutine {
@@ -3368,7 +3368,7 @@ subroutines {
                : set_true "pcpc_tile" ;
                : gosub "check_pcpc_achievement" ;
             } : else {
-               : print "You already inspected the trial pics that way." ;
+               : print "You already found tile pricks in the trial pics." ;
             }
          }
          : match "pile tricks" {
@@ -3463,10 +3463,8 @@ subroutines {
          : return ;
       }
       : set_true "jump_commands_notified" ;
-      : print {( have_won ? "Here are the jump commands, again." : "You've seen all the non-endgame locations in the game. There are several jump commands you can use in case you don't want to fiddle with directions." )} ;
-      : print "" ;
-      : print "" ;
-      : print "{w_eb} = East Branch" ;
+      : print {( have_won ? "Here are the jump commands, again." : "Now that you've seen all of {qt}'s non-endgame locations, here are several jump commands you can use in case you don't want to fiddle with directions." )} ;
+      : print "\n{w_eb} = East Branch" ;
       : print "{w_pb} = Plain Base" ;
       : print "{w_sh} = Stealing Hills" ;
       : print "{w_wt} = West Tiles" ;
