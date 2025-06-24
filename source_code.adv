@@ -763,8 +763,13 @@ strings {
    note_retry : string "{note_reminder}you found the bonus point too late last time through, so you may wish to " ;
    note_tutorial : string "<TUTORIAL NOTE:<#f0f>> " ;
 
-   ## inventory
+   ## miscellaneous concepts and inventory
+   cch : string "<color-coded hinting<#f88>>" ;
+   otta : string "<Ooh, Task to Ask<#88f>>" ;
    pip : string " <(+)<#0f0>>" ;
+   pr : string "<Player Rights<#88f>>" ;
+   rttr : string "<Rare-Thing-There Ring<#a33>>" ;
+   pssp : string "<Pile/Stack Style Pack<#a33>>" ;
 
    # command(s) referred to in footnotes (real or apocryphal)
    f_first_base : string "<FIRST BASE<#f80>>" ;
@@ -972,8 +977,6 @@ strings {
    ## last one
    achievement_taat : string "<Try All: Aye, Trawl<#888>>" ;
 
-   rttr : string "<Rare-Thing-There Ring<#a33>>" ;
-
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_thk}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
@@ -999,7 +1002,7 @@ stats {
 
 objects {
   ## pedagogical stuff
-   ooh_task : object "Ooh, Task to Ask ('Ooh Task')" msg="It is a request to find the {rttr}.{task_read}";
+   ooh_task : object "{otta} ('Ooh Task')" msg="It is a request to find the {rttr}.{task_read}";
    prayer_lights : object "{cc_prayer_lights}" msg="It's a weird book. It seems slightly in code. It's like it's not talking about what it's really talking about, and you need to figure that out.{bonus_note_prayer_lights}";
 
   ## scenery
@@ -1165,7 +1168,7 @@ locations {
             }
             : else_if (!is_carried "ooh_task") {
                : pocket "ooh_task" ;
-               : print "You search yourself, wondering if you forgot something, and hoping something will turn up. You stumble around a bit as you do so, and you kick something. It's a rolled-up parchment. You unroll it. It has <Ooh, Task to Ask<#88f>> in big letters." ;
+               : print "You search yourself, wondering if you forgot something, and hoping something will turn up. You stumble around a bit as you do so, and you kick something. It's a rolled-up parchment. You unroll it. It has {otta} in big letters." ;
                : print "Well, that's a start! You're not sure how or why it got here, but all the same, you're glad you might have some direction, now." ;
                : if (!tutorial_4_x_me_done) {
                   : set_true "tutorial_4_x_me_done";
@@ -5306,13 +5309,6 @@ on_command {
    : match "think _" {
       : gosub "think_thoughts" ;
    }
-   : match "i _" {
-      : mask {
-         : if (carried() == 9) {
-            : set_true "achieve_haih_pre" ;
-         }
-      }
-   }
    : match "bonus _" {
       : gosub "bonus_display" ;
    }
@@ -5349,6 +5345,25 @@ on_command {
          }
       } : else {
          : gosub "options_tutorial" ;
+      }
+   }
+   : match "i _" {
+      : if (!is_carried "ooh_task") {
+         : print "You're empty-handed right now." ;
+         : done ;
+      }
+      : if (is_carried "prayer_lights") {
+         : print "You're carrying {otta} and {cc_prayer_lights}." ;
+         : done ;
+      }
+      : if (!has_visited "plain_base") {
+         : print "You're only carrying {otta} at the moment." ;
+         : done ;
+      }
+      : mask {
+         : if (carried() == 9) {
+            : set_true "achieve_haih_pre" ;
+         }
       }
    }
    : gosub "inventory_arg_check" ;
