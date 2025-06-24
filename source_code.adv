@@ -3776,9 +3776,9 @@ subroutines {
       : press_any_key ;
       : clear_screen ;
       : ask_bool {
-      question   = {qt} also allows for color-coded hinting for important location details. This may help, or it may spoil things, too. You can change this option in-game, but I want the player to be aware of it to start. Would you like to activate it?
-      yes_answer = Yes, I'd like color-coded hinting.
-      no_answer  = No, I'd prefer not to have color-coded hinting.
+      question   = {qt} also allows for {cch} that turns important location or item details <pink<#f88>>. This is meant to help, but it may spoil things, too.\nYou can change this option in-game, but I want the player to be aware of it to start.\nWould you like to activate this feature?
+      yes_answer = Yes, I'd like {cch}.
+      no_answer  = No, I'd prefer not to have {cch}.
       var        = use_color_coding
       }
    }
@@ -3824,12 +3824,12 @@ subroutines {
 
    options_colorhint : subroutine {
       : match "ch yes" {
-         : print "Color hints are now activated." ;
+         : print "Now {cch} is activated." ;
          : set_true "use_color_coding" ;
          : done ;
       }
       : match "ch no" {
-         : print "Color hints are now deactivated." ;
+         : print "Now {cch} is deactivated." ;
          : set_false "use_color_coding" ;
          : done ;
       }
