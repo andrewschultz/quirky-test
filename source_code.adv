@@ -83,6 +83,7 @@ booleans {
    read_bookshelf_this_time : boolean "false" ;
    pig_drawing_credits : boolean "false" scope="survivor" ;
    big_inventory_this_time : boolean "false" ; # no survivor scope since I want to nag the player for the achievement
+   read_task_yet : boolean "false" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -789,7 +790,7 @@ strings {
 
    ## description strings by location
 
-   task_read : dynamic_string {( has_visited "first_base" ? "\nThe small print is easier to read with more light. It says:\nTHERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n                    ANDREW" : " There's small print you can't read in this dimness." )} ;
+   task_read : dynamic_string {( has_visited "first_base" ? "\n" + (read_task_yet ? "" : "The small print is easier to read with more light. It says:\n") + "THERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n<__ ____ ___ ___ ___ <#000>>ANDREW" : " There's small print you can't read in this dimness." )} ;
 
    first_base_first : dynamic_string {( is_first_entered() ? "Finally, a better-lighted place! It's wide open here. " : "" )} ;
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "But less peaceful. The {cc_pro_boor} is blustering away. It's pretty high-energy bluster, too, the sort that only grows more intense if you get sucked in. How to cut through it?" : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them. You'll need to disrupt them just so.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
@@ -4730,6 +4731,9 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (has_visited "first_base" && verb_is "examine" && noun1_is "task") {
+      : set_true "read_task_yet" ;
+   }
    : if (inventory_post_note) {
       : print "{note_once}{vd_i}/{vd_i_long} requires no argument." ;
       : set_false "inventory_post_note" ;
