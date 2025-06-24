@@ -57,7 +57,6 @@ booleans {
    thor_warn_close : boolean "false" scope="survivor" ;
    ask_thor_misfire : boolean "false" scope="survivor" ;
    score_bonus_nag : boolean "false" scope="survivor" ;
-   bonus_max_warn : boolean "false" scope="survivor" ;
    got_all_footnotes_note : boolean "false" scope="survivor" ;
    said_bore_outside_base : boolean "false" ;
    thor_knows_bore : boolean "false" ;
@@ -119,7 +118,6 @@ booleans {
    history_footnote_found : boolean "false" scope="survivor" ; # I could look up footnote #8 (which will probably remain static)
    plaster_man_talked : boolean "false" scope="survivor" ;
    reveal_this_footnote : boolean "false" ; # this is the only footnote variable that might change
-   footnote_complete_nag : boolean "false" ;
 
    ## verb usage notifications (only need noting once if you replay)
    drop_referenced : boolean "false" scope="survivor" ;
@@ -339,6 +337,8 @@ integers {
    bonus_score : integer "0" scope="survivor" ;
    bonus_score_start : integer "0" scope="survivor" ;
    max_bonus_score : integer "17" ;
+   footnotes_found : integer "0" scope="survivor" ;
+   max_footnotes : integer "17" ;
    confidence_meter : integer "0" ; ## yellow field, trim goon => malice chap
    tempint : integer "0" ;
    tempint2 : integer "0" ;
@@ -389,6 +389,8 @@ integers {
 
    times_read_bookshelf : integer "0" scope="survivor" ;
    max_bookshelf_reads : integer "3" ;
+
+   times_won : integer "0" scope="survivor" ;
 }
 
 collections {
@@ -2762,14 +2764,16 @@ subroutines {
       } : else_if (current_location() == "plain_base") {
          : set_true "ach_roer_base" ;
       }
+      : if (bonus_score == max_bonus_score) {
+         : print "{note_once}congratulations! You got all the bonus points. While {vd_bon} is no longer useful, you can still use it to see and feel good about everything you've found. (Hey, you've earned it!)" ;
+         : if (!have_won) {
+            : print "Also, extra ups for getting all the bonus points the first time through! I often forget one or two when I am testing a new achievement or achievement bugfix. I didn't want this to be in the list of formal achievements, because the player could be softlocked out of it, but I still wanted to acknowledge it, because it's impressive." ;
+         }
+         : return ;
+      }
       : done ;
    }
    bonus_display : subroutine {
-      : if (bonus_score == max_bonus_score && !bonus_max_warn) {
-         : print "{note_once}you got all the bonus points. Congratulations! {vd_bon} is no longer useful, though if you wish to see the list again after this nag, {vd_bon} will revert to its regular behavior, so you can see everything you've found. (Enjoy it. You've earned it!)" ;
-         : set_true "bonus_max_warn" ;
-         : return ;
-      }
       : if (bonus_score == 0) {
          : print "You haven't got any bonus points yet. Once you find one, you will get a numbered list." ;
          : return ;
@@ -3075,24 +3079,7 @@ subroutines {
          : return ;
       }
    }
-   footnote_complete_check : subroutine {
-      : if (footnote_complete_nag) {
-         : return ;
-      }
-      : set_integer var = "tempint" "0";
-      : collection_iterate "footnote_finding_list" {
-         : set_integer var="tempint2" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( tempint ) }) )} ;
-         : if (tempint2 == 0) {
-            : return ;
-         }
-         : increment "tempint" ;
-      }
-      : print {( "{note_once}you've found all the footnotes. Congratulations! You no longer need this for reference, but <F 0<#f80>> will revert to its regular behavior after this so you can review all you found. " + (achieve_tnnt ? "As you may've seen, this netted you an achievement, too." : "You've also earned an achievement.") )} ;
-      : set_true "footnote_complete_nag" ;
-      : done ;
-   }
    footnote_lister : subroutine {
-      : gosub "footnote_complete_check" ;
       : print "{bflist}" ;
       : set_integer var = "tempint" "0";
       : collection_iterate "footnote_finding_list" {
@@ -3144,6 +3131,7 @@ subroutines {
       }
       : set_true "ever_reveal_footnote" ;
       : set_true "reveal_this_footnote" ;
+      : increment "footnotes_found" ;
       : collection_modify { collection = "footnote_status_list" index -> (tempint - 1) content -> ("1") ; }
    }
    footnote_hub_history : subroutine {
@@ -4533,6 +4521,7 @@ subroutines {
       : set_true "thor_left" ;
       : update_graphic "s_the_ring" ;
       : set_false "thor_left" ;
+      : increment "times_won" ;
       : if (!have_won) {
          : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
          : press_any_key ;
@@ -4730,6 +4719,16 @@ on_startup {
 ## main on_tick (for searching)
 
 on_tick {
+   : if (reveal_this_footnote) {
+      : print "!{footnotes_found}" ;
+      : set_false "reveal_this_footnote" ;
+      : if (footnotes_found == 17) {
+         : print "{note_once}congratulations! You've found all the footnotes. While this renders {vd_fn} useless for finding things, you can still use it to see all you accomplished and feel good about it." ;
+         : if (times_won == 1) {
+            : print "Also, extra congratulations is due for getting everything in one setting! When I was programmer-testing accomplishments, I usually missed one. So I didn't want \"everything in one go\" to be an accomplishment, since it's too fiddly, but I did want to acknowledge this feat." ;
+         }
+      }
+   }
    : if (has_visited "first_base" && verb_is "examine" && noun1_is "task") {
       : set_true "read_task_yet" ;
    }
