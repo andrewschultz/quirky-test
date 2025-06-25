@@ -799,7 +799,7 @@ strings {
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "But less peaceful. The {cc_pro_boor} is blustering away. It's pretty high-energy bluster, too, the sort that only grows more intense if you get sucked in. How to cut through it?" : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them. You'll need to disrupt them just so.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
-   describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" + (has_visited "first_base" ? "He hands you the {pssp} again. You give him {player_rights}." : "You still have the {pssp} since you warped through, so there's no need to trade for it again.") : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor.\" You nod, recognizing his voice.\nHe notes your recognition and continues. \"Thanks for taking good care of {pr}. I'll trade you this {pssp} for it. You'll be able to carry everything you can pick up -- that's a courtesy of many modern parser games, so you don't have to juggle things. But you can still {v_talk} to learn details of what's in {pr}. If you want. No obligation.\"\nSounds fair. You make the trade.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about " + (thor_asked_once ? "more" : "any" ) + " of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
+   describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" + (has_visited "first_base" ? "He hands you the {pssp} again. You give him {player_rights} back." : "You still have the {pssp} since you warped right back here, so there's no need to trade for it again.") : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor.\" You nod, recognizing his voice.\nHe notes your recognition and continues. \"Thanks for taking good care of {pr}. I'll trade you this {pssp} for it. You'll be able to carry everything you can pick up -- that's a courtesy of many modern parser games, so you don't have to juggle things. But you can still {v_talk} to learn details of what's in {pr}. If you want. No obligation.\"\nSounds fair. You make the trade.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about " + (thor_asked_once ? "more" : "any" ) + " of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
    describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "An establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why." : "There's no trace of Seth Denton's, and maybe that's all for the better." )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
@@ -912,6 +912,7 @@ strings {
 
    cc_pro_boor : dynamic_string {( use_color_coding ? "<Pro Boor<#f88>>" : "Pro Boor" )} ;
    cc_prayer_lights : dynamic_string {( use_color_coding ? "<Prayer Lights<#f88>>" : "Prayer Lights" )} ;
+   cc_player_rights : string "<Player Rights<#0f0>>" ;
 
    ## west hub
    cc_plaster_man : dynamic_string {( use_color_coding ? "<plaster man<#f88>>" : "plaster man" )} ;
@@ -4555,6 +4556,8 @@ subroutines {
 
    win_game_stub : subroutine {
       : if (!have_won) {
+         : press_any_key ;
+         : clear_screen ;
          : ask_bool {
             question   = On replaying {qt}, you have the option to skip rooms not required for bonus points, achievements, or footnotes. While you can toggle it at any time with {optwarp} with the parser, you can set it right now, before this next restart. Would you like to activate this feature after this next go round? (Footnote 2 is only found in Nameless Lameness after a necessary command.)
             yes_answer = Yes, I'd like to skip on restart.
@@ -4596,12 +4599,12 @@ subroutines {
       }
       : if (last_cheat_leap_level > cheat_leap_level) {
          : set_integer var="cheat_leap_level" {( int("" + last_cheat_leap_level) )} ;
-         : print {( "Thor gives you a thumbs-up and says that, due to you finding a bit more bonus content this time, you'll start " + ( cheat_leap_level == 3 ? "at the plain base, the fartheset ahead you can start" : "a bit farther this time" ) + "." )} ;
+         : print {( "Thor gives you a thumbs-up and says that, due to you finding a bit more bonus content this time, you'll start " + ( cheat_leap_level == 3 ? "at the plain base, the farthest ahead you can start" : "a bit farther this time" ) + "." )} ;
          : press_any_key ;
       }
    }
    win_warp_start : subroutine {
-      : if (!option_start_warp) {
+      : if (!option_start_warp || times_won == 1) {
          : return ;
       }
       : pocket "ooh_task" ;
@@ -4623,8 +4626,8 @@ subroutines {
          : update_graphic "s_yellow_pig" ;
          : set_true "show_overlay" ;
          : cycle key = "yp17_intro" predictable_order = "true" skip_interval = "0" {
-            : print "Ah, so you're wondering what 17 is about." ;
-            : print "Okay, let's recap what 17 is about." ;
+            : print "Ah, so you're wondering what the yellow seventeens are about." ;
+            : print "Okay, let's recap what the yellow seventeens are about." ;
          }
          : print "{yp17}" ;
          : if (!pig_drawing_credits) {
