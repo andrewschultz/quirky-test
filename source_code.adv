@@ -42,7 +42,7 @@ booleans {
    ## done once in-game booleans (non-critical, or duplicate)
    xme_twice : boolean "false" ;
    ever_about : boolean "false" ; # this is equivalent tutorial_1_about_done, but it's a bit clearer for certain parts of the code.
-   entered_seth_dentons : boolean "false" ;
+   entered_seth_dentons : boolean "false" scope="survivor" ;
    know_lush_shout : boolean "false" ;
    boor_talked : boolean "false" scope="survivor" ;
    thor_explained_seth : boolean "false" ;
@@ -110,7 +110,7 @@ booleans {
    note_dependent_point : boolean "false" scope="survivor" ;
    note_independent_point : boolean "false" scope="survivor" ;
    footnote_nag : boolean "false" scope="survivor" ;
-   thor_left : boolean "false" scope="survivor" ;
+   thor_left : boolean "false" ;
 
    ## footnote check booleans
    have_won : boolean "false" scope="survivor" ;
@@ -465,7 +465,7 @@ collections {
    }
    footnote_hinting_list : list {
       items = [
-         "<Try something again<#f00>>",
+         "Retry a basic command",
          "<Found during core walkthrough<#f00>>",
          "<Looking back, sort of<#f00>>",
          "<Examine someone<#f00>>",
