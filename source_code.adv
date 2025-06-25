@@ -3563,8 +3563,14 @@ subroutines {
             : redescribe ;
             : return ;
          }
+      } : else_if (is_at "gravel_trail" && !point_missing_house) {
+         : goto "plain_base" ;
+         : return ;
+      } : else_if (is_at "my_house") {
+         : goto "gravel_trail" ;
+         : return ;
       }
-      : print {( "Going out is ambiguous here, as you " + (is_at "west_tiles" || is_at "east_branch" ? "still " : "") + "have more than one direction worth exploring." )} ;
+      : print {( "Going out is ambiguous here, as you " + (is_at "west_tiles" || is_at "east_branch" ? "still " : "") + (!has_visited "plain_base" ? "can't really see a good direction yet." : "have more than one direction worth exploring.") )} ;
       : return ;
    }
    read_book : subroutine {
