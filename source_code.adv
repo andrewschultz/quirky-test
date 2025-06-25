@@ -2465,7 +2465,7 @@ locations {
             }
          }
          : match "hi mouse" {
-            : if (point_see_glimmering) {
+            : if (point_see_glimmering || cheat_dont_require) {
                : clear_screen ;
                : print "You call on the mouse, who seemed friendly and grateful you made it a home. It appears. You point to the glimmering." ;
                : press_any_key ;
@@ -4341,7 +4341,7 @@ subroutines {
       : if (achieve_rssr) {
          : print "You already unlocked the {achievement_rssr} achievement for taking the minimum number of moves between locations." ;
       } : else {
-         : if (rssr_east <= 8 && rssr_west <= 8 && (rssr_base + rssr_hill <= 3)) {
+         : if (rssr_east <= 8 && rssr_west <= 8 && (rssr_base + rssr_hill <= 3) && score == max_score) {
             : if (ever_jump) {
                : print "You're close to the {achievement_rssr} achievement, but next time, don't use warps." ;
             } : else {
@@ -5408,7 +5408,7 @@ on_command {
       }
    }
    : match "i _" {
-      : if (!is_carried "ooh_task") {
+      : if (carried() == 0) {
          : print "You're empty-handed right now." ;
          : done ;
       }
