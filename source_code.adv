@@ -1115,11 +1115,15 @@ vocabulary {
 locations {
    nameless_lameness : location "^c^<NAMELESS LAMENESS<#888>>\n^l^You are surrounded by nameless lameness. It's all very, very grey. You can't really see much beyond yourself. But you need to start somewhere." graphic = "r_nameless_lameness" {
       on_command {
-         : if (!room_name_note) {
-            : match "_ nameless;_ lameness;lameness _;nameless _" {
-               : set_true "room_name_note" ;
-               : print "{note_once}in parser games, you generally don't need to do anything direct with the location name proper. You will be able to riff on it in {qt}, for reasons that I hope become clear." ;
+         : match "_ nameless;_ lameness;lameness _;nameless _" {
+            : if (room_name_note) {
+               : match "_ lameness;_ nameless" {
+                  : return ;
+               }
             }
+            : print {( room_name_note ? custom_unknown_verb_error : "{note_once}in parser games, you generally don't need to do anything direct with the location name proper. You will be able to riff on it in {qt}, for reasons that I hope become clear." )} ;
+            : set_true "room_name_note" ;
+            : done ;
          }
          : if (in_tutorial && !tutorial_5_inventory_done && is_carried("ooh_task")) {
             : match "x ask" {
@@ -1809,8 +1813,12 @@ locations {
          }
          : done ;
       }
-      : match "take _" {
+      : match "take *" {
          : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {v_take} here." )} ;
+         : done ;
+      }
+      : match "take -" {
+         : print "Ah, but what to {v_take}?" ;
          : done ;
       }
       : if (!is_carried "crackers") {
@@ -1828,6 +1836,10 @@ locations {
    };
    hub_w_sw : location "^c^<GIFT SHOALS<#fc0>>\n^l^{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
       on_command {
+      : match "_ shoals" {
+         : print "The shoals block you from going any way but back northwest. There's not much you can do with them." ;
+         : done ;
+      }
       : if (!point_shift_goals) {
          : match "take gifts" {
             : print "You try, but they are too heavy to pick up." ;
@@ -1894,6 +1906,11 @@ locations {
          }
          : match "_ hill" {
             : print "You can't do much to or with the hills except, well, find what they can be changed to." ;
+         }
+      }
+      : if (point_hunters_grill) {
+         : match "_ grill" {
+            : print "The grills are cold now, having served their purpose. No need to use them further." ;
          }
       }
       : match "hunters grill" {
@@ -2279,6 +2296,10 @@ locations {
          : print "A cartoon duck pops up to call you despicable. Not quite the result you hoped for, but you must be close." ;
          : gosub "homonym_close" ;
       }
+      : match "_ toon" {
+         : print "Alas, you're not getting Looney Tunes style or quality graphics from me." ;
+         : gosub "homonym_close" ;
+      }
       : match "grim tune" {
          : if (point_grim_tune) {
             : print "You already thought up a grim tune. Any more, and you might be so depressed you forget what you wrote, or you wonder why even bother to share it." ;
@@ -2380,6 +2401,15 @@ locations {
          : if (initial_book_poke) {
             : match "_ hook;_ bold;_ hold" {
                : set_sentence {( original "verb" + " book" )} ;
+            }
+         }
+         : if (point_missing_house) {
+            : match "_ mailbox" {
+               : cycle key = "mailboxy" predictable_order = "true" skip_interval = "0" {
+                  : print "It's a mailbox with the yellow number <y17> on it. There's not much to do with it but look inside. Nope, no {rttr}. In fact, it's completely empty. Well, it would've been pretty mean for me to put the {rttr} there and not describe it in the text." ;
+                  : print "You already poked at the mailbox. The {rttr} wasn't there. But you must be close." ;
+               }
+               : done ;
             }
          }
          : match "gee _" {
@@ -5214,7 +5244,7 @@ on_command {
       }
       : done ;
    }
-   : match "attack _" {
+   : match "attack _;break _" {
       : print "No explicit violence is needed in {qt}, though sometimes there are comic threats of violence, or comic violence in the narrative after you figure what to do." ;
       : done ;
    }
