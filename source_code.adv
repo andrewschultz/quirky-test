@@ -82,7 +82,8 @@ booleans {
    read_bookshelf_this_time : boolean "false" ;
    pig_drawing_credits : boolean "false" scope="survivor" ;
    big_inventory_this_time : boolean "false" ; # no survivor scope since I want to nag the player for the achievement
-   read_task_yet : boolean "false" ;
+   read_task_yet : boolean "false" scope="survivor";
+   ask_to_talk_note : boolean "false" scope="survivor" ;
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -792,7 +793,7 @@ strings {
 
    ## description strings by location
 
-   task_read : dynamic_string {( has_visited "first_base" ? "\n" + (read_task_yet ? "" : "The small print is easier to read with more light. It says:\n") + "THERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n<__ ____ ___ ___ ___ <#000>>ANDREW" : " There's small print you can't read in this dimness." )} ;
+   task_read : dynamic_string {( has_visited "first_base" ? "\n" + (read_task_yet ? "" : ( have_won ? "You give yourself a refresher.\n" : "The small print is easier to read with more light. It says:\n")) + "THERE ARE TWENTY THREE CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n<__ ____ ___ ___ ___ <#000>>ANDREW" : " There's small print you can't read in this dimness." )} ;
 
    first_base_first : dynamic_string {( is_first_entered() ? "Finally, a better-lighted place! It's wide open here. " : "" )} ;
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "But less peaceful. The {cc_pro_boor} is blustering away. It's pretty high-energy bluster, too, the sort that only grows more intense if you get sucked in. How to cut through it?" : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them. You'll need to disrupt them just so.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
@@ -5023,7 +5024,11 @@ on_command {
       : done ;
    }
    : match "ask _" {
-      : print {( "{v_ask} is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {v_talk} to first" : "someone you'll run into shortly." ) )} ;
+      : if (is_beside "pro_boor") {
+         : print "The {cc_pro_boor} isn't the sort to clarify others' questions. Someone just beyond is, though!" ;
+      } : else {
+         : print {( (ask_to_talk_note ? "" : "{qt} doesn't use a very sophisticated conversation system, so ") + "{v_ask} is used only for " + (talked_to_thor ? "Thor, the major NPC in {qt}." : has_visited("plain_base") ? "Thor, whom you should {v_talk} to first" : "someone you'll run into shortly." ) )} ;
+      }
    }
    : match "take _" {
       : if (!take_note) {
