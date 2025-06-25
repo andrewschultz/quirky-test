@@ -995,7 +995,7 @@ strings {
 
    # Easter Eggy stuff
    y17 : string "<seventeen<#ff0>>" ;
-   yp17 : string "I went to Hampshire College Summer Studies in Mathematics program long ago. They have an in-joke about a yellow pig and the number 17. I realized after the initial release that 17 appeared in two places: maximum bonus points and {pbr}.\nThey also have an aversion for pink pigs and the number 23, which is the maximum core score, but I'll spin that as \"23 is the bare minimum, but 17 shows flair and going that extra mile.\"\nAnd while I didn't go for a career in mathematics, the fun they had there left an impression: I wanted to do fun thinky stuff. {qt}, I hope, qualifies." ;
+   yp17 : string "I attended the Hampshire College Summer Studies in Mathematics (<HCSSiM<#dcb>>[http://hcssim.org]) program long ago. They have an in-joke about a yellow pig and the number 17. I realized after the initial release that 17 appeared in two places: maximum bonus points and {pbr}.\nThey also have an aversion for pink pigs and the number 23, which is the maximum core score, but I'll spin that as \"23 is the bare minimum, but 17 shows flair and going that extra mile.\"\nAnd while I didn't go for a career in mathematics, the fun they had there left an impression: I wanted to do fun thinky stuff. {qt}, I hope, qualifies." ;
 
 }
 
@@ -3825,7 +3825,6 @@ subroutines {
    debug_commands : subroutine {
       : match "win _;wingame _"  {
          : print {( have_won ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
-         : set_true "have_won";
          : gosub "win_game_stub" ;
       }
    }
@@ -4555,27 +4554,34 @@ subroutines {
    }
 
    win_game_stub : subroutine {
+      : if (!have_won) {
+         : ask_bool {
+            question   = On replaying {qt}, you have the option to skip rooms not required for bonus points, achievements, or footnotes. While you can toggle it at any time with {optwarp} with the parser, you can set it right now, before this next restart. Would you like to activate this feature after this next go round? (Footnote 2 is only found in Nameless Lameness after a necessary command.)
+            yes_answer = Yes, I'd like to skip on restart.
+            no_answer  = No, I don't want to skip on restart.
+            var        = option_start_warp
+         }
+      }
       : if (read_bookshelf_this_time && times_read_bookshelf < 2) {
          : increment "times_read_bookshelf" ;
       }
       : gosub "footnote_write_to_survivors" ;
+      : increment "times_won" ;
+      : set_true "have_won" ;
       : win_game ;
    }
    win_notes : subroutine {
       : set_true "thor_left" ;
       : update_graphic "s_the_ring" ;
       : set_false "thor_left" ;
-      : increment "times_won" ;
       : if (!have_won) {
          : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
          : press_any_key ;
          : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
          : print "These can be tracked with {vd_ach} or {vd_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qt_repo} to spoil them." ;
-         : print "Finally, there is a {opt_warp} command that lets you skip ahead of beginning rooms with no bonus points, footnotes or achievements to discover." ;
          : print "Press any key to see the list of achievements." ;
          : press_any_key ;
          : clear_screen ;
-         : set_true "have_won" ;
          : return ;
       }
       : print "Thor nods and smiles. \"Won't give you the long spiel again, but yeah, thanks for your continued patronage and interest. Ugh. That sounded corprorate.\"" ;
@@ -4768,7 +4774,6 @@ on_startup {
 
 on_tick {
    : if (reveal_this_footnote) {
-      : print "!{footnotes_found}" ;
       : set_false "reveal_this_footnote" ;
       : if (footnotes_found == 17) {
          : print "{note_once}congratulations! You've found all the footnotes. While this renders {vd_fn} useless for finding things, you can still use it to see all you accomplished and feel good about it." ;
