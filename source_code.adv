@@ -2392,6 +2392,7 @@ locations {
          : if (is_beside "hissing_mouse") {
             : match "_ mouse" {
                : print "You probably don't want to do anything directly physically with the mouse. Perhaps you can improve the environment to its liking." ;
+               : done ;
             }
          }
       }
@@ -3213,6 +3214,7 @@ subroutines {
          : print "{note_once}you're really close to a point you need. When this happens, you should always get a hopefully amusing response that indicates such. There's no reward for finding them all, though, other than your own amusement." ;
          : set_true "note_homonym" ;
       }
+      : done ;
    }
    hub_check_dependent : subroutine {
       : if (!note_dependent_point) {
@@ -3254,6 +3256,7 @@ subroutines {
          : match "grow need" {
             : if (bonus_point_grow_need) {
                : print "You already grew the right need." ;
+               : done ;
             } : else {
                : print "Not wanting anything is proof you have no greed, right? It's proof of super virtue? Well, yes and no. It also means you are not trying anything more. So you think of needs to grow, not for power or fame or wealth, but stuff that can help others." ;
                : set_true "bonus_point_grow_need" ;
@@ -3279,6 +3282,7 @@ subroutines {
          : match "vast fission" {
             : if (bonus_point_vast_fission) {
                : print "You've already broken things down enough." ;
+               : done ;
             } : else {
                : print "You extrapolate on the fast vision you have and re-interpret events from your past life in many new ways. The mental fission of previous complaints is fast. You make plans for, uh, fishin' for more, once this quest is over. More what? Lighting fires, fighting liars." ;
                : set_true "bonus_point_vast_fission" ;
@@ -3305,6 +3309,7 @@ subroutines {
          : match "so long" {
             : if (bonus_point_so_long) {
                : print "A long (re-)good-bye is not really a good-bye." ;
+               : done ;
             } : else {
                : print "You use the low song in your head to compose a kiss-off to people whom you don't want to stick in your memory, but they do. It helps lighten a few burdens." ;
                : set_true "bonus_point_so_long" ;
@@ -3358,6 +3363,7 @@ subroutines {
          : match "cease purging" {
             : if (bonus_point_cease_purging) {
                : print "One doesn't want to overthink good intentions." ;
+               : done ;
             } : else {
                : print "You use the feeling of peace, surging, to formulate what to do to march towards peace, or to make things more peaceful. Naturally there are things society needs to purge, but then there are too many it doesn't." ;
                : set_true "bonus_point_cease_purging" ;
@@ -3404,6 +3410,7 @@ subroutines {
          : match "sane role" {
             : if (bonus_point_sane_role) {
                : print "Fighting too hard for sanity when you have enough undoes the point." ;
+               : done ;
             } : else {
                : print "Not that things are insane here, but you justify why working through such apparent nonsense is, indeed, good for the soul, even if it doesn't help society right away." ;
                : set_integer var="tempint" "13" ;
@@ -5145,6 +5152,7 @@ on_command {
       : match "theory bore" {
          : if (bonus_point_theory_bore) {
             : print {( is_beside("beery_thor") ? "Thor is bigger than you. Best not to overplay this, even if he's in on the joke." : "You snicker some more at what you realized." )} ;
+            : done ;
          }
          : else {
             : print {( is_beside("beery_thor") ? "You worry Thor will be upset by this observation, but he booms \"Ha! Good one. I was sort of hoping you'd figure that. I actually don't mind people saying that. It implies I said something too smart. Better than being called a musclehead or whatever.\"" : "You snicker at what you've found, a bit worried what Thor might say if you found it around him. Hopefully mind reading is not among his powers." )} ;
