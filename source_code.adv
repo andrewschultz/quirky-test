@@ -3478,6 +3478,12 @@ subroutines {
             }
          }
       }
+      : if (is_carried "focus") {
+         : match "co fuss;cofuss _" {
+            : print "Having someone with you to complain or vent would not help focus. Actually, there's nothing you need to do with your focus." ;
+            : done ;
+         }
+      }
    }
    int_from_noun1 : subroutine {
       : set_integer var="tempint" {( int("" + original "noun1") )} ;
