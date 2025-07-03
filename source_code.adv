@@ -5486,7 +5486,11 @@ on_command {
       }
    }
    : gosub "inventory_arg_check" ;
-   : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" {
+   : match "turkey _;shush _;rare _;bane _;theory _;death _;test  _;beast _;rig _;so _;vast _;cease _;sane _;grow _;racing _;eye _;cheery _" { # bonus point commands
+      : print "{custom_unknown_verb_error}" ;
+   }
+   : match "first _;bro _;player _;fly _;bending _;boring _;dirt _;pouring _;funny _;grim _;fell _;shift _;hunting _;fellow _;master _;chalice _;healing _;gravel _;missing _;hi _" {
+      : print "{custom_unknown_verb_error}" ;
       : print "{custom_unknown_verb_error}" ;
    }
    : gosub "yellow_pig_blather" ;
