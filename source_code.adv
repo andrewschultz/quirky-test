@@ -1664,6 +1664,12 @@ locations {
 
    hub_w_n : location "^c^<PLASTER MAN<#ccc>>\n^l^{point_master_plan ? hub_w_master_plan : hub_w_plaster_man}" {
       on_command {
+      : if (point_master_plan) {
+         : match "plaster man" {
+            : print "Alas, you don't have the skill to put it back together again. But it wasn't alive. Or particularly artsy. It served its purpose best revealing what was inside." ;
+            : done ;
+         }
+      }
       : match "x plaster;x man" {
          : set_integer var="tempint" "13" ;
          : gosub "footnote_reveal" ;
@@ -1856,6 +1862,9 @@ locations {
    };
    hub_w_sw : location "^c^<GIFT SHOALS<#fc0>>\n^l^{point_shift_goals ? hub_w_shift_goals : hub_w_gift_shoals}" {
       on_command {
+      : match "swim _" {
+         : print "You can't see anything to swim to, and besides, shoals can be dangerous." ;
+      }
       : match "_ shoals" {
          : print "The shoals block you from going any way but back northwest. There's not much you can do with them." ;
          : done ;
@@ -2205,6 +2214,11 @@ locations {
             : print {( point_pouring_rain ? "The pouring rain is really poetic, and stuff. You sense talking would ruin things." : "You can't talk or listen normally with this roaring pain around. Perhaps it can become something more manageable." )} ;
             : done ;
          }
+         : if (point_pouring_rain) {
+            : match "roaring pain" {
+               : print "No, stopping the rain isn't worth the pain returning." ;
+            }
+         }
          : match "pouring rain" {
             : if (point_pouring_rain) {
                : print "You already found something less awful than roaring pain." ;
@@ -2250,6 +2264,10 @@ locations {
             : done ;
          }
       } : else {
+         : match "swim _" {
+            : print "It's too shallow, and you don't need to swim to see the {rttr} isn't there." ;
+            : done ;
+         }
          : match "x money;x fountain" {
             : print "You look in the fountain, totally not thinking about fishing loose change out. Nope, no {rttr}." ;
             : done ;
@@ -5506,6 +5524,8 @@ on_command {
    }
    : match "first _;bro _;player _;fly _;bending _;boring _;dirt _;pouring _;funny _;grim _;fell _;shift _;hunting _;fellow _;master _;chalice _;healing _;gravel _;missing _;hi _" {
       : print "{custom_unknown_verb_error}" ;
+   }
+   : match "swim _;plaster _;roaring _" { # these are special verbs
       : print "{custom_unknown_verb_error}" ;
    }
    : gosub "yellow_pig_blather" ;
