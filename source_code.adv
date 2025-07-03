@@ -1413,6 +1413,9 @@ locations {
    };
    plain_base : location "^c^<PLAIN BASE<#888>>\n^l^You are in a plain base. While it's rather plain, it links to other places that look more interesting. You notice paths to the <northeast<#44f>> and <northwest<#44f>>{describe_gravel_trail}. You don't see any way back to First Base.\n{describe_seth_denton}{footnote_reveal_text}\n{describe_beery_thor}" {
       on_command {
+         : match "_ axe" {
+            : gosub "reject_picture_singular" ;
+         }
          : match "_ beer" {
             : if (noticed_beer_ever) {
                : print {( "Thor already explained about the beer." + (noticed_beer_this_time ? "" : " You only needed to guess it was there once for the achievement." ) )} ;
@@ -2141,6 +2144,13 @@ locations {
          : gosub "footnote_reveal" ;
       }
       on_command {
+      : match "_ war" {
+         : print "There must be a way to stop it. But you can't meet aggression with aggression." ;
+         : done ;
+      }
+      : match "_ sun;_ tree" {
+         : gosub "reject_picture_singular" ;
+      }
       : if (!point_boring_way) {
          : match "x warring;x bay" {
             : print "They seem quite involved and focused, bonded by the excitement." ;
@@ -2398,6 +2408,9 @@ locations {
          }
       }
       on_command {
+         : match "_ gravel;_ trail" {
+            : print {( "There's nothing remarkable or magical about the gravel on the trail. You sense you need to deal with the " + (point_missing_house ? "house to the north" : "{cc_hissing_mouse}") + " instead." )} ;
+         }
          : if (is_beside("hissing_mouse")) {
             : match "x mouse;x hissing" {
                : set_integer var="tempint" "16" ;
@@ -3746,6 +3759,14 @@ subroutines {
          : set_true "achieve_nbbn_pre" ;
          : set_true "read_bookshelf_this_time" ;
       }
+   }
+   reject_picture_singular : subroutine {
+      : print "That's just in the graphic for flavor." ;
+      : done ;
+   }
+   reject_picture_plural : subroutine {
+      : print "Those are just in the graphic for flavor." ;
+      : done ;
    }
    rune_parsing : subroutine {
       : match "rig boons;rig boon" {
