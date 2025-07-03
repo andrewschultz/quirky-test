@@ -752,6 +752,7 @@ strings {
    # regular commands in green
    v_ask : string "<ASK<#0f0>>" ;
    v_drop : string "<DROP<#0f0>>" ;
+   v_eat_taste : string "<EAT<#0f0>> or <TASTE<#0f0>>" ;
    v_enter : string "<ENTER<#0f0>>" ;
    v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    v_l : string "<L<#0f0>>" ;
@@ -5095,7 +5096,7 @@ on_command {
    : match "o _;out _" {
       : gosub "out_stub" ;
    }
-   : match "eat _" {
+   : match "eat _;taste _" {
       : if (point_hunters_grill) {
          : print "You already ate what you needed to." ;
          : done ;
@@ -5104,7 +5105,7 @@ on_command {
          : print "Too much for you. You need to share." ;
          : done ;
       }
-      : print "You never explicitly need to EAT anything in {qt}. But, minor spoiler, doing or describing the right thing will allow for a nice communal feast." ;
+      : print "You never explicitly need to {v_eat_taste} anything in {qt}. But, minor spoiler, doing or describing the right thing will allow for a nice communal feast." ;
       : done ;
    }
    : match "credits _" {
