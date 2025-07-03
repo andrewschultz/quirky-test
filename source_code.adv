@@ -85,6 +85,7 @@ booleans {
    read_task_yet : boolean "false" scope="survivor";
    ask_to_talk_note : boolean "false" scope="survivor" ;
    read_17 : boolean "false" scope="survivor" ;
+   small_print_note : boolean "false" scope="survivor" ;
 
    ## new miscellaneous booleans above
 
@@ -1380,6 +1381,12 @@ locations {
                   : done ;
                }
             }
+         }
+      }
+      on_describe {
+         : if (small_print_note) {
+            : print "But on the bright side, it's, uh, bright enough to read the small print on {otta} now.";
+            : set_false "small_print_note" ;
          }
       }
    };
@@ -4946,6 +4953,16 @@ on_pre_command {
 ## main on_command
 
 on_command {
+   : if (is_carried "ooh_task") {
+      : match "_ print;_ small" {
+         : if (!has_visited "first_base") {
+            : print "You'll need more light to read the small print on {otta}. (Don't worry. If it were critical, it would have been LARGE print.)" ;
+            : set_true "small_print_note" ;
+         } : else {
+            : set_sentence "x task" ;
+         }
+      }
+   }
    : match "restart _" {
       : if (bonus_this_playthrough || have_won) {
          : mask {
