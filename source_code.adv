@@ -317,12 +317,12 @@ booleans {
    bonus_this_playthrough : dynamic_boolean {( bonus_score > bonus_score_start )} ;
 
    ## achievements
-   all_red_achievements : dynamic_boolean {( achieve_haih || achieve_mttm || achieve_tyyt || achieve_gmmg )} ;
-   all_orange_achievements : dynamic_boolean {( achieve_tnnt || achieve_cddc_0pts || achieve_pcpccp || achieve_roer_all || achieve_cnnc )} ;
-   all_yellow_achievements : dynamic_boolean {( achieve_qwwq || achieve_kssn )} ; # yeah yeah yeah grammatically it should be both but I want consistent variable names
-   all_green_achievements : dynamic_boolean {( achieve_ssss || achieve_tnnt || achieve_tnnt || achieve_kssn )} ;
+   all_red_achievements : dynamic_boolean {( achieve_haih && achieve_mttm && achieve_tyyt && achieve_gmmg )} ;
+   all_orange_achievements : dynamic_boolean {( achieve_tnnt && achieve_cddc_0pts && achieve_pcpccp && achieve_roer_all && achieve_cnnc )} ;
+   all_yellow_achievements : dynamic_boolean {( achieve_qwwq && achieve_kssn )} ; # yeah yeah yeah grammatically it should be both but I want consistent variable names
+   all_green_achievements : dynamic_boolean {( achieve_ssss && achieve_tnnt && achieve_tnnt && achieve_kssn )} ;
    all_blue_achievements : dynamic_boolean {( achieve_bwwb && achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
-   all_purple_achievements : dynamic_boolean {( achieve_hbbh || achieve_nbbn )} ;
+   all_purple_achievements : dynamic_boolean {( achieve_hbbh && achieve_nbbn )} ;
 
    ## inventory/bonus point stuff
    inv_so_long : dynamic_boolean {( is_carried "low_song" && bonus_point_so_long )} ;
