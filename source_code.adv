@@ -1108,6 +1108,7 @@ vocabulary {
    : verb / aliases = [hi, high]
    : verb / aliases = [hint, hints]
    : verb / aliases = [hunter, hunting, hunters]
+   : verb / aliases = [shift, shifting]
    : verb / aliases = [not, noti, notif, notify]
    : verb / aliases = [o, out]
    : verb / aliases = [t, talk]
@@ -1904,7 +1905,7 @@ locations {
          : print {( point_shift_goals ? "The quiet is more peaceful now you've put the prospect of gifts aside. You don't want to disturb it." : "While the gifts seem to be calling to you, it'd feel weird to talk back." )} ;
          : done ;
       }
-      : match "shift goals;shifting goals" {
+      : match "shift goals" {
          : if (point_shift_goals) {
             : print "But you don't want to shift your goals back." ;
             }
@@ -1950,6 +1951,10 @@ locations {
             : done ;
          }
       } : else {
+         : match "smell _" {
+            : print "Lingering smells of the recent feast." ;
+            : done ;
+         }
          : match "talk -;talk hunters; listen -" {
             : print "With the hunters long gone, the meal finished, and the hills no longer grunting, there's not much chance for meaningful interaction." ;
             : done ;
@@ -5029,6 +5034,9 @@ on_pre_command {
 ## main on_command
 
 on_command {
+   : match "smell _" {
+      : print "Nothing unexpected." ;
+   }
    : if (has_visited "plain_base") {
       : match "_ pack" {
          : if (pack_described) {
@@ -5405,7 +5413,7 @@ on_command {
       : done ;
    }
    : match "drop _" {
-      : print {( drop_referenced ? "No need to {v_drop} anything." : "While classic text adventures often required the player to use {v_drop} due to inventory limits, this is often regarded as needless fiddling today. Modern text adventures, such as this, often take steps to keep the player's inventory manageable so they can focus on puzzles, finding plot-plausible reasons to dispose of items that are no longer necessary. Plus there aren't many items to carry in {qt}. Still, though, there's " + (has_visited "plain_base" || have_won ? "the {pssp}" : "a carryall ahead") + "." )};
+      : print {( drop_referenced ? "No need to {v_drop} anything." : "While classic text adventures often required the player to use {v_drop} due to inventory limits, this is generally regarded as needless fiddling today. So modern text adventures find plausible ways to dispose of items that are no longer necessary. This keeps the player's inventory manageable to help focus on puzzles and story.\nPlus, there aren't many items to carry in {qt}. Still, though, there's " + (has_visited "plain_base" || have_won ? "the {pssp}" : "a carryall ahead") + "." )};
       : set_true "drop_referenced" ;
       : done ;
    }
