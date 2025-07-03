@@ -720,8 +720,9 @@ strings {
    link_roiling : string "<A Roiling Original<#dcb>>[https://andrewschultz.itch.io/a-roiling-original] (soon)" ;
    link_torus : string "<Tours Roust Torus<#dcb>>[https://andrewschultz.itch.io/tours-roust-torus]" ;
 
-   ## items for hints
+   ## hinting text
    next_go_round : string " (Well, maybe next go round.)" ;
+   no_listen : string "Nothing. Listening was the right sense to use." ;
 
    cue_cease_purging : string "<CEASE PURGING<#db8>>" ;
    cue_grow_need : string "<GROW NEED<#db8>>" ;
@@ -1173,6 +1174,21 @@ locations {
                   : set_true "tutorial_5_inventory_done" ;
                   : increment "tutorial_score" ;
                }
+            }
+         }
+         : if (tutorial_6_x_ask_done) {
+            : match "smell _" {
+               : print {( tutorial_7_listen_done ? "{no_listen}" : "Nothing. Smelling isn't the right sense here." )} ;
+               : done ;
+            }
+            : match "taste _" {
+             : print {( tutorial_7_listen_done ? "{no_listen}" : "Nothing. There's nothing to eat or taste here, but there will be. And you won't need to ." )} ;
+            }
+            : match "feel _" {
+             : print {( tutorial_7_listen_done ? "{no_listen}" : "That might take too long. Feeling isn't the right sense here." )} ;
+            }
+            : match "see _" {
+             : print {( tutorial_7_listen_done ? "{no_listen}" : "Too dark here. Seeing is, for the most part, examining or looking, but a small note as a reward for trying things: <SEE<#0f0>> will be useful later." )} ;
             }
          }
          : match "listen _" {
