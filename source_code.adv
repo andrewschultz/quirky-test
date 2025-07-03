@@ -691,6 +691,7 @@ strings {
    vm_credits : string "<CREDITS<#f80>>" ;
    vm_links : string "<LINKS<#f80>>" ;
    vm_meta : string "<META<#f80>>" ;
+   vm_opt : string "<OPTIONS<#f80>>" ;
    vm_pts : string "<POINTS<#f80>>" ;
    vm_thx : string "<THANKS<#f80>>" ; # CREDITS is the preferred verb but THANKS maps to credits
    vm_verbs : string "<VERBS<#f80>>" ;
@@ -4184,7 +4185,7 @@ subroutines {
       : if (talked_to_thor) {
          : print "You can also {v_ask} Thor about {v_rule}s (1-17) with 0 checking for what you haven't asked about." ;
       }
-      : print "No other standard commands are needed to win {qt}. However, {vm_meta} will describe meta-commands, and <OPTIONS<#f80>> shows options that toggle. Also, many verbs have abbreviations." ;
+      : print "No other standard commands are needed to win {qt}. However, {vm_meta} will describe meta-commands, and {vm_opt} shows options that toggle. Also, many verbs have abbreviations." ;
       : if (jump_commands_notified) {
          : print {( "To save keystrokes, you can jump around hub locations with " + w_eb + " (east branch.)" + w_pb + " (plain base,) " + (point_healing_still ? "" : w_sh + " (stealing hill,) ") + w_wt + " (west tiles,) " )} ;
       }
@@ -4623,7 +4624,7 @@ subroutines {
             no_answer  = No, I don't want to skip on restart.
             var        = option_start_warp
          }
-         : print {( option_start_warp ? "Okay. You'll start at Nameless Lameness this time, becauseone footnote appears there after a necessary command, but next time you'll automatically start at Burst Face or beyond." : "Okay. The command is in {vm_opt} if you change your mind." )} ;
+         : print {( option_start_warp ? "Okay. You'll start at Nameless Lameness this time, because one footnote appears there after a necessary command, but next time you'll automatically start at Burst Face or beyond." : "Okay. The command is in {vm_opt} if you change your mind." )} ;
          : print "Press {key_enter} to continue." ;
       }
       : if (read_bookshelf_this_time && times_read_bookshelf < 2) {
