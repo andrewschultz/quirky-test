@@ -87,6 +87,7 @@ booleans {
    read_17 : boolean "false" scope="survivor" ;
    small_print_note : boolean "false" scope="survivor" ;
    pack_described : boolean "false" scope="survivor" ;
+   note_asked_thor_all : boolean "false" scope="survivor" ;
    pre_footnote : boolean "false" ;
 
    ## new miscellaneous booleans above
@@ -2862,6 +2863,19 @@ subroutines {
             : print {( "" + item() )} ;
       }
       : done;
+   }
+   ask_thor_complete_check : subroutine {
+      : if (note_asked_thor_all) {
+         : return ;
+      }
+      : collection_iterate "ask_list" {
+         : if (int(item()) < 3) {
+            : return ;
+         } : else {
+         }
+      }
+      : set_true "note_asked_thor_all" ;
+      : print {( "{note_once}you've asked Thor about everything he can teach you. Such perseverance merits an achievement! " + (have_won ? "{vd_ach} will show which one." : "You'll see a list of them all once you win, with an option to replay for more.") )} ;
    }
    ask_thor_next_guess : subroutine {
       : set_integer var="tempint" "0";
