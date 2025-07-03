@@ -749,6 +749,7 @@ strings {
    # regular commands in green
    v_ask : string "<ASK<#0f0>>" ;
    v_drop : string "<DROP<#0f0>>" ;
+   v_enter : string "<ENTER<#0f0>>" ;
    v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    v_l : string "<L<#0f0>>" ;
    v_o : string "<O<#0f0>>" ;
@@ -810,7 +811,7 @@ strings {
    lush_shout_note : dynamic_string {( bonus_point_shush_lout ? "quieter for being shushed but still pushy" : "with many a lush shout" )} ;
 
    describe_beery_thor : dynamic_string {( is_first_entered() ? (have_won ? "\"Oh, hey. Great to see you back. You know the drill. {v_talk} if you want, or look around for extra content.\"\n" + (has_visited "first_base" ? "He hands you the {pssp} again. You give him {player_rights} back." : "You still have the {pssp} since you warped right back here, so there's no need to trade for it again.") : "A man twice your size stands here. \"Glad you made it! I'm Beery Thor.\" You nod, recognizing his voice.\nHe notes your recognition and continues. \"Thanks for taking good care of {pr}. I'll trade you this {pssp} for it. You'll be able to carry everything you can pick up -- that's a courtesy of many modern parser games, so you don't have to juggle things. But you can still {v_talk} to learn details of what's in {pr}. If you want. No obligation.\"\nSounds fair. You make the trade.") : "Beery Thor stands here, smiling, waiting " + (talked_to_thor ? "for you to {v_ask} about " + (thor_asked_once ? "more" : "any" ) + " of the rules in the Player's Bill of Rights." : "to {v_talk} whenever, about whatever.") )} ;
-   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "An establishment called Seth Denton's is off to the side here. You have a feeling you don't want to <ENTER<#0f0>>, and maybe you can figure why." : "There's no trace of Seth Denton's, and maybe that's all for the better." )} ;
+   describe_seth_denton : dynamic_string {( is_beside "seth_dentons" ? "An establishment called Seth Denton's is off to the side here. You have a feeling you don't want to {v_enter}, and maybe you can figure why." : "There's no trace of Seth Denton's, and maybe that's all for the better." )} ;
    describe_gravel_trail : dynamic_string {( point_gravel_trail ? ", and your travel grail opened up a path north" : ", and it seems weirdly fuzzy north, as if something should be there but isn't. Yet" )} ;
 
    hubdir : dynamic_string {( is_at("west_tiles") ? "west" : "east" )} ;
@@ -5330,7 +5331,7 @@ on_command {
       : done ;
    }
    : match "enter _;in _" {
-      : print "You never need to ENTER or go IN explicitly in {qt}, though {v_o} is used when there's only one exit." ;
+      : print "You never need to {v_enter} or go <IN<#0f0>> explicitly in {qt}, though {v_o} is used when there's only one exit." ;
       : done ;
    }
    : match "drop _" {
