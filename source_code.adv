@@ -86,6 +86,7 @@ booleans {
    ask_to_talk_note : boolean "false" scope="survivor" ;
    read_17 : boolean "false" scope="survivor" ;
    small_print_note : boolean "false" scope="survivor" ;
+   pre_footnote : boolean "false" ;
 
    ## new miscellaneous booleans above
 
@@ -3167,6 +3168,9 @@ subroutines {
    }
    footnote_reveal : subroutine {
       : if (!have_won) {
+         : if (tempint == 1 || tempint == 3 || tempint == 4 || tempint == 7 || tempint == 11 || tempint == 13 || tempint == 14 || tempint == 15 || tempint == 16 || tempint == 17) {
+            : set_true "pre_footnote" ;
+         }
          : return ;
       }
       : if (tempint == 0) {
