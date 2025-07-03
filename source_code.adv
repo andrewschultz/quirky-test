@@ -656,10 +656,13 @@ strings {
    my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
-   ach_asterisk : dynamic_string {( !point_hi_mouse || note_partial_achievements ? " (*)" : "" )} ;
+   ach_asterisk : string " (*)" ;
    bonus_yellow : dynamic_string {( "<" + max_bonus_score + "<#ff0>>" )} ;
    pbr : dynamic_string {( talked_to_thor ? "rules in the Player's Bill of Rights" : "things to {v_ask} {thor_if_known} about" )} ;
    thor_if_known : dynamic_string {( has_visited("plain_base") ? "Thor" : "an NPC you'll find" )} ;
+
+   # keyboard stuff
+   key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
 
    # basic diagnostic verb abbreviations
    vd_bon : string "<BONUS<#f80>>" ;
@@ -4566,11 +4569,13 @@ subroutines {
          : press_any_key ;
          : clear_screen ;
          : ask_bool {
-            question   = On replaying {qt}, you have the option to skip rooms not required for bonus points, achievements, or footnotes. While you can toggle it at any time with {optwarp} with the parser, you can set it right now, before this next restart. Would you like to activate this feature after this next go round? (Footnote 2 is only found in Nameless Lameness after a necessary command.)
+            question   = On replaying {qt}, you have the option to skip rooms not required for bonus points, achievements, or footnotes, all the way up to Plain Base. While you can toggle it at any time with {optwarp} with the parser, you can set it right now, before this next restart. Would you like to activate this feature after this next go round?
             yes_answer = Yes, I'd like to skip on restart.
             no_answer  = No, I don't want to skip on restart.
             var        = option_start_warp
          }
+         : print {( option_start_warp ? "Okay. You'll start at Nameless Lameness this time, becauseone footnote appears there after a necessary command, but next time you'll automatically start at Burst Face or beyond." : "Okay. The command is in {vm_opt} if you change your mind." )} ;
+         : print "Press {key_enter} to continue." ;
       }
       : if (read_bookshelf_this_time && times_read_bookshelf < 2) {
          : increment "times_read_bookshelf" ;
@@ -4585,11 +4590,11 @@ subroutines {
       : update_graphic "s_the_ring" ;
       : set_false "thor_left" ;
       : if (!have_won) {
-         : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, I could have. But that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
+         : print "Thor stops by to congratulate you. \"I knew you could do it! And if you wonder why I didn't do it myself? Well, that sort of stuff, where we meddle in mortals' affairs directly instead of guiding you, makes Ragnarok come sooner.\"" ;
          : press_any_key ;
-         : print "Thor also notes that footnotes will be available on replay, if you choose to peruse them. Most of them will occur within the flow of the game, as you examine, or whatever. There are also achievements, which are slightly harder." ;
-         : print "These can be tracked with {vd_ach} or {vd_ac} on replay. But don't feel obliged to complete any of them. They're meant to be tough, and there are other games to play. Also, feel free to just look at achievements.txt on {qt_repo} to spoil them." ;
-         : print "Press any key to see the list of achievements." ;
+         : print {("Thor also notes that footnotes will be available on replay to mention rejected puzzles or stuff you can't quite {v_ask} about. Roughly half accompany necessary commands, and most of the rest need you to {vd_x_long} carefully." + ( pre_footnote ? " You've actually tried some already, but you'll need to try things again to get any such footnotes." : "" ) )} ;
+         : print "There are also achievements, which can be tracked with {vd_ach} or {vd_ac} on replay. Some are difficult, so don't feel obliged to complete any of them. After all, there are other games to play. Also, feel free to just look at achievements.txt on {qt_repo} to spoil how to get them efficiently." ;
+         : print "Press {key_enter} to see the list of achievements." ;
          : press_any_key ;
          : clear_screen ;
          : return ;
@@ -4668,7 +4673,7 @@ themes {
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
    invalid_choice                                 = {yn_or_12}
-   post_quit = I hope you enjoyed the experience. Pressing any key will restart {qt}.
+   post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {qt}.
    inventory_list_empty = Nothing (yet)
    inventory_list_header = In your {pssp}:\s
    exit_list_header_concise = {exit_or_out}
