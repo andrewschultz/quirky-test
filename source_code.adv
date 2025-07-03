@@ -399,7 +399,7 @@ collections {
       items = [
          "Meta-commands such as {vm_about}, {vm_credits} and {vm_verbs} give you general information that would break up the flow of an introduction.",
          "{v_x_me} is a good in-world starter command to tell you about yourself.",
-         "Shorthand such as {vd_i} to take inventory and {v_x} to <EXAMINE<#0f0>> help simplify what you need to type.",
+         "Shorthand such as {vd_i} to take {vd_i_long} and {v_x} to {v_x_long} help simplify what you need to type.",
          "Senses can provide clues. In this case, {qt} uses {v_listen_hear}, which implies {v_talk} or, as parsers allow shorthand for convenience, {v_t0} works here too. Note that, again for convenience, the ungrammatical {v_talk} SOMEONE works. No need for TO.",
          "You can often try going any direction (up, down, in, out, or the eight compass directions) if the room description is unclear. Also, shorthand such as <W<#0f0>> works in place of <GO WEST<#0f0>>.",
          "{qt}'s point-scoring commands are unusual for a parser game, where guess-the-verb is frowned on. However, the commands are all similar to objects or people you run across."
@@ -752,6 +752,7 @@ strings {
    v_t0 : string "<T<#0f0>>" ;
    v_talk_cues : string "{v_talk} or {v_t0}" ;
    v_x : string "<X<#0f0>>" ;
+   v_x_long : string "<EXAMINE<#0f0>>" ;
    v_x_me : string "<X ME<#0f0>>" ;
    v_xyzzy : string "<XYZZY<#f80>>" ;
 
@@ -2994,7 +2995,7 @@ subroutines {
       : else_if (tempint == 10) {
          : cycle key = "rule_10" predictable_order = "true" skip_interval = "0" {
          : print "\"The tenth rule in Graham Nelson's Player's Bill of Rights is <to have a decent parser<#f88>>.\"" ;
-         : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for <SEARCH<#0f0>> and <EXAMINE<#0f0>> may frustrate players.\nOne thing that helps provide a buffer is a {vm_verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you <LOOK BEHIND<#0f0>> and <LOOK UNDER<#0f0>>, and the right one is based on the object. But this was prompted by {vm_verbs}.\"" ;
+         : print "\"This rule may have evolved since the initial document to read: to have the game use the parser judiciously. There's a certain thrill in writing your own parser for your own game and programming neat side verbs, but it does not always rub off on players. For instance, a vastly different response for <SEARCH<#0f0>> and {v_x_long} may frustrate players.\nOne thing that helps provide a buffer is a {vm_verbs} command, so they know how much they need to focus on the right word. I've enjoyed games where you <LOOK BEHIND<#0f0>> and <LOOK UNDER<#0f0>>, and the right one is based on the object. But this was prompted by {vm_verbs}.\"" ;
          : print "\"{qt} uses Adventuron's simplified two-word parser, since all point-scoring commands are two words. You never need to <USE THIS ON THAT<#0f0>> explicitly.\"" ;
          }
          : gosub "ask_thor_tally" ;
@@ -4126,7 +4127,7 @@ subroutines {
       }
       : print "While {qt} requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." ;
       : print "{qt} uses all eight planar directions, abbreviated <N S E W NW NE SE SW<#0f0>> (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out_b} leaves if there is only one exit." ;
-      : print "You can {v_take} an item, but there is no need to {v_drop} it. You can also {v_x} it, which is short for <EXAMINE<#0f0>>." ;
+      : print "You can {v_take} an item, but there is no need to {v_drop} it. You can also {v_x} it, which is short for {v_x_long}." ;
       : print "You can {v_talk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : if (talked_to_thor) {
          : print "You can also {v_ask} Thor about {v_rule}s (1-17) with 0 checking for what you haven't asked about." ;
