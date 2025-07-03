@@ -240,10 +240,10 @@ booleans {
    achieve_pcpccp_pre : boolean "false" scope="survivor" ;
    pcpc_tile : boolean "false" scope="survivor" ;
    pcpc_pile : boolean "false" scope="survivor" ;
-   achieve_roer : boolean "false" scope="survivor" ;
-   ach_roer_west : boolean "false" scope="survivor" ;
-   ach_roer_east : boolean "false" scope="survivor" ;
-   ach_roer_base : boolean "false" scope="survivor" ;
+   achieve_roer_all : boolean "false" scope="survivor" ;
+   achieve_roer_west : boolean "false" scope="survivor" ;
+   achieve_roer_east : boolean "false" scope="survivor" ;
+   achieve_roer_base : boolean "false" scope="survivor" ;
    achieve_cnnc : boolean "false" scope="survivor" ;
 
    ## yellows
@@ -316,7 +316,7 @@ booleans {
 
    ## achievements
    all_red_achievements : dynamic_boolean {( achieve_haih || achieve_mttm || achieve_tyyt || achieve_gmmg )} ;
-   all_orange_achievements : dynamic_boolean {( achieve_tnnt || achieve_cddc_0pts || achieve_pcpccp || achieve_roer || achieve_cnnc )} ;
+   all_orange_achievements : dynamic_boolean {( achieve_tnnt || achieve_cddc_0pts || achieve_pcpccp || achieve_roer_all || achieve_cnnc )} ;
    all_yellow_achievements : dynamic_boolean {( achieve_qwwq || achieve_kssn )} ; # yeah yeah yeah grammatically it should be both but I want consistent variable names
    all_green_achievements : dynamic_boolean {( achieve_ssss || achieve_tnnt || achieve_tnnt || achieve_kssn )} ;
    all_blue_achievements : dynamic_boolean {( achieve_bwwb && achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
@@ -2864,11 +2864,11 @@ subroutines {
       : collection_modify { collection = "bonus_status" index -> (tempint) content -> ("1") }
       : increment "bonus_score";
       : if (current_location() == "west_tiles") {
-         : set_true "ach_roer_west" ;
+         : set_true "achieve_roer_west" ;
       } : else_if (current_location() == "east_branch") {
-         : set_true "ach_roer_east" ;
+         : set_true "achieve_roer_east" ;
       } : else_if (current_location() == "plain_base") {
-         : set_true "ach_roer_base" ;
+         : set_true "achieve_roer_base" ;
       }
       : if (bonus_score == max_bonus_score) {
          : print "{note_once}congratulations! You got all the bonus points. While {vd_bon} is no longer useful, you can still use it to see and feel good about everything you've found. (Hey, you've earned it!)" ;
@@ -2973,6 +2973,7 @@ subroutines {
          : set_true "have_asked_four";
          : print "{note_once}Thor's responses for each rule come in cycles of three: the rule itself, an explanation, and its application to {qt}. Being an upstanding sort of immortal (unlike Loki,) he'll never get impatient cycling through his responses word for word." ;
       }
+      : gosub "ask_thor_complete_check" ;
       : done ;
    }
    ask_thor : subroutine {
@@ -4376,11 +4377,11 @@ subroutines {
       } : else {
          : print "You haven't unlocked the {achievement_pcpccp} achievement yet.{ach_asterisk}" ;
       }
-      : if (achieve_roer) {
+      : if (achieve_roer_all) {
          : print "You already unlocked the {achievement_roer} achievement." ;
-      } : else_if (ach_roer_west && ach_roer_east && ach_roer_base) {
+      } : else_if (achieve_roer_west && achieve_roer_east && achieve_roer_base) {
          : print "For scoring points in every location, you win the {achievement_roer} achievement!{chimes_note}" ;
-         : set_true "achieve_roer" ;
+         : set_true "achieve_roer_all" ;
       } : else {
          : print "You haven't unlocked the {achievement_roer} achievement yet.{ach_asterisk}" ;
       }
