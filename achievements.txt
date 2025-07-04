@@ -72,10 +72,6 @@ X BOOKSHELF
 
 No bonus points on one runthrough.
 
-** Player-Can-Pair-Clan Care Plan
-
-TILE PRICKS and PILE TRICKS with the trial pics.
-
 ** Reach Out Each Route
 
 Score a point based on an item in each area.
@@ -171,7 +167,6 @@ People who like to optimize things may wonder how many times through you need. I
 Achievements not affected by walkthrough (can/should be done first so your mind is clear for the second time through)
 ** Too Yacky: You, Tacky (talk in first base, plain base, W:W/S/N/NE, E:NE/E/W/NW)
 ** Get a Major Meta-Gauger
-** Player-Can-Pair-Clan Care Plan
 ** Hi! Beer By Here?
 ** Neat-Book-Beat Nook
 
@@ -204,6 +199,11 @@ Efficiency and warping (can only do one or the other):
 ** Chump, Joke Jump? Choke
 ** Did-Buzzin'-Bid? Dozen
 ** Cousin, Draft Dozen-Craft
+
+Note you can get the Player-Can-Pair-Clan Care Plan with the trial pics. It gives a clue what you need to do next.
+
+> TILE PRICKS
+> PILE TRICKS
 
 So one plan to get things done in two runs (and avoid tricky oversights)
 

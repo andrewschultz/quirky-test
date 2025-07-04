@@ -92,6 +92,7 @@ booleans {
    note_asked_thor_all : boolean "false" scope="survivor" ;
    pre_footnote : boolean "false" ;
    chose_achievement : boolean "false" ;
+   noted_plan : boolean "false" scope="survivor" ;
 
    ## new miscellaneous booleans above
 
@@ -358,7 +359,7 @@ integers {
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
    rule_chosen : integer "0" ;
-   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that failed and thus gets rejected.
+   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
    books_read : integer "0" ;
 
    # achievements
@@ -2081,7 +2082,12 @@ locations {
          }
          : else
          {
-            : print "You take a balanced tone of friendship and defiance, explaining you saw this neat home just waiting for someone more worthy than you to occupy it. You're surprised how well it works, and you feel clever for having dealt with negativity." ;
+            : print "You take a balanced tone of friendship and defiance, showing the trial pics and explaining you saw this neat home just waiting for someone more worthy than you to occupy it. You're surprised how well it works, as the pics are quickly snatched from your hand, and you feel clever for having dealt with negativity." ;
+            : if (pcpc_both) {
+               : print "In fact, the fellow is so taken by your salesmanship that he promises to leave you something if you ever find a home. What could it be?" ;
+            } : else_if (pcpc_pile || pcpc_tile) {
+               : print "The fellow looks at thr trial pics and says, rather oddly, \"Nice, but something's still missing.\"" ;
+            }
             : set_true "point_fellow_yield" ;
             : set_false "think_fellow_yield" ;
             : destroy "fast_vision" ;
@@ -2642,6 +2648,13 @@ locations {
          : if (achieve_nbbn && !note_book_reshuffle) {
             : print "{note_once}as a small bonus, the books in the bookshelf are different this time. I wasn't creative enough to do any more than that, but I hope you enjoy it, all the same. Thanks again for playing and replaying!" ;
             : set_true "note_book_reshuffle" ;
+         }
+      }
+      on_tick {
+         : if (!noted_plan && noun1_is "plan") {
+            #: set_true "noted_plan" ;
+            : set_true "noted_plan" ;
+            : print "Oh, maybe this is what the fellow in the field talked about when leaving you something in return. Kind of him." ;
          }
       }
    }
@@ -3756,7 +3769,7 @@ subroutines {
 
    pcpc_check_pieces : subroutine {
       : if (pcpc_tile && pcpc_pile) {
-         : print "You look towards the fourth wall again. No bonus points? Sadly, no. But you're promised a little something extra at the very end." ;
+         : print "You look towards the fourth wall again. No bonus points? Sadly, no. Maybe this will be useful later, though." ;
       } : else {
          : print "You look towards the fourth wall. It's a good spoonerism, right? Isn't a bonus point in order? Apparently, this is just an observation for salesmanship purchases and not for adventuring. And there's still a bit to go." ;
          : create "care_plan" target = "my_house" ;
@@ -4902,8 +4915,10 @@ subroutines {
             : print {( "So {ypintro} what the yellow {y17}s are about. They were intended as a small easter egg and hat-tip to {hcssim} (Hampshire College Summer Studies in Mathematics,) which I attended after my junior year in high school and enjoyed very much." + (read_17 ? "" : " I broke this into a few parts because it got a bit long, so keep typing {y17} or <17<#ff0>>. There's no difference between the numerals and the word.") )} ;
             : print "{hcssim} has an in-joke about a yellow pig and the number 17, and how really it is the most important number. It also has an aversion for pink pigs and the number 23, which is the anti-number for them. I forget why, but it's part of the joke." ;
             : print "I realized after {qt}'s initial release that 17 appeared in two places: maximum bonus points and {pbr}, and I was amused how it popped up accidentally. The maximum core score (shown if you type {sco} or look in the upper right) is 23, and I framed this in my head as \"23 is the number of everyone-gets-them points, but the 17 bonus points show you really used your brain.\"" ;
+            : print "Also, I fudged things a bit. I was at 17 achievements and didn't realize it, so I added another, and then I decided to get rid of one. It turned out to be the item from the trial pics. I think this gave the player good hints about any potentially tough achievements, so maybe there's something along the \"coming back to 17 worked from a gameplay design\" point of view." ;
             : print "While I ultimately didn't go for a career in mathematics, the fun I had at {hcssim} left an impression: I wanted to do or create unexplored fun thinky stuff, somewhere, someday, somehow. And it's something I've tried to bring to all my text adventures, in various ways." ;
-            : print "And of course the more I wrote, the more I wanted to add a {hcssim} Easter Egg, but I didn't want it to feel too forced. With {qt}, it did not.\n\n(END OF SPIEL, but you can reread the cycle)" ;
+            : print "And of course the more I wrote, the more I wanted to add a {hcssim} Easter Egg, but I didn't want it to feel too forced. With {qt}, it did not." ;
+            : print "Before release 2, I saw that David Kelly, the founder of {HCSSiM}, passed away just before his 85th (17*5) birthday in June of 2025. He's inspired a lot more than {qt}. But this is the best I can offer.\n\n(END OF SPIEL, but you can reread the cycle)" ;
          }
          : set_true "read_17" ;
          : if (!pig_drawing_credits) {
