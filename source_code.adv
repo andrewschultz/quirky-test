@@ -1468,6 +1468,10 @@ locations {
             }
             : set_true "noticed_beer_this_time" ;
          }
+         : match "smell _" {
+            : print "Thor doesn't smell very beery. That's to be expected, though. Immortals probably wouldn't let themselves go like that." ;
+            : done ;
+         }
          : match "listen _" {
             : print {( "Thor has a lot you could listen to. Just " + (talked_to_thor ? v_talk : v_ask) + "." )} ;
             : done ;
@@ -1505,7 +1509,7 @@ locations {
             }
             : match "x seth;x denton;x dentons" {
                : print "Very seedy looking. Even its name, though common, seems ominous. Why?";
-               : gosub "thor_on_seth" ;
+               : gosub "ask_thor_seth" ;
                : update_graphic "ts_seth_dentons" ;
                : done ;
             }
@@ -1515,7 +1519,7 @@ locations {
                   : done ;
                } : else {
                : print "It's a seedy place, it is. You are captured and put on trial. It looks bad for you, but before the verdict is rendered, Beery Thor clatters in and makes an argument that befuddles the courtroom.\n\"You're not the first person to try that,\" says Beery Thor. \"And I don't blame you. But there's another way to deal with it.\"" ;
-               : gosub "thor_on_seth" ;
+               : gosub "ask_thor_seth" ;
                : set_true "entered_seth_dentons" ;
                }
             }
@@ -1563,7 +1567,7 @@ locations {
       }
       on_tick {
          : if (subject1_is "seth_dentons" ) {
-            : gosub "thor_on_seth" ;
+            : gosub "ask_thor_seth" ;
             : done ;
          }
          : if (said_bore_outside_base && !thor_knows_bore) {
@@ -2053,7 +2057,7 @@ locations {
    hub_w_nw : location "^c^<YELLOW FIELD<#ff0>>\n^l^{point_fellow_yield ? hub_w_fellow_yield : hub_w_yellow_field}" {
       on_command {
       : if (!point_fellow_yield) {
-         : match "x fellow" {
+         : match "x fellow;x someone" {
             : print "He doesn't seem evil, but boy howdy is he complaining a lot." ;
             : done ;
          }
@@ -2961,17 +2965,6 @@ subroutines {
       : gosub "color_check_bf" ;
       : gosub "color_check_bfa" ;
    }
-   brief_hill_mad : subroutine {
-      : update_graphic "s_stealing_hill_finds" ;
-      : press_any_key ;
-      : update_graphic ;
-   }
-   thor_on_seth : subroutine {
-      : if (!thor_explained_seth) {
-         : print "Beery Thor casually mentions it'd be nice if Seth Denton's disappeared, but not critical. The ring's not there, but if it was, he would've taken care of things, already." ;
-         : set_true "thor_explained_seth" ;
-         }
-      }
    ask_thor_debug : subroutine {
       : print "Results of debug command checking how many times the player asked:" ;
       : collection_iterate "ask_list" {
@@ -3018,6 +3011,12 @@ subroutines {
       }
       : done ;
    }
+   ask_thor_seth : subroutine {
+      : if (!thor_explained_seth) {
+         : print "Beery Thor casually mentions it'd be nice if Seth Denton's disappeared, but not critical. The ring's not there, but if it was, he would've taken care of things, already." ;
+         : set_true "thor_explained_seth" ;
+         }
+      }
    ask_thor_tally : subroutine {
       : set_true "thor_asked_once" ;
       : decrement "tempint" ;
@@ -3231,6 +3230,10 @@ subroutines {
       }
    }
 
+   brief_hill_mad : subroutine {
+      : update_graphic "s_stealing_hill_finds" ;
+      : press_any_key ;
+      : update_graphic ;
    }
 
    evaluate_warp : subroutine {
@@ -4471,7 +4474,7 @@ subroutines {
    }
 
    track_achievements_1_red : subroutine {
-      : if (achieve_haih && achieve_mttm && achieve_tyyt && achieve_gmmg) {
+      : if (all_red_achievements) {
          : print "You got all the achievements for various verb usage: {achievement_haih}, {achievement_mttm}, {achievement_tyyt}, and {achievement_gmmg}." ;
          : return ;
       }
@@ -4517,8 +4520,8 @@ subroutines {
    }
 
    track_achievements_2_orange : subroutine {
-      : if (achieve_tnnt && achieve_cddc_0pts && achieve_pcpccp && achieve_roer_all && achieve_cnnc) {
-         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_cddc_0pts},  {achievement_pcpccp}, {achievement_roer}, and {achievement_cnnc}." ;
+      : if (all_orange_achievements) {
+         : print "You already found all the footnotes and bonus points with {achievement_tnnt}, {achievement_cddc_0pts},  {achievement_roer}, and {achievement_cnnc}." ;
          : return ;
       }
       : if (achieve_tnnt) {
@@ -4568,7 +4571,7 @@ subroutines {
    }
 
    track_achievements_3_yellow : subroutine {
-      : if (achieve_qwwq && achieve_kssn) {
+      : if (all_yellow_achievements) {
          : print "You already got both achievements for {v_ask}ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
          : return ;
       }
@@ -4580,7 +4583,7 @@ subroutines {
    }
 
    track_achievements_4_green : subroutine {
-      : if (achieve_ssss && achieve_gssg && achieve_rssr && achieve_srrs) {
+      : if (all_green_achievements) {
          : print "You got all four achievements that speed- or slow-run: {achievement_ssss}, {achievement_gssg}, {achievement_rssr}, and {achievement_srrs}." ;
          : return ;
       }
@@ -4596,7 +4599,7 @@ subroutines {
          : print "{ach_alr} {achievement_gssg} {ach_for} {achtxt_gssg}." ;
       } : else {
          : if ((hub_think_needed == 0) && (point_healing_still)) {
-            : print "{ach_got} {achievement_gssg} {ach_for} {achtxt_gssg}" ;
+            : print "{ach_got} {achievement_gssg} {ach_for} {achtxt_gssg}." ;
             : set_true "achieve_gssg" ;
          } : else {
             : print "{ach_not} {achievement_gssg} {ach_yet}." ;
@@ -4676,7 +4679,7 @@ subroutines {
    }
 
    track_achievements_6_purple : subroutine {
-      : if (achieve_hbbh && achieve_nbbn) {
+      : if (all_purple_achievements) {
          : print "You already got both examining achievements: {achievement_hbbh} for beer and {achievement_nbbn} for books." ;
          : return ;
       }
