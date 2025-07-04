@@ -908,6 +908,7 @@ strings {
    gravel_trail_house : dynamic_string {(
       point_missing_house ? "to the house you summoned" : "to, well, nowhere at the moment"
    )};
+   listen_cue_trail: dynamic_string {( point_missing_house && !summoned_teary_chimes ? ". You think you hear something with the mouse gone, but you'd have to {v_listen_hear} to make out what it is" : "" )} ;
 
    my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}.\nBecaue, sure, the bookshelf and poster and table make this house feel homey, but maybe it's time to finish things." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and poster and table and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
@@ -2460,7 +2461,8 @@ locations {
          }
       }
    };
-   gravel_trail : location "^c^<GRAVEL TRAIL<#888>>\n^l^This is a gravel trail running south back to the plain base and north {gravel_trail_house}{chimes_present}." {
+
+   gravel_trail : location "^c^<GRAVEL TRAIL<#888>>\n^l^This is a gravel trail running south back to the plain base and north {gravel_trail_house}{listen_cue_trail}{chimes_present}." {
       on_describe {
          : if (is_beside "hissing_mouse") {
             : print "A {cc_hissing_mouse} hisses here! It's not lethal, but you can't blame it for feeling scared and nervous, vulnerable out here in the open." ;
@@ -3776,26 +3778,25 @@ subroutines {
       }
    }
    pcpc_choose : subroutine {
-#      : if (!achieve_haih && !achieve_haih_pre) {
-#         : set_string var="pcpc_view" text="haih" ;
-#      } : else_if (!achieve_mttm) {
-#         : set_string var="pcpc_view" text="mttm" ;
-#      } : else_if (!achieve_tyyt) {
-#         : set_string var="pcpc_view" text="tyyt" ;
-#      } : else_if (!achieve_gmmg) {
-#         : set_string var="pcpc_view" text="gmmg" ;
-#      } : else_if (!achieve_tnnt && !achieve_tnnt_pre) {
-#         : set_string var="pcpc_view" text="tnnt" ;
-#      } : else_if (!achieve_cddc_0pts) {
-#         : set_string var="pcpc_view" text="cddc_0pts" ;
-#      } : else_if (!achieve_cnnc) { # takes out ROER too
-#         : set_string var="pcpc_view" text="cnnc" ;
-#      } : else_if (!achieve_kssn) { # takes out QWWQ too
-#         : set_string var="pcpc_view" text="kssn" ;
-#      } : else_if (!achieve_ssss || !achieve_gssg || !achieve_rssr) {
-#         : set_string var="pcpc_view" text="rssr" ;
-#      } : else_if (!achieve_srrs) {
-      : if (1 == 0) {
+      : if (!achieve_haih && !achieve_haih_pre) {
+         : set_string var="pcpc_view" text="haih" ;
+      } : else_if (!achieve_mttm) {
+         : set_string var="pcpc_view" text="mttm" ;
+      } : else_if (!achieve_tyyt) {
+         : set_string var="pcpc_view" text="tyyt" ;
+      } : else_if (!achieve_gmmg) {
+         : set_string var="pcpc_view" text="gmmg" ;
+      } : else_if (!achieve_tnnt && !achieve_tnnt_pre) {
+         : set_string var="pcpc_view" text="tnnt" ;
+      } : else_if (!achieve_cddc_0pts) {
+         : set_string var="pcpc_view" text="cddc_0pts" ;
+      } : else_if (!achieve_cnnc) { # takes out ROER too
+         : set_string var="pcpc_view" text="cnnc" ;
+      } : else_if (!achieve_kssn) { # takes out QWWQ too
+         : set_string var="pcpc_view" text="kssn" ;
+      } : else_if (!achieve_ssss || !achieve_gssg || !achieve_rssr) {
+         : set_string var="pcpc_view" text="rssr" ;
+      } : else_if (!achieve_srrs) {
          : set_string var="pcpc_view" text="srrs" ;
       } : else_if (!achieve_bwwb) {
          : set_string var="pcpc_view" text="bwwb" ;
