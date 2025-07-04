@@ -4365,7 +4365,7 @@ subroutines {
    meta_versions : subroutine {
       : print "<Version 1.0.0<#80f>> was released for the TALP 2025 Jam on April 30, 2025." ;
       : print "There were several in-comp updates. {qt_io} has this, with the details of what they fixed. It will also track any tweaks after the last major release." ;
-      : print "<Version 2.0.0<#80f>> was released on July 2, 2025. A detailed list of changes is <here<#dcb>>[https://andrewschultz.itch.io/quirky-test/devlog/978215/version-200], but the major ones are bug fixes and graphics upgrades, new achievements (including one that requires two former bonus points now replaced by ones I forgot to add in 1.0.0) and a final ending for players who got all the achievements. Oh, a small Easter egg too." ;
+      : print "<Version 2.0.0<#80f>> was released on July 4, 2025. A detailed list of changes is <here<#dcb>>[https://andrewschultz.itch.io/quirky-test/devlog/978215/version-200], but the major ones are bug fixes and graphics upgrades, new achievements (including one that requires two former bonus points now replaced by ones I forgot to add in 1.0.0) and a final ending for players who got all the achievements. Oh, a small Easter egg too." ;
       : print "There are no future versions planned, barring catastrophic bugs." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "128" ;

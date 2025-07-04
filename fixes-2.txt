@@ -1,0 +1,53 @@
+I made a lot of changes for release 2. The most visible one for content is probably switching two bonus points. Two were related to one item, but they were moved to an achievement. There also are new achievements.
+
+New stuff after build
+--special ending room for people who get all the achievements, which is technically possible in two runthroughs
+--early narrative changed to give more of a feel for what is going on and what to expect
+--score printout redone
+--CREDITS now organizes testers by when they found bugs
+--links to everyone who helped me
+--spillover text should be fixed after bonus points / half right bonus point guesses
+--endgame room now doesn't disallow system verbs like RESTART
+--more nouns implemented if only to say "that's not important"
+--many links added to the final area that points out my other games
+--Seth Denton's code under the hood -- nothing should be wrong, but the bug was about Seth Denton's reappearing even after DEATH SENTENCE on restart so you could get 18 of 17 bonus points
+--graphic transparency tweaked -- I made a pass through, but if something is off it will be obvious
+--one-time "you got all the footnotes, yay" ping echoes "you got all the bonus points, yay." Also, they show up right when you get everything.
+--easter egg for people who notice an odd theme
+
+core game mechanics
+-- (item redacted) had 2 bonus points, but it's now an item that hints at achievements
+-- other new achievements, plus one big one for players trying to get all achievements
+-- there's now an option to jump ahead to the first room that still needs something to complete part of an achievement or reveal footnotes or bonus points, up to Plain Base
+-- new endgame room for getting all achievements, with endgame graphics and "ad space" for my other games
+-- item that should've had bonus point for comp now does. There's also an endgame bonus point that was in the final room graphic.
+-- tutorial mode now more on rails
+-- one footnote is moved from coming back to Thor to being on the hill. It is about the nonreciprocal directions. It seemed better to explain this immediately. Another footnote is moved to leaving the hill.
+-- using Travel Grail too early now gives a THINK
+-- bonus points now roll over to re-playthroughs
+
+text output
+-- adjusted EXITS so "east/exit" don't show in hub spokes (less confusing)
+-- if you replay to get all bonus points, the game now flags half-right bonus points, since it's assumed you know all the main points and there'll thus be no confusion about what you need to do
+-- achievement text is now more uniform for each achievement
+
+fun details
+-- you now have a carryall, with a game-appropriate name
+-- new/redrawn graphics for items, scenery and locations
+-- the bookshelf gets a new set of books if you read all the way through. In fact, there are two of them!
+
+specific verb responses
+-- THINK now saves if you thought of a bonus point too late. Also, if you get the item you need on replay, the game nudges you "hey, do it this time"
+-- TALK and ASK upgrades
+-- TALK responses everywhere including ASK THOR tweaked a lot
+-- ASK 0 now points you to what you haven't asked yet
+-- stock rejects for certain popular parser verbs (ATTACK/USE)
+
+parser wrangling
+-- no more "unrecognized noun" errors for if you say the first word of an unavailable bonus command
+-- The parser should now understand all adjectives, though if I missed one, there'll be a Release 2.0.
+
+under the hood stuff
+-- used Adventuron's ZONE feature to simplify code
+-- modularized variable names for my own sanity, also renaming footnotes_available to have_won
+-- used Python script to check all {string_name} string calls were valid
