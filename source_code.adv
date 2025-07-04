@@ -2450,6 +2450,15 @@ locations {
          : match "_ gravel;_ trail" {
             : print {( "There's nothing remarkable or magical about the gravel on the trail. You sense you need to deal with the " + (point_missing_house ? "house to the north" : "{cc_hissing_mouse}") + " instead." )} ;
          }
+         : if (point_missing_house) {
+            : match "_ mailbox;_ box;_ mail" {
+               : cycle key = "mailboxy" predictable_order = "true" skip_interval = "0" {
+                  : print "It's a mailbox with the yellow number <y17> on it. There's not much to do with it but look inside. Nope, no {rttr}. In fact, it's completely empty. Well, it would've been pretty mean for me to put the {rttr} there and not describe it in the text." ;
+                  : print "You already poked at the mailbox. The {rttr} wasn't there. But you must be close." ;
+               }
+               : done ;
+            }
+         }
          : if (is_beside("hissing_mouse")) {
             : match "x mouse;x hissing" {
                : set_integer var="tempint" "16" ;
@@ -2510,15 +2519,6 @@ locations {
          : if (initial_book_poke) {
             : match "_ hook;_ bold;_ hold" {
                : set_sentence {( original "verb" + " book" )} ;
-            }
-         }
-         : if (point_missing_house) {
-            : match "_ mailbox" {
-               : cycle key = "mailboxy" predictable_order = "true" skip_interval = "0" {
-                  : print "It's a mailbox with the yellow number <y17> on it. There's not much to do with it but look inside. Nope, no {rttr}. In fact, it's completely empty. Well, it would've been pretty mean for me to put the {rttr} there and not describe it in the text." ;
-                  : print "You already poked at the mailbox. The {rttr} wasn't there. But you must be close." ;
-               }
-               : done ;
             }
          }
          : match "gee _" {
