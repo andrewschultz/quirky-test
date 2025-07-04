@@ -91,6 +91,7 @@ booleans {
    pack_described : boolean "false" scope="survivor" ;
    note_asked_thor_all : boolean "false" scope="survivor" ;
    pre_footnote : boolean "false" ;
+   chose_achievement : boolean "false" ;
 
    ## new miscellaneous booleans above
 
@@ -239,10 +240,6 @@ booleans {
    achieve_tnnt : boolean "false" scope="survivor" ;
    achieve_tnnt_pre : boolean "false" scope="survivor" ;
    achieve_cddc_0pts : boolean "false" scope="survivor" ;
-   achieve_pcpccp : boolean "false" scope="survivor" ;
-   achieve_pcpccp_pre : boolean "false" scope="survivor" ;
-   pcpc_tile : boolean "false" scope="survivor" ;
-   pcpc_pile : boolean "false" scope="survivor" ;
    achieve_roer_all : boolean "false" scope="survivor" ;
    achieve_roer_west : boolean "false" scope="survivor" ;
    achieve_roer_east : boolean "false" scope="survivor" ;
@@ -259,6 +256,7 @@ booleans {
    achieve_gssg : boolean "false" scope="survivor" ;
    achieve_rssr : boolean "false" scope="survivor" ;
    achieve_srrs : boolean "false" scope="survivor" ;
+   achieve_srrs_pre : boolean "false" scope="survivor" ;
 
    ## blues
    achieve_bwwb : boolean "false" scope="survivor" ;
@@ -280,6 +278,10 @@ booleans {
    ## final one
    achieve_taat : boolean "false" scope="survivor" ;
 
+   ## honorary/demoted achievements
+   pcpc_tile : boolean "false" scope="survivor" ;
+   pcpc_pile : boolean "false" scope="survivor" ;
+   pcpc_both : dynamic_boolean {( pcpc_tile && pcpc_pile )} ;
    ## tutorial booleans, organized by order you see/do them in
    in_number_choice: boolean "true" ;
    in_tutorial: boolean "false" ;
@@ -320,7 +322,7 @@ booleans {
 
    ## achievements
    all_red_achievements : dynamic_boolean {( achieve_haih && achieve_mttm && achieve_tyyt && achieve_gmmg )} ;
-   all_orange_achievements : dynamic_boolean {( achieve_tnnt && achieve_cddc_0pts && achieve_pcpccp && achieve_roer_all && achieve_cnnc )} ;
+   all_orange_achievements : dynamic_boolean {( achieve_tnnt && achieve_cddc_0pts && achieve_roer_all && achieve_cnnc )} ;
    all_yellow_achievements : dynamic_boolean {( achieve_qwwq && achieve_kssn )} ; # yeah yeah yeah grammatically it should be both but I want consistent variable names
    all_green_achievements : dynamic_boolean {( achieve_ssss && achieve_tnnt && achieve_tnnt && achieve_kssn )} ;
    all_blue_achievements : dynamic_boolean {( achieve_bwwb && achieve_tmmt && achieve_cjjc && achieve_dbbd && achieve_cddc_jump )} ;
@@ -356,7 +358,7 @@ integers {
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
    rule_chosen : integer "0" ;
-   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
+   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that failed and thus gets rejected.
    books_read : integer "0" ;
 
    # achievements
@@ -645,8 +647,9 @@ collections {
 
 strings {
 
-   # for options code
+   # for options and PCPC code
    tempopt : string "blank option" ;
+   pcpc_view : string "" ;
 
    ## important conditional text stubs
    exit_or_out : dynamic_string {( at_spoke ? "Only way {v_out}: " : "Exits: " )} ;
@@ -792,6 +795,7 @@ strings {
    pip : string " <(+)<#0f0>>" ;
    pr : string "<Player Rights<#88f>>" ;
    rttr : string "<Rare-Thing-There Ring<#a33>>" ;
+   pccp : string "<Player-Can-Pair-Clan Care Plan<#a33>>" ;
    pssp : string "<Pile/Stack Style Pack<#a33>>" ;
 
    # command(s) referred to in footnotes (real or apocryphal)
@@ -874,6 +878,7 @@ strings {
    map_and_plan : dynamic_string {( point_chalice_map && point_master_plan ? "The chalice map and master plan seem to fit together well. They'll help when you need them, without having to do anything fancy." : "You sense you may need something else to make full sense of it."
       )} ;
    trial_pics_seen : dynamic_string {( pcpc_tile && pcpc_pile ? "You've found two different ways to look at the pics. There can't be any more." : (!pcpc_tile && !pcpc_pile) ? "Perhaps there is something in the pics, but it can't be SUPER critical." : "You've focused on " + (pcpc_tile ? "the tile pricks" : "how to pile tricks") + ", and yet you feel they have more to offer." )} ;
+   pcpc_no : dynamic_string {( pcpc_both ? "The trial pics have nothing else to offer." : "No, you already looked at the pics that way." )} ;
 
    bonus_note_rare_plights : dynamic_string {( bonus_point_rare_plights ? "\nYou figured {cc_prayer_lights} hid an alternate subtitle {cue_rare_plights} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_rare_plights} again {once_prayer_lights}." : "" )} ;
    bonus_note_cease_purging : dynamic_string {( bonus_point_cease_purging ? "\nYou figured how to {cue_cease_purging} {with_bonus}." : retry_cease_purging ? "\nYou should {cue_cease_purging} again {once_peace_surging}." : "" )} ;
@@ -903,10 +908,11 @@ strings {
       point_missing_house ? "to the house you summoned" : "to, well, nowhere at the moment"
    )};
 
-   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and poster and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
+   my_house_description : dynamic_string {( point_see_glimmering ? "Stuff is glimmering a few places, and maybe the ring is somewhere, but you'll never reach it on your own. Boy, you think, I could use a helper who can get everywhere in {cc_my_house}{chimes_present}.\nBecaue, sure, the bookshelf and poster and table make this house feel homey, but maybe it's time to finish things." : "{cc_glee_simmers} here as you think, yes, this really is {cc_my_house}! It has a bookshelf and poster and table and everything!\nAnd yet, owning a house is nice and all, but ... what about Thor's quest? You glance again at your inventory."
    )};
 
    ruts_poster_note : dynamic_string {( bonus_point_eye_stay ? "You figured its twist" : "Maybe it actually has a double meaning, though you may just wish to wrap things up here" )} ;
+   table_plan : dynamic_string {( pcpc_both ? " And it holds a Player-Can-Pair-Clan Care Plan!" : (pcpc_tile || pcpc_pile ? " It might be a trick of your eyes, but it seems like something is half there and half isn't. Maybe there's something you only did halfway?" : "It seems emptier than it should be, though. Not that it matters too much." ) )} ;
 
    book_is : dynamic_string {(
       books_read == 16 ? "The last book is" :
@@ -974,7 +980,7 @@ strings {
    achievement_haih : string "<Hi, All I Haul<#f00>>" ;
    achtxt_haih : string "taking inventory with the maximum number of items possible" ;
    achievement_mttm : string "<More than Thor, Man<#f00>>" ;
-   achtxt_mttm : string "not talking to Thor this time through" ;
+   achtxt_mttm : string "not talking to Thor one time through" ;
    achievement_tyyt : string "<Too Yacky: You, Tacky<#f00>>" ;
    achtxt_tyyt : string "trying to talk to everyone who might speak" ;
    achievement_gmmg : string "<Get a Major Meta-Gauger<#f00>>" ;
@@ -988,8 +994,6 @@ strings {
    achtxt_cddc_0pts : string "one time through {qt} without any bonus points" ;
    achievement_roer : string "<Reach Out Each Route<#f80>>" ;
    achtxt_roer : string "scoring a bonus point in each post-intro location" ;
-   achievement_pcpccp : string "<Player-Can-Pair-Clan Care Plan<#f80>>" ;
-   achtxt_pcpccp : string "finding two ways to look at the trial pics" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
    achtxt_cnnc : string "getting all the bonus points" ;
 
@@ -1092,6 +1096,8 @@ objects {
    travel_grail : object "a {cc_travel_grail}" msg="It doesn't look super-valuable, but its inscriptions suggest it can help you find a new path that wasn't available before and see somewhere new.\nThere aren't that many locations here, so it shouldn't be TOO hard to find." ;
    teary_chimes : object "teary chimes" msg="{chimes_description_start} small pleasant musical noises in the wind." conspicuous="false" ;
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
+   lots_table : scenery "a tots-label-lots table" at="my_house" conspicuous="false" msg="It has all sorts of cutesy doodles drawn on it.{table_plan}" ;
+   care_plan : scenery conspicuous="false" "a Player-Can-Pair-Clan Care Plan"  msg="achievement help" ;
    ruts_poster : scenery "a putz-roaster-ruts poster" at="my_house" conspicuous="false" msg="It advertises itself as a Putz-Roaster-Ruts Poster, one of those posters that claim to be ironic with motivation or a downer statement. {ruts_poster_note}." ;
 
 }
@@ -1121,6 +1127,7 @@ vocabulary {
    # endgame
    : noun / aliases = [glimmer, glimmers, glimmering]
    : noun / aliases = [putz, roaster, ruts, poster]
+   : noun / aliases = [animation, plan]
 
    # aliases for yes/no
    : noun / aliases = [no, n, off]
@@ -1676,6 +1683,9 @@ locations {
             : print {( "With the stealing hill watching you, it'll be tough to nab or feel anything. " + ( !point_master_plan && !point_chalice_map ? "You'll need to know what you want and how to get there." : !point_master_plan ? "You know where to poke around, but not how or why, yet." : "You know how to sneak around, thanks to the master plan, but not where." ) )} ;
             : if (!think_healing_still) {
                : increment "hub_think_needed" ;
+               : if (hub_think_needed == 7) {
+                  : set_true "achieve_srrs_pre" ;
+               }
             }
             : set_true "think_healing_still" ;
             : gosub "note_think_command" ;
@@ -2521,6 +2531,20 @@ locations {
                : set_sentence {( original "verb" + " book" )} ;
             }
          }
+         : match "_ table" {
+            : print {( "The table is filled with charming childish doodles. " + (pcpc_both ? "On it rests a {pccp}, which, well, you can {v_x} to see an animation." : "It's empty. Might be nice if something were on it, but no big deal, really." ) )} ;
+            : done ;
+         }
+         : match "_plan" {
+            : if (!chose_achievement) {
+               : print "You glance at the {pccp}. The picture on its front cover swirls into a looping animation." ;
+               : gosub "pcpc_choose" ;
+            } : else {
+               : print "The {pccp} continues to loop with the same animation." ;
+            }
+            : gosub "pcpc_describe" ;
+            : set_true "chose_achievement" ;
+         }
          : match "gee _" {
             : match "gee slimmer" {
                : print "You try to finagle a quick-fix weight loss program, not for vanity's sake, but to slide into little cracks. But 1) you'd have to get a LOT slimmer, and 2) exercising and eating better/less is the only way to go. But it was worth a try--I mean, the spelling worked, even if the pronunciation didn't." ;
@@ -2837,6 +2861,9 @@ subroutines {
    }
    : clear_screen ;
    : gosub "init_stats" ;
+   : if (pcpc_both) {
+      : create "care_plan" target = "my_house" ;
+   }
    : if (bonus_point_death_sentence) {
       : destroy "seth_dentons" ;
    }
@@ -3204,14 +3231,8 @@ subroutines {
       }
    }
 
-   check_pcpc_achievement : subroutine {
-      : if (pcpc_tile && pcpc_pile) {
-         : print "You look towards the fourth wall again. No bonus points? Sadly, no. But an achievement, for thoroughly and observantly inspecting the trial pics. A care plan awaits, on solving this quest!" ;
-         : set_true "achieve_pcpccp_pre" ;
-      } : else {
-         : print "You look towards the fourth wall. It's a good spoonerism, right? Isn't a bonus point in order? Apparently, you need to do a little more, if you're into that sort of thing." ;
-      }
    }
+
    evaluate_warp : subroutine {
       : if (latest_warp_number == -2) {
          : set_integer var = "latest_warp_number" "-1";
@@ -3326,6 +3347,7 @@ subroutines {
          }
       }
       : print "{note_once}Congratulations! You found all the footnotes! You don't need this command any more, but I don't blame you if you want to run this command again to re-read and feel good about finding them all." ;
+      : set_true "achieve_tnnt_pre" ;
       : set_true "got_all_footnotes_note" ;
    }
    gain_confidence : subroutine {
@@ -3516,18 +3538,43 @@ subroutines {
             : if (!pcpc_tile) {
                : print "You wonder if it is worth advertising any sort of home security like this, especially since it might backfire on the inhabitant. But a spoonerism's a spoonerism!" ;
                : set_true "pcpc_tile" ;
-               : gosub "check_pcpc_achievement" ;
+               : gosub "pcpc_check_pieces" ;
             } : else {
                : print "You already found tile pricks in the trial pics." ;
             }
+            : done ;
          }
          : match "pile tricks" {
             : if (!pcpc_pile) {
-               : print "You've found a lot of wordplay tricks so far, and you wonder if you should branch off into salesmanship tricks. There are ethical boundaries, of course, but a spoonerism's a spoonerism!" ;
+               : print "You've found a lot of wordplay tricks so far, and you wonder if you should branch off into salesmanship tricks. There are ethical boundaries, of course, but some of your ideas for home improvement are ones you'd actually follow yourself, and a spoonerism's a spoonerism!" ;
                : set_true "pcpc_pile" ;
-               : gosub "check_pcpc_achievement" ;
+               : gosub "pcpc_check_pieces" ;
             } : else {
                : print "Pile up too many tricks, and you wind up playing tricks on yourself." ;
+            }
+            : done ;
+         }
+         : if (pcpc_both) {
+            : match "pile _;tile _;_ tricks;_ pricks" {
+               : print "The trial pics have nothing more to offer." ;
+               : done ;
+            }
+         }
+         : if (pcpc_pile) {
+            : match "pile _;_ tricks" {
+               : print "{pcpc_no}" ;
+               : done ;
+            }
+         }
+         : if (pcpc_tile) {
+            : match "tile _;_ pricks" {
+               : print "{pcpc_no}" ;
+               : done ;
+            }
+         }
+         : if (pcpc_both) {
+            : match "pile _;tile _;_ tricks;_ pricks" {
+               : print {( "The trial pics shake in your hand a bit. You might be close to something " + (pcpc_pile || pcpc_tile ? "else " : "") + "fun to do with them." )} ;
             }
          }
       }
@@ -3704,6 +3751,85 @@ subroutines {
       : print {( "Going out is ambiguous here, as you " + (is_at "west_tiles" || is_at "east_branch" ? "still " : "") + (!has_visited "plain_base" ? "can't really see a good direction yet." : "have more than one direction worth exploring.") )} ;
       : return ;
    }
+
+   pcpc_check_pieces : subroutine {
+      : if (pcpc_tile && pcpc_pile) {
+         : print "You look towards the fourth wall again. No bonus points? Sadly, no. But you're promised a little something extra at the very end." ;
+      } : else {
+         : print "You look towards the fourth wall. It's a good spoonerism, right? Isn't a bonus point in order? Apparently, this is just an observation for salesmanship purchases and not for adventuring. And there's still a bit to go." ;
+         : create "care_plan" target = "my_house" ;
+      }
+   }
+   pcpc_choose : subroutine {
+#      : if (!achieve_haih && !achieve_haih_pre) {
+#         : set_string var="pcpc_view" text="haih" ;
+#      } : else_if (!achieve_mttm) {
+#         : set_string var="pcpc_view" text="mttm" ;
+#      } : else_if (!achieve_tyyt) {
+#         : set_string var="pcpc_view" text="tyyt" ;
+#      } : else_if (!achieve_gmmg) {
+#         : set_string var="pcpc_view" text="gmmg" ;
+#      } : else_if (!achieve_tnnt && !achieve_tnnt_pre) {
+#         : set_string var="pcpc_view" text="tnnt" ;
+#      } : else_if (!achieve_cddc_0pts) {
+#         : set_string var="pcpc_view" text="cddc_0pts" ;
+#      } : else_if (!achieve_cnnc) { # takes out ROER too
+#         : set_string var="pcpc_view" text="cnnc" ;
+#      } : else_if (!achieve_kssn) { # takes out QWWQ too
+#         : set_string var="pcpc_view" text="kssn" ;
+#      } : else_if (!achieve_ssss || !achieve_gssg || !achieve_rssr) {
+#         : set_string var="pcpc_view" text="rssr" ;
+#      } : else_if (!achieve_srrs) {
+      : if (1 == 0) {
+         : set_string var="pcpc_view" text="srrs" ;
+      } : else_if (!achieve_bwwb) {
+         : set_string var="pcpc_view" text="bwwb" ;
+      } : else_if (!achieve_cddc_jump) {
+         : set_string var="pcpc_view" text="cddc_jump" ;
+      } : else_if (!achieve_hbbh) {
+         : set_string var="pcpc_view" text="hbbh" ;
+      } : else_if (!achieve_nbbn) {
+         : set_string var="pcpc_view" text="nbbn" ;
+      } : else {
+         : set_string var="pcpc_view" text="done" ;
+      }
+   }
+   pcpc_describe : subroutine {
+      : if (pcpc_view == "haih") {
+         : print "You see yourself looking in your {pssp}, impressed by the variety of items." ;
+      } : else_if (pcpc_view == "mttm") {
+         : print "You see yourself rushing by Thor, though he looks proud and pleased at being ignored." ;
+      } : else_if (pcpc_view == "tyyt") {
+         : print "You see yourself talking with anyone and everyone you can, friendly or hostile." ;
+      } : else_if (pcpc_view == "gmmg") {
+         : print "You see yourself asking many questions of the Fourth Wall." ;
+      } : else_if (pcpc_view == "tnnt") {
+         : print "You see yourself thumbing through the margins of an interesting book, looking for hidden secrets it has to offer." ;
+      } : else_if (pcpc_view == "cddc_0pts") {
+         : print "You see yourself blowing off miscellaneous items." ;
+      } : else_if (pcpc_view == "cnnc") {
+         : print "You see yourself poking and prodding at various items you carried or scenery you passed by." ;
+      } : else_if (pcpc_view == "kssn") {
+         : print "You see yourself engaged in vigorous discussion with Thor, who shows no signs of losing energy or enthusiasm." ;
+      } : else_if (pcpc_view == "rssr") {
+         : print "You see yourself running around, very businesslike, with no wasted words or movements." ;
+      } : else_if (pcpc_view == "srrs") {
+         : print "You see yourself confused, or pretending to be confused, with things you already figured out." ;
+      } : else_if (pcpc_view == "bwwb") {
+         : print "You see yourself walking around a lot, completely unhurried." ;
+      } : else_if (pcpc_view == "cddc_jump") {
+         : print "You see yourself whizzing around the hubs, hill and base at a ridiculous speed." ;
+      } : else_if (pcpc_view == "hbbh") {
+         : print "You see yourself scrutinizing Thor, and he laughs it off." ;
+      } : else_if (pcpc_view == "nbbn") {
+         : print "You see yourself reading a lot." ;
+      } : else_if (pcpc_view == "done") {
+         : print "You see yourself somewhere you haven't been yet. What could it mean?" ;
+      } : else {
+         : print "Nothing, weirdly. But it should show something, and that's a bug." ;
+      }
+   }
+
    read_book : subroutine {
       : if (!initial_book_poke) {
          : set_integer var="tempint" "17" ;
@@ -4411,14 +4537,6 @@ subroutines {
       } : else {
          : print "{ach_not} {achievement_cddc_0pts} {ach_yet}." ;
       }
-      : if (achieve_pcpccp) {
-         : print "{ach_alr} {achievement_pcpccp} {ach_for} {achtxt_pcpccp}." ;
-      } : else_if (achieve_pcpccp_pre) {
-         : print "{ach_got} {achievement_pcpccp} {ach_for} {achtxt_pcpccp}." ;
-         : set_true "achieve_pcpccp" ;
-      } : else {
-         : print "{ach_not} {achievement_pcpccp} {ach_yet}.{ach_asterisk}" ;
-      }
       : if (achieve_roer_all) {
          : print "{ach_alr} {achievement_roer} {ach_for} {achtxt_roer}." ;
       } : else_if (achieve_roer_west && achieve_roer_east && achieve_roer_base) {
@@ -4501,7 +4619,7 @@ subroutines {
       : if (achieve_srrs) {
          : print "{ach_alr} {achievement_srrs} {ach_for} {achtxt_srrs}." ;
       } : else {
-         : if (hub_think_needed == 7) {
+         : if (achieve_srrs_pre) {
             : print "{ach_got} {achievement_srrs} {ach_for} {achtxt_srrs}." ;
             : set_true "achieve_srrs" ;
          } : else {
