@@ -815,7 +815,7 @@ strings {
 
    ## description strings by location
 
-   task_read : dynamic_string {( has_visited "first_base" ? "\n" + (read_task_yet ? "" : ( have_won ? "Of course, you know how, and you've even done so already, but no harm looking again.\n" : "The small print on the back is easier to read with more light. It says:\n")) + "THERE ARE <TWENTY THREE<#f88>> CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n<__ ____ ___ ___ ___ <#000>>ANDREW" : "There's small print on the back you can't read in this dimness." )} ;
+   task_read : dynamic_string {( has_visited "first_base" ? "\n" + (read_task_yet ? "" : ( have_won ? "Of course, you know how, and you've even done so already, but no harm looking again.\n" : "The small print on the back is easier to read with more light. It says:\n")) + "THERE ARE <TWENTY THREE<#f88>> CORE\nPOINTS TO ACHIEVE IN QUIRKY\nTEST AS WELL AS <SEVENTEEN<#ff0>>\nBONUS POINTS WHICH YOU FIND\nBY MAKING SPOONERISMS OF ALL\nYOU ENCOUNTER HERE WHETHER\nIT BE A PLACE OR THING OR\nPERSON WITH NO WAY TO LOSE\nSO HAVE FUN AND TRY THINGS\n<__ ____ ___ ___ ___ <#000>>ANDREW" : " There's small print on the back you can't read in this dimness." )} ;
 
    first_base_first : dynamic_string {( is_first_entered() ? "Finally, a better-lighted place! It's wide open here. " : "" )} ;
    boor_or_not : dynamic_string {( is_beside("pro_boor") ? (is_first_entered() ? "But less peaceful. The {cc_pro_boor} is blustering away. It's pretty high-energy bluster, too, the sort that only grows more intense if you get sucked in. How to cut through it?" : "The {cc_pro_boor} stands around, continuing to bluster. You're not sure if they want an argument or an audience. You are sure it'd be nice to get rid of them. You'll need to disrupt them just so.") : "It's quieter here with the {cc_pro_boor} gone, but you still aren't sure why you're here. Figuring {cc_prayer_lights}'s main secret may help." )} ;
@@ -1429,7 +1429,7 @@ locations {
          : if (know_lush_shout) {
             : match "shush lout" {
                : if (!bonus_point_shush_lout) {
-                  : print "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nPerhaps you need to take a different sort of dig to get rid of them for good. More direct, more personal. Not necessarily profane or cruel." ;
+                  : print {( "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nBut you don't feel like you failed. This wasn't a direct hit, but it gave you space to relax and think. " + (have_won ? "And besides, you know how to get rid of the {cc_pro_boor}." : "Perhaps you need to take a different sort of dig to get rid of them for good. More direct, more personal. Not necessarily profane or cruel." ) )} ;
                   : set_true "bonus_point_shush_lout" ;
                   : set_integer var="tempint" "2" ;
                   : gosub "add_bonus" ;
@@ -4321,11 +4321,11 @@ subroutines {
    meta_points : subroutine {
       : print "{qt} gives points for finding a spoonerism for objects or ideas in-game. So what is a spoonerism?" ;
       : print "Spoonerisms are when the starting sounds of two words are switched. Sometimes that just means  switching the first letters of two word, but other times, it may be about switching the initial sound, and maybe about tinkering with the spelling." ;
-      : print "Examples of spoonerisms not included in {qt} include:" ;
+      : print "Below is a list of types of spoonerisms, with examples for each type." ;
       : collection_iterate "spoonerism_examples" {
          : print {( "* " + item() )} ;
       }
-      : print "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you when you've guessed one right word for core puzzles. If you replay, it will give a nudge when you guess a bonus point half-right." ;
+      : print {( "There should be no huge stretches in pronunciation in {qt}, although sometimes for spoonerisms, people do this, if it gets enough laughs. Also, {qt} should notify you when you've guessed one right word for core puzzles" + (have_won ? ". On replay, this will happen for bonus points, too. But that miight be too distracting first now." : " or bonus puzzles." ) )} ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "16" ;
       : gosub "meta_flag" ;
@@ -5291,6 +5291,8 @@ on_command {
    : match "achievements _" {
       : if (have_won || cheat_dont_require) {
          : gosub "track_achievements" ;
+      } : else {
+         : print "{qt} won't let you track achievements until you've finished the main game first." ;
       }
    }
    : match "footnote _" {
@@ -5381,7 +5383,7 @@ on_command {
    }
    : match "take _" {
       : if (!take_note) {
-         : print {( "{v_take} is not widely used in {qt}. Most of what you take, you take automatically. There " + (point_take_crackers ? "was that" : "may be a") + " special-case exception, though." )};
+         : print {( "{note_once}{v_take} is not widely used in {qt}. Most of what you take, you take automatically. There " + (point_take_crackers ? "was that" : "may be a") + " special-case exception, though." )};
          : set_true "take_note" ;
          : done ;
       }
@@ -5657,7 +5659,7 @@ on_command {
          : print {( "You've solved " + (points_left_side < 7 ? "{points_left_side} of 7" : "all" ) + " places by West Tiles and " + (points_right_side < 7 ? "{points_right_side} of 7" : "all") + " places by East Branch." )} ;
       }
       : if (bonus_score == max_bonus_score) {
-         : print "You've gotten all {max_bonus_score} bonus points." ;
+         : print "You've gotten all {bonus_yellow} bonus points." ;
       } : else_if (bonus_score == 0) {
          : print "You haven't found any of the {bonus_yellow} bonus points yet." ;
       } : else {
