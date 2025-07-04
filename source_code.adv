@@ -3690,11 +3690,10 @@ subroutines {
       : set_true "jump_buzzing" ;
       : set_true "ever_jump" ;
       : set_integer var="footnote_1_status" {( int(collection_get{ collection -> ("footnote_status_list") index -> ( 0 ) }) )} ;
-      : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
       : if (collection_get {collection -> ("jump_list") index -> (int("" + latest_warp_number))} == "1") {
          : set_false "jump_buzzing" ;
       }
-
+      : collection_modify { collection = "jump_list" index -> (latest_warp_number) content -> ("1") ; }
    }
    meta_flag : subroutine {
       : set_integer var="tempint" {( int("" + (found_meta_verbs_flag % (2 * current_meta_verbs_flag))) )} ;
@@ -5108,7 +5107,7 @@ on_tick {
       : print "{note_once}the plus in parentheses {pip} after an item means you found how to get a bonus point from it." ;
       : set_true "inv_plus_warn" ;
    }
-   : if ((latest_warp_number != -3) && (!achieve_cddc_jump_pre)) {
+   : if ((linger() == 0) && (latest_warp_number != -3) && (!achieve_cddc_jump_pre)) {
       : gosub "evaluate_warp" ;
    }
    : if (!ever_note_footnote && ever_reveal_footnote) {
