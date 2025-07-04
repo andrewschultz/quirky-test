@@ -237,6 +237,7 @@ booleans {
 
    ## oranges
    achieve_tnnt : boolean "false" scope="survivor" ;
+   achieve_tnnt_pre : boolean "false" scope="survivor" ;
    achieve_cddc_0pts : boolean "false" scope="survivor" ;
    achieve_pcpccp : boolean "false" scope="survivor" ;
    achieve_pcpccp_pre : boolean "false" scope="survivor" ;
@@ -261,6 +262,7 @@ booleans {
 
    ## blues
    achieve_bwwb : boolean "false" scope="survivor" ;
+   achieve_bwwb_pre : boolean "false" scope="survivor" ;
    achieve_cjjc : boolean "false" scope="survivor" ;
    achieve_cjjc_pre : boolean "false" scope="survivor" ;
    achieve_tmmt : boolean "false" scope="survivor" ;
@@ -981,33 +983,50 @@ strings {
    ## orange = bonus points / footnotes
    ##ROER post-release
    achievement_tnnt : string "<Totes Need Notes Teed<#f80>>" ;
+   achtxt_tnnt : string "finding all the footnotes" ;
    achievement_cddc_0pts : string "<Cueing Direct Doing: Correct<#f80>>" ;
+   achtxt_cddc_0pts : string "one time through {qt} without any bonus points" ;
    achievement_roer : string "<Reach Out Each Route<#f80>>" ;
+   achtxt_roer : string "scoring a bonus point in each post-intro location" ;
    achievement_pcpccp : string "<Player-Can-Pair-Clan Care Plan<#f80>>" ;
+   achtxt_pcpccp : string "finding two ways to look at the trial pics" ;
    achievement_cnnc : string "<Clever! Nap? Never! (Clap!)<#f80>>" ;
+   achtxt_cnnc : string "getting all the bonus points" ;
 
    ## yellow = asking Thor
    achievement_qwwq : string "<Quell-Worrying-Well Querying<#ff0>>" ;
-   achtxt_qwwq : string "{v_ask}ing Thor about each rule in the Player's Bill of Rights" ;
+   achtxt_qwwq : string "{v_ask}ing Thor {about_bill}" ;
    achievement_kssn : string "<Knowin' Stuff, Stowin' 'Nuff<#ff0>>" ;
-   achtxt_kssn : string "{v_ask}ing Thor three times about each rule in the Player's Bill of Rights" ;
+   achtxt_kssn : string "{v_ask}ing Thor three times {about_bill}" ;
+   about_bill : string "about each rule in the Player's Bill of Rights" ;
 
    ## green = how you get them all
    achievement_ssss : string "<So Slick! Slow? Sick!<#8f8>>" ;
+   achtxt_ssss : string "not returning to Thor until you got the grail" ;
    achievement_gssg : string "<Great Style, Straight Guile<#8f8>>" ;
+   achtxt_gssg : string "not having to repeat the right phrase beyond Thor" ;
    achievement_rssr : string "<Re-Sight-See? Riiight<#8f8>>" ;
+   achtxt_rssr : string "taking the minimum number of moves between hub locations" ;
    achievement_srrs : string "<Second Revvin' Reckoned? Seven<#8f8>>" ;
+   achtxt_srrs : string "trying to solve all seven dependent hub puzzles before you were ready" ;
 
    ## blue = abusing the warp command
    achievement_bwwb : string "<Balk \"Why? Walk By!\"<#00f>>" ;
+   achtxt_bwwb : string "using no jump commands" ;
    achievement_tmmt : string "<Throw Me Mo': Three<#00f>>" ;
+   achtxt_tmmt : string "making a three-room jump" ;
    achievement_cjjc : string "<Chump, Joke Jump? Choke<#00f>>" ;
+   achtxt_cjjc : string "trying to jump to Stealing Hill after getting the Travel Grail" ;
    achievement_dbbd : string "<Did-Buzzin'-Bid? Dozen<#00f>>" ;
+   achtxt_dbbd : string "making all twelve possible jumps" ;
    achievement_cddc_jump : string "<Cousin, Draft Dozen-Craft<#00f>>" ;
+   achtxt_cddc_jump : string "making twelve jumps in a row, all different" ;
 
    ## purple = examine
    achievement_hbbh : string "<Hi! Beer By Here?<#f0f>>" ;
+   achtxt_hbbh : string "noting Thor's implied beer" ;
    achievement_nbbn : string "<Neat-Book-Beat Nook<#f0f>>" ;
+   achtxt_nbbn : string "reading all the way through the bookshelf" ;
 
    ## last one
    achievement_taat : string "<Try All: Aye, Trawl<#888>>" ;
@@ -3292,8 +3311,8 @@ subroutines {
          } : else {
          }
       }
-      : set_true "achieve_tnnt" ;
-      : print "For uncovering all the footnotes available, you win the {achievement_tnnt} achievement!" ;
+      : set_true "achieve_tnnt_pre" ;
+      : print "{ach_got} {achievement_tnnt} {ach_for} {achtxt_tnnt}." ;
    }
    footnote_list_check : subroutine {
       : if (got_all_footnotes_note) {
@@ -4327,7 +4346,7 @@ subroutines {
 
    track_achievements_1_red : subroutine {
       : if (achieve_haih && achieve_mttm && achieve_tyyt && achieve_gmmg) {
-         : print "You got all the achievements for maxing inventory chatting: {achievement_haih}, {achievement_mttm}, {achievement_tyyt}, and {achievement_gmmg}." ;
+         : print "You got all the achievements for various verb usage: {achievement_haih}, {achievement_mttm}, {achievement_tyyt}, and {achievement_gmmg}." ;
          : return ;
       }
       : if (achieve_haih) {
@@ -4354,17 +4373,17 @@ subroutines {
          : print "{ach_alr} {achievement_tyyt} {ach_for} {achtxt_tyyt}." ;
       } : else_if (found_talk_count == max_talk_count) {
          : print "For trying to talk to everyone who might speak, you win the {achievement_tyyt} achievement!" ;
-            : set_true "achieve_tyyt" ;
+         : set_true "achieve_tyyt" ;
       } : else {
-         : print "You haven't unlocked the {achievement_tyyt} achievement yet. ({found_talk_count}/{max_talk_count})" ;
+         : print "{ach_not} {achievement_tyyt} {ach_yet}. ({found_talk_count}/{max_talk_count})" ;
       }
       : if (achieve_gmmg) {
          : print "{ach_alr} {achievement_gmmg} {ach_for} {achtxt_gmmg}." ;
-      } : else_if (found_meta_verbs_flag == 255) {
+      } : else_if (found_meta_verbs_count == max_meta_verbs_count) {
          : print "{ach_got} {achievement_gmmg} {ach_for} {achtxt_gmmg}." ;
             : set_true "achieve_gmmg" ;
       } : else {
-         : print "{ach_not} {achievement_mttm} {ach_yet}." ;
+         : print "{ach_not} {achievement_gmmg} {ach_yet}. ({found_meta_verbs_count}/{max_meta_verbs_count})" ;
       }
       : if (!all_red_achievements) {
          : set_false "achieve_taat" ;
@@ -4377,39 +4396,42 @@ subroutines {
          : return ;
       }
       : if (achieve_tnnt) {
-         : print "{ach_alr} {achievement_tnnt} {ach_for} uncovering all the footnotes available." ;
+         : print "{ach_alr} {achievement_tnnt} {ach_for} {achtxt_tnnt}." ;
+      } : else_if (achieve_tnnt_pre) {
+         : print "{ach_got} {achievement_tnnt} {ach_for} {achtxt_tnnt}." ;
+         : set_true "achieve_tnnt" ;
       } : else {
          : gosub "footnote_endgame_check" ;
       }
       : if (achieve_cddc_0pts) {
-         : print "{ach_alr} {achievement_cddc_0pts} {ach_for} brushing aside bonus points." ;
+         : print "{ach_alr} {achievement_cddc_0pts} {ach_for} {achtxt_cddc_0pts}." ;
       } : else_if (point_hi_mouse && !bonus_this_playthrough) {
-         : print "For brushing aside bonus points, you win the {achievement_cddc_0pts} achievement!" ;
+         : print "{ach_got} {achievement_cddc_0pts} {ach_for} {achtxt_cddc_0pts}." ;
          : set_true "achieve_cddc_0pts" ;
       } : else {
-         : print "You haven't unlocked the {achievement_cddc_0pts} achievement yet." ;
+         : print "{ach_not} {achievement_cddc_0pts} {ach_yet}." ;
       }
       : if (achieve_pcpccp) {
-         : print "You already unlocked the {achievement_pcpccp} achievement." ;
+         : print "{ach_alr} {achievement_pcpccp} {ach_for} {achtxt_pcpccp}." ;
       } : else_if (achieve_pcpccp_pre) {
-         : print "For finding two ways to look at the trial pics, you win the {achievement_pcpccp} achievement!" ;
+         : print "{ach_got} {achievement_pcpccp} {ach_for} {achtxt_pcpccp}." ;
          : set_true "achieve_pcpccp" ;
       } : else {
-         : print "You haven't unlocked the {achievement_pcpccp} achievement yet.{ach_asterisk}" ;
+         : print "{ach_not} {achievement_pcpccp} {ach_yet}.{ach_asterisk}" ;
       }
       : if (achieve_roer_all) {
-         : print "You already unlocked the {achievement_roer} achievement." ;
+         : print "{ach_alr} {achievement_roer} {ach_for} {achtxt_roer}." ;
       } : else_if (achieve_roer_west && achieve_roer_east && achieve_roer_base) {
-         : print "For scoring points in every location, you win the {achievement_roer} achievement!{chimes_note}" ;
+         : print "{ach_got} {achievement_roer} {ach_for} {achtxt_roer}.{chimes_note}" ;
          : set_true "achieve_roer_all" ;
       } : else {
-         : print "You haven't unlocked the {achievement_roer} achievement yet.{ach_asterisk}" ;
+         : print "{ach_not} {achievement_roer} {ach_yet}.{ach_asterisk}" ;
       }
       : if (achieve_cnnc) {
-         : print "{ach_alr} {achievement_cnnc} {ach_for} finding all bonus points)" ;
+         : print "{ach_alr} {achievement_cnnc} {ach_for} {achtxt_cnnc}." ;
       }
       : else_if (bonus_score == max_bonus_score) {
-         : print "For finding all the bonus points, you win the {achievement_cnnc} achievement!" ;
+         : print "{ach_got} {achievement_cnnc} {ach_for} {achtxt_cnnc}." ;
          : set_true "achieve_cnnc" ;
          : if (!achieve_cddc_0pts) {
             : print "{note_once}you will automatically get the {achievement_cddc_0pts} achievement on the next playthrough, since it requires you to win one session without finding any bonus points, and there are no bonus points left to find." ;
@@ -4432,8 +4454,8 @@ subroutines {
          : print "You already got both achievements for {v_ask}ing Thor about everything: {achievement_qwwq} and {achievement_kssn}." ;
          : return ;
       }
-      : gosub "track_achievements_qwwq" ;
-      : gosub "track_achievements_kssn" ;
+      : gosub "track_achievements_3_qwwq" ;
+      : gosub "track_achievements_3_kssn" ;
       : if (!all_yellow_achievements) {
          : set_false "achieve_taat" ;
       }
@@ -4445,45 +4467,45 @@ subroutines {
          : return ;
       }
       : if (achieve_ssss) {
-         : print "{ach_alr} {achievement_ssss} {ach_for} not returning to Thor until you got the grail)" ;
+         : print "{ach_alr} {achievement_ssss} {ach_for} {achtxt_ssss}." ;
       } : else_if (achieve_ssss_pre) {
-         : print "For not returning to Thor until you got the grail, you win the {achievement_ssss} achievement!" ;
+         : print "{ach_got} {achievement_ssss} {ach_for} {achtxt_ssss}." ;
          : set_true "achieve_ssss" ;
       } : else {
-         : print "You haven't unlocked the {achievement_ssss} achievement yet." ;
+         : print "{ach_not} {achievement_ssss} {ach_yet}." ;
       }
       : if (achieve_gssg) {
-         : print "You already unlocked the {achievement_gssg} {ach_for} not having to repeat the right phrase beyond Thor." ;
+         : print "{ach_alr} {achievement_gssg} {ach_for} {achtxt_gssg}." ;
       } : else {
          : if ((hub_think_needed == 0) && (point_healing_still)) {
-            : print "For not having to repeat the right phrase beyond Thor, you win the {achievement_gssg} achievement!" ;
+            : print "{ach_got} {achievement_gssg} {ach_for} {achtxt_gssg}" ;
             : set_true "achieve_gssg" ;
          } : else {
-            : print "You haven't unlocked the {achievement_gssg} achievement yet." ;
+            : print "{ach_not} {achievement_gssg} {ach_yet}." ;
          }
       }
       : if (achieve_rssr) {
-         : print "You already unlocked the {achievement_rssr} {ach_for} taking the minimum number of moves between locations." ;
+         : print "{ach_alr} {achievement_rssr} {ach_for} {achtxt_rssr}." ;
       } : else {
-         : if (rssr_east <= 8 && rssr_west <= 8 && (rssr_base + rssr_hill <= 3) && score == max_score) {
+         : if (rssr_east <= 8 && rssr_west <= 8 && (rssr_base + rssr_hill <= 3) && point_healing_still) {
             : if (ever_jump) {
                : print "You're close to the {achievement_rssr} achievement, but next time, don't use warps." ;
             } : else {
-               : print "For taking the minimum number of moves between locations, you win the {achievement_rssr} achievement!" ;
+               : print "{ach_got} {achievement_rssr} {ach_for} {achtxt_rssr}." ;
                : set_true "achieve_rssr" ;
             }
          } : else {
-            : print "You haven't unlocked the {achievement_rssr} achievement yet." ;
+            : print "{ach_not} {achievement_rssr} {ach_yet}." ;
          }
       }
       : if (achieve_srrs) {
-         : print "You already unlocked the {achievement_srrs} {ach_for} trying to solve all seven dependent puzzles before you were ready." ;
+         : print "{ach_alr} {achievement_srrs} {ach_for} {achtxt_srrs}." ;
       } : else {
          : if (hub_think_needed == 7) {
-            : print "For trying to flip all seven dependent puzzles before you were ready, you win the {achievement_srrs} achievement!" ;
+            : print "{ach_got} {achievement_srrs} {ach_for} {achtxt_srrs}." ;
             : set_true "achieve_srrs" ;
          } : else {
-            : print "You haven't unlocked the {achievement_srrs} achievement yet." ;
+            : print "{ach_not} {achievement_srrs} {ach_yet}." ;
          }
       }
       : if (!all_green_achievements) {
@@ -4497,37 +4519,38 @@ subroutines {
          : return ;
       }
       : if (achieve_bwwb) {
-         : print "{ach_alr} {achievement_bwwb} {ach_for} using no jump commands)" ;
+         : print "{ach_alr} {achievement_bwwb} {ach_for} {achtxt_bwwb}." ;
       } : else_if (!ever_jump && point_hi_mouse) {
-         : print "For not using a jump command, you win the {achievement_bwwb} achievement!" ;
+         : print "{ach_got} {achievement_bwwb} {ach_for} {achtxt_bwwb}." ;
          : set_true "achieve_bwwb" ;
       } : else {
-         : print "You haven't unlocked the {achievement_bwwb} achievement yet." ;
+         : print "{ach_not} {achievement_bwwb} {ach_yet}." ;
+         : set_true "achieve_bwwb" ;
       }
       : if (achieve_tmmt) {
-         : print "{ach_alr} {achievement_tmmt} {ach_for} a three-room jump)" ;
+         : print "{ach_alr} {achievement_tmmt} {ach_for} {achtxt_tmmt}." ;
       } : else_if (achieve_tmmt_pre) {
-         : print "For making a three-room jump, you win the {achievement_tmmt} achievement!" ;
+         : print "{ach_got} {achievement_tmmt} {ach_for} {achtxt_tmmt}." ;
          : set_true "achieve_tmmt" ;
       } : else {
-         : print "You haven't unlocked the {achievement_tmmt} achievement yet." ;
+         : print "{ach_not} {achievement_tmmt} {ach_yet}." ;
       }
       : if (achieve_cjjc) {
-         : print "{ach_alr} {achievement_cjjc} {ach_for} trying to jump to a blocked-off room)" ;
+         : print "{ach_alr} {achievement_cjjc} {ach_for} {achtxt_cjjc}." ;
       } : else_if (achieve_cjjc_pre) {
-         : print "For trying to jump to a blocked-off room, you win the {achievement_cjjc} achievement!" ;
+         : print "{ach_got} {achievement_cjjc} {ach_for} {achtxt_cjjc}." ;
          : set_true "achieve_cjjc" ;
       } : else {
-         : print "You haven't unlocked the {achievement_cjjc} achievement yet." ;
+         : print "{ach_not} {achievement_cjjc} {ach_yet}." ;
       }
-      : gosub "track_achievements_dbbd" ;
+      : gosub "track_achievements_5_dbbd" ;
       : if (achieve_cddc_jump) {
-         : print "You already unlocked the {achievement_cddc_jump} {ach_for} performing all twelve possible warp jumps without duplication." ;
+         : print "{ach_alr} {achievement_cddc_jump} {ach_for} {achtxt_cddc_jump}." ;
       } : else_if (achieve_cddc_jump_pre) {
-         : print "For performing all twelve possible warp jumps without duplicating one path, you win the {achievement_cddc_jump} achievement!" ;
+         : print "{ach_got} {achievement_cddc_jump} {ach_for} {achtxt_cddc_jump}." ;
             : set_true "achieve_cddc_jump" ;
       } : else {
-            : print "You haven't unlocked the {achievement_cddc_jump} achievement yet." ;
+            : print "{ach_not} {achievement_cddc_jump} {ach_yet}." ;
       }
       : if (!all_blue_achievements) {
          : set_false "achieve_taat" ;
@@ -4562,23 +4585,23 @@ subroutines {
 
    # track_achievement subroutines are in alphabetical order
 
-   track_achievements_dbbd : subroutine {
+   track_achievements_5_dbbd : subroutine {
       : if (achieve_dbbd) {
-         : print "You already unlocked the {achievement_dbbd} {ach_for} performing all twelve jumps between jumpable locations." ;
+         : print "{ach_alr} {achievement_dbbd} {ach_for} {achtxt_dbbd}." ;
          : return;
       }
       : collection_iterate "jump_list" {
          : if (int(item()) == 0) {
-            : print "You haven't unlocked the {achievement_dbbd} achievement yet." ;
+            : print "{ach_not} {achievement_dbbd} {ach_yet}." ;
             : return ;
          } : else { # without this else clause, for whatever reason, Adventuron doesn't "see" the above haven't-unlocked-yet.
          }
       }
-      : print "For performing all twelve jumps between jumpable locations, you win the {achievement_dbbd} achievement!" ;
+      : print "{ach_got} {achievement_dbbd} {ach_for} {achtxt_dbbd}." ;
       : set_true "achieve_dbbd" ;
    }
 
-   track_achievements_kssn : subroutine {
+   track_achievements_3_kssn : subroutine {
       : if (achieve_kssn) {
          : print "{ach_alr} {achievement_kssn} {ach_for} {achtxt_kssn}.";
          : return ;
@@ -4592,7 +4615,7 @@ subroutines {
       : print "{ach_got} {achievement_kssn} {ach_for} {achtxt_kssn}." ;
       : set_true "achieve_kssn" ;
    }
-   track_achievements_qwwq : subroutine {
+   track_achievements_3_qwwq : subroutine {
       : if (achieve_qwwq) {
          : print "{ach_alr} {achievement_qwwq} {ach_for} {achtxt_qwwq}.";
          : return ;
