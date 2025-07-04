@@ -564,8 +564,8 @@ collections {
          "<SANE ROLE<#0f0>> when you have a rain soul",
          "<GROW NEED<#0f0>> when you have no greed",
          "<RACING PASSIONS<#00f>> when you have the pacing rations",
-         "<I/EYE STAY<#f0f>> in My House",
          "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
+         "<I/EYE STAY<#f0f>> in My House",
       ]
    };
    bonus_not_found_text : list {
@@ -2465,12 +2465,13 @@ locations {
                : print "You already brought the house back." ;
             }
             : else {
-               : print "BOOM! A missing house appears to the north. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter, grateful not to be alone in the open." ;
+               : print "BOOM! A missing house appears to the north. The mouse squeaks with joy and then goes and hides under it. And yet, it seems to wave at you before you enter, grateful not to be alone in the open.\nYou also hear something new, more musical than hissing." ;
                : set_true "point_missing_house" ;
                : destroy "hissing_mouse" ;
                : gosub "add_point" ;
                : update_graphic ;
             }
+            : done ;
          }
          : if (!point_missing_house) {
             : match "missing _;_ house" {
@@ -2513,7 +2514,7 @@ locations {
             : if (!bonus_point_eye_stay) {
                : print "You eye a stay, despite the poster's negative connotations. Looking closer, you see some complex origami can fold things so the poster, indeed, says I STAY. You have a chuckle. Why, of course you'll stay until you've completed your quest. But no more than that." ;
                : set_true "bonus_point_eye_stay" ;
-               : set_integer var="tempint" "16" ;
+               : set_integer var="tempint" "17" ;
                : update_graphic ;
                : gosub "add_bonus" ;
             } : else {
@@ -2526,7 +2527,7 @@ locations {
                : done ;
             }
          }
-         : if (!point_see_glimmering || bonus_point_cheery_times) {
+         : if (bonus_point_cheery_times) {
             : match "talk _;listen _" {
                : print "You have nobody to talk to right now. Well, you may need to say something specific, to let people in your, uh, my house." ;
                : done ;
@@ -2540,7 +2541,7 @@ locations {
                : print "You already found something unusual in the house. You need an assistant to look through it." ;
             }
             : else {
-               : print "You remember what you came for. The {rttr}. Where could it be? Well, there are a lot of glimmering things, here. It would take you a while to search, especially since they are in odd corners. If only you had someone or something willing to help with the busy work!\nYou think you hear something new, too." ;
+               : print "You remember what you came for. The {rttr}. Where could it be? Well, there are a lot of glimmering things, here. It would take you a while to search, especially since they are in odd corners. If only you had someone or something willing to help with the busy work!" ;
                : set_true "point_see_glimmering" ;
                : gosub "add_point" ;
                : update_graphic ;
@@ -3542,11 +3543,11 @@ subroutines {
          : match "cheery times" {
             : if (is_at "my_house") {
                : print "You take a moment to step outside and reflect..." ;
-            : set_true "chimes_in_my_house" ;
+               : set_true "chimes_in_my_house" ;
             }
             : print "The teary chimes bring back memories of an old couple down the street, when you were a kid. You didn't like the chimes at first, but then when you talked with them, chimes started to remind you of them. They died when you were ten. You haven't heard chimes for a while. While the chimes seem to be saying \"time to move on,\" there's also optimism there will be other, different, good times ahead.\nEventually, the chimes fade away. You blink, and they're gone." ;
             : destroy "teary_chimes" ;
-            : set_integer var="tempint" "17" ;
+            : set_integer var="tempint" "16" ;
             : set_true "bonus_point_cheery_times" ;
             : gosub "add_bonus" ;
             : done ;
@@ -5473,9 +5474,9 @@ on_command {
       : done ;
    }
    : match "listen _" {
-      : if (point_see_glimmering && !summoned_teary_chimes && is_at "zone_endgame") {
+      : if (point_missing_house && !summoned_teary_chimes && is_at "zone_endgame") {
          : print "You locate where the tone is coming from. Teary chimes, at the front of your house. They remind you of many things. Maybe there's some specific tangent to ponder before moving on with things." ;
-         : create "teary_chimes" target="my_house" ;
+         : create "teary_chimes" target="gravel_trail" ;
          : set_true "summoned_teary_chimes" ;
          : done ;
       }

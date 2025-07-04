@@ -403,11 +403,11 @@ Doesn't matter which you do first below.
 > GRAVEL TRAIL (1)
 > N
 > MISSING HOUSE (1)
-> N
-> I STAY (B16)
-> SEE GLIMMERS (1)
 > LISTEN
-> CHEERY TIMES (B17) (achieved Reach Out Each Route -- note the chimes are actually outside, so this counts as one point in each room)
+> CHEERY TIMES (B16)
+> N
+> I STAY (B17) (achieved Reach Out Each Route)
+> SEE GLIMMERS (1)
 > X BOOK
 > X BOOK
 > X BOOK

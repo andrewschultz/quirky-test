@@ -522,20 +522,21 @@ Before getting rid of the mouse, completionists will want to ...
 > X MOUSE (F16)
 
 > MISSING HOUSE (1)
-> N
-
-The poster on the wall is ... interesting.
-
-> I STAY (B16)
-
-"Eye stay" works, too.
-
-> SEE GLIMMERS (1)
 
 Wait, what's that noise?
 
 > LISTEN
-> CHEERY TIMES (B17)
+> CHEERY TIMES (B16)
+
+> N
+
+The poster on the wall is ... interesting.
+
+> I STAY (B17)
+
+"Eye stay" works, too.
+
+> SEE GLIMMERS (1)
 
 One last footnote before winning, to complete the set.
 
