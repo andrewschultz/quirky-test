@@ -661,7 +661,7 @@ strings {
       (is_at "my_house") ? "You can only really go south, but there's no need, since you can just wrap things up here." :
       "This is a dead end, at least for {qt}'s purposes, so you can really only backtrack {spoke_out_dir} to {back_to_hub}, though {v_out_b} always works, too." )} ;
    bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
-   yn_or_12 : dynamic_string {( in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
+   yn_or_12_or_14 : dynamic_string {( (verb_is "save" || verb_is "load") ? "Please choose from 1 to 4." : in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
    my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
@@ -4788,7 +4788,7 @@ themes {
    not_present = You can't see ${entity} here.
    ask_new_game                                   = Would you like to restart {qt}?
    ask_quit                                       = Do you wish to quit {qt}?
-   invalid_choice                                 = {yn_or_12}
+   invalid_choice                                 = {yn_or_12_or_14}
    post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {qt}.
    inventory_list_empty = Nothing (yet)
    inventory_list_header = In your {pssp}:\s
