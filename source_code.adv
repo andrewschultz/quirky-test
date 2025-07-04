@@ -3968,6 +3968,9 @@ subroutines {
          }
       }
       : set_false "already_got_command" ;
+      : if (!half_bonus) {
+         : done ;
+      }
    }
    say_half_b : subroutine {
       : if (!have_won) {
@@ -3985,6 +3988,7 @@ subroutines {
          : set_true "bonus_half_note" ;
       }
       : set_false "half_bonus" ;
+      : done ;
    }
    reflexive_warp_reject : subroutine {
       : print "You're already here!";
