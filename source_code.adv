@@ -93,6 +93,8 @@ booleans {
    pre_footnote : boolean "false" ;
    chose_achievement : boolean "false" ;
    noted_plan : boolean "false" scope="survivor" ;
+   table_examined : boolean "false" scope="survivor" ;
+   alert_pcpc_house : boolean "false" scope="survivor" ;
    can_do_here : boolean "false" scope="survivor" ;
 
    ## new miscellaneous booleans above
@@ -799,6 +801,8 @@ strings {
    rttr : string "<Rare-Thing-There Ring<#a33>>" ;
    pccp : string "<Player-Can-Pair-Clan Care Plan<#a33>>" ;
    pssp : string "<Pile/Stack Style Pack<#a33>>" ;
+   dppd : string "<dare-poodles-pair doodles<#a33>>";
+   tllt : string "<tots-label-lots table<#a33>>";
 
    # command(s) referred to in footnotes (real or apocryphal)
    f_first_base : string "<FIRST BASE<#f80>>" ;
@@ -2544,19 +2548,32 @@ locations {
                : set_sentence {( original "verb" + " book" )} ;
             }
          }
+         : if (table_examined) {
+            : match "_ doodles;_ doodling;_ dare;_poodles;_ pair" {
+               : print "You enjoy losing yourself in the {dppd} for a bit. You imagine sequels and prequels. You needed a break from all this seriousness!" ;
+            }
+         }
          : match "_ table" {
-            : print {( "The table is filled with charming childish doodles. " + (pcpc_both ? "On it rests a {pccp}, which, well, you can {v_x} to see an animation." : "It's empty. Might be nice if something were on it, but no big deal, really." ) )} ;
+            : if (!table_examined) {
+               : print "As just a table, it seems out of place. But the charming childish doodling on it make it a {tllt}." ;
+               : print "Oh, I suppose the doodling has a theme, too: {dppd}." ;
+               : set_true "table_examined" ;
+            }
+            : print {( (pcpc_both ? "On the {tllt} rests a {pccp}, which, well, you can {v_x} to see an animation." : "It's empty, though. Might be nice if something useful were on it, but as-is, the {dppd} are easier to see. So that's something." ) )} ;
             : done ;
          }
-         : match "_plan" {
-            : if (!chose_achievement) {
-               : print "You glance at the {pccp}. The picture on its front cover swirls into a looping animation." ;
-               : gosub "pcpc_choose" ;
-            } : else {
-               : print "The {pccp} continues to loop with the same animation." ;
+         : if (pcpc_both) {
+            : match "_ plan" {
+               : if (!chose_achievement) {
+                  : print "You glance at the {pccp}. The picture on its front cover is of the fellow you gave the dirt home to. He is smiling and waving." ;
+                  : print "You flip through the {pccp}, and it swirls into a looping animation." ;
+                  : gosub "pcpc_choose" ;
+               } : else {
+                  : print "The {pccp} continues to loop with the same animation." ;
+               }
+               : gosub "pcpc_describe" ;
+               : set_true "chose_achievement" ;
             }
-            : gosub "pcpc_describe" ;
-            : set_true "chose_achievement" ;
          }
          : match "gee _" {
             : match "gee slimmer" {
@@ -2652,12 +2669,19 @@ locations {
             : print "{note_once}as a small bonus, the books in the bookshelf are different this time. I wasn't creative enough to do any more than that, but I hope you enjoy it, all the same. Thanks again for playing and replaying!" ;
             : set_true "note_book_reshuffle" ;
          }
+         : if (!have_won && !pcpc_both) {
+            : set_true "alert_pcpc_house" ;
+         }
+         : if (have_won && alert_pcpc_house) {
+            : print {( "Ooh! The " + (table_examined ? tllt : "table" ) + " isn't empty this time around. Wonder what it could have on it?" )} ;
+            : set_false "alert_pcpc_house" ;
+         }
       }
       on_tick {
-         : if (!noted_plan && noun1_is "plan") {
+         : if (!noted_plan && noun1_is "plan" && !can_do_here) {
             #: set_true "noted_plan" ;
             : set_true "noted_plan" ;
-            : print "Oh, maybe this is what the fellow in the field talked about when leaving you something in return. Kind of him." ;
+            : print "This doesn't feel like something you can do now, but maybe you can figure out how to, on restart." ;
          }
       }
    }
