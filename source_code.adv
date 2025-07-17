@@ -848,12 +848,12 @@ strings {
    hub_w_chalice_map : string "You got the chalice map here. There can't really be anything left to do." ;
    hub_w_shell_fort : string "A {cc_shell_fort} sits here. It occasionally fires rounds that get close to you. While there's no danger of you getting hit, it's still annoying and gets in the way of trying to find anything." ;
    hub_w_fell_short : string "The shell fort lies barren now. You even ransacked it for rations." ;
-   hub_w_cake_trackers : string "^c^<CA<#f00>>KE <TR<#f88>><AC<#654>><KE<#800>><RS<#cb9>>\n^l^{cc_cake_trackers} mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
+   hub_w_cake_trackers : string "^c^- <CA<#f00>>KE <TR<#f88>><AC<#654>><KE<#800>><RS<#cb9>> -\n^l^{cc_cake_trackers} mope about here, looking for cake, mumbling about how they only have boring food to eat. They are nonspecific about what boring food it is, but maybe you can figure that out." ;
    hub_w_take_crackers : string "^c^<CRACKERS<#cb9>>\n^l^Man! Those folks sure had a lot of crackers. But they were greedy and wanted cake. You've taken all you possibly need, and there are still several boxes left over." ;
    hub_w_gift_shoals : string "{cc_gift_shoals} are here. They sure have washed up a lot of gifts! Nothing you particularly like or can use, but you're drawn to them anyway, in your current mental state." ;
    hub_w_shift_goals : string "The shoals seem more peaceful now that you have fixed your mindset. You don't miss the now-vanished gifts." ;
-   hub_w_grunters_hill : string "^c^<GRUNTERS'<#888>> <HILLS<#8f8>>\n^l^Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
-   hub_w_hunters_grill : string "^c^<HUNTERS' GRILL<#080>>\n^l^Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
+   hub_w_grunters_hill : string "^c^<- GRUNTERS'<#888>> <HILLS -<#8f8>>\n^l^Grunts from big hills, here. Well, from around the hills. That must make them {cc_grunters_hill}. It's like people are trying to forage for food, but of course their grunts scare off prey. Said grunts are mainly about not having enough food." ;
+   hub_w_hunters_grill : string "^c^<HUNTERS' GRILLS<#080>>\n^l^Well, you've had your feast, and it was delicious. It's filled you up for the journey ahead. Hanging around here wouldn't burn any calories, so you should probably get going." ;
    hub_w_yellow_field : string "Someone is blocking you here in this {cc_yellow_field}. Why, or from what, you're not sure. But, boy, they're persistent!" ;
    hub_w_fellow_yield : string "The yellow field is pretty to look at, but there's nobody and nothing here that can help you further." ;
 
@@ -862,13 +862,13 @@ strings {
    hub_e_fly_score : string "It was inspirational to think up a neat little tune here, but you realize you want to share it." ;
    hub_e_trending_booth : string "A {cc_trending_booth} sits here, spouting all sorts of things you can and should be doing that are more exciting than silly old text adventuring. The arguments seem convincing, and yet ..." ;
    hub_e_bending_truth : string "Noise continues to emanate from the trending booth, but you sort of recognize a lot of its rhetorical tricks, so you can ignore it and leave when you want." ;
-   hub_e_warring_bay : string "^c^<WARRING BAY<#c00>>\n^l^You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
+   hub_e_warring_bay : string "^c^<- WARRING BAY -<#c00>>\n^l^You don't know how or why a war started in this {cc_warring_bay}. Everyone seems quite excited to be dedicated to their own cause, whatever it is." ;
    hub_e_boring_way : string "^c^<BORING WAY<#888>>\n^l^Well, you made this a boring way. You feel content having contributed to peace, but all the same, this being a boring place, you can't imagine having anything interesting to do here." ;
-   hub_e_hurt_dome : string "^c^<HURT DOME<#c00>>\n^l^A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to hurt anyone or anything actively by launching missiles. But perhaps you could remove the hurt?" ;
+   hub_e_hurt_dome : string "^c^<- HURT DOME -<#c00>>\n^l^A {cc_hurt_dome} sits here. Fortunately, it just looks hurt and doesn't seem to want to hurt anyone or anything actively by launching missiles. But perhaps you could remove the hurt?" ;
    hub_e_dirt_home : string "^c^<DIRT HOME<#a98>>\n^l^The dirt home you summoned stands here, infinitely less menacing than its previous form." ;
-   hub_e_roaring_pain : string "^c^<ROARING PAIN<#c00>>\n^l^You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
+   hub_e_roaring_pain : string "^c^<- ROARING PAIN -<#c00>>\n^l^You feel {cc_roaring_pain}. While there's some shelter here from above, it doesn't help with the internal stuff." ;
    hub_e_pouring_rain : string "^c^<POURING RAIN<#00f>>\n^l^The shelter keeps you safe from the pouring rain, which shows no sign of letting up. Probably just have to make a run for it when you can." ;
-   hub_e_money_fountain : string "^c^<MONEY FOUNTAIN<#fc0>>\n^l^A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
+   hub_e_money_fountain : string "^c^<- MONEY FOUNTAIN -<#fc0>>\n^l^A {cc_money_fountain} is here. People dive in, trying to get the money, but they somehow come up empty. It's very upsetting and soul-draining for them." ;
    hub_e_funny_mountain : string "^c^<FUNNY MOUNTAIN<#f88>>\n^l^A mountain with a cheery face somehow carved in its side makes all who walk by laugh or smile as they go on their day. It helps you, too, though you recognize true happiness is a journey that extends away from here, and the mountain just gives a temporary boost." ;
    hub_e_trim_goon : string "A {cc_trim_goon} sits here, ready to rough you up if provoked. Fortunately, you've given them no cause, but boy, it'd be fun to tweak them and win a psychological victory. You suspect it's what Thor would want." ;
    hub_e_grim_tune : string "You sit and bask in the area, now barren, which only reinforces the grim tune you whipped up. You see, with some modifications, it could work against non-physical cruelty." ;
@@ -2917,7 +2917,7 @@ subroutines {
          : print "<Your score just went up by a point!<#0f0>>" ;
       }
       : if (!room_change_noted && in_name_change_room) {
-         : print "{note_once}some locations, like this, change their name. (Six total.) You can probably guess what the name changes to, but if you are curious enough to see the small silly change, you'll need to {v_l} after figuring what to do." ;
+         : print "{note_once}some locations, like this, change their header name and color once you figure what to do, but you need to {v_l} again. They have (-) surrounding the text. I couldn't get Adventuron to refresh the centered header automatically." ;
          : set_true "room_change_noted" ;
       }
       : increment "score" ;
