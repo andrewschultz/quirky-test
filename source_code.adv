@@ -93,6 +93,7 @@ booleans {
    pre_footnote : boolean "false" ;
    chose_achievement : boolean "false" ;
    noted_plan : boolean "false" scope="survivor" ;
+   can_do_here : boolean "false" scope="survivor" ;
 
    ## new miscellaneous booleans above
 
@@ -3811,6 +3812,7 @@ subroutines {
       }
    }
    pcpc_describe : subroutine {
+      : set_false "can_do_here" ;
       : if (pcpc_view == "haih") {
          : print "You see yourself looking in your {pssp}, impressed by the variety of items." ;
       } : else_if (pcpc_view == "mttm") {
@@ -3838,9 +3840,10 @@ subroutines {
       } : else_if (pcpc_view == "hbbh") {
          : print "You see yourself scrutinizing Thor, and he laughs it off." ;
       } : else_if (pcpc_view == "nbbn") {
-         : print "You see yourself reading a lot." ;
+         : print "You see yourself reading a lot--why, inside this very house!" ;
+         : set_true "can_do_here" ;
       } : else_if (pcpc_view == "done") {
-         : print "You see yourself somewhere you haven't been yet. What could it mean?" ;
+         : print "You see yourself somewhere exotic and new that you haven't been yet. What could it mean?" ;
       } : else {
          : print "Nothing, weirdly. But it should show something, and that's a bug." ;
       }
