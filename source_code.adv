@@ -1700,7 +1700,7 @@ locations {
          : else
          {
             : print "With the chalice map handy as well as the master plan, you know what to look for and where. Plan keys can please, you think, as your trusty map exposes many a musty trap." ;
-            : print "Of course, it takes a while to get there, as the stealing hill tends to look around a lot, but it gets distracted by other passers-by. Eventually you find the travel grail. But where can it take you?" ;
+            : print "Of course, it takes a while to get there, as you need to step carefully so the stealing hill isn't alerted. Eventually you find the travel grail. But where can it take you?" ;
             : update_graphic "s_stealing_hill_grail" ;
             : press_any_key ;
             : print "As you take it, you think you hear the beginnings of an angry inhuman groaning. If it's the hill, now might be a really good time to move on. You can't see anything else to do here!" ;
@@ -3772,7 +3772,7 @@ subroutines {
 
    pcpc_check_pieces : subroutine {
       : if (pcpc_tile && pcpc_pile) {
-         : print "You look towards the fourth wall again. No bonus points? Sadly, no. Maybe this will be useful later, though." ;
+         : print "You look towards the fourth wall again. Bonus point this time, maybe? Sadly, no. Perhaps there's something small and nice down the road." ;
       } : else {
          : print "You look towards the fourth wall. It's a good spoonerism, right? Isn't a bonus point in order? Apparently, this is just an observation for salesmanship purchases and not for adventuring. And there's still a bit to go." ;
          : create "care_plan" target = "my_house" ;
@@ -5781,6 +5781,9 @@ on_command {
       : print "{custom_unknown_verb_error}" ;
    }
    : match "first _;bro _;player _;fly _;bending _;boring _;dirt _;pouring _;funny _;grim _;fell _;shift _;hunting _;fellow _;master _;chalice _;healing _;gravel _;missing _;hi _" {
+      : print "{custom_unknown_verb_error}" ;
+   }
+   : match "pile _;tile _" {
       : print "{custom_unknown_verb_error}" ;
    }
    : match "swim _;plaster _;roaring _" { # these are special verbs
