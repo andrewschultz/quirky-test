@@ -713,11 +713,13 @@ strings {
    vs_tss : string "<TSTART<#f80>> and <TSTOP<#f80>>" ;
 
    ## names in credits
+   indent : string "<____<#000>>" ;
    talj : string "<TALJ<#0f0>>" ;
    tx_ca : string "<Chris Ainsley<#0f0>>[https://adventuron.itch.io/]" ;
    tx_cm : string "<Christopher Merriner<#0f0>>[https://christophermerriner.itch.io/]" ;
    tx_ds : string "<Deborah Sherwood<#0f0>>[https://dsherwood.itch.io]" ;
    tx_gf : string "<Garry Francis<#0f0>>[https://warrigal.itch.io/]" ;
+   tx_jd : string "<John Doolittle<#0f0>>[https://drdooriddle.itch.io]" ;
    tx_ll : string "<Leon Lin<#0f0>>[https://leonwlin.itch.io/]" ;
    tx_wc : string "<Wade Clarke<#0f0>>[https://wade-clarke.itch.io/]" ;
    tx_da : string "<DemonApologist<#0f0>>[https://demonapologist.itch.io/]" ;
@@ -4342,12 +4344,12 @@ subroutines {
    }
 
    meta_links : subroutine {
-      : print "Clicking on the light green text below will open a new tab." ;
+      : print "Clicking on any light green text below will open a new tab." ;
       : print "Here is a link to {qt_io}." ;
       : print "Here is a link to <TALJ 2025<#8f8>>[https://itch.io/jam/talp2025], where {qt} was entered on release. {qt} would not have been a thing without it, or without <Adventuron<#8f8>>[http://adventuron.io]." ;
       : print "Here are links to previous incarnations of TALP/TALJ: <TALP 2024<#8f8>>[https://itch.io/jam/talp2024/entries], <TALP 2023<#8f8>>[https://itch.io/jam/talp2023/entries], <TALP 2022<#8f8>>[https://itch.io/jam/talp2022/entries], and <TALP 2021<#8f8>>[https://itch.io/jam/talp/entries]." ;
-      : print "If you find a bug, big or small, and want to report an issue, here is a link to {qt_repo}." ;
-      : print "If you would like to share a transcript with me, send it to {email}." ;
+      : print "If you find a bug, big or small, you can report an issue at {qt_repo}." ;
+      : print "If you prefer, you mqy also just mail me at {email}, whether to note a bug or discuss {qt} in general." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "2" ;
       : gosub "meta_flag" ;
@@ -4406,11 +4408,12 @@ subroutines {
 
    meta_thanks : subroutine {
       : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca}, {tx_gf} and <Pinkunz<#0f0>>. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts. {vm_links} will lead you to past comps." ;
+      : print "Thanks to {tx_jd} for offering generous prizes for TALP. I'd have written {qt} anyway, but my prize was a wonderful motivator to release the post-comp version sooner and not later." ;
       : print "Thanks to {tx_ca} for creating Adventuron." ;
-      : print "Thanks (in alphabetical order) to people who offered bug-finds and advice." ;
-      : print "    Pre-comp: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
-      : print "    In-comp: {tx_da} and {tx_on}." ;
-      : print "    Post-comp: {tx_wc}, {tx_ll} and {tx_ta}." ;
+      : print "Thanks (in alphabetical order) to people who found bugs and/or offered big-picture advice." ;
+      : print "{indent}Pre-comp: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
+      : print "{indent}In-comp: {tx_da} and {tx_on}." ;
+      : print "{indent}Post-comp: {tx_wc}, {tx_ll} and {tx_ta}." ;
       : print "Thanks to you, for giving {qt} a chance." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "32" ;
@@ -4421,6 +4424,7 @@ subroutines {
       : print "<Version 1.0.0<#80f>> was released for the TALP 2025 Jam on April 30, 2025." ;
       : print "There were several in-comp updates. {qt_io} has this, with the details of what they fixed. It will also track any tweaks after the last major release." ;
       : print "<Version 2.0.0<#80f>> was released on July 4, 2025. A detailed list of changes is <here<#dcb>>[https://andrewschultz.itch.io/quirky-test/devlog/978215/version-200], but the major ones are bug fixes and graphics upgrades, new achievements (including one that requires two former bonus points now replaced by ones I forgot to add in 1.0.0) and a final ending for players who got all the achievements. Oh, a small Easter egg too." ;
+      : print "The current version is <2.0.1<#80f>>, which unlocked an achievement-cluing item." ;
       : print "There are no future versions planned, barring catastrophic bugs." ;
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "128" ;
@@ -5360,7 +5364,7 @@ on_command {
    : match "credits _" {
       : if (!credits_to_thanks_note) {
          : mask {
-            : print "{note_once}General credits from {tx_ca}, the creator of Adventuron, can be seen with <*<#f80>>{vm_credits}." ;
+            : print "{note_once}General credits from {tx_ca}, the creator of Adventuron, can be seen with <*<#f80>>{vm_credits}. Also, clicking on <green text<#0f0>> below opens a link in a new tab." ;
             : press_any_key ;
             : set_true "credits_to_thanks_note" ;
          }
