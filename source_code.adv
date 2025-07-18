@@ -3835,6 +3835,10 @@ subroutines {
          : set_string var="pcpc_view" text="srrs" ;
       } : else_if (!achieve_bwwb) {
          : set_string var="pcpc_view" text="bwwb" ;
+      } : else_if (!achieve_tmmt) {
+         : set_string var="pcpc_view" text="tmmt" ;
+      } : else_if (!achieve_cjjc) {
+         : set_string var="pcpc_view" text="cjjc" ;
       } : else_if (!achieve_cddc_jump) {
          : set_string var="pcpc_view" text="cddc_jump" ;
       } : else_if (!achieve_hbbh) {
@@ -3858,7 +3862,7 @@ subroutines {
       } : else_if (pcpc_view == "tnnt") {
          : print "You see yourself thumbing through the margins of an interesting book, looking for hidden secrets it has to offer." ;
       } : else_if (pcpc_view == "cddc_0pts") {
-         : print "You see yourself blowing off miscellaneous items." ;
+         : print "You see yourself blowing off miscellaneous tasks." ;
       } : else_if (pcpc_view == "cnnc") {
          : print "You see yourself poking and prodding at various items you carried or scenery you passed by." ;
       } : else_if (pcpc_view == "kssn") {
@@ -3866,20 +3870,26 @@ subroutines {
       } : else_if (pcpc_view == "rssr") {
          : print "You see yourself running around, very businesslike, with no wasted words or movements." ;
       } : else_if (pcpc_view == "srrs") {
-         : print "You see yourself confused, or pretending to be confused, with things you already figured out." ;
+         : print "You see yourself confused, or pretending to be confused, by things you already figured out." ;
       } : else_if (pcpc_view == "bwwb") {
          : print "You see yourself walking around a lot, completely unhurried." ;
+      } : else_if (pcpc_view == "tmmt") {
+         : print "You see yourself leaping from one side of the hubs to the other. You can't imagine a longer jump!" ;
+      } : else_if (pcpc_view == "cjjc") {
+         : print "You see yourself laughing a bit before and after trying, and failing, to make a jump." ;
       } : else_if (pcpc_view == "cddc_jump") {
-         : print "You see yourself whizzing around the hubs, hill and base at a ridiculous speed." ;
+         : print "You see yourself leaping constatly between the hubs, hill and base." ;
       } : else_if (pcpc_view == "hbbh") {
          : print "You see yourself scrutinizing Thor, and he laughs it off." ;
       } : else_if (pcpc_view == "nbbn") {
          : print "You see yourself reading a lot--why, inside this very house!" ;
          : set_true "can_do_here" ;
       } : else_if (pcpc_view == "done") {
-         : print "You see yourself somewhere exotic and new that you haven't been yet. What could it mean?" ;
+         : print "You see yourself somewhere exotic and new that you haven't been yet. What could this mean?" ;
       } : else {
-         : print "Nothing, weirdly. But it should show something, and that's a bug." ;
+         : print "Nothing, weirdly. But it should show something, and that's a BUG." ;
+         : gosub "report_bug" ;
+         : print {( "To help me find the case I missed, , you can win the game" + (have_won ? " or, since you won the game, just type {vs_ach}" : "" ) + ". Thanks!" )} ;
       }
    }
 
@@ -4008,6 +4018,11 @@ subroutines {
       : print "Those are just in the graphic for flavor." ;
       : done ;
    }
+
+   report_bug : subroutine {
+      : print "If you could send me a transcript chunk at {email} or {qt_repo}, I'd appreciate it. If you're not taking one, you can start transcripts with {vs_ts1} and end them with {vs_ts2} to try to reproduce things." ;
+   }
+
    rune_parsing : subroutine {
       : match "rig boons;rig boon" {
          : if (bonus_point_rig_boons) {
