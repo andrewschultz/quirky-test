@@ -2676,7 +2676,7 @@ locations {
       }
       on_describe {
          : if (achieve_nbbn && !note_book_reshuffle) {
-            : print "{note_once}as a small bonus, the books in the bookshelf are different this time. I wasn't creative enough to do any more than that, but I hope you enjoy it, all the same. Thanks again for playing and replaying!" ;
+            : print "{note_once}as a small bonus, the books in the bookshelf you scoured are different this time. In fact, there are {max_bookshelf_reads} total sets, and reading through one activates a new one on the next playthrough. Thanks again for playing and replaying!" ;
             : set_true "note_book_reshuffle" ;
          }
          : if (!have_won && !pcpc_both) {
@@ -3894,6 +3894,9 @@ subroutines {
    }
 
    read_book : subroutine {
+      : if (books_read == 0 && !read_bookshelf_this_time && times_read_bookshelf == max_bookshelf_reads) {
+         : print "{note_once}thanks for your diligence and dedication, but I ran out of random books. There won't be any new ones this time." ;
+      }
       : if (!initial_book_poke) {
          : set_integer var="tempint" "17" ;
          : gosub "footnote_reveal" ;
@@ -3911,17 +3914,17 @@ subroutines {
          : print "You peruse the bookshelf again.{footnote_reveal_text}" ;
          : set_true "got_footnote_17" ;
       }
-      : if (times_read_bookshelf == 3) {
+      : if (times_read_bookshelf >= 3) {
          : if (books_read == 17) {
             : print "The final book is a whopper: <Clowns, Frames, Frowns, Claims, Crowns, Flames<#ff0>>." ;
          } : else {
             : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Alarmin' a Marlin<#ff0>>." ;
+               : print "{book_is} <Best Reach Rest Beach<#ff0>>." ;
                : print "{book_is} <Blame, Cadge, Claim Badge<#ff0>>." ;
                : print "{book_is} <Brittle Low Little Bro<#ff0>>." ;
                : print "{book_is} <Come Now, Numb Cow<#ff0>>." ;
                : print "{book_is} <Deep Water: Weep, Daughter<#ff0>>." ;
-               : print "{book_is} <Dirt Had Hurt Dad<#ff0>>." ;
                : print "{book_is} <Farm Smear-Small-Fear<#ff0>>." ;
                : print "{book_is} <Grady and Eighty Grand<#ff0>>." ;
                : print "{book_is} <Knight, Moon, Might, Noon<#ff0>>." ;
@@ -3935,24 +3938,27 @@ subroutines {
             }
          }
       } : else_if (times_read_bookshelf == 2) {
-         : cycle key = "books_to_read_3" predictable_order = "false" skip_interval = "0" {
-            : print "{book_is} <Beef, Cheese, Chief Bees<#ff0>>." ;
-            : print "{book_is} <Brunch, Lakes, Lunch Breaks<#ff0>>." ;
-            : print "{book_is} <Burt Had Hurt Bad<#ff0>>." ;
-            : print "{book_is} <Chuck: Stained, Stuck, Chained<#ff0>>." ;
-            : print "{book_is} <Fake Snail, Snake, Fail<#ff0>>." ;
-            : print "{book_is} <Halts-Five-Faults Hive<#ff0>>." ;
-            : print "{book_is} <Least Fast Feast, Last<#ff0>>." ;
-            : print "{book_is} <Leaving White Weaving Light<#ff0>>." ;
-            : print "{book_is} <Link Thoughts, Think Lots<#ff0>>." ;
-            : print "{book_is} <My Banners By Manors<#ff0>>." ;
-            : print "{book_is} <Near Words We're Nerds<#ff0>>." ;
-            : print "{book_is} <Rhyme, Slow Slime Row<#ff0>>." ;
-            : print "{book_is} <Sore Eyes or Sighs<#ff0>>." ;
-            : print "{book_is} <Strain, Meet Main Street<#ff0>>." ;
-            : print "{book_is} <Swear They There Sway<#ff0>>." ;
-            : print "{book_is} <Thy Prayer: Pry There<#ff0>>." ;
-            : print "{book_is} <Vast Libes' Last Vibes<#ff0>>." ;
+         : if (books_read == 17) {
+            : print "A long title for the final book: <Dirt Had Hurt Dad, Bert had Hurt Bad<#ff0>>." ;
+         } : else {
+            : cycle key = "books_to_read_3" predictable_order = "false" skip_interval = "0" {
+               : print "{book_is} <Beef, Cheese, Chief Bees<#ff0>>." ;
+               : print "{book_is} <Brunch, Lakes, Lunch Breaks<#ff0>>." ;
+               : print "{book_is} <Chuck: Stained, Stuck, Chained<#ff0>>." ;
+               : print "{book_is} <Fake Snail, Snake, Fail<#ff0>>." ;
+               : print "{book_is} <Halts-Five-Faults Hive<#ff0>>." ;
+               : print "{book_is} <Least Fast Feast, Last<#ff0>>." ;
+               : print "{book_is} <Leaving White Weaving Light<#ff0>>." ;
+               : print "{book_is} <Link Thoughts, Think Lots<#ff0>>." ;
+               : print "{book_is} <My Banners By Manors<#ff0>>." ;
+               : print "{book_is} <Near Words We're Nerds<#ff0>>." ;
+               : print "{book_is} <Rhyme, Slow Slime Row<#ff0>>." ;
+               : print "{book_is} <Sore Eyes or Sighs<#ff0>>." ;
+               : print "{book_is} <Strain, Meet Main Street<#ff0>>." ;
+               : print "{book_is} <Swear They There Sway<#ff0>>." ;
+               : print "{book_is} <Thy Prayer: Pry There<#ff0>>." ;
+               : print "{book_is} <Vast Libes' Last Vibes<#ff0>>." ;
+            }
          }
       } : else_if (times_read_bookshelf == 1) {
          : cycle key = "books_to_read_2" predictable_order = "false" skip_interval = "0" {
@@ -4926,7 +4932,7 @@ subroutines {
          : print {( option_start_warp ? "Okay. You'll start at Nameless Lameness this time, because one footnote appears there after a necessary command, but next time you'll automatically start at Burst Face or beyond." : "Okay. The command is in {vm_opt} if you change your mind." )} ;
          : print "Press {key_enter} to continue." ;
       }
-      : if (read_bookshelf_this_time && times_read_bookshelf < max_bookshelf_reads - 1) {
+      : if (read_bookshelf_this_time && times_read_bookshelf < max_bookshelf_reads) {
          : increment "times_read_bookshelf" ;
       }
       : gosub "footnote_write_to_survivors" ;
@@ -5407,7 +5413,7 @@ on_command {
          : if (point_healing_still) {
             : print "{stealing_hill_mad}" ;
             : if (!achieve_cjjc_pre) {
-               : print "(However, just trying to find this sort of loophole, making it back to a room the developer shut off, shows you're an enterprising adventurer and might be a very good tester for other games, if you aren't already. It's an important and selfless part of the whole process, as testers often see programmers' blind spots but only get a hat-tip in the {v_cred}. And it can maybe help start you on the way to making your own game! Okay, ignore this if you already have. But either way, a small silly achievement awaits at game's end for trying this.)" ;
+               : print "(However, just trying to find this sort of loophole, making it back to a room the developer shut off, shows you're an enterprising adventurer and might be a very good tester for other games, if you aren't already. It's an important and selfless part of the whole process, as testers often see programmers' blind spots but only get a hat-tip in the {vm_cred}. And it can maybe help start you on the way to making your own game! Okay, ignore this if you already have. But either way, a small silly achievement awaits at game's end for trying this.)" ;
             }
             : set_true "achieve_cjjc_pre" ;
             : done ;

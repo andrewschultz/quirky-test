@@ -1,12 +1,14 @@
 Quirky Test walkthrough
 
-The game and walkthrough are both copyright 2025 by Andrew Schultz. The walkthrough is published on itch.io and will be on CASA post-comp.
+The game and walkthrough are both copyright 2025 by Andrew Schultz. This walkthrough is on both itch.io and www.solutionarchive.com (CASA, Classic Adventure Solutions Archive).
 
-The tutorial is mainly there for people to be acquainted with meta-commands they may not be aware of. There's a puzzle in the spirit of the game, too, but it's solvable by trial and error.
+The tutorial is mainly there for people new to text adventures to get acquainted with meta-commands they may not be aware of. There's a puzzle in the spirit of the game, too, but it's solvable by trial and error.
 
-Some of these commands (e.g. the meta-commands) are superfluous in non-tutorial mode.
+Many of these commands (e.g. the meta-commands) are superfluous in non-tutorial mode.
 
-This walkthrough also deliberately ignores all bonus points. I'd like to keep that challenge. Or, you know, you can just visit https://github.com/andrewschultz/quirky-test and read the source code. It should be low-level detective work even if you didn't find a bonus point.
+This walkthrough also deliberately ignores all bonus points, to keep things simple. The achievements.txt file goes in-depth about how to get all achievements. It should also be on both itch and CASA.
+
+If you want just bonus points, you can search "(B" in the achievements document to see what they are. Or you can also just visit https://github.com/andrewschultz/quirky-test and read the source code, which might be fun detective work.
 
 ===============================================
 

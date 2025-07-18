@@ -1,0 +1,20 @@
+There are no new discoveries in this point release. Well, okay, there's one, sort of.
+
+THE BIG CHANGES:
+-- There's a new set of books. That makes four. I fixed a weird bug with the game not fully registering you'd read all book collections, too.
+-- The item that clues an achievement left is now part of the final room picture, if it's there. There's also a cut scene when you read it. I obfuscated the two commands needed to get this item, too.
+-- The game details better how/when room names change once you solve something.
+-- I tweaked the credits to also thank John Doolittle for his generous prizes to those who entered. Not doing so for 2.0.0 was a motivator to get 2.0.1 out. VERSIONS and LINKS got small upgrades, too.
+
+The big trouble in all this was testing. I used pyautogui for testing the exhaustive talking achievement, since I got sick of hitting the up arrow.
+
+for x in range(1, 18):
+	for y in range(0, tries):
+		pyautogui.write("ask {}\n".format(x))
+
+But trickier by far was testing the achievement cluer item, which you could only use once without debug commands. I had a command called ACHALL which let you get achievements up to X. Here is the tail end of the code:
+
+: set_boolean var="achieve_hbbh" {( tempint > 19 )} ;
+: set_boolean var="achieve_nbbn" {( tempint > 20 )} ;
+
+I feared writing it, and even though it looks ugly, it turned out not to be too bad. I didn't have to use an if/else once I found out about set_boolean.
