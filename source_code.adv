@@ -2565,8 +2565,16 @@ locations {
          : if (pcpc_both) {
             : match "_ plan" {
                : if (!chose_achievement) {
+                  : set_false "show_overlay" ;
+                  : clear_screen ;
+                  : update_graphic "s_pcpccp_old_friend" ;
                   : print "You glance at the {pccp}. The picture on its front cover is of the fellow you gave the dirt home to. He is smiling and waving." ;
+                  : press_any_key ;
+                  : update_graphic "s_pcpccp_spiral" ;
                   : print "You flip through the {pccp}, and it swirls into a looping animation." ;
+                  : press_any_key ;
+                  : set_true "show_overlay" ;
+                  : update_graphic ;
                   : gosub "pcpc_choose" ;
                } : else {
                   : print "The {pccp} continues to loop with the same animation." ;
@@ -2681,7 +2689,7 @@ locations {
          : if (!noted_plan && noun1_is "plan" && !can_do_here) {
             #: set_true "noted_plan" ;
             : set_true "noted_plan" ;
-            : print "This doesn't feel like something you can do now, but maybe you can figure out how to, on restart." ;
+            : print "You put the {pccp} down. What you just saw doesn't feel like something you can do now, but maybe you can figure out how to, on restart." ;
          }
       }
    }
@@ -5922,12 +5930,20 @@ assets {
       s_big_runes_east : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEX/gAAAwAA7v3XfAAAA8klEQVQ4y+XSQQ6CMBAF0BoWXfYIHIWjIeFicBOO0CULwsgM/YPfCOrahvyE77NCnSC65hqxeNitSHgBLwGQk9eNx3uQGwSBKTpoESdgahEEhsqBIAiM/QfQdWgGQRDoRzSjIE5AJwgC1YCmFwSBOKGpBPEM1qhvbk0UBIGUC1ijlCCwJD19A0lKMKjnApYkJQjMtd4Z8Hlh0CzXIDe6K3YpHxFoVwAfKAJTq2+mzTFQDOxsDPhAERjsdLU5BorAaP+PAZ8XAp1d2hzzQqC3TbQ55oVAZd/S5h7CbQ8C0X5Xm7CtPX4D2zHmL8HJM1ytPwEPSPdTt25HPIkAAAAASUVORK5CYII=";
       s_big_runes_west : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEX/gAAAwAA7v3XfAAABHklEQVQ4y+WSwY2EMBAEfeLhp0NwKIQGiMQgE4fgJw9EH3b3GKM9aQM4tGqpTGkG2Hb4crl/JAQgM2bnfhgVPwV3X4yX4IH0XajxCBVNGICNJ3O5N38IK7DTQgvDKizlVy20MHQ6W2mhhaHT1IEWWhhWIZUXsZOB8Ramy3MM37mEYRXydAWOAS6FUMJ4Bo657wWGkMIxnpFjgFMhlBCPyDH3vcgQUjjjMXLMIwglhNyEQ/ESrpAn7inPwxBK8GninvJGDKE66ZP2lG/CEEoYNu0pX5UhlLDu2qOWpIadUPd0pSFKWJZ20krzEvZVD9KVhihhG2zPUxqihORtzyMQe2HvC2UoIQfbY4Uy7IXUF0poQv1fUl+ov4TcF0oI/AIq2z05VCLflQAAAABJRU5ErkJggg==";
 
+      # PCPC cut scene
+      s_pcpccp_old_friend : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAGFBMVEUAAACAAACAgADAwMD/AAAA/wAAAP/////l29zpAAABE0lEQVR4XuXVMWvDQAwF4EdNq7lT16LFq0Hg/IFA1i7NHAg5r2oSor9fnR03ZE2hj+I3PKPh0Gc4OMRDkbFVbx0eD+U3gKNqO/WCAdpm0QD6EwpA32+AJ/17wFHv0i4PEPcAyiWUefKIpQK+3iJeuQCnAqbzHIC7B+atIAACcl15zokBEA+X8ybW63AKoOkSkes3dTUFYJh/XSgAWJeVAkdQAG6G+g0PEqAxA1YRJ4ACCJj1+wrodxAGwJsE2OpUGwxAoAIy2Z0wAI6XGWAgADKXCbAz64QDKJYpA8xYgL1ZXwZvDByAlowOAeu4AG9IgDJmyNnJAAcZICJMAOExev6s2U6Awzh8EADlmkUDDtv/DvgGs9bgN8/8MvUAAAAASUVORK5CYII=" ;
+      s_pcpccp_spiral : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAgMAAABslMwaAAAADFBMVEUAAAAAgAD/AAD///+CqD+SAAAA7klEQVR4XqXWsW3EMBBEUZ4gJowEQ2yCVRgKLyIITj8SYPXBy4jfpF2B74DdjRcvmWAm/P5/hZckPZlvnt4Dl6RaHMAtacEH9OIEKk7g8AIJfCkUF/BS9wFDFQjBDEw1GLkagcTMDR7qZoDYmNkMLHA1hszAF4zGZQc2mBvRDuwF9pHtQE6wXnIAB5wxPOxALYxQhh1QmiExox34DnWByw5IxwbDAfS0w9ztQGUtsNqBgzvBjx1I3AecZqAX7grDHiPcvZiB2BPcsndjCEBUcvQCzKynD5AOFzCk5gIuLxCdwMxO4JQPmFGfUnDPvD+NMg4c3RRljwAAAABJRU5ErkJggg==" ;
+
       # final command stuff
       s_tiny_shrunk_shiny_trunk : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAAqUlEQVRYw+3YwQ2AIAwF0CYdoKs06f47uYHCwUQPNYGUfgw08cSBx0cRoBNctAEbsAF/BNBXJQCIzanSouMBh9u/lpYEAJkbQH3GA9wArAagYACDAWpgQMZXcLj9l+EbGMBggBoYwDkA/zdg6ATyAcpgANHqAPgULP8OKL12Z3MAJBNwr34PQHMA0SuhgAHtAQQDBAzoCCAWIGBATwChAMkBxB2M57gfuAAqp+unOj774QAAAABJRU5ErkJggg==";
       s_costly_lost_key : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAApklEQVRYw+2XSw7AIAhEe6c5APc/Dwdorb82dkcJsxAWWk1MXxCBOU6yHQmQAKZT+owylxIIABmjYizrVxgAvgCIBND2yzdA2woLQmAFMDrA/ApkCUKrA/yeoeyVB3okggsAWO/dB6A4wMMFfwCsyc8TYBodQHYFqHm4TAmQABwA9LaEBDBqgd6lWLeshqmMuC0Zuyllt+V0YUKXZnRxSpfnmYgc7QKMI1vml/UUKAAAAABJRU5ErkJggg==";
       s_the_ring : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAAA/klEQVRYw+XXQQqEMAwF0EAOkKsEuvSYs/IcLr1Ub5BxAkpFIwj2Z8AobhT6sOmvkj1dlS5KDo/T8+OXoHS5cxQ8DgjHL36H+gPCYmdI9ynwcfhsChgCsOqDnTaBX7oDvAs07AIA4CfQsA8RAOMIsPQGBFA5WozKhADYjSzsBIjTyCBToGEcKwTAK2Dyo21CCKBui2Ao07CPIgjgzirsAahNDo3jZ5/FCAA3gHmedi8AAajNVjD42W5GAACHAIYALj4JCwYQhqDiAcrJAKK3A9Kn4PU9oOvPyD8BBAlY0+9qK0AnoSQD1JIBkgxQSwZIMkAtGSAYQPxFZBDA3foCa3swCduC+zcAAAAASUVORK5CYII=";
+
+      # Final final stuff (all achievements)
       s_sound_group_ground_soup : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAAD/AACAQAAAgADggED///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfj+eBAAABtElEQVRYhe2YC46DIBCGySYcwD3BVusF1hsYDzAx4f5XWWYYBBTbAtNu0nSSqhSc/5vhIarMP5v6ALwlgMqZfgEAsFZJpRQA3Ahyp5hSiABAog2Z/O9jDyUBAK/udb76E0tHA5+bASgU8rvXmya+GNe04ocpAA+NAKBIfSc9GuMALh2V7MGsodJTaLy9EQB9pMpWmyVsAi7dt0uA0++oQZQJ66ANAAxgjw9Wa5kxzi383kWMAChOJcLhPpl+aVRQCpsSQCNusNkmgGAU8uJHgP1dF4fTU5IGHiC6sQs4A9jdi0tErB9lxQH0XMSmMhlIxwACjO7/lUrX2U8BKztHZGJj4DALRpPgbBH7mRj0hWbBjXXAAezXANYWWwdwGNSvhGAkAHT9s8D/2kwH1dKnoRYBiDwU7gdABgCOcWc7INNsO7RZrQuQeRxnU/CQqejYZnU+mFsCoC4FKjm1WY0TTy20Ka2/RWZbXt4J6nDxWgKVuWqzMj8Rr9ibUVEKpN+MSh3FtGIABTMhaSr3dgyPPY15D/UEgPCSWNRI9gPF3X44NhD+QgKnO5Kzmqd8osnuCk/a/gHRaNgGa2ryHQAAAABJRU5ErkJggg==";
       s_final_rewards : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEUAAAD///+l2Z/dAAAB6UlEQVQ4y33Uv0tbQRwA8BQHh3Zx6pilf4Ag0oLKGx2LYM3q1s12KQmIeTpYEYcO4tbwcA5YOojDS3JCEXFoO7QhgkgcxCCWXETsN/q9e1/vzqjF+74+uOMOPny/9+PdN0Pc1w3vhxkW4EJvkDxJASpzG6OjU4AJnbXx+9MBbQddEyYFXNtuvs90aaBwN0pLMfQfcEEB4dK22+T7gAHP1DdCWQvp42gBIh90qU+FKMWIrH0egp8+aJkWGRC3KnsA0gdN06QFUD1jgTANUEYOvGSAvQNE2Yxbi2edvKw/BgmpHGmkHyPSpvg+9xho0jlKkI6vZOUpQNZLgaTHiWbpXL2unm4Nhh4AG4FiM8pW/wwytylJTREdzKfeBQApEnFtrDe/9NbgTnJWVN1MHX3wdtE4now2UJRwd04VzuWwdw5b7brYRHGIq0X96q1c804yf/I7ivHT4UVQvFqV/kkS/K0LgeulfFjEBgtOdgyojPZb0H7HAHujGCQQGHDERUjGLVCw5FKUGNCwQEM0030u28MMyBkgNAQv8NfMtGbWYAFpyK7j/jTzLtwabH3YXY7Yh+N2QbY+NJtsfYCBibIgVx9MhI5fYWAzV7Z/dq8+cGByxYJefeDAmy8O3NYHBnwdKIt/5im7ePhuAIC7inOp/q9RAAAAAElFTkSuQmCC";
+
+      # Easter egg
       s_yellow_pig : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAMFBMVEUAAACAAAAAgACAgAAAAICAAIAAgICAgIDAwMD/AAAA/wD//wAAAP//AP8A//////97H7HEAAABI0lEQVRYw+2YQQ6EMAhFWTbh0ix7HPZcbop1LNpuhphvMpG4aEy0L/xfQKk+HPQCvADJx3qUBwCk+PbW4waE3zNAQmxH0PcFksxIBsBiKG0MPSkJgoQH2C7hDPtNAgDIBBBZCkCC9dak3C4DAMwJUN50YG1sSAB18ftiBFIC/e5NPQcoAIkA3BVQpAlngCCCViyA2m6/oyI8AeD1+FqYwQBHMMQDPABGTeg5YAabkM/FyBh6DK8dySmebEatLCqwHa8oSma+y2ZgCQAayTbTzwCUm28plQDlG0aRLMA49WcLViTAQoCKBPAGzLEApQVIeqBZUGX/OOL8AciPZIXHlgIH8MkzTJ/i85BWIICQFQmiExqgERQJRb+tiaAA7w+KPwP4AGOnyrkUw3SbAAAAAElFTkSuQmCC";
 
    # final final silly room
