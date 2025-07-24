@@ -438,6 +438,18 @@ collections {
          "hub_e_nw"
       ]
    };
+   num_to_word : list {
+      items = [
+         "zero",
+         "one",
+         "two",
+         "three",
+         "four",
+         "five",
+         "six",
+         "seven"
+      ]
+   };
    ask_list : list {
       items = [
          0,
@@ -753,6 +765,7 @@ strings {
    here_e_nw : dynamic_string {( is_at "hub_e_nw" ? "here" : "(East Branch, NW)" )} ;
    here_stealing_hill : dynamic_string {( is_at "stealing_hill" ? "here" : "(Stealing Hill)" )} ;
    here_my_house : dynamic_string {( is_at "my_house" ? "here" : "into My House" )} ;
+   thought_count_words : dynamic_string {( collection_get{ collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
 
    # yes-or-no
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
@@ -846,13 +859,7 @@ strings {
    hubdir : dynamic_string {( is_at("west_tiles") ? "west" : "east" )} ;
    hubrevdir : dynamic_string {( is_at("west_tiles") ? "east" : "west" )} ;
    sub_hub : dynamic_string {( "You also see big runes carved into the ground here in the {hubdir} mini-hub. You can go south{hubrevdir} back to the plain base" + (point_healing_still ? ", which is your only choice, given the stealing hill's mood." : " or " + (has_visited("stealing_hill") ? "back up to the stealing hill" : "up to a hill") + ".\n{spokes_left}" ) )};
-   spokes_word : dynamic_string {( tempint == 6 ? "one" :
-      tempint == 5 ? "two" :
-      tempint == 4 ? "three" :
-      tempint == 3 ? "four" :
-      tempint == 2 ? "five" :
-      tempint == 1 ? "six" :
-      "(error, bug, {tempint})"
+   spokes_word : dynamic_string {( collection_get{ collection -> ("num_to_word") index -> ( 7 - tempint ) }
       )};
    spokes_left : dynamic_string {( tempint == 0 ? "You haven't figured what to do in any of the seven outward spokes here. Yet." : (tempint == 7 ? "You've taken care of business in all the side areas here." : "You still need to take care of things in {spokes_word} of the seven planar directions.") )};
 
