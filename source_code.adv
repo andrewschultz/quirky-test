@@ -365,6 +365,9 @@ integers {
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
    books_read : integer "0" ;
 
+   # for THINK
+   commands_figured : dynamic_integer {( (think_chalice_map ? 1 : 0) + (think_fellow_yield ? 1 : 0) + (think_grim_tune ? 1 : 0) + (think_healing_still ? 1 : 0) + (think_hunters_grill ? 1 : 0) + (think_master_plan ? 1 : 0) + (think_shift_goals ? 1 : 0) + (think_gravel_trail ? 1 : 0)  + (think_hi_mouse ? 1 : 0) )}
+
    # achievements
    rssr_west : integer "0" ;
    rssr_east : integer "0" ;
@@ -683,12 +686,13 @@ strings {
       "This is a dead end, at least for {qt}'s purposes, so you can really only backtrack {spoke_out_dir} to {back_to_hub}, though {v_out_b} always works, too." )} ;
    bflist : dynamic_string {( "Here is a list of all the " + ( verb_is "footnotes" ? "footnotes" : "bonus points") + ", in approximate order you might find them. The color-coding further lumps them by general area." )} ;
    yn_or_12_or_14 : dynamic_string {( (verb_is "save" || verb_is "load") ? "Please choose from 1 to 4." : in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
-   my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}/{max_score}" )} ;
    unknown_begin_note : dynamic_string {( have_won || (has_visited("west_tiles") && has_visited("east_branch")) ? "" : ", though special commands are cued in puzzles throughout {qt}" )} ;
    custom_unknown_verb_error : string "Nothing comes from that. {vm_verbs} gives a list of basic standard verbs{unknown_begin_note}." ;
    bonus_yellow : dynamic_string {( "<" + max_bonus_score + "<#ff0>>" )} ;
    pbr : dynamic_string {( talked_to_thor ? "rules in the Player's Bill of Rights" : "things to {v_ask} {thor_if_known} about" )} ;
    thor_if_known : dynamic_string {( has_visited("plain_base") ? "Thor" : "an NPC you'll find" )} ;
+   my_score : dynamic_string {( in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}{plus_in_header}/{max_score}" )} ;
+   plus_in_header : dynamic_string {( commands_figured > 0 ? "+{commands_figured}" : "" )} ;
 
    # keyboard stuff
    key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
@@ -4118,7 +4122,7 @@ subroutines {
          : return ;
       }
       : if (think_available) {
-         : print "Here are things that seemed like they should work, but you didn't have the resources yet:" ;
+         : print {( "Here " + (commands_figured > 1 ? "are {thought_count_words} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
       }
       : if (think_chalice_map) {
          : print "-- get the <CHALICE MAP<#0f0>> {here_w_ne}";
@@ -5784,6 +5788,9 @@ on_command {
          : print "You haven't found any of the {bonus_yellow} bonus points yet." ;
       } : else {
          : print "Your <bonus score<#ff0>> is {bonus_score} out of {bonus_yellow}." ;
+      }
+      : if (think_available) {
+         : print {( "You have also figured  {thought_count_words} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_thk} for details." )} ;
       }
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
