@@ -655,7 +655,7 @@ strings {
    tempopt : string "blank option" ;
    pcpc_view : string "" ;
 
-   ## important conditional text stubs
+   ## important miscellaneous conditional text stubs
    exit_or_out : dynamic_string {( at_spoke ? "Only way {v_out}: " : "Exits: " )} ;
    exitserr : dynamic_string {( is_beside "cheering_voice" ? "No, that's not the way out. Trial and error might get it. Or figuring what the voice really means." :
       (tutorial_6_x_ask_done && is_at "nameless_lameness") ? "You don't want to wander off without any direction, but maybe that voice could offer a clue." :
@@ -743,6 +743,16 @@ strings {
    cue_sane_role : string "<SANE ROLE<#db8>>" ;
    cue_so_long : string "<SO LONG<#db8>>" ;
    cue_vast_fission : string "<VAST FISSION<#db8>>" ;
+
+   # THINK related
+   here_w_n : dynamic_string {( is_at "hub_w_n" ? "here" : "(West Tiles, N)" )} ;
+   here_w_ne : dynamic_string {( is_at "hub_w_ne" ? "here" : "(West Tiles, NE)" )} ;
+   here_w_sw : dynamic_string {( is_at "hub_w_sw" ? "here" : "(West Tiles, SW)" )} ;
+   here_w_w : dynamic_string {( is_at "hub_w_w" ? "here" : "(West Tiles, W)" )} ;
+   here_w_nw : dynamic_string {( is_at "hub_w_nw" ? "here" : "(West Tiles, NW)" )} ;
+   here_e_nw : dynamic_string {( is_at "hub_e_nw" ? "here" : "(East Branch, NW)" )} ;
+   here_stealing_hill : dynamic_string {( is_at "stealing_hill" ? "here" : "(Stealing Hill)" )} ;
+   here_my_house : dynamic_string {( is_at "my_house" ? "here" : "into My House" )} ;
 
    # yes-or-no
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
@@ -4104,31 +4114,31 @@ subroutines {
          : print "Here are things that seemed like they should work, but you didn't have the resources yet:" ;
       }
       : if (think_chalice_map) {
-         : print "-- get the <CHALICE MAP<#0f0>> (West Tiles, NE)";
+         : print "-- get the <CHALICE MAP<#0f0>> {here_w_ne}";
       }
       : if (think_fellow_yield) {
-         : print "-- make the <FELLOW YIELD<#0f0>> (West Tiles, NW)";
+         : print "-- make the <FELLOW YIELD<#0f0>> {here_w_nw}";
       }
       : if (think_grim_tune) {
-         : print "-- sing a <GRIM TUNE<#0f0>> (East Branch, NE) once you have a melody and lyric inspiration";
+         : print "-- sing a <GRIM TUNE<#0f0>> {here_e_nw} once you have a melody and lyric inspiration";
       }
       : if (think_healing_still) {
-         : print "-- feel (or discover a) <HEALING STILL<#0f0>> (Stealing Hill)";
+         : print "-- feel (or discover a) <HEALING STILL<#0f0>> {here_stealing_hill}";
       }
       : if (think_hunters_grill) {
-         : print "-- start up the <HUNTERS GRILL<#0f0>> with gifts of food (West Tiles, W)";
+         : print "-- start up the <HUNTERS GRILL<#0f0>> with gifts of food {here_w_w}";
       }
       : if (think_master_plan) {
-         : print "-- have the strength and self-belief to get the <MASTER PLAN<#0f0>> (West Tiles, N)";
+         : print "-- have the strength and self-belief to get the <MASTER PLAN<#0f0>> {here_w_n}";
       }
       : if (think_shift_goals) {
-         : print "-- help others out enough to be able to <SHIFT GOALS<#0f0>> (West Tiles, SW)";
+         : print "-- help others out enough to be able to <SHIFT GOALS<#0f0>> {here_w_sw}";
       }
       : if (think_gravel_trail) {
-         : print "-- find the right place to open up the <GRAVEL TRAIL<#0f0>>" ;
+         : print "-- find the right place to open up the <GRAVEL TRAIL<#0f0>> " ;
       }
       : if (think_hi_mouse) {
-         : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back into My House";
+         : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back {here_my_house}";
       }
       : if (retry_available) {
          : print "Here are bonus commands you got right, but it was a bit too late. You can use them on replay." ;
