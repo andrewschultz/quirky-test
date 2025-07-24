@@ -3790,7 +3790,7 @@ subroutines {
    note_think_command : subroutine {
       : if (!think_noted) {
          : set_true "think_noted" ;
-         : print "{note_once}you've found the right thing to say or do, but you weren't prepared yet. {vd_thk} will record this and other point-scoring commands you might discover, for when your character is fully prepared." ;
+         : print "{note_once}you've found the right thing to say or do, but you weren't prepared yet. {vd_thk} will record the details, while {vd_sco} and the status bar (with +1, etc.) record the number of commands figured. The passage back here will also be marked on the map." ;
       }
    }
    out_stub : subroutine {
@@ -5092,8 +5092,14 @@ on_render {
       : if (point_master_plan) {
          : overlay "o_check_mark" x="124" y="0" ;
       }
+      : if (think_master_plan) {
+         : overlay "o_guessed_right" x="122" y="1" ;
+      }
       : if (point_chalice_map) {
          : overlay "o_check_mark" x="164" y="0" ;
+      }
+      : if (think_chalice_map) {
+         : overlay "o_guessed_right" x="162" y="1" ;
       }
       : if (point_fell_short) {
          : overlay "o_check_mark" x="192" y="14" ;
@@ -5104,11 +5110,20 @@ on_render {
       : if (point_shift_goals) {
          : overlay "o_check_mark" x="80" y="28" ;
       }
+      : if (think_shift_goals) {
+         : overlay "o_guessed_right" x="82" y="28" ;
+      }
       : if (point_hunters_grill) {
          : overlay "o_check_mark" x="64" y="14" ;
       }
+      : if (think_hunters_grill) {
+         : overlay "o_guessed_right" x="66" y="14" ;
+      }
       : if (point_fellow_yield) {
          : overlay "o_check_mark" x="84" y="0" ;
+      }
+      : if (think_fellow_yield) {
+         : overlay "o_guessed_right" x="82" y="0" ;
       }
    }
    : if (is_at("east_branch")) {
@@ -5132,6 +5147,9 @@ on_render {
       }
       : if (point_grim_tune) {
          : overlay "o_check_mark" x="84" y="0" ;
+      }
+      : if (think_grim_tune) {
+         : overlay "o_guessed_right" x="84" y="1" ;
       }
    }
    : if (is_at("my_house")) {
@@ -6000,6 +6018,7 @@ assets {
 
    # general overlay graphic (s)
       o_check_mark : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAEFJREFUKFNjZCAE/jP8Z2BkYAQpAxN4AdGKkRQSNploxWgK8ZtMtGIsChEmo0viVQzSBlOAQyGqm0lSjGw6jlgCAPhyHAy7s/zYAAAAAElFTkSuQmCC";
+      o_guessed_right : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAJ0lEQVR4nGP8//8/AypgRBL4z4gsw8RAAhj2ilkwhVCDi4DigQhnAAKHCBdo0eBnAAAAAElFTkSuQmCC" ;
 
       o_thor : base64_png "iVBORw0KGgoAAAANSUhEUgAAAHwAAAAoCAYAAAA8AZ5fAAAC7klEQVR4nO1b25KsMAhsps5/q1/OeZjJbsSoJMGAO3aVZbmjSGibkMsSMyMiloUYAKaJyduXHkRrx8vbgTOkgN0REX0PT/gDWzyEfxkewr8MtyA8Yl94hqg+hyVcVrVRA1iC9DVKhQ4A/7wdOMI0MbUQvSyL8plZnM/8maqJi0Q2AFDUcbjE2XhWT3KOWZz12CM/2rhbIrTCS1gW4hTMNpKt/Ph9dyL/Dt3ObRQO5AGdjSzO4mxjL6q6gcBFWwm/gZxd/ShjBhCbbGBH4SldtRQpV9jJbdliFmc7WLT5CmwUnge2J8hWdiye90BUn2+V0h/0Y5XS977K2vRkZQcAiIiZY/eLJUT1W6XwmvQUNZU9eONH4Vqi9icc+p4vOkfvYdihUj73YKSaFO9U+e6A6omXH2LnGavzRVAHjLJJjyuCTHWTKsxMVPnMCLQVbTnJFxGuDlaJXCJeHW0OHNtQflTRSA89tapWt7zviiA3ZI2IKn8BYwstzbu6g8RMq8PLxgeRSA+h8DwgSdWtxQ5lCxhsMM3Zay9Xeamdo+E+8SKr2R41kFitktee9izbCbwzpSZbyvvcCQf6Vd2Dkem2t50WXa9rSi8Fe2ShM3I2rPQe7fuP1iXO1+Dn1ZW7wi0DLvvYoz5XE+wae7XQttu6oA5RtFlCQ0qNsi1JrkVpV438ey3cFT4aURc1jiCno3vW2t0VPpKA0vAI+PvFYg5XwkfPREVT9pE/lruFcryuMHqEqFt/vgUh+vA81UaahrRE3jbPNrr34Smt5zNR6VqVgqN8IDu+ltqVrke6l1Ct8FJK7k3TzEzpSNc99qIhb1fezj1c1X8DjXvaFqGqSTTAYk+bWgmBFd6j5nyjiYzv6vfTLdbv31PsVwovjffa/oFu+1ytHatFBi+YpO7P5hIpsB5sUvoVaaTVpipYEdL/jg8WZAPbDNqDYtFmRbqVndMCjpncUvtBKm+FpaIl3Kv0M6ir9ghKR38q35BtvGfwP4CLKW+5pkTbAAAAAElFTkSuQmCC";
 
