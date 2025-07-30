@@ -96,6 +96,11 @@ booleans {
    table_examined : boolean "false" scope="survivor" ;
    alert_pcpc_house : boolean "false" scope="survivor" ;
    can_do_here : boolean "false" scope="survivor" ;
+   map_note : boolean "false" scope="survivor" ;
+   map_black_room_note : boolean "false" scope="survivor" ;
+   map_red_room_note : boolean "false" scope="survivor" ;
+   map_dark_grey_room_note : boolean "false" scope="survivor" ;
+   map_see_all_nudge : boolean "false" scope="survivor" ;
 
    ## new miscellaneous booleans above
 
@@ -113,6 +118,7 @@ booleans {
 
    ## utility booleans
    show_overlay : boolean "true" scope="survivor" ; # you may not wish for some graphics to show overlay
+   in_map : boolean "false" scope="survivor" ;
 
    ## game progress booleans
    tutorial_done : boolean "false" ;
@@ -701,6 +707,7 @@ strings {
    vd_bon : string "<BONUS<#f80>>" ;
    vd_i : string "<I<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
+   vd_map : string "<MAP<#f80>>" ;
    vd_sco : string "<SCORE<#f80>>" ;
    vd_thk : string "<THINK<#f80>>" ;
 
@@ -1074,6 +1081,9 @@ strings {
    inv_plus_so_long : dynamic_string {( inv_so_long ? pip : "" )} ;
    inv_plus_cease_purging : dynamic_string {( inv_cease_purging ? pip : "" )} ;
    inv_plus_racing_passions : dynamic_string {( inv_racing_passions ? pip : "" )} ;
+
+   # map conditional text
+   see_all_map : dynamic_string {( map_see_all_nudge ? "" : " To see a full legend, put an argument after {vd_map}." )} ;
 
    # Easter Eggy / retry stuff
    bookshelves_in_words : dynamic_string {( (collection_get{ collection -> ("num_to_word") index -> ( max_bookshelf_reads ) }) )} ;
@@ -2722,6 +2732,9 @@ locations {
       on_command {
          : match "l _" {
             : redescribe ;
+         }
+         : match "map _" {
+            : gosub "map_game" ;
          }
          : gosub "yellow_pig_blather" ;
          : match "load _;save _;restart _;restore _;tstart _;tstop _" {
@@ -4390,6 +4403,38 @@ subroutines {
       : press_any_key;
    }
 
+   map_game : subroutine {
+      : clear_screen ;
+      : set_true "in_map" ;
+      : update_graphic "m_blank" ;
+      : set_false "in_map" ;
+      : match "map *" {
+         : print "Lines with arrows mean one-way paths. Black rooms are finished--you can't return. Red rooms mean you saw what to do but need to return when prepared. Dark grey rooms are finished, but you can revisit them." ;
+         : set_true "map_black_room_note" ;
+         : set_true "map_red_room_note" ;
+         : set_true "map_dark_grey_room_note" ;
+         : press_any_key ;
+         : redescribe ;
+      }
+      : if (!map_black_room_note && has_visited "burst_face") {
+         : print "{note_once}a black room is one you can't revisit. The arrows on connecting lines mean a one-way path.{see_all_map}" ;
+         : set_true "map_see_all_nudge" ;
+         : set_true "map_black_room_note" ;
+      }
+      : if (!map_red_room_note && think_available && !has_visited "gravel_trail") {
+         : print "{note_once}a red room is one where you saw what to do but weren't prepared yet.{see_all_map}" ;
+         : set_true "map_see_all_nudge" ;
+		   : set_true "map_red_room_note" ;
+      }
+      : if (!map_dark_grey_room_note && point_gravel_trail) {
+         : print {( "{note_once}a grey room is one you've solved but can still revisit, though you shouldn't need to." + (have_won ? "" : "By the way, you're very close to the end.") + see_all_map )} ;
+         : set_true "map_see_all_nudge" ;
+		   : set_true "map_dark_grey_room_note" ;
+      }
+      : press_any_key ;
+      : redescribe ;
+   }
+
    meta_about : subroutine {
       : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. It placed 4th of 7 entries." ;
       : print "I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#8f8>>[https://cobwebbeddragon.itch.io/interactive-adventurer-tutorial-adventure-talp], a 2023 entry by <Cobwebbed Dragon<#8f8>>[https://cobwebbeddragon.itch.io/] (clickable links,) as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
@@ -4426,6 +4471,7 @@ subroutines {
       : print "{vm_thx} or {vm_credits} lists people who helped me make or improve {qt}.";
       : print "{vd_thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
       : print {( "{vd_sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> lists bonus points you've found and clues where to get others." : "" ) )} ;
+      : print "{vd_map} gives a graphical map, and typing any text after gives a legend." ;
       : print "{vm_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
       : if (have_won) {
          : print "By winning the game, you've opened up footnotes ({vd_footnote_cue}) and achievements tracking ({vd_ach}).";
@@ -4483,6 +4529,7 @@ subroutines {
       : print "Thanks to {talj} (formerly TALP, p = project) admins past and future: {tx_ca}, {tx_gf} and <Pinkunz<#0f0>>. Thanks to those who came before who wrote so many great games that made me want to write something more welcoming than my usual efforts. {vm_links} will lead you to past comps." ;
       : print "Thanks to {tx_jd} for offering generous prizes for TALP. I'd have written {qt} anyway, but my prize was a wonderful motivator to release the post-comp version sooner and not later." ;
       : print "Thanks to {tx_ca} for creating Adventuron." ;
+      : print "Thanks to Khurasan for the Game Bubble font which appears in the {vd_map}." ;
       : print "Thanks (in alphabetical order) to people who found bugs and/or offered big-picture advice." ;
       : print "{indent}Pre-comp: {tx_wc}, {tx_gf} (who also helped me with collections,) {tx_ll}, {tx_cm}, and {tx_ds}." ;
       : print "{indent}In-comp: {tx_da} and {tx_on}." ;
@@ -5098,6 +5145,253 @@ themes {
 # end themes
 
 on_render {
+   : if (in_map) {
+      : if (have_won) {
+		 : overlay "m_room_achievement" x="1" y="321" ;
+         : if (is_at "kill_hassle_hill_castle") {
+            : overlay "m_room_achievement_gotit" x="1" y="321" ;
+         } : else {
+            : overlay "m_room_achievement_tease" x="1" y="321" ;
+         }
+      }
+      : if (is_at "nameless_lameness") {
+         : overlay "m_visited" x="601" y="321" ;
+      } : else {
+         : overlay "m_finished_blocked" x="601" y="321" ;
+      }
+      : overlay "m_room_nameless_lameness" x="601" y="321" ;
+      : if (has_visited "burst_face") {
+         : overlay "m_arrow_west" x="561" y="335" ;
+         : if (is_at "burst_face") {
+            : overlay "m_visited" x="481" y="321" ;
+         } : else {
+            : overlay "m_finished_blocked" x="481" y="321" ;
+         }
+         : overlay "m_room_burst_face" x="481" y="321" ;
+      } : else {
+         : done ;
+      }
+      : if (has_visited "first_base") {
+         : overlay "m_arrow_south" x="515" y="361" ;
+         : if (is_at "first_base") {
+            : overlay "m_visited" x="481" y="401" ;
+         } : else {
+            : overlay "m_finished_blocked" x="481" y="401" ;
+         }
+         : overlay "m_room_first_base" x="481" y="401" ;
+      } : else {
+         : done ;
+      }
+      : if (has_visited "plain_base") {
+         : overlay "m_arrow_west" x="381" y="415" ;
+         : overlay "m_arrow_west" x="411" y="415" ;
+         : overlay "m_arrow_west" x="441" y="415" ;
+         : if (point_gravel_trail) {
+            : overlay "m_finished" x="301" y="401" ;
+            : overlay "m_path_v" x="340" y="361" ;
+         } : else {
+            : overlay "m_visited" x="301" y="401" ;
+         }
+         : overlay "m_room_plain_base" x="301" y="401" ;
+         : overlay "m_base_ne" x="380" y="196" ;
+         : overlay "m_base_nw" x="190" y="196" ;
+      }
+      : if (has_visited "west_tiles") {
+         : overlay "m_octagon" x="121" y="161" ;
+         : overlay "m_room_west_tiles" x="121" y="161" ;
+		 : overlay "m_path_h" x="201" y="180" ;
+		 : overlay "m_path_h" x="81" y="180" ;
+		 : overlay "m_path_v" x="160" y="201" ;
+		 : overlay "m_path_v" x="160" y="121" ;
+		 : overlay "m_path_nw" x="81" y="121" ;
+		 : overlay "m_path_ne" x="191" y="121" ;
+		 : overlay "m_path_ne" x="81" y="196" ;
+      }
+      : if (has_visited "east_branch") {
+         : overlay "m_octagon" x="481" y="161" ;
+         : overlay "m_room_east_branch" x="481" y="161" ;
+		 : overlay "m_path_h" x="561" y="180" ;
+		 : overlay "m_path_h" x="441" y="180" ;
+		 : overlay "m_path_v" x="520" y="201" ;
+		 : overlay "m_path_v" x="520" y="121" ;
+		 : overlay "m_path_nw" x="441" y="121" ;
+		 : overlay "m_path_ne" x="551" y="121" ;
+		 : overlay "m_path_nw" x="551" y="196" ;
+      }
+      : if (has_visited "stealing_hill" || has_visited "east_branch") {
+         : overlay "m_path_h" x="381" y="20" ;
+		 : overlay "m_path_ehill" x="421" y="20" ;
+      }
+      : if (has_visited "stealing_hill" || has_visited "west_tiles") {
+         : overlay "m_path_h" x="261" y="20" ;
+		 : overlay "m_path_whill" x="181" y="20" ;
+      }
+      : if (has_visited "stealing_hill") {
+         : if (point_healing_still) {
+            : overlay "m_finished_blocked" x="301" y="1" ;
+         } : else_if (think_healing_still) {
+            : overlay "m_thought" x="301" y="1" ;
+         } : else {
+            : overlay "m_visited_hill" x="301" y="1" ;
+         }
+         : overlay "m_room_stealing_hill" x="301" y="1" ;
+      }
+      # now hub side rooms
+
+      : if (has_visited "hub_e_n") {
+         : if (point_fly_score) {
+            : overlay "m_finished_blocked" x="481" y="81" ;
+         } : else {
+            : overlay "m_visited" x="481" y="81" ;
+         } ;
+         : overlay "m_room_hub_e_n" x="481" y="81" ;
+      }
+      : if (has_visited "hub_e_ne") {
+         : if (point_bending_truth) {
+            : overlay "m_finished_blocked" x="601" y="81" ;
+         } : else {
+            : overlay "m_visited" x="601" y="81" ;
+         } ;
+         : overlay "m_room_hub_e_ne" x="601" y="81" ;
+      }
+      : if (has_visited "hub_e_e") {
+         : if (point_boring_way) {
+            : overlay "m_finished_blocked" x="601" y="161" ;
+            : overlay "m_room_hub_e_e_after" x="601" y="161" ;
+         } : else {
+            : overlay "m_visited" x="601" y="161" ;
+            : overlay "m_room_hub_e_e" x="601" y="161" ;
+         } ;
+      }
+      : if (has_visited "hub_e_se") {
+         : if (point_dirt_home) {
+            : overlay "m_finished_blocked" x="601" y="241" ;
+            : overlay "m_room_hub_e_se_after" x="601" y="241" ;
+         } : else {
+            : overlay "m_visited" x="601" y="241" ;
+            : overlay "m_room_hub_e_se" x="601" y="241" ;
+         } ;
+      }
+      : if (has_visited "hub_e_s") {
+         : if (point_pouring_rain) {
+            : overlay "m_finished_blocked" x="481" y="241" ;
+            : overlay "m_room_hub_e_s_after" x="481" y="241" ;
+         } : else {
+            : overlay "m_visited" x="481" y="241" ;
+            : overlay "m_room_hub_e_s" x="481" y="241" ;
+         } ;
+      }
+      : if (has_visited "hub_e_w") {
+         : if (point_funny_mountain) {
+            : overlay "m_finished_blocked" x="361" y="161" ;
+            : overlay "m_room_hub_e_w_after" x="361" y="161" ;
+         } : else {
+            : overlay "m_visited" x="361" y="161" ;
+            : overlay "m_room_hub_e_w" x="361" y="161" ;
+         } ;
+      }
+      : if (has_visited "hub_e_nw") {
+         : if (point_grim_tune) {
+            : overlay "m_finished_blocked" x="361" y="81" ;
+         } : else_if (think_grim_tune) {
+            : overlay "m_thought" x="361" y="81" ;
+         } : else {
+            : overlay "m_visited" x="361" y="81" ;
+         } ;
+         : overlay "m_room_hub_e_nw" x="361" y="81" ;
+      }
+
+      : if (has_visited "hub_w_n") {
+         : if (point_master_plan) {
+            : overlay "m_finished_blocked" x="121" y="81" ;
+         } : else_if (think_master_plan) {
+            : overlay "m_thought" x="121" y="81" ;
+         } : else {
+            : overlay "m_visited" x="121" y="81" ;
+         } ;
+         : overlay "m_room_hub_w_n" x="121" y="81" ;
+      }
+      : if (has_visited "hub_w_ne") {
+         : if (point_chalice_map) {
+            : overlay "m_finished_blocked" x="241" y="81" ;
+         } : else_if (think_chalice_map) {
+            : overlay "m_thought" x="241" y="81" ;
+         } : else {
+            : overlay "m_visited" x="241" y="81" ;
+         } ;
+         : overlay "m_room_hub_w_ne" x="241" y="81" ;
+      }
+      : if (has_visited "hub_w_e") {
+         : if (point_fell_short) {
+            : overlay "m_finished_blocked" x="241" y="161" ;
+         } : else {
+            : overlay "m_visited" x="241" y="161" ;
+         } ;
+         : overlay "m_room_hub_w_e" x="241" y="161" ;
+      }
+      : if (has_visited "hub_w_s") {
+         : if (point_take_crackers) {
+            : overlay "m_finished_blocked" x="121" y="241" ;
+         } : else {
+            : overlay "m_visited" x="121" y="241" ;
+         } ;
+         : overlay "m_room_hub_w_s" x="121" y="241" ;
+      }
+      : if (has_visited "hub_w_sw") {
+         : if (point_shift_goals) {
+            : overlay "m_finished_blocked" x="1" y="241" ;
+         } : else_if (think_shift_goals) {
+            : overlay "m_thought" x="1" y="241" ;
+         } : else {
+            : overlay "m_visited" x="1" y="241" ;
+         } ;
+         : overlay "m_room_hub_w_sw" x="1" y="241" ;
+      }
+      : if (has_visited "hub_w_w") {
+         : if (point_hunters_grill) {
+            : overlay "m_finished_blocked" x="1" y="161" ;
+            : overlay "m_room_hub_w_w_after" x="1" y="161" ;
+         } : else_if (think_hunters_grill) {
+            : overlay "m_thought" x="1" y="161" ;
+            : overlay "m_room_hub_w_w" x="1" y="161" ;
+         } : else {
+            : overlay "m_visited" x="1" y="161" ;
+            : overlay "m_room_hub_w_w" x="1" y="161" ;
+         } ;
+      }
+      : if (has_visited "hub_w_nw") {
+         : if (point_fellow_yield) {
+            : overlay "m_finished_blocked" x="1" y="81" ;
+         } : else_if (think_fellow_yield) {
+            : overlay "m_thought" x="1" y="81" ;
+         } : else {
+            : overlay "m_visited" x="1" y="81" ;
+         } ;
+         : overlay "m_room_hub_w_nw" x="1" y="81" ;
+      }
+
+      # now endgame rooms
+      : if (has_visited "gravel_trail") {
+         : if (point_missing_house) {
+            : overlay "m_finished" x="301" y="321" ;
+         } : else {
+            : overlay "m_visited" x="301" y="321" ;
+         }
+         : overlay "m_room_gravel_trail" x="301" y="321" ;
+         : if (point_missing_house) {
+            : overlay "m_path_v" x="340" y="281" ;
+         }
+      }
+      : if (has_visited "my_house") {
+         : if (point_hi_mouse) { # this is possible -- if you trigger the "all the achievements" warp on winning.
+            : overlay "m_finished" x="301" y="241" ;
+         } : else {
+            : overlay "m_visited" x="301" y="241" ;
+         }
+         : overlay "m_room_my_house" x="301" y="241" ;
+      }
+      : done ;
+   }
    : if (thor_left) {
       : overlay "o_thor" x="0" y="0" ;
       : done ;
@@ -5677,6 +5971,9 @@ on_command {
    }
    : if (in_debug) {
       : gosub "debug_commands" ;
+   }
+   : match "map _" {
+      : gosub "map_game" ;
    }
    : match "about _" {
       : gosub "meta_about" ;
