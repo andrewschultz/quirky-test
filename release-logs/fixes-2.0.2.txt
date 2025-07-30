@@ -1,0 +1,19 @@
+There were enough odds and ends that I figured a small maintenance release was a good idea. There's nothing new to my Adventuron knowledge base, but I think I made the THINK a bit more ...
+
+...hmm, awkward repeating words, try again. I think I made the help a bit more helpful ...
+
+Aigh. There were things I wanted to put in that just add a bit of user-friendliness. And also, I wanted to try them on QT, because I figured out a game for EctoComp 25.
+
+The Petite Mort section requires you to take a maximum of 4 hours for coding. But you can copy and paste stuff from other games. So trying something in QT first helps me bend that rule to its fullest!
+
+Fixes/upgrades for 2.0.2:
+
+--THINK now specifies "here" if the sub-command directs you to the room you're in
+--1-7 written as one through seven
+--SCORE sends you to THINK if you got the right command at the wrong time
+--status bar shows x+1 if you got the right command at the wrong time
+--yellow exclamation mark appears in passages to where you got the right command at the wrong time, in the hub areas
+
+While writing all this, I got an idea for a game map from Chris Hay's Snowshoe Adventure https://eldritchrenaissancecake.itch.io/snowshoe-adventure
+
+I like how it shows you moving around and what to expect. So that would be version 2.1.0, if I find the inclination. But seriously this time I can't think of more.

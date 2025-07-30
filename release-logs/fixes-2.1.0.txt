@@ -1,0 +1,11 @@
+The big feature in 2.1.0 is a new map. I like it a lot, and I hope you do, too, whether you're playing or re-playing! A more or less full map is in the screenshots. One room name is redacted as it may be a spoiler.
+
+Here are other fixes/augmentations:
+--used my script to fix some blank string calls e.g. if my_string is not defined, {my_string} doesn't throw an error but just shows no text
+--change 042f43c48c41fee6110878160fc83106f7e4d9e3 is only 2 lines but has some big fixes that pushed me forward on this release
+  --fixed regression with inventory
+  --actually put item from Stealing Hill in inventory (this had always been broken, and I'm flattered people didn't check. I'm going to assume it means they knew what to do, based on the game context. Also, I had code to disappear the item but not make it appear.)
+--new bookshelf title list ab68133da59fa0f660381ea9c4331bc86408ea1e
+--trizbort map tweaked to jibe with in-game map
+
+I thought of maybe one more feature: A "G" verb for GO in the hub areas. But that is it, or it should be, since I have other stuff to write.
