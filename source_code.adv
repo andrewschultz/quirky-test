@@ -3952,7 +3952,7 @@ subroutines {
          : set_true "got_footnote_17" ;
       }
       : else_if (times_read_bookshelf >= max_bookshelf_reads - 1) {
-         : if (books_read == 17) {
+         : if (books_read == 16) {
             : print "The final book is a whopper: <Clowns, Frames, Frowns, Claims, Crowns, Flames<#ff0>>." ;
          } : else {
             : cycle key = "books_to_read_5" predictable_order = "false" skip_interval = "0" {
@@ -3975,15 +3975,15 @@ subroutines {
             }
          }
       } : else_if (times_read_bookshelf == 3) {
-         : if (books_read == 17) {
-            : print "The final book has a little extra flair: <Go, Slum So Glum: Glow Some!<#ff0>>." ;
+         : if (books_read == 16) {
+            : print "The final book has a little extra flair: <Go, Slum So Glum: Glow Some!<#ff0>>" ;
          } : else {
             : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Crusty Dew, Dusty Crew<#ff0>>." ;
-               : print "{book_is} <Most Can Coast, Man!<#ff0>>." ;
+               : print "{book_is} <Most Can Coast, Man!<#ff0>>" ;
                : print "{book_is} <Honing Great Groaning Hate<#ff0>>." ;
                : print "{book_is} <Sour Pets' Power Sets<#ff0>>." ;
-               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>." ;
+               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>" ;
                : print "{book_is} <Bearable Turns, Terrible Burns<#ff0>>." ;
                : print "{book_is} <Brad 'Scapes Bad Scrapes<#ff0>>." ;
                : print "{book_is} <They Grow Grey, Tho'<#ff0>>." ;
@@ -3992,13 +3992,13 @@ subroutines {
                : print "{book_is} <Jade Monk Made Junk<#ff0>>." ;
                : print "{book_is} <Mats, Rays, Rats' Maze<#ff0>>." ;
                : print "{book_is} <Led Tritely? Tread Lightly<#ff0>>." ;
-               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>." ;
+               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>" ;
                : print "{book_is} <When Murk Men Work<#ff0>>." ;
                : print "{book_is} <Lie-Floored Fly Lord<#ff0>>." ;
             }
          }
       } : else_if (times_read_bookshelf == 2) {
-         : if (books_read == 17) {
+         : if (books_read == 16) {
             : print "A long title for the final book: <Dirt Had Hurt Dad, Bert had Hurt Bad<#ff0>>." ;
          } : else {
             : cycle key = "books_to_read_3" predictable_order = "false" skip_interval = "0" {
@@ -4063,13 +4063,13 @@ subroutines {
       }
       : increment "books_read";
       : if (books_read == 17 && !read_bookshelf_this_time) {
-         : print "That's all the books. If you continue examining, they'll cycle again, but in a different random order." ;
+         : print "That's all the books. If you continue examining now, they'll cycle again, but in a different random order." ;
          : if (times_read_bookshelf == 0) {
             : print "There are, in fact, {bookshelves_in_words} total book sets. A new one activates for the next playthrough on reading everything in a shelf. You can also look them up in the <source on GitHub<#0f0>>[https://github.com/andrewschultz/quirky-test/blob/main/source_code.adv], if you want. I put this in here as a small coding exercise that might be fun for achievement hunters." ;
          } : else_if (times_read_bookshelf < max_bookshelf_reads - 1) {
-            : print {( "You have read through " + (collection_get{ collection -> ("num_to_word") index -> ( times_read_bookshelf + 1 ) }) + " of the {bookshelves_in_words} different book sets. " + (read_bookshelf_this_time ? "You'll read new books next time through." : "Read everything on the shelf for new books next time through." ) )} ;
+            : print {( "You have read through " + (collection_get{ collection -> ("num_to_word") index -> ( times_read_bookshelf + 1 ) }) + " of the {bookshelves_in_words} different book sets. The next time through, there'll be a new book set." )} ;
          } : else {
-            : print "You've gone through all the sets of books." ;
+            : print "You've gone through all the sets of books, so there won't be any new ones next time through." ;
          }
          : set_integer var = "books_read" "0" ;
          : set_true "achieve_nbbn_pre" ;
