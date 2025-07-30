@@ -1683,6 +1683,7 @@ locations {
                : gosub "footnote_reveal" ;
                : print "As you slip away, you hear the hill screaming. It realizes you have stolen something. Something valueless to it, since hills don't generally move around a lot, but hey, the principle's the important thing.{footnote_reveal_text}" ;
                : set_true "hill_aware_you_stole" ;
+               : pocket "travel_grail" ;
                : gosub "brief_hill_mad" ;
             }
          }
@@ -5888,7 +5889,7 @@ on_command {
          : print "You're carrying {otta} and {cc_prayer_lights}." ;
          : done ;
       }
-      : if (!is_at "zone_start") {
+      : if (carried() == 1 && is_carried "ooh_task") {
          : print "You're only carrying {otta} at the moment." ;
          : done ;
       }
