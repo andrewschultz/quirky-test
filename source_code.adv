@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 2.0.2
+   game_version                 = 2.1.0
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -409,7 +409,7 @@ integers {
    max_meta_verbs_count : integer "8" scope="survivor" ;
 
    times_read_bookshelf : integer "0" scope="survivor" ;
-   max_bookshelf_reads : integer "4" ;
+   max_bookshelf_reads : integer "5" ;
 
    times_won : integer "0" scope="survivor" ;
 }
@@ -3935,11 +3935,11 @@ subroutines {
          : print "You peruse the bookshelf again.{footnote_reveal_text}" ;
          : set_true "got_footnote_17" ;
       }
-      : if (times_read_bookshelf >= 3) {
+      : else_if (times_read_bookshelf >= max_bookshelf_reads - 1) {
          : if (books_read == 17) {
             : print "The final book is a whopper: <Clowns, Frames, Frowns, Claims, Crowns, Flames<#ff0>>." ;
          } : else {
-            : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
+            : cycle key = "books_to_read_5" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Alarmin' a Marlin<#ff0>>." ;
                : print "{book_is} <Best Reach Rest Beach<#ff0>>." ;
                : print "{book_is} <Blame, Cadge, Claim Badge<#ff0>>." ;
@@ -3956,6 +3956,29 @@ subroutines {
                : print "{book_is} <Summer Bay? Bummer, Say<#ff0>>." ;
                : print "{book_is} <We, Friend-Free, Wend<#ff0>>." ;
                : print "{book_is} <Yen, Tears: Ten Years<#ff0>>." ;
+            }
+         }
+      } : else_if (times_read_bookshelf == 3) {
+         : if (books_read == 17) {
+            : print "The final book has a little extra flair: <Go, Slum So Glum: Glow Some!<#ff0>>." ;
+         } : else {
+            : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
+               : print "{book_is} <Crusty Dew, Dusty Crew<#ff0>>." ;
+               : print "{book_is} <Most Can Coast, Man!<#ff0>>." ;
+               : print "{book_is} <Honing Great Groaning Hate<#ff0>>." ;
+               : print "{book_is} <Sour Pets' Power Sets<#ff0>>." ;
+               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>." ;
+               : print "{book_is} <Bearable Turns, Terrible Burns<#ff0>>." ;
+               : print "{book_is} <Brad 'Scapes Bad Scrapes<#ff0>>." ;
+               : print "{book_is} <They Grow Grey, Tho'<#ff0>>." ;
+               : print "{book_is} <Snide? Here, Hide Sneer<#ff0>>." ;
+               : print "{book_is} <Grow, Sand So Grand<#ff0>>." ;
+               : print "{book_is} <Jade Monk Made Junk<#ff0>>." ;
+               : print "{book_is} <Mats, Rays, Rats' Maze<#ff0>>." ;
+               : print "{book_is} <Led Tritely? Tread Lightly<#ff0>>." ;
+               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>." ;
+               : print "{book_is} <When Murk Men Work<#ff0>>." ;
+               : print "{book_is} <Lie-Floored Fly Lord<#ff0>>." ;
             }
          }
       } : else_if (times_read_bookshelf == 2) {
@@ -3989,13 +4012,13 @@ subroutines {
             : print "{book_is} <Bye, Hidden High Biddin'<#ff0>>." ;
             : print "{book_is} <Dreamy Stinkers, Steamy Drinkers<#ff0>>." ;
             : print "{book_is} <Feel Cold, Keel, Fold<#ff0>>." ;
-            : print "{book_is} <Grow, City So Gritty<#ff0>>." ;
             : print "{book_is} <Hit Wealth, Wit, Health<#ff0>>." ;
             : print "{book_is} <LOL! Aye, All Lie<#ff0>>." ;
             : print "{book_is} <Lunch, Pines, Punch Lines<#ff0>>." ;
             : print "{book_is} <Lurk, Wait, Work Late<#ff0>>." ;
             : print "{book_is} <Near Home Here, Gnome<#ff0>>." ;
             : print "{book_is} <Rake Might Make Right<#ff0>>." ;
+            : print "{book_is} <Say, Gritty Grey City<#ff0>>." ;
             : print "{book_is} <Smite, Woke White Smoke<#ff0>>." ;
             : print "{book_is} <Thumb, Free From Thee<#ff0>>." ;
             : print "{book_is} <Will, Styled Still Wild<#ff0>>." ;
@@ -4026,9 +4049,9 @@ subroutines {
       : if (books_read == 17 && !read_bookshelf_this_time) {
          : print "That's all the books. If you continue examining, they'll cycle again, but in a different random order." ;
          : if (times_read_bookshelf == 0) {
-            : print "However, now you've been through the first set of books, there are three more if you replay after winning. The new one activates for the next playthrough on reading everything in a shelf. You can also look them up in the <source on GitHub<#0f0>>[https://github.com/andrewschultz/quirky-test/blob/main/source_code.adv], if you want. I put this in here as a small coding exercise that might be fun for achievement hunters." ;
+            : print "There are, in fact, {bookshelves_in_words} total book sets. A new one activates for the next playthrough on reading everything in a shelf. You can also look them up in the <source on GitHub<#0f0>>[https://github.com/andrewschultz/quirky-test/blob/main/source_code.adv], if you want. I put this in here as a small coding exercise that might be fun for achievement hunters." ;
          } : else_if (times_read_bookshelf < max_bookshelf_reads - 1) {
-            : print {( "You have been through the books " + (times_read_bookshelf + 1) + " times of " + max_bookshelf_reads + ". " + (read_bookshelf_this_time ? "You'll read new books next time through." : "Read everything on the shelf for new books next time through." ) )} ;
+            : print {( "You have read through " + (collection_get{ collection -> ("num_to_word") index -> ( times_read_bookshelf + 1 ) }) + " of the {bookshelves_in_words} different book sets. " + (read_bookshelf_this_time ? "You'll read new books next time through." : "Read everything on the shelf for new books next time through." ) )} ;
          } : else {
             : print "You've gone through all the sets of books." ;
          }
