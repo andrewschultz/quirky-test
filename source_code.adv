@@ -101,6 +101,7 @@ booleans {
    map_red_room_note : boolean "false" scope="survivor" ;
    map_dark_grey_room_note : boolean "false" scope="survivor" ;
    map_see_all_nudge : boolean "false" scope="survivor" ;
+   bookshelf_done_note : boolean "false" scope="survivor" ;
 
    ## new miscellaneous booleans above
 
@@ -3929,8 +3930,9 @@ subroutines {
    }
 
    read_book : subroutine {
-      : if (books_read == 0 && !read_bookshelf_this_time && times_read_bookshelf == max_bookshelf_reads) {
+      : if (books_read == 0 && !read_bookshelf_this_time && times_read_bookshelf == max_bookshelf_reads && !bookshelf_done_note) {
          : print "{note_once}thanks for your diligence and dedication, but I ran out of random books. There won't be any new ones this time." ;
+         : set_true "bookshelf_done_note" ;
       }
       : if (!initial_book_poke) {
          : set_integer var="tempint" "17" ;
