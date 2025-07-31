@@ -14,7 +14,7 @@ game_settings {
 
 game_information {
    game_name                    = Quirky Test
-   game_version                 = 2.1.0
+   game_version                 = 2.1.1
    game_shortname               = QT
    written_by                   = Andrew Schultz
    uuid                         = b58b6418-313b-465a-a17b-75782c893568
@@ -3812,11 +3812,9 @@ subroutines {
       : if (is_at("zone_east_spokes")) {
          : goto "east_branch" ;
          : redescribe ;
-         : return ;
       } : else_if (is_at("zone_west_spokes")) {
          : goto "west_tiles" ;
          : redescribe ;
-         : return ;
       } : else_if (is_at "nameless_lameness" && is_beside "cheering_voice") {
          : print "Yes, you need to get out, but which specific way to get out? What the voice says is a clue." ;
       } : else_if (is_at("zone_hubs")) {
@@ -3837,7 +3835,7 @@ subroutines {
          : return ;
       }
       : print {( "Going out is ambiguous here, as you " + (is_at "west_tiles" || is_at "east_branch" ? "still " : "") + (!has_visited "plain_base" ? "can't really see a good direction yet." : "have more than one direction worth exploring.") )} ;
-      : return ;
+      : done ;
    }
 
    pcpc_check_pieces : subroutine {
