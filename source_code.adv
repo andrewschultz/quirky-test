@@ -361,9 +361,9 @@ integers {
    max_tutorial_score : integer "10";
    score : integer "0" ;
    max_score : integer "23" ;
-   points_left_side : integer "0" ;
-   points_right_side : integer "0" ;
-   points_this_side : dynamic_integer {( is_at "zone_west_hub" ? points_left_side : points_right_side )} ;
+   points_west_hub : dynamic_integer {( (point_fell_short ? 1 : 0) + (point_take_crackers ? 1 : 0) + (point_shift_goals ? 1 : 0) + (point_hunters_grill ? 1 : 0) + (point_fellow_yield ? 1 : 0) + (point_master_plan ? 1 : 0) + (point_chalice_map ? 1 : 0) )} ;
+   points_east_hub : dynamic_integer {( (point_fly_score ? 1 : 0) + (point_bending_truth ? 1 : 0) + (point_boring_way ? 1 : 0) + (point_dirt_home ? 1 : 0) + (point_pouring_rain ? 1 : 0) + (point_funny_mountain ? 1 : 0) + (point_grim_tune ? 1 : 0) )} ;
+   points_this_side : dynamic_integer {( is_at "zone_west_spokes" || is_at "west_tiles" ? points_west_hub : points_east_hub )} ;
    bonus_score : integer "0" scope="survivor" ;
    bonus_score_start : integer "0" scope="survivor" ;
    max_bonus_score : integer "17" ;
@@ -374,7 +374,7 @@ integers {
    tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
    rule_chosen : integer "0" ;
-   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that faile and thus gets rejected.
+   latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that failed and thus gets rejected.
    books_read : integer "0" ;
 
    # for THINK
@@ -1627,7 +1627,7 @@ locations {
 
    west_tiles : location "^c^<W<#0f0>><E<#cb9>><S<#0f0>><T<#cb9>> <T<#0f0>><I<#cb9>><L<#0f0>><E<#cb9>><S<#0f0>>\n^l^Such nice, orderly tiles here. {sub_hub}" graphic = "r_west_tiles" {
       on_pre_describe {
-         : set_integer var = "tempint" {(points_left_side)} ;
+         : set_integer var = "tempint" {(points_west_hub)} ;
          : create "big_runes" ;
       }
       on_command {
@@ -1658,7 +1658,7 @@ locations {
 
    east_branch : location "^c^<E<#8f8>><A<#cb9>><S<#8f8>><T<#cb9>> <B<#8f8>><R<#cb9>><A<#8f8>><N<#cb9>><C<#8f8>><H<#cb9>>\n^l^The paths here are not super tidy or straight, but they don't look dangerous. {sub_hub}" graphic = "r_east_branch" {
       on_pre_describe {
-         : set_integer var = "tempint" {(points_right_side)} ;
+         : set_integer var = "tempint" {(points_east_hub)} ;
          : create "big_runes" ;
       }
       on_command {
@@ -1821,7 +1821,7 @@ locations {
             : print {( "You have reason to find a master plan, and your feast with the hunters has left you stronger. Without much trouble, you bust open the plaster man (checking to make " + ( plaster_man_talked ? "extra " : "" ) + "sure it's inanimate) and find said master plan." )} ;
             : set_true "point_master_plan" ;
             : set_false "think_master_plan" ;
-            : gosub "add_point_west" ;
+            : gosub "add_point" ;
             : gosub "hub_check_dependent" ;
             : destroy "meal_dude" ;
             : destroy "focus" ;
@@ -1874,7 +1874,7 @@ locations {
          : print "This doesn't faze you. You've internalized your confidence without realizing it. It's so internalized, it even, well, disappears from your inventory to make way for the chalice map." ;
          : set_true "point_chalice_map" ;
          : set_false "think_chalice_map" ;
-         : gosub "add_point_west" ;
+         : gosub "add_point" ;
          : gosub "hub_check_dependent" ;
          : pocket "chalice_map" ;
          : destroy "confidence" ;
@@ -1912,7 +1912,7 @@ locations {
          {
             : print "You believe in yourself and use the power of words to make the artillery fall short. The people inside give up on you. They have much easier targets.\nOh! And what did they leave behind? Some very, very sensible pacing rations. They taste bleah enough so you pace yourself eating them, but not so bleah they're inedible. You take them." ;
             : set_true "point_fell_short" ;
-            : gosub "add_point_west" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
             : pocket "pacing_rations" ;
             : if (retry_racing_passions) {
@@ -1950,7 +1950,7 @@ locations {
             : print "While the cake trackers aren't looking, you pinch a box of crackers. They don't notice at first, but when they fail to find any cake, they notice some crackers are missing, then start getting mad and accusing each other." ;
             : print "In the argument that follows, they ignore the wonderful variety of crackers they brought along, dredging up small beefs from the past instead. They chase each other away, leaving you alone." ;
             : set_true "point_take_crackers" ;
-            : gosub "add_point_west" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
             : pocket "crackers" ;
          }
@@ -2020,7 +2020,7 @@ locations {
             : destroy "peace_surging" ;
             : destroy "no_greed" ;
             : pocket "focus" ;
-            : gosub "add_point_west" ;
+            : gosub "add_point" ;
             : gosub "hub_check_dependent" ;
          }
          : done ;
@@ -2083,7 +2083,7 @@ locations {
             : destroy "pacing_rations" ;
             : destroy "crackers" ;
             : pocket "meal_dude" ;
-            : gosub "add_point_west" ;
+            : gosub "add_point" ;
             : gosub "hub_check_dependent" ;
          }
          : done ;
@@ -2139,7 +2139,7 @@ locations {
             : set_false "think_fellow_yield" ;
             : destroy "fast_vision" ;
             : destroy "trial_pics" ;
-            : gosub "add_point_west" ;
+            : gosub "add_point" ;
             : gosub "gain_confidence" ;
             : gosub "hub_check_dependent" ;
          }
@@ -2190,7 +2190,7 @@ locations {
          {
             : print "The poetic nature of the sky floor embeds itself in your head, and you think up a tune you're surprised you were able to. You now have a low song running through your head. Where to release it?" ;
             : set_true "point_fly_score" ;
-            : gosub "add_point_east" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
             : pocket "low_song" ;
             : if (retry_so_long) {
@@ -2232,7 +2232,7 @@ locations {
             : if (retry_vast_fission) {
                : print "{note_retry}{cue_vast_fission}." ;
             }
-            : gosub "add_point_east" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
          }
          : done ;
@@ -2281,7 +2281,7 @@ locations {
          {
             : print "You somehow manage to get into the fighters' heads that it's not as exciting as it seems. At first they're mad, but after a while, they realize it's all for the best.\nYou feel peace surging within you. Peace may be boring, but then again, the excitement of war is draining." ;
             : set_true "point_boring_way" ;
-            : gosub "add_point_east" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
             : pocket "peace_surging" ;
             : if (retry_cease_purging) {
@@ -2312,7 +2312,7 @@ locations {
             : print "Poof! The hurt dome transforms into a dirt home. It looks like it needs a resident, but you're too busy, now. However, you take a set of trial pics left at the doorstep, which show the home in the best possible light." ;
             : pocket "trial_pics" ;
             : set_true "point_dirt_home" ;
-            : gosub "add_point_east" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
          }
          : done ;
@@ -2364,7 +2364,7 @@ locations {
                : if (retry_sane_role) {
                   : print "{note_retry}{cue_sane_role}." ;
                }
-               : gosub "add_point_east" ;
+               : gosub "add_point" ;
                : gosub "hub_check_independent" ;
             }
             : done ;
@@ -2433,7 +2433,7 @@ locations {
             : if (retry_grow_need) {
                : print "{note_retry}{cue_grow_need}." ;
             }
-            : gosub "add_point_east" ;
+            : gosub "add_point" ;
             : gosub "hub_check_independent" ;
          }
          : done ;
@@ -2493,7 +2493,7 @@ locations {
             : set_false "think_grim_tune" ;
             : destroy "rain_soul";
             : destroy "low_song" ;
-            : gosub "add_point_east" ;
+            : gosub "add_point" ;
             : gosub "gain_confidence" ;
             : gosub "hub_check_dependent" ;
          }
@@ -2998,16 +2998,6 @@ subroutines {
          : set_true "room_change_noted" ;
       }
       : increment "score" ;
-   }
-   add_point_west : subroutine {
-      : increment "points_left_side" ;
-      : gosub "add_point" ;
-      : update_graphic ;
-   }
-   add_point_east : subroutine {
-      : increment "points_right_side" ;
-      : gosub "add_point" ;
-      : update_graphic ;
    }
    add_bonus : subroutine {
       : if (score_notify) {
@@ -3837,11 +3827,11 @@ subroutines {
       : redescribe ;
    }
    g_check_which_hub_to : subroutine {
-      : if (points_left_side == 7 || !has_visited "east_branch") {
+      : if (points_west_hub == 7 || !has_visited "east_branch") {
          : goto "east_branch" ;
          : redescribe ;
       }
-      : if (points_right_side == 7 || !has_visited "west_tiles") {
+      : if (points_east_hub == 7 || !has_visited "west_tiles") {
          : goto "west_tiles" ;
          : redescribe ;
       }
@@ -3852,14 +3842,14 @@ subroutines {
          : goto "plain_base" ;
          : redescribe ;
       }
-      : if (points_right_side == 7 && points_left_side == 7) {
+      : if (points_east_hub == 7 && points_west_hub == 7) {
          : goto "stealing_hill" ;
          : redescribe ;
       }
    }
    g_search_east : subroutine {
       : gosub "g_search_hub_general" ;
-      : if (points_right_side == 7) {
+      : if (points_east_hub == 7) {
          : print "You've figured what to do in all the spokes here. Try the other side, now." ;
          : done ;
       }
@@ -3885,7 +3875,7 @@ subroutines {
    }
    g_search_west : subroutine {
       : gosub "g_search_hub_general" ;
-      : if (points_left_side == 7) {
+      : if (points_west_hub == 7) {
          : print "You've figured what to do in all the spokes here. Try the other side, now." ;
          : done ;
       }
@@ -3934,7 +3924,7 @@ subroutines {
                : redescribe ;
             }
          }
-         : if (points_left_side == 7 && points_right_side == 7) {
+         : if (points_west_hub == 7 && points_east_hub == 7) {
             : print {( "There's a third way to go, but you need to find something to uncover it. You're ready, now, and there are two equal ways to start to " + (think_healing_still ? "get to Stealing Hill and try the command that didn't quite work before" : "get to where you need to be") + "." )} ;
             : done ;
          }
@@ -3958,7 +3948,7 @@ subroutines {
          }
          : redescribe ;
       }
-      : if (is_at "stealing_hill" && points_left_side == 7 && points_right_side == 7) {
+      : if (is_at "stealing_hill" && points_west_hub == 7 && points_east_hub == 7) {
          : print "While you can go either way, there's nothing to do there. What you need to do is here." ;
          : done ;
       }
@@ -3992,11 +3982,11 @@ subroutines {
       } : else_if (is_at "nameless_lameness" && is_beside "cheering_voice") {
          : print "Yes, you need to get out, but which specific way to get out? What the voice says is a clue." ;
       } : else_if (is_at("zone_hubs")) {
-         : if (is_at("east_branch") && points_right_side == 7 && point_healing_still) {
+         : if (is_at("east_branch") && points_east_hub == 7 && point_healing_still) {
             : goto "plain_base" ;
             : redescribe ;
             : return ;
-         } : else_if (is_at("west_tiles") && points_left_side == 7 && point_healing_still) {
+         } : else_if (is_at("west_tiles") && points_west_hub == 7 && point_healing_still) {
             : goto "plain_base" ;
             : redescribe ;
             : return ;
@@ -6303,7 +6293,7 @@ on_command {
       }
       : print {( "Your <core score<#0f0>> is " + score + " out of <" + max_score + "<#0f0>>." )} ;
       : if ((has_visited "west_tiles") && (has_visited "east_branch")) {
-         : print {( "You've solved " + (points_left_side < 7 ? "{points_left_side} of 7" : "all" ) + " places by West Tiles and " + (points_right_side < 7 ? "{points_right_side} of 7" : "all") + " places by East Branch." )} ;
+         : print {( "You've solved " + (points_west_hub < 7 ? "{points_west_hub} of 7" : "all" ) + " places by West Tiles and " + (points_east_hub < 7 ? "{points_east_hub} of 7" : "all") + " places by East Branch." )} ;
       }
       : if (bonus_score == max_bonus_score) {
          : print "You've gotten all {bonus_yellow} bonus points." ;
