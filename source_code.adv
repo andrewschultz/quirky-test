@@ -3976,14 +3976,14 @@ subroutines {
          }
       } : else_if (times_read_bookshelf == 3) {
          : if (books_read == 16) {
-            : print "The final book has a little extra flair: <Go, Slum So Glum: Glow Some!<#ff0>>" ;
+            : print "The final book has a little extra flair: <Go, Slum So Glum: Glow Some!<#ff0>>." ;
          } : else {
             : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Crusty Dew, Dusty Crew<#ff0>>." ;
-               : print "{book_is} <Most Can Coast, Man!<#ff0>>" ;
+               : print "{book_is} <Most Can Coast, Man!<#ff0>>." ;
                : print "{book_is} <Honing Great Groaning Hate<#ff0>>." ;
                : print "{book_is} <Sour Pets' Power Sets<#ff0>>." ;
-               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>" ;
+               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>." ;
                : print "{book_is} <Bearable Turns, Terrible Burns<#ff0>>." ;
                : print "{book_is} <Brad 'Scapes Bad Scrapes<#ff0>>." ;
                : print "{book_is} <They Grow Grey, Tho'<#ff0>>." ;
@@ -3992,7 +3992,7 @@ subroutines {
                : print "{book_is} <Jade Monk Made Junk<#ff0>>." ;
                : print "{book_is} <Mats, Rays, Rats' Maze<#ff0>>." ;
                : print "{book_is} <Led Tritely? Tread Lightly<#ff0>>." ;
-               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>" ;
+               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>." ;
                : print "{book_is} <When Murk Men Work<#ff0>>." ;
                : print "{book_is} <Lie-Floored Fly Lord<#ff0>>." ;
             }
