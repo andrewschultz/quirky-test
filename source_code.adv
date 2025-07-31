@@ -421,7 +421,7 @@ integers {
    max_meta_verbs_count : integer "8" scope="survivor" ;
 
    times_read_bookshelf : integer "0" scope="survivor" ;
-   max_bookshelf_reads : integer "5" ;
+   max_bookshelf_reads : integer "6" ;
 
    times_won : integer "0" scope="survivor" ;
 }
@@ -4117,7 +4117,7 @@ subroutines {
          : if (books_read == 16) {
             : print "The final book is a whopper: <Clowns, Frames, Frowns, Claims, Crowns, Flames<#ff0>>." ;
          } : else {
-            : cycle key = "books_to_read_5" predictable_order = "false" skip_interval = "0" {
+            : cycle key = "books_to_read_6" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Alarmin' a Marlin<#ff0>>." ;
                : print "{book_is} <Best Reach Rest Beach<#ff0>>." ;
                : print "{book_is} <Blame, Cadge, Claim Badge<#ff0>>." ;
@@ -4136,34 +4136,34 @@ subroutines {
                : print "{book_is} <Yen, Tears: Ten Years<#ff0>>." ;
             }
          }
-      } : else_if (times_read_bookshelf == 3) {
+      } : else_if (times_read_bookshelf == 4) {
          : if (books_read == 16) {
             : print "The final book has a little extra flair: <Go, Slum So Glum: Glow Some!<#ff0>>." ;
          } : else {
-            : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
-               : print "{book_is} <Crusty Dew, Dusty Crew<#ff0>>." ;
-               : print "{book_is} <Most Can Coast, Man!<#ff0>>." ;
-               : print "{book_is} <Honing Great Groaning Hate<#ff0>>." ;
-               : print "{book_is} <Sour Pets' Power Sets<#ff0>>." ;
-               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>." ;
+            : cycle key = "books_to_read_5" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Bearable Turns, Terrible Burns<#ff0>>." ;
                : print "{book_is} <Brad 'Scapes Bad Scrapes<#ff0>>." ;
-               : print "{book_is} <They Grow Grey, Tho'<#ff0>>." ;
-               : print "{book_is} <Snide? Here, Hide Sneer<#ff0>>." ;
+               : print "{book_is} <Crusty Dew, Dusty Crew<#ff0>>." ;
+               : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>." ;
                : print "{book_is} <Grow, Sand So Grand<#ff0>>." ;
+               : print "{book_is} <Honing Great Groaning Hate<#ff0>>." ;
                : print "{book_is} <Jade Monk Made Junk<#ff0>>." ;
-               : print "{book_is} <Mats, Rays, Rats' Maze<#ff0>>." ;
                : print "{book_is} <Led Tritely? Tread Lightly<#ff0>>." ;
-               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>." ;
-               : print "{book_is} <When Murk Men Work<#ff0>>." ;
                : print "{book_is} <Lie-Floored Fly Lord<#ff0>>." ;
+               : print "{book_is} <Mats, Rays, Rats' Maze<#ff0>>." ;
+               : print "{book_is} <Most Can Coast, Man!<#ff0>>." ;
+               : print "{book_is} <Snide? Here, Hide Sneer<#ff0>>." ;
+               : print "{book_is} <Sour Pets' Power Sets<#ff0>>." ;
+               : print "{book_is} <They Grow Grey, Tho'<#ff0>>." ;
+               : print "{book_is} <When Murk Men Work<#ff0>>." ;
+               : print "{book_is} <Wondering Sense Sundering: Whence?<#ff0>>." ;
             }
          }
-      } : else_if (times_read_bookshelf == 2) {
+      } : else_if (times_read_bookshelf == 3) {
          : if (books_read == 16) {
             : print "A long title for the final book: <Dirt Had Hurt Dad, Bert had Hurt Bad<#ff0>>." ;
          } : else {
-            : cycle key = "books_to_read_3" predictable_order = "false" skip_interval = "0" {
+            : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Beef, Cheese, Chief Bees<#ff0>>." ;
                : print "{book_is} <Brunch, Lakes, Lunch Breaks<#ff0>>." ;
                : print "{book_is} <Chuck: Stained, Stuck, Chained<#ff0>>." ;
@@ -4182,25 +4182,51 @@ subroutines {
                : print "{book_is} <Vast Libes' Last Vibes<#ff0>>." ;
             }
          }
+      } : else_if (times_read_bookshelf == 2) {
+         : if (books_read == 16) {
+            : print "The final book is <Dry Fey Friday: Die, Fray!<#ff0>>" ;
+         } : else {
+            : cycle key = "books_to_read_3" predictable_order = "false" skip_interval = "0" {
+               : print "{book_is} <Blades, Rushing Raids, Blushing<#ff0>>." ;
+               : print "{book_is} <Blue Fridges, Flu, Bridges<#ff0>>." ;
+               : print "{book_is} <Bold Colts, Cold Bolts<#ff0>>." ;
+               : print "{book_is} <Budge Not, Nudge-Bot<#ff0>>." ;
+               : print "{book_is} <Mite, Whale, White Male<#ff0>>." ;
+               : print "{book_is} <Pale Fools' Fail-Pools<#ff0>>." ;
+               : print "{book_is} <Po' Lads' Low Pads<#ff0>>." ;
+               : print "{book_is} <Rich Whys Which Rise<#ff0>>." ;
+               : print "{book_is} <Styles Fill Files Still<#ff0>>." ;
+               : print "{book_is} <Tony Fools' Phony Tools<#ff0>>." ;
+               : print "{book_is} <Wear Scorn, Scare, Warn<#ff0>>." ;
+               : print "{book_is} <Where I Err, Why<#ff0>>." ;
+               : print "{book_is} <Who Blogs, Blue Hogs?<#ff0>>." ;
+               : print "{book_is} <Will, Styled Still Wild<#ff0>>." ;
+               : print "{book_is} <With-Small-Smith Wall<#ff0>>." ;
+               : print "{book_is} <Wizard Sea: Scissored, Whee!<#ff0>>" ;
+            }
+         }
       } : else_if (times_read_bookshelf == 1) {
-         : cycle key = "books_to_read_2" predictable_order = "false" skip_interval = "0" {
-            : print "{book_is} <Bad Hosts Had Boasts<#ff0>>." ;
-            : print "{book_is} <Boo, Debtor, Do Better<#ff0>>." ;
-            : print "{book_is} <Bought Gourd, Got Bored<#ff0>>." ;
-            : print "{book_is} <Bye, Hidden High Biddin'<#ff0>>." ;
-            : print "{book_is} <Dreamy Stinkers, Steamy Drinkers<#ff0>>." ;
-            : print "{book_is} <Feel Cold, Keel, Fold<#ff0>>." ;
-            : print "{book_is} <Hit Wealth, Wit, Health<#ff0>>." ;
-            : print "{book_is} <LOL! Aye, All Lie<#ff0>>." ;
-            : print "{book_is} <Lunch, Pines, Punch Lines<#ff0>>." ;
-            : print "{book_is} <Lurk, Wait, Work Late<#ff0>>." ;
-            : print "{book_is} <Near Home Here, Gnome<#ff0>>." ;
-            : print "{book_is} <Rake Might Make Right<#ff0>>." ;
-            : print "{book_is} <Say, Gritty Grey City<#ff0>>." ;
-            : print "{book_is} <Smite, Woke White Smoke<#ff0>>." ;
-            : print "{book_is} <Thumb, Free From Thee<#ff0>>." ;
-            : print "{book_is} <Will, Styled Still Wild<#ff0>>." ;
-            : print "{book_is} <You May Moo, Yay<#ff0>>." ;
+         : if (books_read == 16) {
+            : print "The final book is <Do Bring Brooding<#ff0>>, by Drew Bing." ;
+         } : else {
+            : cycle key = "books_to_read_2" predictable_order = "false" skip_interval = "0" {
+               : print "{book_is} <Bad Hosts Had Boasts<#ff0>>." ;
+               : print "{book_is} <Boo, Debtor, Do Better<#ff0>>." ;
+               : print "{book_is} <Bought Gourd, Got Bored<#ff0>>." ;
+               : print "{book_is} <Bye, Hidden High Biddin'<#ff0>>." ;
+               : print "{book_is} <Dreamy Stinkers, Steamy Drinkers<#ff0>>." ;
+               : print "{book_is} <Feel Cold, Keel, Fold<#ff0>>." ;
+               : print "{book_is} <Hit Wealth, Wit, Health<#ff0>>." ;
+               : print "{book_is} <LOL! Aye, All Lie<#ff0>>." ;
+               : print "{book_is} <Lunch, Pines, Punch Lines<#ff0>>." ;
+               : print "{book_is} <Lurk, Wait, Work Late<#ff0>>." ;
+               : print "{book_is} <Near Home Here, Gnome<#ff0>>." ;
+               : print "{book_is} <Rake Might Make Right<#ff0>>." ;
+               : print "{book_is} <Say, Gritty Grey City<#ff0>>." ;
+               : print "{book_is} <Smite, Woke White Smoke<#ff0>>." ;
+               : print "{book_is} <Thumb, Free From Thee<#ff0>>." ;
+               : print "{book_is} <You May Moo, Yay<#ff0>>." ;
+            }
          }
       } : else_if (times_read_bookshelf == 0) {
          : cycle key = "books_to_read_1" predictable_order = "false" skip_interval = "0" {
