@@ -102,8 +102,12 @@ booleans {
    map_dark_grey_room_note : boolean "false" scope="survivor" ;
    map_see_all_nudge : boolean "false" scope="survivor" ;
    bookshelf_done_note : boolean "false" scope="survivor" ;
+   note_forced_east : boolean "false" scope="survivor" ;
+   force_east_note_flag : boolean "false" scope="survivor" ;
+   g_pick_nag : boolean "false" scope="survivor" ;
+   g_stealing_nag : boolean "false" scope="survivor" ;
 
-   ## new miscellaneous booleans above
+   ## put new miscellaneous booleans above
 
    ## text coloring notes
    ever_bonus : boolean "false" scope="survivor" ;
@@ -359,6 +363,7 @@ integers {
    max_score : integer "23" ;
    points_left_side : integer "0" ;
    points_right_side : integer "0" ;
+   points_this_side : dynamic_integer {( is_at "zone_west_hub" ? points_left_side : points_right_side )} ;
    bonus_score : integer "0" scope="survivor" ;
    bonus_score_start : integer "0" scope="survivor" ;
    max_bonus_score : integer "17" ;
@@ -802,6 +807,7 @@ strings {
    v_eat_taste : string "<EAT<#0f0>> or <TASTE<#0f0>>" ;
    v_enter : string "<ENTER<#0f0>>" ;
    v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
+   v_g : string "<G<#0f0>>" ;
    v_l : string "<L<#0f0>>" ;
    v_o : string "<O<#0f0>>" ;
    v_out : string "<OUT<#0f0>>" ;
@@ -3808,6 +3814,174 @@ subroutines {
          : print "{note_once}you've found the right thing to say or do, but you weren't prepared yet. {vd_thk} will record the details, while {vd_sco} and the status bar (with +1, etc.) record the number of commands figured. The passage back here will also be marked on the map." ;
       }
    }
+   g_check_west_available : subroutine {
+      : if (!point_take_crackers || !point_fell_short || !point_hunters_grill) {
+         : return ;
+      }
+      : if (point_funny_mountain && point_boring_way && !point_shift_goals) {
+         : return ;
+      }
+      : if (point_bending_truth && point_dirt_home && !point_fellow_yield) {
+         : return ;
+      }
+      : if (point_fellow_yield && point_grim_tune && !point_chalice_map) {
+         : return ;
+      }
+      : if (point_hunters_grill && point_shift_goals && !point_master_plan) {
+         : return ;
+      }
+      : if (!note_forced_east) {
+         : set_true "force_east_note_flag" ;
+      }
+      : goto "east_branch" ;
+      : redescribe ;
+   }
+   g_check_which_hub_to : subroutine {
+      : if (points_left_side == 7 || !has_visited "east_branch") {
+         : goto "east_branch" ;
+         : redescribe ;
+      }
+      : if (points_right_side == 7 || !has_visited "west_tiles") {
+         : goto "west_tiles" ;
+         : redescribe ;
+      }
+      : gosub "g_check_west_available" ;
+   }
+   g_search_hub_general : subroutine {
+      : if (point_healing_still) {
+         : goto "plain_base" ;
+         : redescribe ;
+      }
+      : if (points_right_side == 7 && points_left_side == 7) {
+         : goto "stealing_hill" ;
+         : redescribe ;
+      }
+   }
+   g_search_east : subroutine {
+      : gosub "g_search_hub_general" ;
+      : if (points_right_side == 7) {
+         : print "You've figured what to do in all the spokes here. Try the other side, now." ;
+         : done ;
+      }
+      : if (!point_fly_score) {
+         : goto "hub_e_n" ;
+      } : else_if (!point_bending_truth) {
+         : goto "hub_e_ne" ;
+      } : else_if (!point_boring_way) {
+         : goto "hub_e_e" ;
+      } : else_if (!point_dirt_home) {
+         : goto "hub_e_se" ;
+      } : else_if (!point_pouring_rain) {
+         : goto "hub_e_s" ;
+      } : else_if (!point_funny_mountain) {
+         : goto "hub_e_w" ;
+      } : else_if (!point_grim_tune) {
+         : goto "hub_e_nw" ;
+      } : else {
+         : print "Reaching this code is a small bug, but it also means I've found nothing to do in the spokes." ;
+         : done ;
+      }
+      : redescribe ;
+   }
+   g_search_west : subroutine {
+      : gosub "g_search_hub_general" ;
+      : if (points_left_side == 7) {
+         : print "You've figured what to do in all the spokes here. Try the other side, now." ;
+         : done ;
+      }
+      : if (!point_fell_short) {
+         : goto "hub_w_e" ;
+      } : else_if (!point_take_crackers) {
+         : goto "hub_w_s" ;
+      } : else_if (!point_shift_goals && point_funny_mountain && point_boring_way) {
+         : goto "hub_w_sw" ;
+      } : else_if (!point_hunters_grill && point_take_crackers && point_fell_short) {
+         : goto "hub_w_w" ;
+      } : else_if (!point_fellow_yield && point_dirt_home && point_bending_truth) {
+         : goto "hub_w_nw" ;
+      } : else_if (!point_master_plan && point_hunters_grill && point_shift_goals) {
+         : goto "hub_w_n" ;
+      } : else_if (!point_chalice_map && point_fellow_yield && point_grim_tune) {
+         : goto "hub_w_ne" ;
+      } : else {
+         : print {( "There's stuff to do here, but you're not prepared yet. You may need to " + (has_visited "east_branch" ? "explore outside this hub" : "check out East Branch again") + "." )} ;
+         : done ;
+      }
+      : redescribe ;
+   }
+   g_stub : subroutine {
+      : if (is_at "zone_start") {
+         : print "Auto-going with {v_g} won't work until you get to the main area. For now, you need to figure what to say to move along." ;
+         : done ;
+      }
+      : if (is_at "plain_base") {
+         : if (!has_visited "east_branch" || !has_visited "west_tiles") {
+            : if (!g_pick_nag) {
+               : print "You can make progress to the northwest or northeast, so strictly speaking, there's no right way to go. Though if you try again, I'll send you to where you can do more at once." ;
+               : set_true "g_pick_nag" ;
+               : done ;
+            } : else {
+               : goto "east_branch" ;
+               : redescribe ;
+            }
+         }
+         : if (point_healing_still) {
+            : if (!point_gravel_trail) {
+               : print "With everything beyond Plain Base covered, there's a third way to go, but you need to uncover it. You have what you need." ;
+               : done ;
+            } : else {
+               : goto "gravel_trail" ;
+               : redescribe ;
+            }
+         }
+         : if (points_left_side == 7 && points_right_side == 7) {
+            : print {( "There's a third way to go, but you need to find something to uncover it. You're ready, now, and there are two equal ways to start to " + (think_healing_still ? "get to Stealing Hill and try the command that didn't quite work before" : "get to where you need to be") + "." )} ;
+            : done ;
+         }
+      }
+      : if (is_at "west_tiles") {
+         : gosub "g_search_west" ;
+      }
+      : if (is_at "east_branch") {
+         : gosub "g_search_east" ;
+      }
+      : if (is_at "stealing_hill" && point_healing_still) {
+         : if (!g_stealing_nag) {
+            : print "Either way out is completely safe. I'll pick one at random if you try again." ;
+            : set_true "g_stealing_nag" ;
+            : done ;
+         }
+         : if (random (1) < 1) {
+            : goto "west_tiles" ;
+         } : else {
+            : goto "east_branch" ;
+         }
+         : redescribe ;
+      }
+      : if (is_at "stealing_hill" && points_left_side == 7 && points_right_side == 7) {
+         : print "While you can go either way, there's nothing to do there. What you need to do is here." ;
+         : done ;
+      }
+      : if (is_at "plain_base" || is_at "stealing_hill") {
+         : gosub "g_check_which_hub_to" ;
+      }
+      : if (is_at "gravel_trail") {
+         : if (!point_missing_house) {
+            : print "You can only back out for now. Take care of the mouse, and you'll have somewhere else to go." ;
+            : done ;
+         }
+         : goto "my_house" ;
+         : redescribe ;
+      }
+      : if (is_at "stealing_hill") {
+         : print "You can make progress to the east or west at the moment, so I'll let you decide." ;
+         : done ;
+      }
+      : if (is_at "my_house") {
+         : print "You're where you need to be." ;
+         : done ;
+      }
+   }
    out_stub : subroutine {
       : if (is_at("zone_east_spokes")) {
          : goto "east_branch" ;
@@ -5531,6 +5705,12 @@ on_tick {
       : print "{note_once}{vd_i}/{vd_i_long} requires no argument." ;
       : set_false "inventory_post_note" ;
    }
+   : if (force_east_note_flag) {
+      : set_true "note_forced_east" ;
+      : set_false "force_east_note_flag" ;
+      : print "{note_once}the only currently solvable puzzles are here in East Branch, so even though you could've gone to West Tiles, it would not have been constructive. This in itself is a sort of hint, I hope." ;
+   }
+
    : if (!out_argument_note) {
       : match "o *;out *" {
          : print "{note_once}{v_out_b} requires no argument, since it just checks if there is only one exit before going." ;
@@ -5730,6 +5910,12 @@ on_command {
             : set_true "show_overlay" ;
          }
       }
+   }
+   : match "g _" {
+      : gosub "g_stub" ;
+      : gosub "out_stub" ;
+      : print "I can't really find the best way (or anywhere productive) to go. You'll just need to use standard directions." ;
+      : done ;
    }
    : match "o _;out _" {
       : gosub "out_stub" ;
