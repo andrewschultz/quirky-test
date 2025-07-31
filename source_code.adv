@@ -4143,9 +4143,9 @@ subroutines {
             : cycle key = "books_to_read_5" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Bearable Turns, Terrible Burns<#ff0>>." ;
                : print "{book_is} <Brad 'Scapes Bad Scrapes<#ff0>>." ;
+               : print "{book_is} <Chuck: Stained, Stuck, Chained<#ff0>>." ;
                : print "{book_is} <Crusty Dew, Dusty Crew<#ff0>>." ;
                : print "{book_is} <Fam, Spew Spam? Phew!<#ff0>>." ;
-               : print "{book_is} <Grow, Sand So Grand<#ff0>>." ;
                : print "{book_is} <Honing Great Groaning Hate<#ff0>>." ;
                : print "{book_is} <Jade Monk Made Junk<#ff0>>." ;
                : print "{book_is} <Led Tritely? Tread Lightly<#ff0>>." ;
@@ -4166,20 +4166,20 @@ subroutines {
             : cycle key = "books_to_read_4" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Beef, Cheese, Chief Bees<#ff0>>." ;
                : print "{book_is} <Brunch, Lakes, Lunch Breaks<#ff0>>." ;
-               : print "{book_is} <Chuck: Stained, Stuck, Chained<#ff0>>." ;
                : print "{book_is} <Fake Snail, Snake, Fail<#ff0>>." ;
+               : print "{book_is} <Grow, Sand So Grand<#ff0>>." ;
                : print "{book_is} <Halts-Five-Faults Hive<#ff0>>." ;
                : print "{book_is} <Least Fast Feast, Last<#ff0>>." ;
                : print "{book_is} <Leaving White Weaving Light<#ff0>>." ;
                : print "{book_is} <Link Thoughts, Think Lots<#ff0>>." ;
-               : print "{book_is} <My Banners By Manors<#ff0>>." ;
                : print "{book_is} <Near Words We're Nerds<#ff0>>." ;
                : print "{book_is} <Rhyme, Slow Slime Row<#ff0>>." ;
                : print "{book_is} <Sore Eyes or Sighs<#ff0>>." ;
                : print "{book_is} <Strain, Meet Main Street<#ff0>>." ;
+               : print "{book_is} <Styles Fill Files Still<#ff0>>." ;
                : print "{book_is} <Swear They There Sway<#ff0>>." ;
-               : print "{book_is} <Thy Prayer: Pry There<#ff0>>." ;
-               : print "{book_is} <Vast Libes' Last Vibes<#ff0>>." ;
+               : print "{book_is} <Where I Err, Why<#ff0>>." ;
+               : print "{book_is} <Who Blogs, Blue Hogs?<#ff0>>." ;
             }
          }
       } : else_if (times_read_bookshelf == 2) {
@@ -4190,16 +4190,16 @@ subroutines {
                : print "{book_is} <Blades, Rushing Raids, Blushing<#ff0>>." ;
                : print "{book_is} <Blue Fridges, Flu, Bridges<#ff0>>." ;
                : print "{book_is} <Bold Colts, Cold Bolts<#ff0>>." ;
+               : print "{book_is} <Boo, Debtor, Do Better<#ff0>>." ;
                : print "{book_is} <Budge Not, Nudge-Bot<#ff0>>." ;
                : print "{book_is} <Mite, Whale, White Male<#ff0>>." ;
-               : print "{book_is} <Pale Fools' Fail-Pools<#ff0>>." ;
+               : print "{book_is} <My Banners By Manors<#ff0>>." ;
                : print "{book_is} <Po' Lads' Low Pads<#ff0>>." ;
                : print "{book_is} <Rich Whys Which Rise<#ff0>>." ;
-               : print "{book_is} <Styles Fill Files Still<#ff0>>." ;
+               : print "{book_is} <See Pride Preside<#ff0>>." ;
                : print "{book_is} <Tony Fools' Phony Tools<#ff0>>." ;
                : print "{book_is} <Wear Scorn, Scare, Warn<#ff0>>." ;
-               : print "{book_is} <Where I Err, Why<#ff0>>." ;
-               : print "{book_is} <Who Blogs, Blue Hogs?<#ff0>>." ;
+               : print "{book_is} <Thy Prayer: Pry There<#ff0>>." ;
                : print "{book_is} <Will, Styled Still Wild<#ff0>>." ;
                : print "{book_is} <With-Small-Smith Wall<#ff0>>." ;
                : print "{book_is} <Wizard Sea: Scissored, Whee!<#ff0>>" ;
@@ -4211,20 +4211,20 @@ subroutines {
          } : else {
             : cycle key = "books_to_read_2" predictable_order = "false" skip_interval = "0" {
                : print "{book_is} <Bad Hosts Had Boasts<#ff0>>." ;
-               : print "{book_is} <Boo, Debtor, Do Better<#ff0>>." ;
                : print "{book_is} <Bought Gourd, Got Bored<#ff0>>." ;
                : print "{book_is} <Bye, Hidden High Biddin'<#ff0>>." ;
                : print "{book_is} <Dreamy Stinkers, Steamy Drinkers<#ff0>>." ;
-               : print "{book_is} <Feel Cold, Keel, Fold<#ff0>>." ;
                : print "{book_is} <Hit Wealth, Wit, Health<#ff0>>." ;
-               : print "{book_is} <LOL! Aye, All Lie<#ff0>>." ;
                : print "{book_is} <Lunch, Pines, Punch Lines<#ff0>>." ;
                : print "{book_is} <Lurk, Wait, Work Late<#ff0>>." ;
+               : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
                : print "{book_is} <Near Home Here, Gnome<#ff0>>." ;
+               : print "{book_is} <Nor Fight For Night<#ff0>>." ;
+               : print "{book_is} <Pale Fools' Fail-Pools<#ff0>>." ;
                : print "{book_is} <Rake Might Make Right<#ff0>>." ;
-               : print "{book_is} <Say, Gritty Grey City<#ff0>>." ;
                : print "{book_is} <Smite, Woke White Smoke<#ff0>>." ;
                : print "{book_is} <Thumb, Free From Thee<#ff0>>." ;
+               : print "{book_is} <To Prep True Pep<#ff0>>." ;
                : print "{book_is} <You May Moo, Yay<#ff0>>." ;
             }
          }
@@ -4232,20 +4232,20 @@ subroutines {
          : cycle key = "books_to_read_1" predictable_order = "false" skip_interval = "0" {
             : print "{book_is} <Chaz, Jess, Jazz, Chess<#ff0>>." ;
             : print "{book_is} <Dang! Big Bang, Dig!<#ff0>>." ;
+            : print "{book_is} <Feel Cold, Keel, Fold<#ff0>>." ;
             : print "{book_is} <Fusty Trite Trustee Fight<#ff0>>." ;
+            : print "{book_is} <LOL! Aye, All Lie<#ff0>>." ;
             : print "{book_is} <Kenny Muller's Many Colors<#ff0>>." ;
             : print "{book_is} <Mirth, Waking, Worth Making<#ff0>>." ;
-            : print "{book_is} <My Skill, Sky, Mill<#ff0>>." ;
             : print "{book_is} <My Son Simon<#ff0>>." ;
-            : print "{book_is} <Nor Fight For Night<#ff0>>." ;
+            : print "{book_is} <Say, Gritty Grey City<#ff0>>." ;
             : print "{book_is} <See Bunny, Be Sunny<#ff0>>." ;
-            : print "{book_is} <See Pride Preside<#ff0>>." ;
             : print "{book_is} <Socially Show Sully<#ff0>>." ;
             : print "{book_is} <Tad, Who HAD To<#ff0>>." ;
             : print "{book_is} <Thumb, Sing Something<#ff0>>." ;
-            : print "{book_is} <To Prep True Pep<#ff0>>." ;
             : print "{book_is} <Toil, Anchor, Oil Tanker<#ff0>>." ;
             : print "{book_is} <Two Trolls' True Tolls<#ff0>>." ;
+            : print "{book_is} <Vast Libes' Last Vibes<#ff0>>." ;
             : print "{book_is} <A Will Way Ill<#ff0>>." ;
          }
       }
