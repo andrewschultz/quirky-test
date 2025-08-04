@@ -3964,7 +3964,7 @@ subroutines {
          : redescribe ;
       }
       : if (is_at "stealing_hill") {
-         : print "You can make progress to the east or west at the moment, so I'll let you decide." ;
+         : print "Since you've been to the east or west and can make progress either way, so I'll let you decide." ;
          : done ;
       }
       : if (is_at "my_house") {
@@ -5761,7 +5761,7 @@ on_tick {
       }
       : if (!inventory_incorporeal) {
          : if (is_carried("low_song") || is_carried("confidence") || is_carried("focus") || is_carried("no_greed") || is_carried("fast_vision") || is_carried("rain_soul") || is_carried("peace_surging")) {
-            : print "{note_once}items listed in <GREY<#888>> are abstract moods or feelings that will automatically help you overcome obstacles when the time comes. You can manipulate some of them beyond this, if you're clever enough, but it's not necessary to win {qt}." ;
+            : print "{note_once}items listed in <GREY<#888>> aren't quite in your {pssp}, of course. They're abstract moods or feelings that will automatically help you overcome obstacles when the time comes. You can manipulate some of them beyond this, if you're clever enough, but that's not necessary to win {qt}." ;
             : set_true "inventory_incorporeal" ;
          }
       }
@@ -6387,7 +6387,7 @@ on_command {
          : done ;
       }
       : if (carried() == 1 && is_carried "ooh_task") {
-         : print "You're only carrying {otta} at the moment." ;
+         : print {( "You're only carrying {otta} " + (has_visited "plain_base" ? "in your {pssp}" : "") + "at the moment." )} ;
          : done ;
       }
       : mask {
