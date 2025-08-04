@@ -13,12 +13,14 @@
 #
 
 import sys
+import os
 import re
 
 from collections import defaultdict
 import mytools as mt
 
-aux_file = "books-from.txt"
+aux_file = "c:/users/andrew/documents/github/quirky-test/utils/books-from.txt"
+source_file = "c:/users/andrew/documents/github/quirky-test/source_code.adv"
 
 flaggables = sys.argv[1:]
 
@@ -28,7 +30,7 @@ def title_to_array(my_string):
 def array_to_title(my_array):
     return ' '.join(my_array).title()
 
-def check_auxiliry_file(aux_file):
+def check_auxiliary_file(aux_file):
     if not os.path.exists(aux_file):
         print("Can't find", aux_file)
         return
@@ -64,12 +66,15 @@ book_set_aux = set()
 
 this_shelf_dict = defaultdict(int)
 
-with open("source_code.adv") as file:
+with open(source_file) as file:
     for (line_count, line) in enumerate (file, 1):
         if line.rstrip().startswith('      }'):
             this_shelf_dict.clear()
         if "book_is" not in line and 'final book' not in line: continue
         if "print" not in line: continue
+        if re.search("[\?!\.]<#ff0>>\.", line.lower()):
+            ary = line.split('"')
+            mt.warn("BAD BOOK PUNCTUATION LINE {} {}".format(line_count, ary[1]))
         ary_init = line.lower().split('<')
         book_count += 1
         word_array = title_to_array(ary_init[1])
