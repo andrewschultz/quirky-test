@@ -1361,7 +1361,6 @@ locations {
             : goto "first_base" ;
             : gosub "tutorial_shutoff" ;
             : redescribe ;
-            : done ;
          }
          : match "first _;_ base" {
             : gosub "say_half" ;
@@ -1826,6 +1825,7 @@ locations {
             : destroy "meal_dude" ;
             : destroy "focus" ;
             : pocket "master_plan" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -1878,6 +1878,7 @@ locations {
          : gosub "hub_check_dependent" ;
          : pocket "chalice_map" ;
          : destroy "confidence" ;
+         : update_graphic ;
          : done ;
          }
       : if (!point_chalice_map) {
@@ -1918,6 +1919,7 @@ locations {
             : if (retry_racing_passions) {
                : print "{note_retry}{cue_racing_passions}." ;
             }
+            : update_graphic ;
          }
          : done ;
          }
@@ -1953,6 +1955,7 @@ locations {
             : gosub "add_point" ;
             : gosub "hub_check_independent" ;
             : pocket "crackers" ;
+            : update_graphic ;
          }
          : done ;
       }
@@ -2022,6 +2025,7 @@ locations {
             : pocket "focus" ;
             : gosub "add_point" ;
             : gosub "hub_check_dependent" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -2085,6 +2089,7 @@ locations {
             : pocket "meal_dude" ;
             : gosub "add_point" ;
             : gosub "hub_check_dependent" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -2142,6 +2147,7 @@ locations {
             : gosub "add_point" ;
             : gosub "gain_confidence" ;
             : gosub "hub_check_dependent" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -2196,6 +2202,7 @@ locations {
             : if (retry_so_long) {
                : print "{note_retry}{cue_so_long}." ;
             }
+            : update_graphic ;
          }
          : done ;
          }
@@ -2234,6 +2241,7 @@ locations {
             }
             : gosub "add_point" ;
             : gosub "hub_check_independent" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -2287,6 +2295,7 @@ locations {
             : if (retry_cease_purging) {
                : print "{note_retry}{cue_cease_purging}." ;
             }
+            : update_graphic ;
          }
          : done ;
          }
@@ -2314,6 +2323,7 @@ locations {
             : set_true "point_dirt_home" ;
             : gosub "add_point" ;
             : gosub "hub_check_independent" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -2366,6 +2376,7 @@ locations {
                }
                : gosub "add_point" ;
                : gosub "hub_check_independent" ;
+               : update_graphic ;
             }
             : done ;
          }
@@ -2435,6 +2446,7 @@ locations {
             }
             : gosub "add_point" ;
             : gosub "hub_check_independent" ;
+            : update_graphic ;
          }
          : done ;
          }
@@ -2496,6 +2508,7 @@ locations {
             : gosub "add_point" ;
             : gosub "gain_confidence" ;
             : gosub "hub_check_dependent" ;
+            : update_graphic ;
          }
          : done ;
          }
