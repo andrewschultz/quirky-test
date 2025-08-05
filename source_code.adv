@@ -4267,7 +4267,7 @@ subroutines {
       : if (books_read == 17 && !read_bookshelf_this_time) {
          : print "That's all the books. If you continue examining now, they'll cycle again, but in a different random order." ;
          : if (times_read_bookshelf == 0) {
-            : print "There are, in fact, {bookshelves_in_words} total book sets. A new one activates for the next playthrough on reading everything in a shelf. You can also look them up in the <source on GitHub<#0f0>>[https://github.com/andrewschultz/quirky-test/blob/main/source_code.adv], if you want. I put this in here as a small coding exercise that might be fun for achievement hunters." ;
+            : print "There are, in fact, {bookshelves_in_words} total book sets. A new one activates for the next playthrough on reading everything in a shelf. You can also look them up in the <source on GitHub<#0f0>>[https://github.com/andrewschultz/quirky-test/blob/main/source_code.adv], if you want. Searching for any book title should get you to the relevant code, though <the README file<#0f0>>[https://github.com/andrewschultz/quirky-test/blob/main/README.md], which is also on the front page, will point you to a comment marker in the code where the titles start." ;
          } : else_if (times_read_bookshelf < max_bookshelf_reads - 1) {
             : print {( "You have read through " + (collection_get{ collection -> ("num_to_word") index -> ( times_read_bookshelf + 1 ) }) + " of the {bookshelves_in_words} different book sets. The next time through, there'll be a new book set." )} ;
          } : else {
