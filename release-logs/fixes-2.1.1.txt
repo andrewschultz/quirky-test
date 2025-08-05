@@ -1,0 +1,9 @@
+The big fix for 2.1.1 is the G command. The commit is here https://github.com/andrewschultz/quirky-test/commit/126830ed0f8221c9b66db9d1dfc3689be604c535, for people interested in code. So what does the G command do?
+
+It nudges you on a very good way to go next. It's a super-powered version of O, and in fact it re-uses a lot of O's code, but it is smart if there is more than one exit.
+
+Other stuff? Well, the code for G reminded me of code I wanted to tweak. Oh, and stuff I wanted to add. There wasn't much. But when you play through several times, small things appear.
+
+--graphics are now more reliably updated on point-scoring commands https://github.com/andrewschultz/quirky-test/commit/97d4cabbd490f90b6ff3532641663c0ae00b6878
+--one more new set of books in the bookshelf (this seems to be fun to add each sub-release. I also added START RANDOM BOOKS in the source.) https://github.com/andrewschultz/quirky-test/commit/fc34b4a74d710b501db679d80eb89ada85a0745d
+--internal code: renamed points_left and points_right to west and east and also created dynamic_integers to track hub scores https://github.com/andrewschultz/quirky-test/commit/3d43a43d79b9e60bac78bbfe1a23ee11e31288d5

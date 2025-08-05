@@ -429,7 +429,7 @@ integers {
 collections {
    tutorial_stuff : list {
       items = [
-         "Meta-commands such as {vm_about}, {vm_credits} and {vm_verbs} give you general information that would break up the flow of an introduction.",
+         "Meta-commands such as {vm_about}, {vm_credits} and {vm_verbs} give you general information that would break up the flow of an introduction. They have no effect in the game world.",
          "{v_x_me} is a good in-world starter command to tell you about yourself.",
          "Shorthand such as {vd_i} to take {vd_i_long} and {v_x} to {v_x_long} help simplify what you need to type.",
          "Senses can provide clues. In this case, {qt} uses {v_listen_hear}, which implies {v_talk} or, as parsers allow shorthand for convenience, {v_t0} works here too. Note that, again for convenience, the ungrammatical {v_talk} SOMEONE works. No need for TO.",
@@ -4126,6 +4126,7 @@ subroutines {
          : print "You peruse the bookshelf again.{footnote_reveal_text}" ;
          : set_true "got_footnote_17" ;
       }
+      # start random books here
       : else_if (times_read_bookshelf >= max_bookshelf_reads - 1) {
          : if (books_read == 16) {
             : print "The final book is a whopper: <Clowns, Frames, Frowns, Claims, Crowns, Flames<#ff0>>." ;
@@ -4785,7 +4786,7 @@ subroutines {
          : increment "tutorial_score" ;
       }
       : print "While {qt} requires you to guess some verbs as part of a puzzle, it has a simplified parser otherwise." ;
-      : print "{qt} uses all eight planar directions, abbreviated <N S E W NW NE SE SW<#0f0>> (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out_b} leaves if there is only one exit." ;
+      : print "{qt} uses all eight planar directions, abbreviated <N S E W NW NE SE SW<#0f0>> (don't worry! The diagonal directions are restricted to two hubs,) and U for up as well. You can use the long form of each direction, but it is not necessary. Also, {v_out_b} leaves if there is only one exit, and {v_g} tries to go in the most useful direction." ;
       : print "You can {v_take} an item, but there is no need to {v_drop} it. You can also {v_x} it, which is short for {v_x_long}." ;
       : print "You can {v_talk} (<T<#0f0>>) to people you see. A subject or \"to\" is not necessary, as there will be no more than one other character per room." ;
       : if (talked_to_thor) {
