@@ -89,7 +89,7 @@ There are three non-dead-end locations beyond. East Branch is first if you want 
 
 You can TALK to Thor then ASK him about pedagogical stuff, but none of this is needed if you want to get through quickly.
 
-First, let's poke around.
+First, let's poke around. You can skip this bit up to "what follows" below.
 
 > NW
 
@@ -301,4 +301,4 @@ shell fort -+           |             |
   warring  -+
     bay
 
-So that's how to get through! Notice you didn't have any accomplishments. I did this deliberately, as (spoiler) getting through quickly is an accomplishment.
+So that's how to get through! Notice you didn't have any accomplishments. I did this deliberately, even up to the bonus point, as (spoiler) getting through without any bonus points is an accomplishment.
