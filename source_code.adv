@@ -3019,10 +3019,10 @@ subroutines {
    }
    add_bonus : subroutine {
       : if (score_notify) {
-         : set_true "score_bonus_nag" ;
          : print "<You just found a bonus point!<#ff0>>" ;
-         : if (bonus_score == 0) {
-             : print "{note_once}{qt} contains several bonus points that are uncued. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
+         : if (!score_bonus_nag) {
+            : print "{note_once}{qt} contains several bonus points that are uncued. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
+            : set_true "score_bonus_nag" ;
          }
       }
       : decrement "tempint" ; # this is because I use 1-based numbers in my personal table, but Adventuron is 0-based.
@@ -3062,6 +3062,7 @@ subroutines {
          : increment "tempint" ;
       }
       : set_true "ever_bonus" ;
+      : set_true "score_bonus_nag" ;
       : gosub "color_check_bf" ;
       : gosub "color_check_bfa" ;
    }
