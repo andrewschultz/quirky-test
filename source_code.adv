@@ -4634,12 +4634,12 @@ subroutines {
       : if (!map_red_room_note && think_available && !has_visited "gravel_trail") {
          : print "{note_once}a red room is one where you saw what to do but weren't prepared yet.{see_all_map}" ;
          : set_true "map_see_all_nudge" ;
-		   : set_true "map_red_room_note" ;
+           : set_true "map_red_room_note" ;
       }
       : if (!map_dark_grey_room_note && point_gravel_trail) {
          : print {( "{note_once}a grey room is one you've solved but can still revisit, though you shouldn't need to." + (have_won ? "" : "By the way, you're very close to the end.") + see_all_map )} ;
          : set_true "map_see_all_nudge" ;
-		   : set_true "map_dark_grey_room_note" ;
+           : set_true "map_dark_grey_room_note" ;
       }
       : press_any_key ;
       : redescribe ;
@@ -5357,7 +5357,7 @@ themes {
 on_render {
    : if (in_map) {
       : if (have_won) {
-		 : overlay "m_room_achievement" x="1" y="321" ;
+         : overlay "m_room_achievement" x="1" y="321" ;
          : if (is_at "kill_hassle_hill_castle") {
             : overlay "m_room_achievement_gotit" x="1" y="321" ;
          } : else {
@@ -5409,32 +5409,32 @@ on_render {
       : if (has_visited "west_tiles") {
          : overlay "m_octagon" x="121" y="161" ;
          : overlay "m_room_west_tiles" x="121" y="161" ;
-		 : overlay "m_path_h" x="201" y="180" ;
-		 : overlay "m_path_h" x="81" y="180" ;
-		 : overlay "m_path_v" x="160" y="201" ;
-		 : overlay "m_path_v" x="160" y="121" ;
-		 : overlay "m_path_nw" x="81" y="121" ;
-		 : overlay "m_path_ne" x="191" y="121" ;
-		 : overlay "m_path_ne" x="81" y="196" ;
+         : overlay "m_path_h" x="201" y="180" ;
+         : overlay "m_path_h" x="81" y="180" ;
+         : overlay "m_path_v" x="160" y="201" ;
+         : overlay "m_path_v" x="160" y="121" ;
+         : overlay "m_path_nw" x="81" y="121" ;
+         : overlay "m_path_ne" x="191" y="121" ;
+         : overlay "m_path_ne" x="81" y="196" ;
       }
       : if (has_visited "east_branch") {
          : overlay "m_octagon" x="481" y="161" ;
          : overlay "m_room_east_branch" x="481" y="161" ;
-		 : overlay "m_path_h" x="561" y="180" ;
-		 : overlay "m_path_h" x="441" y="180" ;
-		 : overlay "m_path_v" x="520" y="201" ;
-		 : overlay "m_path_v" x="520" y="121" ;
-		 : overlay "m_path_nw" x="441" y="121" ;
-		 : overlay "m_path_ne" x="551" y="121" ;
-		 : overlay "m_path_nw" x="551" y="196" ;
+         : overlay "m_path_h" x="561" y="180" ;
+         : overlay "m_path_h" x="441" y="180" ;
+         : overlay "m_path_v" x="520" y="201" ;
+         : overlay "m_path_v" x="520" y="121" ;
+         : overlay "m_path_nw" x="441" y="121" ;
+         : overlay "m_path_ne" x="551" y="121" ;
+         : overlay "m_path_nw" x="551" y="196" ;
       }
       : if (has_visited "stealing_hill" || has_visited "east_branch") {
          : overlay "m_path_h" x="381" y="20" ;
-		 : overlay "m_path_ehill" x="421" y="20" ;
+         : overlay "m_path_ehill" x="421" y="20" ;
       }
       : if (has_visited "stealing_hill" || has_visited "west_tiles") {
          : overlay "m_path_h" x="261" y="20" ;
-		 : overlay "m_path_whill" x="181" y="20" ;
+         : overlay "m_path_whill" x="181" y="20" ;
       }
       : if (has_visited "stealing_hill") {
          : if (point_healing_still) {
