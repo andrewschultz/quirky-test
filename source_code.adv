@@ -106,6 +106,7 @@ booleans {
    force_east_note_flag : boolean "false" scope="survivor" ;
    g_pick_nag : boolean "false" scope="survivor" ;
    g_stealing_nag : boolean "false" scope="survivor" ;
+   booth_note : boolean "false" ;
 
    ## put new miscellaneous booleans above
 
@@ -2226,6 +2227,10 @@ locations {
          : set_integer var="tempint" "11" ;
          : gosub "footnote_reveal" ;
          : print {( (point_bending_truth ? "Empty now. Well, it was empty even when it wasn't empty." : "You don't want to get too close. You're not sure why the person in the booth is around. Don't they have anything better to do?") + "{footnote_reveal_text}" )}
+         : if (!booth_note) {
+            : print "It was apparently built with love, pride and the finest quality wood by the Oh-Stall-So-Tall-Stow-All company. This will not help you in your quest, but since you looked, I felt obliged to point it out." ;
+            : set_true "booth_note" ;
+         }
       }
       : match "bending truth" {
          : if (point_bending_truth) {
