@@ -1107,7 +1107,6 @@ strings {
    here_e_nw : dynamic_string {( is_at "hub_e_nw" ? "here" : "(East Branch, NW)" )} ;
    here_stealing_hill : dynamic_string {( is_at "stealing_hill" ? "here" : "(Stealing Hill)" )} ;
    here_my_house : dynamic_string {( is_at "my_house" ? "here" : "into My House" )} ;
-   thought_count_words : dynamic_string {( collection_get{ collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
 
    # yes-or-no
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
@@ -1417,7 +1416,9 @@ strings {
    # map conditional text
    see_all_map : dynamic_string {( map_see_all_nudge ? "" : " To see a full legend, put an argument after {vd_map}." )} ;
 
+   # Interpretive
    noguess : string "<(unknown)<#888>>" ;
+   number_as_word : dynamic_string {( collection_get { collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
 
    # Easter Eggy / retry stuff
    bookshelves_in_words : dynamic_string {( (collection_get{ collection -> ("num_to_word") index -> ( max_bookshelf_reads ) }) )} ;
@@ -4939,7 +4940,7 @@ subroutines {
    }
    meta_think_note_later : subroutine {
       : if (think_available) {
-         : print {( "Here " + (commands_figured > 1 ? "are {thought_count_words} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
+         : print {( "Here " + (commands_figured > 1 ? "are {number_as_word} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
       }
       : if (think_chalice_map) {
          : print "-- get the <CHALICE MAP<#0f0>> {here_w_ne}";
@@ -6972,7 +6973,7 @@ on_command {
          : print "Your <bonus score<#ff0>> is {bonus_score} out of {bonus_yellow}." ;
       }
       : if (think_available) {
-         : print {( "You have also figured  {thought_count_words} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_thk} for details." )} ;
+         : print {( "You have also figured  {number_as_word} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_thk} for details." )} ;
       }
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
