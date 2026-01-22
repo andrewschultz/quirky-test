@@ -242,6 +242,8 @@ booleans {
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
    solved_both_parts_core_nag : boolean "false" scope="survivor" ;
    solved_both_parts_bonus_nag : boolean "false" scope="survivor" ;
+   print_bonus_nag_after : boolean "false" scope="survivor" ;
+   print_core_nag_after : boolean "false" scope="survivor" ;
 
    ## "retry" booleans for THINK: if you got something after losing it
    retry_rare_plights : boolean "false" scope="survivor" ;
@@ -5354,8 +5356,7 @@ subroutines {
                }
                : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess_c_1}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
                : if (!solved_both_parts_core_nag && part_core_score == 3) {
-                  : print "{note_once}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
-                  : set_true "solved_both_parts_core_nag" ;
+                  : set_true "print_core_nag_after" ;
                   }
                }
             }
@@ -5377,8 +5378,7 @@ subroutines {
                   }
                : print {( (part_bonus_score != 2 ? (collection_get{ collection -> ("think_first_bonus") index -> (counter) }) : "{noguess}") + " " + (part_bonus_score >= 2 ? (collection_get{ collection -> ("think_second_bonus") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_bonus") index -> (counter) }) )} ;
                : if (!solved_both_parts_bonus_nag && part_bonus_score == 3) {
-                  : print "{note_once}You have figured each half of a bonus point scoring command, but you haven't typed them both together. You should be able to type that command for a bonus point right now, though game state changes may make this undoable. {vd_think} will remind you of this try, with context." ;
-                  : set_true "solved_both_parts_bonus_nag" ;
+                  : set_true "print_bonus_nag_after" ;
                   }
                }
             }
@@ -7017,6 +7017,16 @@ on_command {
       : gosub "meta_think_core_half" ;
       : gosub "meta_think_bonus_half" ;
       : gosub "meta_think_retry_replay" ;
+      : if (print_core_nag_after) {
+         : print "{note_once}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
+         : set_true "solved_both_parts_core_nag" ;
+         : set_false "print_core_nag_after" ;
+      }
+      : if (print_bonus_nag_after) {
+         : print "{note_once}You have figured each half of a bonus point scoring command, but you haven't typed them both together. You should be able to type that command for a bonus point right now, though game state changes may make this undoable. Until you do, {vd_think} will remind you of this try, with context." ;
+         : set_true "solved_both_parts_bonus_nag" ;
+         : set_false "print_bonus_nag_after" ;
+      }
       : if (!think_text_yet) {
          : print "There are no point-scoring commands you've figured in part, or fully to try later." ;
       }
