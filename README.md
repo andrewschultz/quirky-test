@@ -4,9 +4,9 @@ This is a repository for the Adventuron source code for *Quirky Test*, which was
 
 ## Game Details
 
-*Quirky Test* is a wordplay game with a tutorial and graphics, but it also has an NPC who discusses what people can expect from a parser game. It features bonus points, achievements, and (once the player finished) footnotes. I'd like to think that the tutorial encompasses, first, the conveniences to expect from a modern parser now that programmers can use more memory, and second, what a player can expect in terms of a game's fairness.
+*Quirky Test* is a wordplay game with a tutorial and graphics, but it also has an NPC with optional dialogue about what people can expect from a parser game, as well as my own experiences. It features bonus points, achievements, and (once the player finished) footnotes. I'd like to think that the tutorial encompasses, first, the conveniences to expect from a modern parser now that programmers can use more memory, and second, what a player can expect in terms of a game's fairness, text-based or otherwise.
 
-There are twenty-three rooms, but fourteen of them are "guess what to do and leave" and spokes in a hub. So I hope it is not too overwhelming.
+There are twenty-three rooms, but fourteen of them are spokes in a hub where you guess what to do and leave. Some of the puzzles rely on others. So I hope it is not too overwhelming.
 
 ## Walkthroughs and maps
 
@@ -24,20 +24,23 @@ There have been post-comp releases, mainly where I tried to experiment with Adve
 
 There may be future releases for minor features, but I can't see much at the moment, beyond updating the Easter Egg endgame, which contains references to works I've written.
 
-Previous release dates are listed below.
+Previous release dates, excluding in-comp updates, are listed below.
 
 * 2.1.1: 2028/8/4, G command for going intelligently to where you can progress
 * 2.1.0: 2028/7/30, MAP command for in-game graphic map
 * 2.0.2: 2028/7/25, THINK command clarification and better player cueing
 * 2.0.1: 2028/7/18, new item near the end that you can onlock, which helps you find achievements
 * 2.0.0: 2028/7/5, remaking with more achievements, an Easter Egg command (noticing something in the graphics and game requirements,) and many bug fixes
-* 1.0.0: 2025/4/30
+* 1.0.0: 2025/4/30, initial release for TALP
 
 The [game front page](https://andrewschultz.itch.io/quirky-test) linked to above also has, if you scroll past the description and blurb, a list of more detailed devlogs that include in-comp changes.
 
 ## A plug for TALP
 
-I'd like to put in an ad here for TALP/TALJ. It's a great way to learn a programming language and also to describe or show what you learned or know. Here are past editions:
+I'd like to put in an ad here for TALP/TALJ. It's a great way to learn a programming language and also to describe or show what you learned or know. Here are other editions. If this is not updated regularly, I assume you can URL-munge to find the latest edition.
+* FUTURE
+* [2026](https://itch.io/jam/talp2026)
+* PAST
 * [2024](https://itch.io/jam/talp2024)
 * [2023](https://itch.io/jam/talp2023)
 * [2022](https://itch.io/jam/talp2022)
@@ -45,4 +48,4 @@ I'd like to put in an ad here for TALP/TALJ. It's a great way to learn a program
 
 ## Reading all bookshelf titles in the game without replaying
 
-Oh, hey! One other thing. If you wish to read all the book titles in the bookshelf without replaying, search for the text START RANDOM BOOKS HERE in source_code.adv. This isn't a huge spoiler, as the bookshelf code is nowhere near game-critical code, and it's just intended as comic relief once you've almost won the game anyway.
+Oh, hey! One other thing. If you wish to read all the book titles in the bookshelf without replaying, search for the text START RANDOM BOOKS HERE in source_code.adv. This isn't a huge spoiler, as the bookshelf code is nowhere near game-critical code, and it's just intended as comic relief once you've almost won the game anyway. I've tried to add one per release.
