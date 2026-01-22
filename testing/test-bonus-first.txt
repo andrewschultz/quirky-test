@@ -4,22 +4,26 @@ anykey
 2
 anykey
 2
-GT MY_HOUSE
-SEE GLIMMERS
-HI MOUSE
-anykey
-anykey
-anykey
-anykey
-anykey
-anykey
-anykey
-2
-anykey
-anykey
-anykey
-anykey
-anykey
+#kept just in case I need it, but the uncommented cheat-code should work
+#GT MY_HOUSE
+#SEE GLIMMERS
+#HI MOUSE
+#anykey
+#anykey
+#anykey
+#anykey
+#anykey
+#anykey
+#anykey
+#2
+#anykey
+#anykey
+#anykey
+#anykey
+#anykey
+GT CHT
+L
+WQ
 TSTART
 anykey
 ABOUT
