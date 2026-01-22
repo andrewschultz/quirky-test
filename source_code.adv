@@ -2317,6 +2317,7 @@ locations {
          : done ;
       }
       : match "take *" {
+         : collection_modify { collection = "got_first_core" index -> (tempint) content -> ("true") ; }
          : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {v_take} here." )} ;
          : done ;
       }
@@ -2324,14 +2325,11 @@ locations {
          : print "Ah, but what to {v_take}?" ;
          : done ;
       }
-      : if (!is_carried "crackers") {
-         : match "_ crackers" {
-            : print "That's/Those are what you want, but what to do with it?" ;
-            : done ;
-         }
-      }
       : if (!point_take_crackers) {
          : match "_ crackers" {
+            : set_integer var="tempint" "14" ;
+            : print "That's/Those are what you want, but what to do with it?" ;
+            : collection_modify { collection = "got_second_core" index -> (tempint) content -> ("true") ; }
             : gosub "say_half" ;
             }
          }
