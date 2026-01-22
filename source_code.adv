@@ -4780,6 +4780,19 @@ subroutines {
             : print "One word right, one word wrong{for_bonus}.{already_got_check}" ;
          }
       }
+      : if (first_half) {
+         : if (half_bonus) {
+            : collection_modify { collection = "got_first_core" index -> (tempint) content -> ("true") ; }
+         } : else {
+            : collection_modify { collection = "got_first_bonus" index -> (tempint) content -> ("true") ; }
+         }
+      } : else {
+         : if (half_bonus) {
+            : collection_modify { collection = "got_second_core" index -> (tempint) content -> ("true") ; }
+         } : else {
+            : collection_modify { collection = "got_second_bonus" index -> (tempint) content -> ("true") ; }
+         }
+      }
       : set_false "already_got_command" ;
       : if (!half_bonus) {
          : done ;
