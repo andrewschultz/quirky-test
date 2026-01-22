@@ -3292,7 +3292,7 @@ locations {
       }
    }
 
-   cht : location "This sets in_debug and cheat_dont_require. You need to <L<#0f0>> to go back where you were. Or WIN/WINGAME initiates the winning sequence. <WQ<#0f0>>/<WINQUICK<#0f0>> wins quick and just sets the have_won boolean to true." {
+   cht : location "This sets in_debug and cheat_dont_require. You need to <L<#0f0>> to go back where you were. Or <WIN<#0f0>>/<WINGAME<#0f0>> initiates the winning sequence. <WQ<#0f0>>/<WINQUICK<#0f0>> wins quick and just sets the have_won boolean to true." {
       on_tick {
          : set_true "in_debug" ;
          : set_true "cheat_dont_require" ;
@@ -5050,6 +5050,7 @@ subroutines {
       : match "wq _;winquick _"  {
          : print {( have_won ? "Already won game, but forcing have_won to true." : "Setting have_won to true." )} ;
          : set_true "have_won" ;
+         : done ;
       }      : match "win _;wingame _"  {
          : print {( have_won ? "Already won game, but restarting with footnotes still available." : "Auto-winning game so footnotes are available on reboot." )} ;
          : gosub "win_game_stub" ;
