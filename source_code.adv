@@ -371,13 +371,15 @@ integers {
    footnotes_found : integer "0" scope="survivor" ;
    max_footnotes : integer "17" ;
    confidence_meter : integer "0" ; ## yellow field, trim goon => malice chap
-   tempint : integer "0" ;
-   tempint2 : integer "0" ;
    hub_think_needed : integer "0" ;
    rule_chosen : integer "0" ;
    latest_warp_number : integer "-3" ; ## there are magic numbers here. -3 means not aware/done. -2 means there was no warp this turn. -1 means there was a warp try that failed and thus gets rejected.
    books_read : integer "0" ;
 
+   # helper variables
+   counter : integer "0" ;
+   tempint : integer "0" ;
+   tempint2 : integer "0" ;
    # for THINK
    commands_figured : dynamic_integer {( (think_chalice_map ? 1 : 0) + (think_fellow_yield ? 1 : 0) + (think_grim_tune ? 1 : 0) + (think_healing_still ? 1 : 0) + (think_hunters_grill ? 1 : 0) + (think_master_plan ? 1 : 0) + (think_shift_goals ? 1 : 0) + (think_gravel_trail ? 1 : 0)  + (think_hi_mouse ? 1 : 0) )}
 
