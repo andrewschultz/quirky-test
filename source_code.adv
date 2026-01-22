@@ -1586,10 +1586,8 @@ locations {
                : done ;
             }
             : match "_ west" {
-               : print "You don't need any fancy verb. Just WEST or GO WEST or even W should work." ;
-               : set_integer var="tempint" "0" ;
-               : set_false "first_half" ;
-               : gosub "say_half" ;
+               : print "That's the idea, but you don't need any fancy verb. Just <WEST<#0f0>> or <GO WEST<#0f0>> or even <W<#0f0>> should work. So I'm going to make you type something shorter, because pedantry is fun. Well, for the pedant! Or less no-fun than for their, umm, targets." ;
+               : collection_modify { collection = "got_second_core" index -> (0) content -> ("true") } ;
                : done ;
             }
          }
@@ -2373,7 +2371,7 @@ locations {
          : done ;
       }
       : match "take *" {
-         : collection_modify { collection = "got_first_core" index -> (tempint) content -> ("true") ; }
+         : collection_modify { collection = "got_first_core" index -> (14) content -> ("true") ; }
          : print {( "Not quite what you " + (point_take_crackers ? "needed" : "need") + " to {v_take} here." )} ;
          : done ;
       }
@@ -2385,7 +2383,7 @@ locations {
          : match "_ crackers" {
             : set_integer var="tempint" "14" ;
             : print "That's/Those are what you want, but what to do with it?" ;
-            : collection_modify { collection = "got_second_core" index -> (tempint) content -> ("true") ; }
+            : collection_modify { collection = "got_second_core" index -> (14) content -> ("true") } ;
             : gosub "say_half" ;
             }
          }
