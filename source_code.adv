@@ -236,7 +236,8 @@ booleans {
    # think auxiliary
    in_bonus_half : boolean "false" ;
    first_half : boolean "false" ;
-   think_half_yet : boolean "false" ;
+   think_text_yet : boolean "false" ;
+   think_core_yet : boolean "false" ;
    think_bonus_yet : boolean "false" ;
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
    solved_both_parts_core_nag : boolean "false" scope="survivor" ;
@@ -1423,6 +1424,7 @@ strings {
    # Interpretive
    noguess : string "<(unknown)<#888>>" ;
    noguess_c_1 : dynamic_string {( unneeded_half ? "<(unneeded)<#888>>" : "<(unknown)<#888>>" )} ;
+   think_here_also : dynamic_string {( think_text_yet ? "Also, here" : "Here" )} ;
    number_as_word : dynamic_string {( collection_get { collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
 
    # Easter Eggy / retry stuff
@@ -4979,7 +4981,8 @@ subroutines {
       : if (!retry_available) {
          : return ;
       }
-      : print {( (think_half_yet ? "Also, here" : "Here") + " are bonus commands you got right, but it was a bit too late. You can use them on replay." )} ;
+      : print "{think_here_also} are bonus commands you got right, but it was a bit too late. You can use them on replay." ;
+      : set_true "think_text_yet" ;
       : if (retry_rare_plights) {
          : print "-- say {cue_rare_plights} {once_prayer_lights}" ;
       }
@@ -5333,12 +5336,14 @@ subroutines {
 
    meta_think_core_half : subroutine {
       : set_integer var="counter" "0" ;
+      : set_false "think_core_yet" ;
       : while (counter < max_score) {
          : if ((collection_get{ collection -> ("tried_combo_core") index -> ( counter )} == "false")) {
             : if (part_core_score > 0) {
-               : if (!think_half_yet) {
-                  : print {( (think_available ? "Also, here" : "Here") + " is a summary of correct bonus command half-guesses:" )} ;
-                  : set_true "think_half_yet" ;
+               : if (!think_core_yet) {
+                  : print "{think_here_also} is a summary of correct bonus command half-guesses:" ;
+                  : set_true "think_core_yet" ;
+                  : set_true "think_text_yet" ;
                }
                : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess_c_1}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
                : if (!solved_both_parts_core_nag && part_core_score == 3) {
@@ -5359,8 +5364,8 @@ subroutines {
          : if ((collection_get{ collection -> ("bonus_status") index -> ( counter )} == "0")) {
             : if (part_bonus_score > 0) {
                : if (!think_bonus_yet) {
-                  : print {( (think_available ? "Also, here" : "Here") + " is a summary of correct bonus command half-guesses:" )} ;
-                  : set_true "think_half_yet" ;
+                  : print "{think_here_also} is a summary of correct bonus command half-guesses:" ;
+                  : set_true "think_text_yet" ;
                   : set_true "think_bonus_yet" ;
                   }
                : print {( (part_bonus_score != 2 ? (collection_get{ collection -> ("think_first_bonus") index -> (counter) }) : "{noguess}") + " " + (part_bonus_score >= 2 ? (collection_get{ collection -> ("think_second_bonus") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_bonus") index -> (counter) }) )} ;
@@ -6993,12 +6998,12 @@ on_command {
       }
    }
    : match "think _" {
-      : set_false "think_half_yet" ;
+      : set_false "think_text_yet" ;
       : gosub "meta_think_do_later" ;
       : gosub "meta_think_core_half" ;
       : gosub "meta_think_bonus_half" ;
       : gosub "meta_think_retry_replay" ;
-      : if (!think_half_yet && !think_available && !retry_available) {
+      : if (!think_text_yet) {
          : print "There are no point-scoring commands you've figured in part, or fully to try later." ;
       }
       : gosub "check_additional_meta" ;
