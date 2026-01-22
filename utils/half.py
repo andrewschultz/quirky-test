@@ -9,7 +9,7 @@ with open("walkthrough.txt") as file:
             continue
         a = line.lower().strip().split(' ')
         b = ' '.join(a[1:3])
-        if b not in ignorables:
+        if b not in ignorables and a[1:3] not in matches:
             matches.append(a[1:3])
 
 with open("source_code.adv") as file:

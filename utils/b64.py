@@ -25,7 +25,7 @@ with open("c:/users/andrew/documents/github/quirky-test/source_code.adv") as fil
 				print("Duplicate base64_png definition {} line {}.".format(a, line_count))
 			need_one[a[0]] = True
 			continue
-		if 'overlay' in line and line.strip().startswith(':'):
+		if 'overlay' in line and line.strip().startswith(':') and ('x=' in line or 'y=' in line):
 			a = [x.strip() for x in line.split('"')]
 			got_one[a[1]] = True
 		if 'location' in line and 'graphic' in line:
