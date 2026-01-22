@@ -393,6 +393,8 @@ integers {
    counter : integer "0" ;
    tempint : integer "0" ;
    tempint2 : integer "0" ;
+   first_bonus_binary_temp : integer "0" scope="survivor" ;
+   second_bonus_binary_temp : integer "0" scope="survivor" ;
 
    # for THINK
    commands_figured : dynamic_integer {( (think_chalice_map ? 1 : 0) + (think_fellow_yield ? 1 : 0) + (think_grim_tune ? 1 : 0) + (think_healing_still ? 1 : 0) + (think_hunters_grill ? 1 : 0) + (think_master_plan ? 1 : 0) + (think_shift_goals ? 1 : 0) + (think_gravel_trail ? 1 : 0)  + (think_hi_mouse ? 1 : 0) )}
@@ -3463,6 +3465,7 @@ subroutines {
    : if (have_won) {
       : gosub "bonus_read_from_survivors" ;
       : gosub "footnote_read_from_survivors" ;
+      : gosub "halfbonus_read_from_survivors" ;
       : if (!footnote_nag) {
          : print "Because you won at least once, footnotes are available, and you will skip over the initial menu choices for tutorials or colored text hints. They can still be set with {opt_tutorial} and {opt_ch}.";
          : set_true "footnote_nag" ;
@@ -5871,6 +5874,40 @@ subroutines {
       : set_integer var="bonus_score_start" {( int("" + bonus_score) )} ;
    }
 
+   halfbonus_write_to_survivors : subroutine {
+      : set_integer var="first_bonus_binary_temp" "0" ;
+      : set_integer var="second_bonus_binary_temp" "0" ;
+      : set_integer var="counter" "0" ;
+      : while (counter < max_bonus_score) {
+         : set_integer var="first_bonus_binary_temp" {( first_bonus_binary_temp * 2 )} ;
+         : set_integer var="second_bonus_binary_temp" {( second_bonus_binary_temp * 2 )} ;
+         : if (collection_get{ collection -> ("got_first_bonus") index -> (counter)} == "true") {
+            : increment "first_bonus_binary_temp" ;
+         }
+         : if (collection_get{ collection -> ("got_second_bonus") index -> (counter)} == "true") {
+            : increment "second_bonus_binary_temp" ;
+         }
+         : increment "counter" ;
+      }
+   }
+
+   halfbonus_read_from_survivors : subroutine {
+      : set_integer var="counter" {( max_bonus_score - 1)} ;
+      : set_integer var="tempint" {( first_bonus_binary_temp )} ;
+      : set_integer var="tempint2" {( second_bonus_binary_temp )} ;
+      : while (counter >= 0) {
+         : if (tempint % 2 == 1) {
+            : collection_modify { collection = "got_first_bonus" index -> (counter) content -> ("true") } ;
+         }
+         : if (tempint2 % 2 == 1) {
+            : collection_modify { collection = "got_second_bonus" index -> (counter) content -> ("true") } ;
+         }
+         : set_integer var="tempint" {( tempint / 2 )} ;
+         : set_integer var="tempint2" {( tempint2 / 2 )} ;
+         : decrement "counter" ;
+      }
+   }
+
    win_game_stub : subroutine {
       : if (!have_won) {
          : press_any_key ;
@@ -5888,6 +5925,7 @@ subroutines {
          : increment "times_read_bookshelf" ;
       }
       : gosub "footnote_write_to_survivors" ;
+      : gosub "halfbonus_write_to_survivors" ;
       : increment "times_won" ;
       : set_true "have_won" ;
       : win_game ;
