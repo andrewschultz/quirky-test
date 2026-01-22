@@ -24,6 +24,8 @@ source_file = "c:/users/andrew/documents/github/quirky-test/source_code.adv"
 
 flaggables = sys.argv[1:]
 
+trivial_warnings = []
+
 def title_to_array(my_string):
     return [x for x in re.split("[^a-zA-Z']+", my_string) if x]
 
@@ -70,6 +72,9 @@ with open(source_file) as file:
     for (line_count, line) in enumerate (file, 1):
         if line.rstrip().startswith('      }'):
             this_shelf_dict.clear()
+        if 'times_read_bookshelf' in line:
+            bookshelf_string = re.sub(".*times_read_bookshelf", "times_read_bookshelf", line.strip())
+            bookshelf_string = re.sub("\).*", "", bookshelf_string).strip()
         if "book_is" not in line and 'final book' not in line: continue
         if "print" not in line: continue
         if re.search("[\?!\.]<#ff0>>\.", line.lower()):
@@ -83,7 +88,7 @@ with open(source_file) as file:
         word_flags = set(word_array) & set(flaggables)
         for w in word_array:
             if w in this_shelf_dict and this_shelf_dict[w] != line_count:
-                mt.warn("TRIVIAL WARNING: {} is repeated in bookshelf at line {}, originally {}.".format(w, line_count, this_shelf_dict[w]))
+                trivial_warnings.append("TRIVIAL WARNING: {} is repeated in bookshelf <{}> at line {}, originally {}.".format(w, bookshelf_string, line_count, this_shelf_dict[w]))
             else:
                 this_shelf_dict[w] = line_count
         if word_flags:
@@ -100,7 +105,10 @@ with open(source_file) as file:
                 for x in range(0, len(word_array)):
                     temp_string = "{} {}".format(word_array[x], word_array[(x+1) % len(word_array)])
                     if temp_string in pair_lines:
-                        mt.warn("Duplicate word pair: {} lines {}/{}".format(temp_string, pair_lines[temp_string], line_count))
+                        if temp_string == 'had hurt' and line_count == pair_lines[temp_string]:
+                            pass
+                        else:
+                            trivial_warnings.append("Duplicate word pair: {} lines {}/{}".format(temp_string, pair_lines[temp_string], line_count))
                     else:
                         pair_lines[temp_string] = line_count
             books_sorted[sorted_array].append(final_title)
@@ -112,3 +120,6 @@ for b in sorted(books, key=lambda x:(len(books[x]), x)):
         print("({}): {:7} = {}".format(len(books[b]), b, ' / '.join([u.title() for u in books[b]])))
 
 check_auxiliary_file(aux_file)
+
+for t in trivial_warnings:
+    mt.warn(t)
