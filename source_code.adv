@@ -237,6 +237,7 @@ booleans {
    in_bonus_half : boolean "false" ;
    first_half : boolean "false" ;
    think_half_yet : boolean "false" ;
+   think_bonus_yet : boolean "false" ;
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
    solved_both_parts_core_nag : boolean "false" scope="survivor" ;
    solved_both_parts_bonus_nag : boolean "false" scope="survivor" ;
@@ -1293,8 +1294,7 @@ strings {
 
    ## noting where chimes were solved/are
    chimes_present : dynamic_string {(
-      (summoned_teary_chimes && !bonus_point_cheery_times) ? ". You hear teary chimes " + (is_at "gravel_trail" ? "here" : "outside" ) + ", too" : ""
-   )} ;
+      (summoned_teary_chimes && !bonus_point_cheery_times) ? ". You hear teary chimes " + (is_at "gravel_trail" ? "here" : "outside" ) + ", too" : "" )} ;
    chimes_note : dynamic_string {( chimes_in_my_house ? " (Point of order: you recalled cheery times inside the house, but the teary chimes were outside.)" : "" )} ;
 
    castle_description : dynamic_string {( is_first_entered() ? "You made it. Really, there's nothing else left to do here. Any command you type, I will just hype up my own library of games, with links, too. Hey, you made it this far, you're more likely than most to enjoy them.\n{note_once}only top-level meta-verbs ({vs_restart}, {vs_tss}) can be used here. This room is just denouement. The {vd_map} is slightly tweaked, though." : "You continue to sit back and feel a sense of accomplishment. And yet, at the same time, you may or may not appreciate an idea for a new adventure popping in your head." )}
@@ -5332,7 +5332,7 @@ subroutines {
          : if ((collection_get{ collection -> ("tried_combo_core") index -> ( counter )} == "false")) {
             : if (part_core_score > 0) {
                : if (!think_half_yet) {
-                  : print {( (think_available ? "Also, here" : "Here") + " is what you know from partially correct guessing:" )} ;
+                  : print {( (think_available ? "Also, here" : "Here") + " is a summary of correct bonus command half-guesses:" )} ;
                   : set_true "think_half_yet" ;
                }
                : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess_c_1}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
@@ -5348,13 +5348,15 @@ subroutines {
 
    meta_think_bonus_half : subroutine {
       : set_integer var="counter" "0" ;
+      : set_false "think_bonus_yet" ;
       : set_true "in_bonus_half" ;
       : while (counter < max_bonus_score) {
          : if ((collection_get{ collection -> ("bonus_status") index -> ( counter )} == "0")) {
             : if (part_bonus_score > 0) {
-               : if (!think_half_yet) {
-                  : print {( (think_available ? "Also, here" : "Here") + " is what you know from partially correct guessing:" )} ;
+               : if (!think_bonus_yet) {
+                  : print {( (think_available ? "Also, here" : "Here") + " is a summary of correct bonus command half-guesses:" )} ;
                   : set_true "think_half_yet" ;
+                  : set_true "think_bonus_yet" ;
                   }
                : print {( (part_bonus_score != 2 ? (collection_get{ collection -> ("think_first_bonus") index -> (counter) }) : "{noguess}") + " " + (part_bonus_score >= 2 ? (collection_get{ collection -> ("think_second_bonus") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_bonus") index -> (counter) }) )} ;
                : if (!solved_both_parts_bonus_nag && part_bonus_score == 3) {
@@ -6986,6 +6988,7 @@ on_command {
       }
    }
    : match "think _" {
+      : set_false "think_half_yet" ;
       : gosub "meta_think_note_later" ;
       : gosub "meta_think_core_half" ;
       : gosub "meta_think_bonus_half" ;
