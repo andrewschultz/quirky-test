@@ -927,7 +927,7 @@ collections {
 
    think_first_bonus : list {
       items = [
-         "TURKEY",
+         "<T<#f00>><U<#f80>><R<#ff0>><K<#0f0>><E<#00f>><Y<#f0f>>",
          "<SHUSH<#f00>>",
          "<RARE<#f00>>",
          "<BANE<#f80>>",
@@ -971,7 +971,7 @@ collections {
 
    think_second_bonus : list {
       items = [
-         "QUEST",
+         "<Q<#f00>><U<#f80>><E<#ff0>><S<#0f0>><T<#00f>>",
          "<LOUT<#f00>>",
          "<PLIGHTS<#f00>>",
          "<PLACE<#f80>>",
