@@ -1086,12 +1086,24 @@ strings {
    cue_so_long : string "<SO LONG<#db8>>" ;
    cue_vast_fission : string "<VAST FISSION<#db8>>" ;
 
-   # THINK related
+   # HERE strings
+   here_intro : dynamic_string {( is_at "nameless_lameness" ? "here" : "(Nameless Lameness)" )} ;
+   here_plain_base : dynamic_string {( is_at "plain_base" ? "here" : "(Plain Base)" )} ;
+   here_west_tiles : dynamic_string {( is_at "west_tiles" ? "here" : "(West Tiles)" )} ;
+   here_east_branch : dynamic_string {( is_at "east_branch" ? "here" : "(East Branch)" )} ;
    here_w_n : dynamic_string {( is_at "hub_w_n" ? "here" : "(West Tiles, N)" )} ;
    here_w_ne : dynamic_string {( is_at "hub_w_ne" ? "here" : "(West Tiles, NE)" )} ;
+   here_w_e : dynamic_string {( is_at "hub_w_e" ? "here" : "(West Tiles, E)" )} ;
+   here_w_s : dynamic_string {( is_at "hub_w_s" ? "here" : "(West Tiles, S)" )} ;
    here_w_sw : dynamic_string {( is_at "hub_w_sw" ? "here" : "(West Tiles, SW)" )} ;
    here_w_w : dynamic_string {( is_at "hub_w_w" ? "here" : "(West Tiles, W)" )} ;
    here_w_nw : dynamic_string {( is_at "hub_w_nw" ? "here" : "(West Tiles, NW)" )} ;
+   here_e_n : dynamic_string {( is_at "hub_e_n" ? "here" : "(East Branch, N)" )} ;
+   here_e_ne : dynamic_string {( is_at "hub_e_ne" ? "here" : "(East Branch, NE)" )} ;
+   here_e_e : dynamic_string {( is_at "hub_e_e" ? "here" : "(East Branch, E)" )} ;
+   here_e_se : dynamic_string {( is_at "hub_e_se" ? "here" : "(East Branch, SE)" )} ;
+   here_e_s : dynamic_string {( is_at "hub_e_s" ? "here" : "(East Branch, S)" )} ;
+   here_e_w : dynamic_string {( is_at "hub_e_w" ? "here" : "(East Branch, W)" )} ;
    here_e_nw : dynamic_string {( is_at "hub_e_nw" ? "here" : "(East Branch, NW)" )} ;
    here_stealing_hill : dynamic_string {( is_at "stealing_hill" ? "here" : "(Stealing Hill)" )} ;
    here_my_house : dynamic_string {( is_at "my_house" ? "here" : "into My House" )} ;
