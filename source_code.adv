@@ -3520,7 +3520,8 @@ subroutines {
          }
       }
       : decrement "tempint" ; # this is because I use 1-based numbers in my personal table, but Adventuron is 0-based.
-      : collection_modify { collection = "bonus_status" index -> (tempint) content -> ("1") }
+      : collection_modify { collection = "bonus_status" index -> (tempint) content -> ("1") } ;
+      : gosub "wipe_partial_bonus_tracking" ;
       : increment "bonus_score";
       : if (current_location() == "west_tiles") {
          : set_true "achieve_roer_west" ;
@@ -5792,6 +5793,11 @@ subroutines {
          : print "{note_once}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {vd_think} will keep track of what you saw." ;
          : set_true "warn_must_redo" ;
       }
+   }
+
+   wipe_partial_bonus_tracking : subroutine {
+      : collection_modify { collection = "got_second_bonus" index -> (tempint) content -> ("false") } ;
+      : collection_modify { collection = "got_first_bonus" index -> (tempint) content -> ("false") } ;
    }
 
    ## I realize how bad this code is. But we can't save collections survivor status. And it's pedantic to expect someone to see all footnotes each time through. So this is the least bad solution I could think of. Well, the only one.
