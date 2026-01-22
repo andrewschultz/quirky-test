@@ -233,7 +233,11 @@ booleans {
    think_gravel_trail : boolean "false" ; ## put endgame at end
    think_hi_mouse : boolean "false" ;
 
+   # think auxiliary
+   first_half : boolean "false" ;
+   think_half_yet : boolean "false" ;
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
+   solved_both_parts_nag : boolean "false" scope="survivor" ;
 
    ## "retry" booleans for THINK: if you got something after losing it
    retry_rare_plights : boolean "false" scope="survivor" ;
@@ -380,8 +384,13 @@ integers {
    counter : integer "0" ;
    tempint : integer "0" ;
    tempint2 : integer "0" ;
+
    # for THINK
    commands_figured : dynamic_integer {( (think_chalice_map ? 1 : 0) + (think_fellow_yield ? 1 : 0) + (think_grim_tune ? 1 : 0) + (think_healing_still ? 1 : 0) + (think_hunters_grill ? 1 : 0) + (think_master_plan ? 1 : 0) + (think_shift_goals ? 1 : 0) + (think_gravel_trail ? 1 : 0)  + (think_hi_mouse ? 1 : 0) )}
+
+   # for half THINK
+   part_core_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_core") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_core") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
+   part_bonus_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_bonus") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_bonus") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
 
    # achievements
    rssr_west : integer "0" ;
@@ -1395,6 +1404,8 @@ strings {
 
    # map conditional text
    see_all_map : dynamic_string {( map_see_all_nudge ? "" : " To see a full legend, put an argument after {vd_map}." )} ;
+
+   noguess : string "<(unknown)<#888>>" ;
 
    # Easter Eggy / retry stuff
    bookshelves_in_words : dynamic_string {( (collection_get{ collection -> ("num_to_word") index -> ( max_bookshelf_reads ) }) )} ;
