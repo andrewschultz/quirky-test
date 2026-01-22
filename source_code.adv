@@ -1723,6 +1723,11 @@ locations {
             }
             : if (!bonus_point_rare_plights) {
                : match "rare _;_ plights" {
+                  : set_integer var="tempint" "3" ;
+                  : set_false "first_half" ;
+                  : match "rare _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half_b" ;
                   : done ;
                }
@@ -1827,6 +1832,11 @@ locations {
             }
             : if (!bonus_point_shush_lout) {
                : match "shush _;_ lout" {
+                  : set_integer var="tempint" "2" ;
+                  : set_false "first_half" ;
+                  : match "shush _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half_b" ;
                   : done ;
                }
@@ -1890,6 +1900,11 @@ locations {
             }
             : if (!bonus_point_death_sentence) {
                : match "death _;_ sentence" {
+                  : set_integer var="tempint" "6" ;
+                  : set_false "first_half" ;
+                  : match "death _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half_b" ;
                   : done ;
                }
@@ -1934,6 +1949,11 @@ locations {
          }
          : if (!bonus_point_bane_place) {
             : match "bane _;_ place" {
+               : set_integer var="tempint" "4" ;
+               : set_false "first_half" ;
+               : match "bane _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -1985,6 +2005,11 @@ locations {
          }
          : if (!bonus_point_test_wiles) {
             : match "test _;_ wiles" {
+               : set_integer var="tempint" "7" ;
+               : set_false "first_half" ;
+               : match "test _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -2016,6 +2041,11 @@ locations {
          }
          : if (!bonus_point_beast_ranch) {
             : match "beast _;_ ranch" {
+               : set_integer var="tempint" "8" ;
+               : set_false "first_half" ;
+               : match "beast _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -3092,6 +3122,11 @@ locations {
          }
          : if (!bonus_point_eye_stay) {
             : match "eye _;i *;_ stay" {
+               : set_integer var="tempint" "17" ;
+               : set_false "first_half" ;
+               : match "eye _;i *" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -3960,6 +3995,11 @@ subroutines {
          }
          : if (!bonus_point_grow_need) {
             : match "grow _;_ need" {
+               : set_integer var="tempint" "14" ;
+               : set_false "first_half" ;
+               : match "grow _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
             }
          }
@@ -3986,6 +4026,11 @@ subroutines {
          }
          : if (!bonus_point_vast_fission) {
             : match "vast _;_ fission" {
+               : set_integer var="tempint" "11" ;
+               : set_false "first_half" ;
+               : match "vast _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -4013,6 +4058,11 @@ subroutines {
          }
          : if (!bonus_point_so_long) {
             : match "so _;_ long" {
+               : set_integer var="tempint" "10" ;
+               : set_false "first_half" ;
+               : match "so _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -4040,6 +4090,11 @@ subroutines {
          }
          : if (!bonus_point_racing_passions) {
             : match "racing _;_ passions" {
+               : set_integer var="tempint" "15" ;
+               : set_false "first_half" ;
+               : match "racing _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -4067,6 +4122,11 @@ subroutines {
          }
          : if (!bonus_point_cease_purging) {
             : match "cease _;_ purging" {
+               : set_integer var="tempint" "12" ;
+               : set_false "first_half" ;
+               : match "cease _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -4139,6 +4199,11 @@ subroutines {
          }
          : if (!bonus_point_sane_role) {
             : match "sane _;_ role" {
+               : set_integer var="tempint" "13" ;
+               : set_false "first_half" ;
+               : match "sane _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
                : done ;
             }
@@ -4166,6 +4231,11 @@ subroutines {
          }
          : if (!bonus_point_cheery_times) {
             : match "cheery _;_ times" {
+               : set_integer var="tempint" "16" ;
+               : set_false "first_half" ;
+               : match "cheery _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half_b" ;
             : done ;
             }
@@ -4784,6 +4854,11 @@ subroutines {
       }
       : if (!bonus_point_rig_boons) {
          : match "rig _;_ boons" {
+            : set_integer var="tempint" "9" ;
+            : set_false "first_half" ;
+            : match "rig _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half_b" ;
             : done ;
          }
@@ -6680,6 +6755,11 @@ on_command {
       }
       : if (!bonus_point_theory_bore) {
          : match "theory _;_ bore" {
+            : set_integer var="tempint" "5" ;
+            : set_false "first_half" ;
+            : match "theory _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half_b" ;
             : done ;
          }
@@ -6711,6 +6791,11 @@ on_command {
    }
    : if (!bonus_point_turkey_quest) {
       : match "turkey _;_ quest" {
+         : set_integer var="tempint" "1" ;
+         : set_false "first_half" ;
+         : match "turkey _" {
+            : set_true "first_half" ;
+         }
          : gosub "say_half_b" ;
          : done ;
       }
