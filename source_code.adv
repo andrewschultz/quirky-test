@@ -888,22 +888,22 @@ collections {
    situations_bonus : list {
       items = [
          "anywhere",
-         "in First Base",
-         "in First Base",
+         "at First Base",
+         "at First Base",
          "at Plain Base",
          "at Plain Base",
          "at Plain Base",
-         "in West Tiles",
-         "in East Tiles",
-         "in a hub room",
+         "at West Tiles",
+         "at East Tiles",
+         "at either hub room",
          "with the low song",
          "with the fast vision",
          "with the peace surging",
          "with the rain soul",
-         "with a growing need",
+         "with the growing need",
          "with the pacing rations",
          "with the teary chimes"
-         "in the house (\"Sty, eh?\")"
+         "in My House (\"Sty, eh?\")"
       ]
    }
 
@@ -1484,7 +1484,7 @@ objects {
    bookshelf : scenery "a bookshelf" at="my_house" conspicuous="false" ;
    lots_table : scenery "a tots-label-lots table" at="my_house" conspicuous="false" msg="It has all sorts of cutesy doodles drawn on it.{table_plan}" ;
    care_plan : scenery conspicuous="false" "a Player-Can-Pair-Clan Care Plan"  msg="achievement help" ;
-   ruts_poster : scenery "a putz-roaster-ruts poster" at="my_house" conspicuous="false" msg="It advertises itself as a Putz-Roaster-Ruts Poster, one of those posters that claim to be ironic with motivation or a downer statement. {ruts_poster_note}." ;
+   ruts_poster : scenery "a putz-roaster-ruts poster" at="my_house" conspicuous="false" msg="It advertises itself as a Putz-Roaster-Ruts Poster, one of those posters that claim to be ironic with motivation or a downer statement. Here the message is \"Sty, Eh?\" {ruts_poster_note}." ;
 
 }
 
@@ -4353,7 +4353,7 @@ subroutines {
    note_diagonal_direction_from_hub : subroutine {
       : if (!has_visited("east_branch") && !has_visited("west_tiles"))
       {
-         : print {( have_won ? "Small talk from Thor. \"Those diagonal directions a pain?\"\n\"Nah, used to 'em,\" you say. He nods and smiles." : "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. There're just hubs with dead ends northeast and northwest, so hopefully you can visualize the map in your head.\"" )} ;
+         : print {( have_won ? "Small talk from Thor. \"Those diagonal directions a pain?\"\n\"Nah, used to 'em,\" you say. He nods and smiles." : "As you start, Thor calls out to you. \"Oh, hey, those diagonal directions? Sorry about them. Usually not done in a text adventure. It can confuse people. But we have a good excuse. It keeps the map symmetrical, and the passages from bending too weirdly. Northeast and northwest both lead to hubs, but the spokes are all dead ends, so hopefully you can visualize the map in your head.\"" )} ;
          : set_true "noted_diagonal_direction" ;
          : press_any_key ;
          : return ;
