@@ -4666,11 +4666,7 @@ subroutines {
          : increment "found_talk_count" ;
       }
    }
-   think_thoughts : subroutine {
-      : if (!think_available && !retry_available) {
-         : print "You can't think of anything you tried to do, but you didn't have the resources yet." ;
-         : return ;
-      }
+   meta_think_note_later : subroutine {
       : if (think_available) {
          : print {( "Here " + (commands_figured > 1 ? "are {thought_count_words} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
       }
@@ -4725,9 +4721,8 @@ subroutines {
       : if (retry_racing_passions) {
          : print "-- have {cue_racing_passions} {once_pacing_rations}" ;
       }
-      : gosub "check_additional_meta" ;
-      : return ;
    }
+
    tutorial_choice : subroutine {
       : if (have_won) {
          : return ;
@@ -5051,6 +5046,26 @@ subroutines {
       : gosub "check_additional_meta" ;
       : set_integer var="current_meta_verbs_flag" "32" ;
       : gosub "meta_flag" ;
+   }
+
+   meta_think_core_half : subroutine {
+      : set_integer var="counter" "0" ;
+      : while (counter < max_score) {
+         : if ((collection_get{ collection -> ("tried_combo_core") index -> ( counter )} == "false")) {
+            : if (part_core_score > 0) {
+               : if (!think_half_yet) {
+                  : print {( (think_available ? "Also, here" : "Here") + " is what you know from partially correct guessing:" )} ;
+                  : set_true "think_half_yet" ;
+                  }
+               : print {( "{counter}. " + (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
+               : if (!solved_both_parts_nag && part_core_score == 3) {
+                  : print "{note_once}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
+                  : set_true "solved_both_parts_nag" ;
+                  }
+               }
+            }
+         : increment "counter" ;
+      }
    }
 
    meta_versions : subroutine {
@@ -6660,7 +6675,13 @@ on_command {
       }
    }
    : match "think _" {
-      : gosub "think_thoughts" ;
+      : gosub "meta_think_note_later" ;
+      : gosub "meta_think_core_half" ;
+      : if (!think_half_yet && !think_available) {
+         : print "There are no point-scoring commands you've only figured partially. That includes both full phrases you figured before solving other puzzles they depended on and half-phrases you figured with the {vo_see_lol} option active." ;
+      }
+      : gosub "check_additional_meta" ;
+      : done ;
    }
    : match "bonus _" {
       : gosub "bonus_display" ;
