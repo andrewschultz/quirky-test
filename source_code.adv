@@ -924,7 +924,6 @@ collections {
          "TURKEY",
          "<SHUSH<#f00>>",
          "<RARE<#f00>>",
-         "<PLAYER<#f00>>",
          "<BANE<#f80>>",
          "<THEORY<#f80>>",
          "<DEATH<#f80>>",
@@ -932,13 +931,13 @@ collections {
          "<BEAST<#ff0>>",
          "<RIG<#ff0>>",
          "<SO<#0f0>>",
-         "<VAST<#00f>>",
-         "<CEASE<#00f>>",
-         "<SANE<#00f>>",
-         "<NO<#00f>>",
+         "<VAST<#0f0>>",
+         "<CEASE<#0f0>>",
+         "<SANE<#0f0>>",
+         "<NO<#0f0>>",
          "<RACING<#00f>>",
-         "<CHEERY<#00f>>",
-         "<EYE<#00f>>",
+         "<CHEERY<#f0f>>",
+         "<EYE<#f0f>>"
       ]
    }
 
@@ -981,8 +980,8 @@ collections {
          "<ROLE<#0f0>>",
          "<GREED<#0f0>>",
          "<PASSIONS<#00f>>",
-         "<TIMES<#00f>>",
-         "<STAY<#00f>>",
+         "<TIMES<#f0f>>",
+         "<STAY<#f0f>>"
       ]
    }
 
