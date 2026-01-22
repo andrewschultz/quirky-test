@@ -3940,7 +3940,7 @@ subroutines {
          }
          : if (!bonus_point_grow_need) {
             : match "grow _;_ need" {
-               : gosub "say_half" ;
+               : gosub "say_half_b" ;
             }
          }
       }
