@@ -2065,7 +2065,7 @@ locations {
       }
       : match "healing still" {
          : if (point_healing_still) {
-         : print "You already found the healing still that contained the travel grail." ;
+            : print "You already found the healing still that contained the travel grail." ;
          }
          : else_if ((!point_chalice_map || !point_master_plan) && (!cheat_dont_require)) {
             : print {( "With the stealing hill watching you, it'll be tough to nab or feel anything. " + ( !point_master_plan && !point_chalice_map ? "You'll need to know what you want and how to get there." : !point_master_plan ? "You know where to poke around, but not how or why, yet." : "You know how to sneak around, thanks to the master plan, but not where." ) )} ;
@@ -3197,18 +3197,19 @@ locations {
          }
          : if (is_at "kill_hassle_hill_castle") {
             : cycle key = "silly_ads" predictable_order = "true" skip_interval = "0" {
-               : print "You wonder if there are other spoonerism-based quests. Why, indeed there are! <Roads of Liches<#dcb>>[https://andrewschultz.itch.io/roads-of-liches] was written for EctoComp, <Trail Stash<#dcb>>[https://andrewschultz.itch.io/trail-stash] was written in Twine for IFComp, and the author has a few more plans. Consider this a poke to himself to get going, already." ;
+               : print "You wonder if there are other spoonerism-based quests. Why, indeed there are! <Roads of Liches<#dcb>>[https://andrewschultz.itch.io/roads-of-liches] was written for EctoComp 2023, <Trail Stash<#dcb>>[https://andrewschultz.itch.io/trail-stash] was written in Twine for IFComp 2023, and the author has a few more such games plans. Consider this a poke to himself to get going, already. But wait -- has the author written anything else in Adventuron?" ;
+               : print "Why, yes! <Go-Strange-Ghost Range<#dcb>> was a Petite Mort entry for EctoComp 2025. It has wordplay similar to these two Inform games ..." ;
                : print "You wonder if an anagram-themed quest might be just the thing now. A thought runs through your mind, completely spontaneous, that the <Stale Tales Slate<#f88>> series with {link_shuffling}, {link_roiling} (longer) or {link_torus} (shorter) would be just the thing." ;
                : print "You ponder taking a trip to the mysterious cities of <Threediopolis<#dcb>>[https://andrewschultz.itch.io/threediopolis] and <Fourdiopolis<#dcb>>[https://andrewschultz.itch.io/fourdiopolis], where how you get there is as important as the location." ;
                : print "You come across information about the <Prime Pro-Rhyme Row<#f88>>, a series of rhyming games starting with <Very Vile Fairy File<#dcb>>[https://andrewschultz.itch.io/very-vile-fairy-file]." ;
                : print "You consider you might be up for some palindromes, which <Ailihphilia<#dcb>>[https://andrewschultz.itch.io/ailihphilia] has in spades. Be a tsilihphilist! Don't have aibohphobia!" ;
-               : print "You muse over Pig Latin and its possibilities. Suddenly, you realize <Under They Thunder<#dcb>> covers them all, although it does bang on for a while, because the author had nothing else to do during COVID. <Weary Eerie Way<#dcb>> is more succinct." ;
+               : print "You muse over Pig Latin and its possibilities. Suddenly, you realize <Under They Thunder<#dcb>> covers them all, although it does bang on for a while, because the author had nothing else to do during COVID. <Weary Eerie Way<#dcb>>, as an EctoComp entry, is more succinct." ;
                : print "Or perhaps chess adventures are your thing. There are a whopping five: Fivebyfivia Delenda Est, Fourbyfourian Quarryin', You Won't Get Her Back, Zero Chance of Recovery, Xenophobic Opposites Unite." ;
-               : print "<Why Pout<#dcb>>[https://andrewschultz.itch.io/why-pout] also involves a sort of wordplay I won't spoil, but the title is a clue." ;
+               : print "<Why Pout<#dcb>>[https://andrewschultz.itch.io/why-pout] and <Us Too<#dcb>> also involve a sort of wordplay I won't spoil, but the titles are a clue." ;
                : print "You wonder too about discovering <The Cube in the Cavern<#dcb>>, a game based on a three-dimensional map of ... a cube." ;
                : print "You wonder if <Ugly Oafs<#dcb>> is worth a try. However, you stumble upon inside information that the author meant to put out a post-comp release but never did, because playtesting was too hard. As <the IFWiki page<#0f0>>[https://www.ifwiki.org/Ugly_Oafs] says, explaining what it's about would be a spoiler. Walkthrough recommended. Only for the hardcore. Perhaps it is the sort of thing where you can be glad it exists, and not much more." ;
                : print "Now for, some general resource links: <IFDB<#0f0>>[http://ifdb.org] and <ifarchive.org<#0f0>>[http://ifarchive.org] track game reviews and binaries. <ifcomp.org<#0f0>>[http://ifcomp.org] and <Spring Thing<#0f0>>[http://springthing.org] are competitions where I submitted many of the works above." ;
-               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to go check his {link_itch}. Unless, of course, you found the advertisements so enthralling, you can't help but read through them again, to keep the energy pulsing." ;
+               : print "My goodness, you think to yourself, that clever Andrew Schultz fellow has certainly written a lot of neat stuff! This list is complete as of 2025, but if he came back to update it, it might distract him from his next cool idea. You vow to check his {link_itch} regularly, to be kept up-to-date on his latest bouts of whimsy! Because, alas, there are no more to record at the moment." ;
             }
             : done ;
          }
@@ -6820,7 +6821,7 @@ on_command {
       }
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
-         : print "{note_once}You can track which bonus points you've found with <BONUS<#f80>>. Also, while {qt} will always let you know when you're half-right on a core point, it will not do so for bonus points. This isn't to be mean or stingy, but rather to make sure you don't get sidelined guessing a non-quest item." ;
+         : print {( "{note_once}You can track which bonus points you've found with {vd_bon}. Also, " + (have_won ? "while {qt} will always let you know when you're half-right on a core point, it will not do so for bonus points the first time through. This isn't to be mean or stingy, but the first time through I don't want you to get sidelined guessing a non-quest item." : "now you've been through once, {qt} will track when you're half-right on bonus points, since you've solved all the core puzzles." ) )} ;
       }
    }
    : match "think _" {
