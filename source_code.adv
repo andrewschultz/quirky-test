@@ -674,7 +674,308 @@ collections {
    };
    jump_set : set {
    };
-   temp_list : list;
+
+   tried_combo_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   situations_core : list {
+      items = [
+         "here",
+         "here",
+         "here",
+         "here",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "somewhere",
+         "at the hill",
+         "where a path could open",
+         "in trail",
+         "in final room",
+         "in final room"
+      ]
+   }
+
+   got_first_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   think_first_core : list {
+      items = [
+         "<GO<#f00>>",
+         "<FIRST<#f00>>",
+         "<BRO<#f00>>",
+         "<PLAYER<#f00>>",
+         "<FLY<#0f0>>",
+         "<BENDING<#0f0>>",
+         "<BORING<#0f0>>",
+         "<HURT<#0f0>>",
+         "<ROARING<#0f0>>",
+         "<FUNNY<#0f0>>",
+         "<GRIM<#0f0>>",
+         "<PLASTER<#00f>>",
+         "<CHALICE<#00f>>",
+         "<FELL<#00f>>",
+         "<TAKE<#00f>>",
+         "<SHIFT<#00f>>",
+         "<HUNTERS<#00f>>",
+         "<FELLOW<#00f>>",
+         "<HEALING<#f0f>>",
+         "<GRAVEL<#f0f>>",
+         "<MISSING<#f0f>>",
+         "<SEE<#f0f>>",
+         "<HI<#f0f>>"
+      ]
+   }
+
+   got_second_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   think_second_core : list {
+      items = [
+         "<WEST<#f00>>",
+         "<BASE<#f00>>",
+         "<POOR<#f00>>",
+         "<RIGHTS<#f00>>",
+         "<SCORE<#0f0>>",
+         "<TRUTH<#0f0>>",
+         "<WAY<#0f0>>",
+         "<DOME<#0f0>>",
+         "<PAIN<#0f0>>",
+         "<MOUNTAIN<#0f0>>",
+         "<TUNE<#0f0>>",
+         "<MAN<#00f>>",
+         "<MAP<#00f>>",
+         "<SHORT<#00f>>",
+         "<CRACKERS<#00f>>",
+         "<GOALS<#00f>>",
+         "<GRILL<#00f>>",
+         "<YIELD<#00f>>",
+         "<STILL<#f0f>>",
+         "<TRAIL<#f0f>>",
+         "<HOUSE<#f0f>>",
+         "<GLIMMERS<#f0f>>",
+         "<MOUSE<#f0f>>"
+      ]
+   }
+
+   tried_combo_bonus : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   situations_bonus : list {
+      items = [
+         "anywhere",
+         "in First Base",
+         "in First Base",
+         "at Plain Base",
+         "at Plain Base",
+         "at Plain Base",
+         "in West Tiles",
+         "in East Tiles",
+         "in a hub room",
+         "with the low song",
+         "with the fast vision",
+         "with the peace surging",
+         "with the rain soul",
+         "with a growing need",
+         "with the pacing rations",
+         "with the teary chimes"
+         "in the house (\"Sty, eh?\")"
+      ]
+   }
+
+   got_first_bonus : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   think_first_bonus : list {
+      items = [
+         "TURKEY",
+         "<SHUSH<#f00>>",
+         "<RARE<#f00>>",
+         "<PLAYER<#f00>>",
+         "<BANE<#f80>>",
+         "<THEORY<#f80>>",
+         "<DEATH<#f80>>",
+         "<TEST<#ff0>>",
+         "<BEAST<#ff0>>",
+         "<RIG<#ff0>>",
+         "<SO<#0f0>>",
+         "<VAST<#00f>>",
+         "<CEASE<#00f>>",
+         "<SANE<#00f>>",
+         "<NO<#00f>>",
+         "<RACING<#00f>>",
+         "<CHEERY<#00f>>",
+         "<EYE<#00f>>",
+      ]
+   }
+
+   got_second_bonus : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   think_second_bonus : list {
+      items = [
+         "QUEST",
+         "<LOUT<#f00>>",
+         "<PLIGHTS<#f00>>",
+         "<PLACE<#f80>>",
+         "<BORE<#f80>>",
+         "<SENTENCE<#f80>>",
+         "<WILES<#ff0>>",
+         "<RANCH<#ff0>>",
+         "<BOONS<#ff0>>",
+         "<LONG<#0f0>>",
+         "<FISSION<#0f0>>",
+         "<PURGING<#0f0>>",
+         "<ROLE<#0f0>>",
+         "<GREED<#0f0>>",
+         "<PASSIONS<#00f>>",
+         "<TIMES<#00f>>",
+         "<STAY<#00f>>",
+      ]
+   }
+
 }
 
 ## strings
