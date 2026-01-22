@@ -4941,10 +4941,11 @@ subroutines {
          : increment "found_talk_count" ;
       }
    }
-   meta_think_note_later : subroutine {
-      : if (think_available) {
-         : print {( "Here " + (commands_figured > 1 ? "are {number_as_word} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
+   meta_think_do_later : subroutine {
+      : if (!think_available) {
+         : return ;
       }
+      : print {( "Here " + (commands_figured > 1 ? "are {number_as_word} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
       : if (think_chalice_map) {
          : print "-- get the <CHALICE MAP<#0f0>> {here_w_ne}";
       }
@@ -4972,9 +4973,13 @@ subroutines {
       : if (think_hi_mouse) {
          : print "-- have a reason to say <HI MOUSE<#0f0>> to invite it back {here_my_house}";
       }
-      : if (retry_available) {
-         : print "Here are bonus commands you got right, but it was a bit too late. You can use them on replay." ;
+   }
+
+   meta_think_retry_replay : subroutine {
+      : if (!retry_available) {
+         : return ;
       }
+      : print {( (think_half_yet ? "Also, here" : "Here") + " are bonus commands you got right, but it was a bit too late. You can use them on replay." )} ;
       : if (retry_rare_plights) {
          : print "-- say {cue_rare_plights} {once_prayer_lights}" ;
       }
@@ -6989,11 +6994,12 @@ on_command {
    }
    : match "think _" {
       : set_false "think_half_yet" ;
-      : gosub "meta_think_note_later" ;
+      : gosub "meta_think_do_later" ;
       : gosub "meta_think_core_half" ;
       : gosub "meta_think_bonus_half" ;
-      : if (!think_half_yet && !think_available) {
-         : print "There are no point-scoring commands you've only figured partially. That includes both full phrases you figured before solving other puzzles they depended on and half-phrases you figured with the {vo_see_lol} option active." ;
+      : gosub "meta_think_retry_replay" ;
+      : if (!think_half_yet && !think_available && !retry_available) {
+         : print "There are no point-scoring commands you've figured in part, or fully to try later." ;
       }
       : gosub "check_additional_meta" ;
       : done ;
