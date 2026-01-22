@@ -1034,7 +1034,7 @@ strings {
    vd_i_long : string "<INVENTORY<#f80>>" ;
    vd_map : string "<MAP<#f80>>" ;
    vd_sco : string "<SCORE<#f80>>" ;
-   vd_thk : string "<THINK<#f80>>" ;
+   vd_think : string "<THINK<#f80>>" ;
 
    # 2nd time through diagnostics
    vd_ach : string "<ACHIEVEMENTS<#f80>>" ;
@@ -1051,7 +1051,7 @@ strings {
    vm_meta : string "<META<#f80>>" ;
    vm_opt : string "<OPTIONS<#f80>>" ;
    vm_pts : string "<POINTS<#f80>>" ;
-   vm_thx : string "<THANKS<#f80>>" ; # CREDITS is the preferred verb but THANKS maps to credits
+   vm_thanks : string "<THANKS<#f80>>" ; # CREDITS is the preferred verb but THANKS maps to credits
    vm_verbs : string "<VERBS<#f80>>" ;
    vm_versions : string "<VERSIONS<#f80>>" ;
 
@@ -1407,7 +1407,7 @@ strings {
    ## last one
    achievement_taat : string "<Try All: Aye, Trawl<#888>>" ;
 
-   already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_thk}." : "" )} ;
+   already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
    ## inventory bonus point notes
@@ -4355,7 +4355,7 @@ subroutines {
    note_think_command : subroutine {
       : if (!think_noted) {
          : set_true "think_noted" ;
-         : print "{note_once}you've found the right thing to say or do, but you weren't prepared yet. {vd_thk} will record the details, while {vd_sco} and the status bar (with +1, etc.) record the number of commands figured. The passage back here will also be marked on the map." ;
+         : print "{note_once}you've found the right thing to say or do, but you weren't prepared yet. {vd_think} will record the details, while {vd_sco} and the status bar (with +1, etc.) record the number of commands figured. The passage back here will also be marked on the map." ;
       }
    }
    g_check_west_available : subroutine {
@@ -5233,7 +5233,7 @@ subroutines {
       : print "{qt} was made for the 2025 Text Adventure Literacy Jam ({talj}) after years of judging it. It placed 4th of 7 entries." ;
       : print "I always wanted to write an Adventuron game. It, or the tutorial bit, was particularly inspired by <The Interactive Adventurer's Tutorial Adventure<#8f8>>[https://cobwebbeddragon.itch.io/interactive-adventurer-tutorial-adventure-talp], a 2023 entry by <Cobwebbed Dragon<#8f8>>[https://cobwebbeddragon.itch.io/] (clickable links,) as well as the <Shake a Tower<#0f0>> section of Infocom's classic <Nord and Bert Couldn't Make Head or Tail of It<#0f0>>." ;
       : print {( "You can see what sort of commands {qt} uses with {vm_verbs}" + (!has_visited("plain_base") ? ", though I'd like to note that each point-scoring command follows a certain sort of wordplay" : "" ) + "." )} ;
-      : print "The {vm_thx}/{vm_credits} command lists people and entities who helped in {qt}'s production." ;
+      : print "The {vm_thanks}/{vm_credits} command lists people and entities who helped in {qt}'s production." ;
       : print "{vm_links} lists relevant links, and {vm_versions} lists summaries of versions." ;
       : if (!ever_about) {
          : print "{note_once}if you want the mechanic for point-scoring commands spoiled or explained, {vm_pts} will do so." ;
@@ -5262,8 +5262,8 @@ subroutines {
 
    meta_meta : subroutine {
       : print "{vm_about} gives general info about {qt}.";
-      : print "{vm_thx} or {vm_credits} lists people who helped me make or improve {qt}.";
-      : print "{vd_thk} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
+      : print "{vm_thanks} or {vm_credits} lists people who helped me make or improve {qt}.";
+      : print "{vd_think} reminds you of commands you tried that should work, or will work in the future, but you didn't yet have the resources." ;
       : print {( "{vd_sco} shows your score, both of core points (to finish the game) and bonus points, for observant players." + (bonus_score > 0 ? " Also, <BONUS<#f80>> lists bonus points you've found and clues where to get others." : "" ) )} ;
       : print "{vd_map} gives a graphical map, and typing any text after gives a legend." ;
       : print "{vm_pts} shows what sorts of commands score points, with examples of fun ones that missed the cut for {qt}." ;
@@ -5789,7 +5789,7 @@ subroutines {
 
    warning_bonus_after : subroutine {
       : if (!warn_must_redo) {
-         : print "{note_once}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {vd_thk} will keep track of what you saw." ;
+         : print "{note_once}you can replay the game to pick off this bonus point, if you're a completionist. Meanwhile, {vd_think} will keep track of what you saw." ;
          : set_true "warn_must_redo" ;
       }
    }
@@ -6990,7 +6990,7 @@ on_command {
          : print "Your <bonus score<#ff0>> is {bonus_score} out of {bonus_yellow}." ;
       }
       : if (think_available) {
-         : print {( "You have also figured  {number_as_word} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_thk} for details." )} ;
+         : print {( "You have also figured  {number_as_word} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_think} for details." )} ;
       }
       : if (!score_bonus_nag && bonus_score > 0 && bonus_score < max_bonus_score) {
          : set_true "score_bonus_nag" ;
