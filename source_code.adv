@@ -234,6 +234,7 @@ booleans {
    think_hi_mouse : boolean "false" ;
 
    # think auxiliary
+   in_bonus_half : boolean "false" ;
    first_half : boolean "false" ;
    think_half_yet : boolean "false" ;
    already_got_command : boolean "false" ; ## not for any one command, but if you guess 1 of 2 after guessing 2 of 2, there you go
@@ -357,6 +358,9 @@ booleans {
    inv_cease_purging : dynamic_boolean {( is_carried "peace_surging" && bonus_point_cease_purging )} ;
    inv_racing_passions : dynamic_boolean {( is_carried "pacing_rations" && bonus_point_racing_passions )} ;
    inv_any_bonuses : dynamic_boolean {( inv_so_long || inv_vast_fission || inv_sane_role || inv_grow_need || inv_cease_purging || inv_racing_passions )} ;
+
+   # tricky THINK/HALF string
+   unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
 
 }
 
@@ -1418,6 +1422,7 @@ strings {
 
    # Interpretive
    noguess : string "<(unknown)<#888>>" ;
+   noguess_c_1 : dynamic_string {( unneeded_half ? "<(unneeded)<#888>>" : "<(unknown)<#888>>" )} ;
    number_as_word : dynamic_string {( collection_get { collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
 
    # Easter Eggy / retry stuff
@@ -5331,8 +5336,8 @@ subroutines {
                : if (!think_half_yet) {
                   : print {( (think_available ? "Also, here" : "Here") + " is what you know from partially correct guessing:" )} ;
                   : set_true "think_half_yet" ;
-                  }
-               : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
+               }
+               : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess_c_1}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
                : if (!solved_both_parts_core_nag && part_core_score == 3) {
                   : print "{note_once}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
                   : set_true "solved_both_parts_core_nag" ;
@@ -5345,6 +5350,7 @@ subroutines {
 
    meta_think_bonus_half : subroutine {
       : set_integer var="counter" "0" ;
+      : set_true "in_bonus_half" ;
       : while (counter < max_bonus_score) {
          : if ((collection_get{ collection -> ("bonus_status") index -> ( counter )} == "0")) {
             : if (part_bonus_score > 0) {
@@ -5361,6 +5367,7 @@ subroutines {
             }
          : increment "counter" ;
       }
+      : set_false "in_bonus_half" ;
    }
 
    meta_versions : subroutine {
