@@ -1567,6 +1567,13 @@ locations {
                : print "It's probably more what the voice is saying." ;
                : done ;
             }
+            : match "_ west" {
+               : print "You don't need any fancy verb. Just WEST or GO WEST or even W should work." ;
+               : set_integer var="tempint" "0" ;
+               : set_false "first_half" ;
+               : gosub "say_half" ;
+               : done ;
+            }
          }
          : if ((verb_is "inventory")) {
             : if (in_tutorial && !tutorial_4_x_me_done) {
@@ -1678,6 +1685,11 @@ locations {
             : redescribe ;
          }
          : match "first _;_ base" {
+            : set_integer var="tempint" "1" ;
+            : set_false "first_half" ;
+            : match "first _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             : done ;
          }
@@ -1727,6 +1739,11 @@ locations {
             }
             : if (is_carried("prayer_lights")) {
                : match "_ rights;player _" {
+                  : set_integer var="tempint" "3" ;
+                  : set_false "first_half" ;
+                  : match "player _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half" ;
                   : done ;
                }
@@ -1783,6 +1800,11 @@ locations {
          }
          : if (!point_bro_poor) {
             : match "bro _;_ poor" {
+               : set_integer var="tempint" "2" ;
+               : set_false "first_half" ;
+               : match "bro _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
                : done ;
             }
@@ -2076,6 +2098,11 @@ locations {
       : if (!point_healing_still) {
          : match "healing _;_ still" {
             : set_boolean var = "already_got_command" {( think_healing_still && !point_healing_still )} ;
+            : set_integer var="tempint" "18" ;
+            : set_false "first_half" ;
+            : match "healing _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
          }
       }
@@ -2147,6 +2174,11 @@ locations {
       : if (!point_master_plan) {
          : match "master _;_ plan" {
             : set_boolean var = "already_got_command" {( think_master_plan && !point_master_plan )} ;
+            : set_integer var="tempint" "11" ;
+            : set_false "first_half" ;
+            : match "master _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2199,6 +2231,11 @@ locations {
       : if (!point_chalice_map) {
          : match "chalice _;_ map" {
             : set_boolean var = "already_got_command" {( think_chalice_map && !point_chalice_map )} ;
+            : set_integer var="tempint" "12" ;
+            : set_false "first_half" ;
+            : match "chalice _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2240,6 +2277,11 @@ locations {
          }
       : if (!point_fell_short) {
          : match "fell _;_ short" {
+            : set_integer var="tempint" "13" ;
+            : set_false "first_half" ;
+            : match "fell _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
          }
       }
@@ -2347,6 +2389,11 @@ locations {
       : if (!point_shift_goals) {
          : match "shift _;_ goals" {
             : set_boolean var = "already_got_command" {( think_shift_goals && !point_shift_goals )} ;
+            : set_integer var="tempint" "15" ;
+            : set_false "first_half" ;
+            : match "shift _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2411,6 +2458,11 @@ locations {
       : if (!point_hunters_grill) {
          : match "hunters _;_ grill" {
             : set_boolean var = "already_got_command" {( think_hunters_grill && !point_hunters_grill )} ;
+            : set_integer var="tempint" "16" ;
+            : set_false "first_half" ;
+            : match "hunters _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
          }
       }
@@ -2469,6 +2521,11 @@ locations {
       : if (!point_fellow_yield) {
          : match "fellow _;_ yield" {
             : set_boolean var = "already_got_command" {( think_fellow_yield && !point_fellow_yield )} ;
+            : set_integer var="tempint" "17" ;
+            : set_false "first_half" ;
+            : match "fellow _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2523,6 +2580,11 @@ locations {
          }
       : if (!point_fly_score) {
          : match "fly _;_ score" {
+            : set_integer var="tempint" "4" ;
+            : set_false "first_half" ;
+            : match "fly _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
          }
       }
@@ -2566,6 +2628,11 @@ locations {
          }
       : if (!point_bending_truth) {
          : match "bending _;_ truth" {
+            : set_integer var="tempint" "5" ;
+            : set_false "first_half" ;
+            : match "bending _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
          }
       }
@@ -2620,6 +2687,11 @@ locations {
          }
       : if (!point_boring_way) {
          : match "boring _;_ way" {
+            : set_integer var="tempint" "6" ;
+            : set_false "first_half" ;
+            : match "boring _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2648,6 +2720,11 @@ locations {
          }
          : if (!point_dirt_home) {
             : match "dirt _;_ home" {
+               : set_integer var="tempint" "7" ;
+               : set_false "first_half" ;
+               : match "dirt _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
                }
             : match "x hurt;x dome" {
@@ -2701,6 +2778,11 @@ locations {
          }
          : if (!point_pouring_rain) {
             : match "pouring _;_ rain" {
+               : set_integer var="tempint" "8" ;
+               : set_false "first_half" ;
+               : match "pouring _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
             }
             : match "x roaring;x pain" {
@@ -2771,6 +2853,11 @@ locations {
          }
       : if (!point_funny_mountain) {
          : match "funny _;_ mountain" {
+            : set_integer var="tempint" "9" ;
+            : set_false "first_half" ;
+            : match "funny _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2834,6 +2921,11 @@ locations {
       : if (!point_grim_tune) {
          : match "grim _;_ tune" {
             : set_boolean var = "already_got_command" {( think_grim_tune && !point_grim_tune )} ;
+            : set_integer var="tempint" "10" ;
+            : set_false "first_half" ;
+            : match "grim _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
             }
          }
@@ -2903,6 +2995,11 @@ locations {
          }
          : if (!point_missing_house) {
             : match "missing _;_ house" {
+               : set_integer var="tempint" "20" ;
+               : set_false "first_half" ;
+               : match "missing_" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
             }
          }
@@ -2995,6 +3092,7 @@ locations {
                : print "You already found something unusual in the house. You need an assistant to look through it." ;
             }
             : else {
+               : collection_modify { collection = "tried_combo_core" index -> (21) content -> ("true") } ;
                : print "You remember what you came for. The {rttr}. Where could it be? Well, there are a lot of glimmering things, here. It would take you a while to search, especially since they are in odd corners. If only you had someone or something willing to help with the busy work!" ;
                : set_true "point_see_glimmering" ;
                : gosub "add_point" ;
@@ -3004,10 +3102,16 @@ locations {
          }
          : if (!point_see_glimmering) {
             : match "see _;_ glimmering;_ glimmers" {
+               : set_integer var="tempint" "21" ;
+               : set_false "first_half" ;
+               : match "first _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
             }
          }
          : match "hi mouse" {
+            : collection_modify { collection = "tried_combo_core" index -> (22) content -> ("true") } ;
             : if (point_see_glimmering || cheat_dont_require) {
                : clear_screen ;
                : print "You call on the mouse, who seemed friendly and grateful you made it a home. It appears. You point to the glimmering." ;
@@ -3042,6 +3146,11 @@ locations {
          }
          : match "hi _;high _;_ mouse" {
             : set_boolean var = "already_got_command" {( think_hi_mouse && !point_hi_mouse )} ;
+            : set_integer var="tempint" "22" ;
+            : set_false "first_half" ;
+            : match "hi _;high _" {
+               : set_true "first_half" ;
+            }
             : gosub "say_half" ;
          }
       }
@@ -4063,6 +4172,11 @@ subroutines {
          }
          : if (!point_gravel_trail) {
             : match "gravel _;_ trail" {
+               : set_integer var="tempint" "19" ;
+               : set_false "first_half" ;
+               : match "first _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
             }
          }
