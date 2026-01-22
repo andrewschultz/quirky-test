@@ -595,25 +595,25 @@ collections {
          "<queer old dean/dear old queen<#f80>> (buffer word inside)"
       ]
    };
-   bonus_found_text : list {
+   bonus_found_where : list {
       items = [
-         "TURKEY QUEST (any time)",
-         "<SHUSH LOUT<#f00>> (on <LISTEN<#0f0>>ing to the {cc_pro_boor})",
-         "<RARE PLIGHTS<#f00>> once you have {cc_prayer_lights}",
-         "<BANE PLACE<#f80>> in Plain Base",
-         "<THEORY BORE<#f80>> once you've met Thor",
-         "<DEATH SENTENCE<#f80>> in Plain Base, around Seth Denton's",
-         "<TEST WILES<#ff0>> in West Tiles",
-         "<BEAST RANCH<#ff0>> in East Branch",
-         "<RIG BOONS<#ff0>> in either hub",
-         "<SO LONG<#0f0>> when you have the low song",
-         "<VAST FISSION<#0f0>> (or fishin/fishing) when you have the fast vision",
-         "<CEASE PURGING<#0f0>> when you feel peace surging",
-         "<SANE ROLE<#0f0>> when you have a rain soul",
-         "<GROW NEED<#0f0>> when you have no greed",
-         "<RACING PASSIONS<#00f>> when you have the pacing rations",
-         "<CHEERY TIMES<#f0f>> after hearing the teary chimes"
-         "<I/EYE STAY<#f0f>> in My House",
+         "(any time)",
+         "(on <LISTEN<#0f0>>ing to the {cc_pro_boor})",
+         "once you have {cc_prayer_lights}",
+         "in Plain Base",
+         "once you've met Thor",
+         "in Plain Base, around Seth Denton's",
+         "in West Tiles",
+         "in East Branch",
+         "in either hub",
+         "when you have the low song",
+         "(or fishin/fishing) when you have the fast vision",
+         "when you feel peace surging",
+         "when you have a rain soul",
+         "when you have no greed",
+         "when you have the pacing rations",
+         "after hearing the teary chimes"
+         "in My House",
       ]
    };
    bonus_not_found_text : list {
@@ -3539,15 +3539,15 @@ subroutines {
       }
       : clear_screen ;
       : print "{bflist}" ;
-      : set_integer var="tempint" "0" ;
-      : collection_iterate "bonus_found_text" {
-         : set_integer var="tempint2" {( int(collection_get{ collection -> ("bonus_status") index -> ( tempint ) }) )} ;
+      : set_integer var="counter" "0" ;
+      : while (counter < max_bonus_score) {
+         : set_integer var="tempint2" {( int(collection_get{ collection -> ("bonus_status") index -> ( counter ) }) )} ;
          : if (tempint2 > 0) {
-            : print {("" + (tempint + 1) + ". " + item())}
+            : print {("" + (counter + 1) + ". " + (collection_get{ collection -> ("think_first_bonus") index -> ( counter ) }) + " " + (collection_get{ collection -> ("think_second_bonus") index -> ( counter ) }) + " " + (collection_get{ collection -> ("bonus_found_where") index -> ( counter ) }) )} ;
          } : else {
-            : print {( "" + (tempint + 1) + ". " + (collection_get{ collection -> ("bonus_not_found_text") index -> ( tempint ) }) )} ;
+            : print {( "" + (counter + 1) + ". " + (collection_get{ collection -> ("bonus_not_found_text") index -> ( counter ) }) )} ;
          }
-         : increment "tempint" ;
+         : increment "counter" ;
       }
       : set_true "ever_bonus" ;
       : set_true "score_bonus_nag" ;
