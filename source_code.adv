@@ -246,6 +246,7 @@ booleans {
    print_core_nag_after : boolean "false" scope="survivor" ;
 
    ## "retry" booleans for THINK: if you got something after losing it
+   retry_shush_lout : boolean "false" scope="survivor" ;
    retry_rare_plights : boolean "false" scope="survivor" ;
    retry_so_long : boolean "false" scope="survivor" ;
    retry_vast_fission : boolean "false" scope="survivor" ;
@@ -343,7 +344,7 @@ booleans {
    in_name_change_room : dynamic_boolean {( is_at "hub_w_s" || is_at "hub_w_w" || is_at "hub_e_e" || is_at "hub_e_se" || is_at "hub_e_s" || is_at "hub_e_w" )} ;
 
    think_available : dynamic_boolean {( think_chalice_map || think_fellow_yield || think_grim_tune || think_healing_still || think_hunters_grill || think_master_plan || think_shift_goals || think_gravel_trail || think_hi_mouse )} ;
-   retry_available : dynamic_boolean {( retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
+   retry_available : dynamic_boolean {( retry_shush_lout || retry_rare_plights || retry_so_long || retry_vast_fission || retry_cease_purging || retry_sane_role || retry_grow_need || retry_racing_passions )} ;
    bonus_this_playthrough : dynamic_boolean {( bonus_score > bonus_score_start )} ;
 
    ## achievements
@@ -1092,12 +1093,14 @@ strings {
    cue_grow_need : string "<GROW NEED<#db8>>" ;
    cue_racing_passions : string "<RACING PASSIONS<#db8>>" ;
    cue_rare_plights : string "<RARE PLIGHTS<#db8>>" ;
+   cue_shush_lout : string "<SHUSH LOUT<#db8>>" ;
    cue_sane_role : string "<SANE ROLE<#db8>>" ;
    cue_so_long : string "<SO LONG<#db8>>" ;
    cue_vast_fission : string "<VAST FISSION<#db8>>" ;
 
    # HERE strings
    here_intro : dynamic_string {( is_at "nameless_lameness" ? "here" : "(Nameless Lameness)" )} ;
+   here_first_base : dynamic_string {( is_at "first_base" ? "here" : "(First Base)" )} ;
    here_plain_base : dynamic_string {( is_at "plain_base" ? "here" : "(Plain Base)" )} ;
    here_west_tiles : dynamic_string {( is_at "west_tiles" ? "here" : "(West Tiles)" )} ;
    here_east_branch : dynamic_string {( is_at "east_branch" ? "here" : "(East Branch)" )} ;
@@ -1266,6 +1269,7 @@ strings {
 
    with_bonus : string "with this for a bonus point" ;
 
+   once_lush_shout : dynamic_string {( (know_lush_shout && is_beside "pro_boor" ? "now" : "once") + " you've <LISTEN<#0f0>>ed for the Pro Boor's {cc_lush_shout}" )};
    once_prayer_lights : dynamic_string {( (is_carried "prayer_lights" ? "now" : "once") + " you have {cc_prayer_lights}" )};
    once_peace_surging : dynamic_string {( (is_carried "peace_surging" ? "now" : "once") + " you have peace surging" )};
    once_fast_vision : dynamic_string {( (is_carried "fast_vision" ? "now" : "once") + " you have the fast vision" )};
@@ -1311,6 +1315,7 @@ strings {
    cc_burst_face : dynamic_string {( use_color_coding ? "<burst face<#f88>>" : "burst face")} ;
 
    cc_pro_boor : dynamic_string {( use_color_coding ? "<Pro Boor<#f88>>" : "Pro Boor" )} ;
+   cc_lush_shout : dynamic_string {( use_color_coding ? "<lush shout<#f88>>" : "lush shout" )} ;
    cc_prayer_lights : dynamic_string {( use_color_coding ? "<Prayer Lights<#f88>>" : "Prayer Lights" )} ;
    cc_player_rights : string "<Player Rights<#0f0>>" ;
 
@@ -5004,6 +5009,9 @@ subroutines {
       }
       : print "{think_here_also} are bonus commands you got right, but it was a bit too late. You can use them on replay." ;
       : set_true "think_text_yet" ;
+      : if (retry_shush_lout) {
+         : print "-- say {cue_shush_lout} {once_lush_shout}" ;
+      }
       : if (retry_rare_plights) {
          : print "-- say {cue_rare_plights} {once_prayer_lights}" ;
       }
