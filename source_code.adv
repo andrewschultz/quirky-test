@@ -1841,6 +1841,15 @@ locations {
          }
          : if (know_lush_shout) {
             : match "shush lout" {
+               : if (!is_beside "pro_boor") {
+                  : print {( "With the pro boor gone, it's too late to do so" + ( bonus_point_shush_lout ? ", but once was enough." : " again." )} ;
+                  : if (!bonus_point_shush_lout) {
+                     : set_true "retry_shush_lout" ;
+                     : set_integer var="tempint" "1" ;
+                     : gosub "warning_bonus_after" ;
+                  }
+                  : done ;
+               }
                : if (!bonus_point_shush_lout) {
                   : print {( "The {cc_pro_boor} takes exception to this. Being called a lout is one thing, but being told to talk a bit less is unforgivable! Sadly, said unforgivingness results in a pause before continuing and not just leaving.\nBut you don't feel like you failed. This wasn't a direct hit, but it gave you space to relax and think. " + (have_won ? "And besides, you know how to get rid of the {cc_pro_boor}." : "Perhaps you need to take a different sort of dig to get rid of them for good. More direct, more personal. Not necessarily profane or cruel." ) )} ;
                   : set_true "bonus_point_shush_lout" ;
