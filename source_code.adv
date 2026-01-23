@@ -1817,11 +1817,11 @@ locations {
             : if (!point_bro_poor) {
                : collection_modify { collection = "tried_combo_core" index -> (2) content -> ("true") } ;
                : print "The {cc_pro_boor} looks taken aback. They don't need this nonsense. If you want to go forward and suffer some boring game where you don't get to shoot or beat up anyone, that's your business. They can't stop you. You yourself are not worth shooting or beating up." ;
-               : print "As a parting gift, they shove something into your hands, a discussion of what you're getting into, which they assure you is nothing near as good as Tad Beecher's writings." ;
-               : print "It's titled {cc_prayer_lights}. Which doesn't seem QUITE right.";
-               : print "You make a note of the direction the Pro Boor left. Probably the opposite of where you wish to go. But first, what's with {cc_prayer_lights}?" ;
+               : print {( "As a parting gift, they shove something into your hands, a discussion of what you're getting into, which they assure you is nothing near as good as Tad Beecher's writings." + (known_lush_shout && !bonus_point_shush_lout ? " The lush shout, of course, fades as the boor leaves. Perhaps you could've had a bit of fun with it, but it's too late now." : "" ) )} ;
+               : print "The book is titled {cc_prayer_lights}. Which doesn't seem QUITE right. You skim through it a bit, and it distracts you enough that you forget how the Pro Boor left, so you could go the opposite way.\nBut you can still study {cc_prayer_lights} for clues of what to do next." ;
                : set_true "point_bro_poor" ;
                : destroy "pro_boor" ;
+               : destroy "lush_shout" ;
                : pocket "prayer_lights" ;
                : gosub "add_point" ;
                : if (retry_rare_plights) {
